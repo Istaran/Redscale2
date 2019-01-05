@@ -1,0 +1,25 @@
+div.div-bottom {
+    position: absolute;
+    bottom: 5px;
+	width: 100%;
+	background-color: black;
+	color: lime;
+}
+
+div.div-scroll-bottom {
+	height: 200px;
+	overflow-y: scroll;
+	display:flex; 
+	flex-direction:column-reverse;
+}
+
+table.chatlist {
+	width: 100%;
+}
+
+.chatInputSection {
+	display: flex;
+}
+.chatInput {
+	flex-grow: 1;
+}
