@@ -50,6 +50,31 @@ class ChatDisplayer extends React.Component {
 	}
 }
 
+class ActButton extends React.Component {
+	constructor(props) {
+		super(props);
+	};
+	
+	takeAction = function() {
+		let self=this;
+		fetch('/act', {
+				method: 'post',
+				headers: {
+				   "Content-Type": "application/json; charset=utf-8",
+				},
+				body: JSON.stringify({ 'body': { 'verb':self.props.verb, 'details':self.props.details, 'username':self.props.parent.state.username }})
+			  }).then(function(response) {
+				return response.json();
+			  }).then(function(data) {
+				self.props.parent.setState({gameState: data});
+			  });
+	}
+	
+	render() {
+		return <input type='button' className='actButton' onClick={(event)=>this.takeAction(event)} value={this.props.display} />;
+	}
+}
+
 
 class GameDisplayer extends React.Component {
 	constructor(props) {
@@ -118,13 +143,23 @@ class GameDisplayer extends React.Component {
 
 	
 	render() {
-
+		let self = this;
 		
 		if (!this.state.username) {
 			return (<input type='textbox' id='usernameInput' className='usernameInput' onKeyUp={(event) => this.handleUsernameKeyUp(event)}></input>);
 		} else if (this.state.gameState) {
-			
-			return (<div><div>{this.state.gameState.status}</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);				
+			let controlTable = this.state.gameState.controls.map((column, colIndex) => {
+				let controlColumn = column.map((control, rowIndex) => {
+					switch (control.type) {
+						case 'actButton': 
+						return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} details={control.details} />;
+						default:
+						return '';
+					}
+				});
+				return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
+			});			
+			return (<div><div>{this.state.gameState.status}</div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);				
 		} else {
 			
 		return (<div><div>Welcome, {this.state.username}. Please wait while we load your game state.</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);

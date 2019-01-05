@@ -1,0 +1,21 @@
+div.controlTable {
+    position: absolute;
+    bottom: 235px;
+	width: 480px;
+	height: 150px;
+	background-color: light-gray;
+}
+
+div.controlColumn {
+	height: 100%;
+	width: 100px;
+	margin-right: 5px;
+	display:flex; 
+	flex-direction:column;
+}
+
+input.actButton {
+	width: 100px;
+	height: 20px;
+	margin-bottom: 5px;
+}

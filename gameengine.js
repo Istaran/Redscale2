@@ -1,45 +1,32 @@
 
-var fs = require('fs');
-
-var cache = {};
-
-let load = function (path) {
-	if (cache[path] === undefined) {
-		cache[path] = new Promise(function(resolve, reject) {
-			
-			fs.readFile(path, {encoding: 'utf8'}, (err, data) => {
-				if (err) {
-					console.log(err);
-					resolve(null);
-				} else {
-					resolve(JSON.parse(data));
-				}
-			});
-		});
-	}
-	return cache[path];
-};
+var cache = require('./cache');
 
 let newGamePath = './data/newGame.json';
-load(newGamePath);
+cache.load(newGamePath);
 let saveMigrationPath = './data/saveMigrations.json';
-load(saveMigrationPath);
+cache.load(saveMigrationPath);
 
-let save = function (path, value) {
-	let old = cache[path];
-	
-	cache[path] = new Promise(function (resolve, reject) {
-		let writeValue = function () { fs.writeFile(path, JSON.stringify(value), {encoding: 'utf8'}, (err) => {if (err) console.log(err); resolve(value); });};
-		if (old) {
-			old.then(writeValue);
-		} else {
-			writeValue();
-		}					
-	});
-}
+var verbs = {
+	travel: require('./verbs/travel')
+};
+
 
 let view = async function (state) {
-	return { status: "View state not implemented yet.", controls: [] };
+	if (state.event2 !== undefined) {
+		return state.event2.getView();
+	} else if (state.enemy !== undefined) {
+		return { status: "ERROR: Combat not implemented yet.", controls: [] };
+	} else if (state.event !== undefined) {
+		return state.event.getView();
+	} else {
+		// Get description from location, and combine controls from location and player modules.
+		return { status: "View state not implemented yet.", controls: [[
+{"type":"actButton", "verb":"travel", "display":"Go north", "details":{"direction":"north"}},
+{"type":"actButton", "verb":"travel", "display":"Go south", "details":{"direction":"south"}},
+{"type":"actButton", "verb":"travel", "display":"Go west", "details":{"direction":"west"}},
+{"type":"actButton", "verb":"travel", "display":"Go east", "details":{"direction":"east"}},
+]] };		
+	}	
 }
 
 let act = async function (action) {
@@ -47,11 +34,11 @@ let act = async function (action) {
 	let savePath = './saves/' + action.username + '.json';
 	
 	// Load current existence.
-	let state = await load(savePath);
+	let state = await cache.load(savePath);
 	if (state == null) {
-		state = await load(newGamePath);
+		state = await cache.load(newGamePath);
 	}
-	let migrations = await load(saveMigrationPath);
+	let migrations = await cache.load(saveMigrationPath);
 	
 	while (state["save version"] < migrations.length) {
 		let change = migrations[state["save version"]];
@@ -60,16 +47,17 @@ let act = async function (action) {
 	}
 	
 	// Apply action
-	switch (action.type) {
-		
-		default:
-		// No-op / pure load / status checked
+	if (verbs[action.verb] !== undefined) {
+		verbs[action.verb].act(state, action.details);
 	}
 	
-	// Save current state;
-	save(savePath, state);
+	if (action.verb != 'status')
+		state.view = view(state); // Status preserves the existing view
 	
-	return view(state);
+	// Save current state;
+	cache.save(savePath, state);
+	
+	return state.view;
 };
 
 module.exports = {
