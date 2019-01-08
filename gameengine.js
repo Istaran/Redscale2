@@ -10,22 +10,21 @@ var verbs = {
 	travel: require('./verbs/travel')
 };
 
+var loc = require('./location');
+var player = require('./player');
 
-let view = async function (state) {
+let controls = async function (state) {
 	if (state.event2 !== undefined) {
-		return state.event2.getView();
+		return state.event2.getControls();
 	} else if (state.enemy !== undefined) {
-		return { status: "ERROR: Combat not implemented yet.", controls: [] };
+		return [];
 	} else if (state.event !== undefined) {
-		return state.event.getView();
+		return state.event.getControls();
 	} else {
+		let controls = await loc.getControls(state);
+		player.addControls(state, controls);
 		// Get description from location, and combine controls from location and player modules.
-		return { status: "View state not implemented yet.", controls: [[
-{"type":"actButton", "verb":"travel", "display":"Go north", "details":{"direction":"north"}},
-{"type":"actButton", "verb":"travel", "display":"Go south", "details":{"direction":"south"}},
-{"type":"actButton", "verb":"travel", "display":"Go west", "details":{"direction":"west"}},
-{"type":"actButton", "verb":"travel", "display":"Go east", "details":{"direction":"east"}},
-]] };		
+		return controls;		
 	}	
 }
 
@@ -48,11 +47,11 @@ let act = async function (action) {
 	
 	// Apply action
 	if (verbs[action.verb] !== undefined) {
-		verbs[action.verb].act(state, action.details);
+		await verbs[action.verb].act(state, action.details);
 	}
 	
 	if (action.verb != 'status')
-		state.view = view(state); // Status preserves the existing view
+		state.view.controls = await controls(state); // Status preserves the existing view
 	
 	// Save current state;
 	cache.save(savePath, state);

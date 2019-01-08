@@ -76,6 +76,52 @@ class ActButton extends React.Component {
 }
 
 
+
+class Navigator extends React.Component {
+	constructor(props) {
+		super(props);
+	};
+	
+	navigate(event, dir) {
+		let gameDisp = this.props.parent;
+		let details = this.props.details[dir];
+		if (details) {
+			fetch('/act', {
+				method: 'post',
+				headers: {
+				   "Content-Type": "application/json; charset=utf-8",
+				},
+				body: JSON.stringify({ 'body': { 'verb':'travel', 'details':details, 'username':gameDisp.state.username }})
+			  }).then(function(response) {
+				return response.json();
+			  }).then(function(data) {
+				gameDisp.setState({gameState: data});
+			  });
+		}
+	}
+	
+	render() {
+		let upColor = (this.props.details.up) ? "skyblue" : "slateblue";
+		let northColor = (this.props.details.north) ? "red" : "darkred";
+		let westColor = (this.props.details.west) ? "lightgray" : "darkgray";
+		let specialColor = (this.props.details.special) ? "lightgray" : "white";
+		let eastColor = (this.props.details.east) ? "lightgray" : "darkgray";
+		let southColor = (this.props.details.south) ? "lightgray" : "darkgray";
+		let downColor = (this.props.details.down) ? "peru" : "saddlebrown";
+		return <svg className='navigator' width='100' height='145'>
+		<polygon points="0,73 0,0 99,0 99,73 75,22 25,22" fill={upColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'up')}/>
+		<polygon points="50,22 40,63 50,57 60,63" fill={northColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'north')}/>
+		<polygon points="0,73 40,63 35,73 40,83" fill={westColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'west')}/>
+		<polygon cx='50' cy='73' cr='15' fill={specialColor} strokeWidth="0" onClick={(event) => this.navigate(event, 'special')}/>
+		<polygon points="99,73 60,63 64,73 60,83" fill={eastColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'east')}/>
+		<polygon points="50,122 40,83 50,87, 60,83" fill={southColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'south')}/>
+		<polygon points="0,73 0,144 99,144, 99,73 75,122 25,122" fill={downColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'down')}/>
+
+		</svg>;
+	}
+	
+}
+
 class GameDisplayer extends React.Component {
 	constructor(props) {
 		super(props);
@@ -146,13 +192,15 @@ class GameDisplayer extends React.Component {
 		let self = this;
 		
 		if (!this.state.username) {
-			return (<input type='textbox' id='usernameInput' className='usernameInput' onKeyUp={(event) => this.handleUsernameKeyUp(event)}></input>);
+			return (<div>Username:<input type='textbox' id='usernameInput' className='usernameInput' onKeyUp={(event) => this.handleUsernameKeyUp(event)}/></div>);
 		} else if (this.state.gameState) {
 			let controlTable = this.state.gameState.controls.map((column, colIndex) => {
 				let controlColumn = column.map((control, rowIndex) => {
 					switch (control.type) {
 						case 'actButton': 
 						return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} details={control.details} />;
+						case 'navigator':
+						return <Navigator parent={self} key={colIndex * 10 + rowIndex} details={control.details} />;
 						default:
 						return '';
 					}

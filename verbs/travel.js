@@ -1,11 +1,12 @@
+var loc = require('../location');
 
-let act = function(state, details) {
+let act = async function(state, details) {
 	switch (details.direction) {
 		case 'north': 
-			state.y = (state.y ? state.y : 0) + 1;
+			state.y = (state.y ? state.y : 0) - 1;
 			break;
 		case 'south': 
-			state.y = (state.y ? state.y : 0) - 1;
+			state.y = (state.y ? state.y : 0) + 1;
 			break;
 		case 'west': 
 			state.x = (state.x ? state.x : 0) - 1;
@@ -20,10 +21,12 @@ let act = function(state, details) {
 			state.z = (state.z ? state.z : 0) - 1;
 			break;				
 	}
-	if (details.location) state.location = details.location;
-	if (details.x) state.x = details.x;
-	if (details.y) state.y = details.y;
-	if (details.z) state.z = details.z;
+	if (details.location !== undefined) state.location = details.location;
+	if (details.x !== undefined) state.x = details.x;
+	if (details.y !== undefined) state.y = details.y;
+	if (details.z !== undefined) state.z = details.z;
+	
+	return loc.explore(state);
 };
 
 

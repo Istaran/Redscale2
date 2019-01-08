@@ -4,6 +4,8 @@ div.controlTable {
 	width: 480px;
 	height: 150px;
 	background-color: light-gray;
+	display: flex;
+    flex-direction: row;
 }
 
 div.controlColumn {

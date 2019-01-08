@@ -1,7 +1,2 @@
-{"location":"Dragonbone Cave", "x":"0", "y":"0", "save version":"0",
-"view":{"status":"Starting a new game.","controls":[[
-{"type":"actButton", "verb":"travel", "display":"Go north", "details":{"direction":"north"}},
-{"type":"actButton", "verb":"travel", "display":"Go south", "details":{"direction":"south"}},
-{"type":"actButton", "verb":"travel", "display":"Go west", "details":{"direction":"west"}},
-{"type":"actButton", "verb":"travel", "display":"Go east", "details":{"direction":"east"}}
-]]}}
+{"location":"Dragonbone Cave", "x":4, "y":5, "z":0, "save version":0,
+"view":{"status":"Starting a new game.","controls":[[{"type":"navigator","details":{"up":{"direction":"up"},"north":{"direction":"north"},"east":{"direction":"east"},"west":{"direction":"west"},"south":{"direction":"south"}}}],[]]}}
