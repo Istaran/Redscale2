@@ -12,8 +12,8 @@ app.use(express.static(__dirname + '/assets'));
 
 app.post('/chat', function (req, res) {
   const body = req.body.body;
-
-  chat.sendChat(body);
+  const local = (req.ip == "::1" || req.ip == "127.0.0.1");
+  chat.sendChat(body, local);
   
   res.set('Content-Type', 'text/plain');
   res.send(`chat received: ${body}`);

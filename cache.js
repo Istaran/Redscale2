@@ -32,8 +32,10 @@ let save = function (path, value) {
 	});
 }
 
+let clear = function () { cache = {} };
 
 module.exports = {
+	clear: clear,
 	load: load,
 	save: save
 };

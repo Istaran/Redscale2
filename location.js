@@ -18,8 +18,8 @@ let getControls = async function (state) {
 		let spot = zone.map[state.z][state.y][state.x];
 		let style = zone.styles[spot];
 		
-		if (style.controls) {
-			controls[1].concat(style.controls);
+		if (style.actions) {
+			style.actions.forEach((action) => controls[1].push(zone.actions[action]));
 		}
 	} else {
 		// If someone ends up stuck in a wall, so to speak, add a location reset button.

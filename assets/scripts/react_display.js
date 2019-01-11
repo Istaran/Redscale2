@@ -102,20 +102,32 @@ class Navigator extends React.Component {
 	
 	render() {
 		let upColor = (this.props.details.up) ? "skyblue" : "slateblue";
+		let upColor2 = (this.props.details.up) ? "white" : "darkgray";
 		let northColor = (this.props.details.north) ? "red" : "darkred";
 		let westColor = (this.props.details.west) ? "lightgray" : "darkgray";
 		let specialColor = (this.props.details.special) ? "lightgray" : "white";
 		let eastColor = (this.props.details.east) ? "lightgray" : "darkgray";
 		let southColor = (this.props.details.south) ? "lightgray" : "darkgray";
 		let downColor = (this.props.details.down) ? "peru" : "saddlebrown";
+		let downColor2 = (this.props.details.down) ? "lime" : "green";
 		return <svg className='navigator' width='100' height='145'>
-		<polygon points="0,73 0,0 99,0 99,73 75,22 25,22" fill={upColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'up')}/>
-		<polygon points="50,22 40,63 50,57 60,63" fill={northColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'north')}/>
+		<defs>
+			<linearGradient id="groundGradient" x1="0" x2="0" y1="0" y2="1">
+				<stop offset="50%" stopColor={downColor2}/>
+				<stop offset="95%" stopColor={downColor}/>
+			</linearGradient>
+			<linearGradient id="skyGradient" x1="0" x2="0" y1="0" y2="1">
+				<stop offset="5%" stopColor={upColor2}/>
+				<stop offset="50%" stopColor={upColor}/>
+			</linearGradient>
+		</defs>
+		<polygon points="0,73 0,0 99,0 99,73 75,22 25,22" fill="url(#skyGradient)" stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'up')}/>
+		<polygon points="50,22 40,63 50,58 60,63" fill={northColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'north')}/>
 		<polygon points="0,73 40,63 35,73 40,83" fill={westColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'west')}/>
-		<polygon cx='50' cy='73' cr='15' fill={specialColor} strokeWidth="0" onClick={(event) => this.navigate(event, 'special')}/>
+		<circle cx='50' cy='73' r='10' fill={specialColor} strokeWidth="0" onClick={(event) => this.navigate(event, 'special')}/>
 		<polygon points="99,73 60,63 64,73 60,83" fill={eastColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'east')}/>
 		<polygon points="50,122 40,83 50,87, 60,83" fill={southColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'south')}/>
-		<polygon points="0,73 0,144 99,144, 99,73 75,122 25,122" fill={downColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'down')}/>
+		<polygon points="0,73 0,144 99,144, 99,73 75,122 25,122" fill="url(#groundGradient)" stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'down')}/>
 
 		</svg>;
 	}
