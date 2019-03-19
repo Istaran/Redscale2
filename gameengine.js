@@ -52,6 +52,12 @@ let act = async function (action) {
 	
 	if (action.verb != 'status')
 		state.view.controls = await controls(state); // Status preserves the existing view
+
+	//Determine which character should be shown on left. By default, it's the player
+	state.view.leftStatus = player.getStatusDisplay();
+	
+	//Determine which character should be shown on right. By default, it's none.
+	state.view.rightStatus = null;
 	
 	// Save current state;
 	cache.save(savePath, state);

@@ -21,3 +21,42 @@ input.actButton {
 	height: 20px;
 	margin-bottom: 5px;
 }
+
+@keyframes fade-in-from-top {
+  0%   {background-color:black; height:0px;}
+  100% {background-color:white; height:150px;}
+}
+
+div.div-help {
+	width: 95%;
+	position: absolute;
+	top: 15px;
+	left:2.5%;
+	color: black;
+	border-color: gray;
+	border-style: ridge;
+	animation-name: fade-in-from-top;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	white-space: pre-wrap;
+}
+
+@keyframes fade-out-to-top {
+  0% { background-color:white; height:150px; opacity:1;}
+  100%   {background-color:black; height:0px; opacity:0;}
+}
+
+
+div.div-unhelp {
+	width: 95%;
+	position: absolute;
+	top: 15px;
+	left:2.5%;
+	color: black;
+	animation-name: fade-out-to-top;
+	animation-duration: 1s;
+	opacity:0;
+	overflow: none;
+	white-space: pre-wrap;
+}
+

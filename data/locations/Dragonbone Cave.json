@@ -22,29 +22,71 @@
 
 	[null, "Air", "Air", "Air", "OverRiver", "Air", "Air", "Air", "Air"]]],
 "styles":{
-	"Edge":{ "description": "You're near the edge of the massive cavern. The walls are occasionally perferated by holes too small for you to enter, which at least keep enough fresh air flowing to keep things from going too stale.", "actions":["hunt"] },
-	"Middle":{ "description": "You're in the middle of a vast cavern.", "actions":["hunt"] },
-	"Air":{ "description": "You're flying in a vast cavern.", "actions":["hunt2"] },
-	"Dragonhome":{ "description": "You're in the center of a vast cavern, in the place you call home.", "actions":["rest"] },
-	"OverRiver": { "description": "You're flying over an underground river.", "actions":["hunt2"] },
-	"OverHome": { "description": "You're flying in the middle of a vast cavern, over the place you call home.", "actions":["hunt2"]},
-	"River": { "description": "The cavern here is split by a shallow river, flowing generally northeast.", "actions":["hunt3"]},
-	"RiverStart": { "description": "The underground river here enters the cave from beneath a pile of rocks, the end result of a long ago cave-in.", "actions":["hunt3"] },
-	"RiverEnd": { "description": "The underground river here leaves the cave, flowing down into a deep, dark tunnel of unknown length.", "actions":["hunt3"] },
-	"Skull": { "description": "Your mother's skull lies here, much of it covered in rocks from a cave-in. One massive spike of stone in particular pierces the center, the top still black from the lightning blast that knocked it loose.", "actions":["commune"] },
-	"UnderSpine": { "description": "Your mother's spine arches above you here, morbid reminder of the silent guardian who died well before you hatched.", "actions":["hunt"] },
-	"Spine": { "description": "Your mother's spine arches through the air here, far above the ground, nearly reaching the ceiling.", "actions":["harvest", "hunt2"] },
-	"Ribs": { "description": "Your mother's massive ribs arch down to the ground here like massive columns, chipped and worn in places where something has been breaking off pieces.", "actions":["harvest", "hunt"]  },
-	"Tailbone": { "description": "Your mother's tail bones extend through this area, creating a sort of wall splitting the area here. The river used to flow here, but her massive tail redirected it a bit south.", "actions":["harvest"] }
+	"Edge":{ 
+		"description": "You're near the edge of the massive cavern. The walls are occasionally perferated by holes too small for you to enter, which at least keep enough fresh air flowing to keep things from going too stale.", 
+		"preview": "It looks like the walls slope down to the ground over there. You probably can't go much farther that way, and the ceiling gets too low to really fly.",
+		"actions":["hunt"] },
+	"Middle":{ 
+		"description": "You're in the middle of a vast cavern.", 
+		"preview": "It looks like an unremarkable area in the middle of the cavern. You don't really see much of anything for some distance.",
+		"actions":["hunt"] },
+	"Air":{ 
+		"description": "You're flying in a vast cavern.", 
+		"preview": "It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly.",
+		"actions":["hunt2"] },
+	"Dragonhome":{ 
+		"description": "You're in the center of a vast cavern, in the place you call home.", 
+		"preview": "You see the center of the cavern, the place you've called home for longer than you can remember.",
+		"actions":["rest"] },
+	"OverRiver": { 
+		"description": "You're flying over an underground river.", 
+		"preview": "It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly.",
+		"actions":["hunt2"] },
+	"OverHome": { 
+		"description": "You're flying in the middle of a vast cavern, over the place you call home.", 
+		"preview": "It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly.",
+		"actions":["hunt2"]},
+	"River": { 
+		"description": "The cavern here is split by a shallow river, flowing generally northeast.", 
+		"preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+		"actions":["hunt3"]},
+	"RiverStart": { 
+		"description": "The underground river here enters the cave from beneath a pile of rocks, the end result of a long ago cave-in.", 
+		"preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+		"actions":["hunt3"] },
+	"RiverEnd": { 
+		"description": "The underground river here leaves the cave, flowing down into a deep, dark tunnel of unknown length.", 
+		"preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+		"actions":["hunt3"] },
+	"Skull": { 
+		"description": "Your mother's skull lies here, much of it covered in rocks from a cave-in. One massive spike of stone in particular pierces the center, the top still black from the lightning blast that knocked it loose.", 
+		"preview": "You can see your mother's skull over there, stuck in a cave-in from before you hatched.",
+		"actions":["commune"] },
+	"UnderSpine": { 
+		"description": "Your mother's spine arches above you here, morbid reminder of the silent guardian who died well before you hatched.", 
+		"preview": "You can see your mother's skeletal spine arching far over the ground over there, an easy landmark to spot, even at a distance.",
+		"actions":["hunt"] },
+	"Spine": { 
+		"description": "Your mother's spine arches through the air here, far above the ground, nearly reaching the ceiling.", 
+		"preview": "The airspace over there is broken up by your mother's spine arching close to the ceiling, massive ribs arching away from it to either side.",
+		"actions":["harvest", "hunt2"] },
+	"Ribs": { 
+		"description": "Your mother's massive ribs arch down to the ground here like massive columns, chipped and worn in places where something has been breaking off pieces.", 
+		"preview": "Your mother's ribs arch down through the area over there, massive columns visible from a distance.",
+		"actions":["harvest", "hunt"]  },
+	"Tailbone": { 
+		"description": "Your mother's tail bones extend through this area, creating a sort of wall splitting the area here. The river used to flow here, but her massive tail redirected it a bit south.", 
+		"preview": "Your mother's massive tail bone cuts through the area like a wall.",
+		"actions":["harvest"] }
 },
 "events":{
 
 },
 "actions":{
-	"rest":{ "type":"actButton", "display":"Rest", "verb":"rest", "details":{}},
-	"harvest":{ "type":"actButton", "display":"Harvest bone", "verb":"gather", "details":{"item":"Dragonbone shard"}},
-	"commune":{ "type":"actButton", "display":"Commune", "verb":"commune", "details":{"spirit":"Mother"}},
-	"hunt":{ "type":"actButton", "display":"Hunt", "verb":"hunt", "details":{"targets":["cave rat", "cave spider"]}},
-	"hunt2":{ "type":"actButton", "display":"Hunt", "verb":"hunt", "details":{"targets":["cave bat", "cave spider"]}},
-	"hunt3":{ "type":"actButton", "display":"Fish", "verb":"hunt", "details":{"targets":["cave fish"]}}
+	"rest":{ "type":"actButton", "display":"Rest", "verb":"rest", "details":{}, "help":"Fast forward time to recover from your trevails. In addition, you may have a resting event, and also save a checkpoint in case you die or want to rewind."},
+	"harvest":{ "type":"actButton", "display":"Harvest bone", "verb":"gather", "details":{"item":"Dragonbone shard"}, "help":"Spend some time gathering dragonbone from your mother's remains. It's quite sturdy and hard, as well as being elementally aligned with fire, giving it some nice properties as a material."},
+	"commune":{ "type":"actButton", "display":"Commune", "verb":"commune", "details":{"spirit":"Mother"}, "help":"Connect your soul to the lingering shade of your mother's spirit. Every mother loves it when their son calls, even those that have been dead since before their son hatched. She can advise you, and help you focus your powers."},
+	"hunt":{ "type":"actButton", "display":"Hunt", "verb":"hunt", "details":{"targets":["cave rat", "cave spider"]}, "help":"Search the area for prey to kill, or whatever, initiating a combat."},
+	"hunt2":{ "type":"actButton", "display":"Hunt", "verb":"hunt", "details":{"targets":["cave bat", "cave spider"]}, "help":"Search the area for prey to kill, or whatever, initiating a combat."},
+	"hunt3":{ "type":"actButton", "display":"Fish", "verb":"hunt", "details":{"targets":["cave fish"]}, "help":"Dive into the water for acquatic prey, initiating a combat."}
 }}

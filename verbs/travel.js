@@ -1,6 +1,7 @@
 var loc = require('../location');
 
 let act = async function(state, details) {
+	if (state.event || state.event2 || state.enemy) return; // Somehow you cheaty-clicked to travel
 	switch (details.direction) {
 		case 'north': 
 			state.y = (state.y ? state.y : 0) - 1;
@@ -26,7 +27,7 @@ let act = async function(state, details) {
 	if (details.y !== undefined) state.y = details.y;
 	if (details.z !== undefined) state.z = details.z;
 	
-	return loc.explore(state);
+	loc.explore(state);
 };
 
 

@@ -5,6 +5,28 @@ var pusher = new Pusher('91450cc1727e582f15c1', {
   forceTLS: true
 });
 
+var helper;
+
+class HelpDisplayer extends React.Component {
+	constructor(props) {
+		super(props);
+		helper = this;
+		this.state = {help: null};
+		this.oldHelp = null;
+	}
+	
+	render() {
+		if (this.state.help) {
+			this.oldHelp = this.state.help;
+			return <div className='div-help'>{this.state.help}</div>;
+		}
+		if (this.oldHelp) {
+		return <div className='div-unhelp'>{this.oldHelp}</div>;
+		}
+		return null;
+	}
+}
+
 class ChatDisplayer extends React.Component {
 	constructor(props) {
 		super(props);
@@ -46,6 +68,7 @@ class ChatDisplayer extends React.Component {
 						<input type='textbox' id='chatInput' className='chatInput' onKeyUp={(event) => this.handleChatKeyUp(event)}></input>
 						<input type='button' id='chatSend' className='chatSend' onClick={(event) => this.handleClickSend(event)} value='Send'></input>
 					</div>
+					<HelpDisplayer />
 				</div>);
 	}
 }
@@ -71,7 +94,7 @@ class ActButton extends React.Component {
 	}
 	
 	render() {
-		return <input type='button' className='actButton' onClick={(event)=>this.takeAction(event)} value={this.props.display} />;
+		return <input type='button' className='actButton' onClick={(event)=>this.takeAction(event)} value={this.props.display} onMouseOver={(event)=>helper.setState({help:this.props.help})} onMouseOut={(event)=>helper.setState({help:null})} />;
 	}
 }
 
@@ -110,6 +133,15 @@ class Navigator extends React.Component {
 		let southColor = (this.props.details.south) ? "lightgray" : "darkgray";
 		let downColor = (this.props.details.down) ? "peru" : "saddlebrown";
 		let downColor2 = (this.props.details.down) ? "lime" : "green";
+		
+		let upHelp = (this.props.details.up) ? "Go up.\n" + this.props.details.up.preview : "You can't go up from here.";
+		let northHelp = (this.props.details.north) ? "Go north.\n" + this.props.details.north.preview : "You can't go north from here.";
+		let westHelp = (this.props.details.west) ? "Go west.\n" + this.props.details.west.preview : "You can't go west from here.";
+		let specialHelp = (this.props.details.special) ? this.props.details.special.help + this.props.details.special.preview : null;
+		let eastHelp = (this.props.details.east) ? "Go east.\n" + this.props.details.east.preview : "You can't go east from here.";
+		let southHelp = (this.props.details.south) ? "Go south.\n" + this.props.details.south.preview : "You can't go south from here.";
+		let downHelp = (this.props.details.down) ? "Go down.\n" + this.props.details.down.preview : "You can't go down from here.";
+
 		return <svg className='navigator' width='100' height='145'>
 		<defs>
 			<linearGradient id="groundGradient" x1="0" x2="0" y1="0" y2="1">
@@ -121,13 +153,13 @@ class Navigator extends React.Component {
 				<stop offset="50%" stopColor={upColor}/>
 			</linearGradient>
 		</defs>
-		<polygon points="0,73 0,0 99,0 99,73 75,22 25,22" fill="url(#skyGradient)" stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'up')}/>
-		<polygon points="50,22 40,63 50,58 60,63" fill={northColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'north')}/>
-		<polygon points="0,73 40,63 35,73 40,83" fill={westColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'west')}/>
-		<circle cx='50' cy='73' r='10' fill={specialColor} strokeWidth="0" onClick={(event) => this.navigate(event, 'special')}/>
-		<polygon points="99,73 60,63 64,73 60,83" fill={eastColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'east')}/>
-		<polygon points="50,122 40,83 50,87, 60,83" fill={southColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'south')}/>
-		<polygon points="0,73 0,144 99,144, 99,73 75,122 25,122" fill="url(#groundGradient)" stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'down')}/>
+		<polygon points="0,73 0,0 99,0 99,73 75,22 25,22" fill="url(#skyGradient)" stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'up')} onMouseOver={(event)=>helper.setState({help:upHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+		<polygon points="50,22 40,63 50,58 60,63" fill={northColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'north')} onMouseOver={(event)=>helper.setState({help:northHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+		<polygon points="0,73 40,63 35,73 40,83" fill={westColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'west')} onMouseOver={(event)=>helper.setState({help:westHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+		<circle cx='50' cy='73' r='10' fill={specialColor} strokeWidth="0" onClick={(event) => this.navigate(event, 'special')} onMouseOver={(event)=>helper.setState({help:specialHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+		<polygon points="99,73 60,63 64,73 60,83" fill={eastColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'east')} onMouseOver={(event)=>helper.setState({help:eastHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+		<polygon points="50,122 40,83 50,87, 60,83" fill={southColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'south')} onMouseOver={(event)=>helper.setState({help:southHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+		<polygon points="0,73 0,144 99,144, 99,73 75,122 25,122" fill="url(#groundGradient)" stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'down')} onMouseOver={(event)=>helper.setState({help:downHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
 
 		</svg>;
 	}
@@ -210,7 +242,7 @@ class GameDisplayer extends React.Component {
 				let controlColumn = column.map((control, rowIndex) => {
 					switch (control.type) {
 						case 'actButton': 
-						return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} details={control.details} />;
+						return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} details={control.details} help={control.help} />;
 						case 'navigator':
 						return <Navigator parent={self} key={colIndex * 10 + rowIndex} details={control.details} />;
 						default:
