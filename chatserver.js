@@ -1,6 +1,7 @@
 
 var Pusher = require('pusher');
 var fs = require('fs');
+var cache = require('./cache');
 
 var pusher = new Pusher({
   appId: '612236',
@@ -24,15 +25,24 @@ while (chatArchive.length > 100)
 var chatStream = fs.createWriteStream('', { fd: chatFD });
 // TODO: separate by channel, private messages
 
-let sendChat = function (message) {
+let sendChat = function (message, local) {
 	  console.log(message);
 	 var parts = message.split('\t');
 	 var data = parts.length > 1 ? ({ message: parts[1], username: parts[0]}) : ({message: parts[0]});
-  pusher.trigger('Redscale_main_chat', 'chat message', data);
-  chatArchive.push(message);
-  while (chatArchive.length > 100)
-	  chatArchive.shift();
-  chatStream.write(message + '\n');
+	 if (data.message[0] == '/') {
+		if (local) {
+			if (data.message == "/clear cache") {
+				cache.clear();
+				pusher.trigger('Redscale_main_chat', 'chat message', 'Server cache was cleared');
+			} 
+		}
+	 }else {
+		  pusher.trigger('Redscale_main_chat', 'chat message', data);
+		  chatArchive.push(message);
+		  while (chatArchive.length > 100)
+			  chatArchive.shift();
+		  chatStream.write(message + '\n');
+	 }
 };
 
 let getChats = function () {

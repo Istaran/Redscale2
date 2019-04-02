@@ -1,0 +1,412 @@
+{
+    "map": 
+    [
+        [
+            [ "Edge", "Edge", "Edge", "Edge", "Edge", "Edge", "Edge", "Edge", "RiverEnd", "Edge" ],
+            [ "Edge", "Middle", "Middle", "Middle", "Middle", "Middle", "Middle", "River", "Middle", "Edge" ],
+            [ "Edge", "Middle", "Middle", "Ribs", "Ribs", "Tailbone", "Tailbone", "River", "Middle", "Edge" ],
+            [ "Skull", "UnderSpine", "UnderSpine", "UnderSpine", "UnderSpine", "River", "River", "River", "Middle", "Edge" ],
+            [ "Edge", "Middle", "Middle", "Ribs", "Ribs", "River", "Middle", "Middle", "Middle", "Edge" ],
+            [ "Edge", "Middle", "Middle", "Middle", "Dragonhome", "River", "Middle", "Middle", "Middle", "Edge" ],
+            [ "Edge", "Middle", "River", "River", "River", "River", "Middle", "Middle", "Middle", "Edge" ],
+            [ "Edge", "Middle", "River", "Middle", "River", "Middle", "Middle", "Middle", "Middle", "Edge" ],
+            [ "RiverStart", "River", "River", "Middle", "River", "Middle", "Middle", "Middle", "Middle", "Edge" ],
+            [ "Edge", "Middle", "Middle", "Middle", "River", "Middle", "Middle", "Middle", "Middle", "Edge" ],
+            [ "Edge", "Edge", "Edge", "Edge", "RiverStart", "Edge", "Edge", "Edge", "Edge", "Edge" ]
+        ],
+        [
+            [],
+            [ null, "Air", "Air", "Air", "Air", "Air", "Air", "OverRiver", "Air" ],
+            [ null, "Air", "Air", "Air", "Air", "Air", "Air", "OverRiver", "Air" ],
+            [ null, "Spine", "Spine", "Spine", "Spine", "OverRiver", "OverRiver", "OverRiver", "Air" ],
+            [ null, "Air", "Air", "Air", "Air", "OverRiver", "Air", "Air", "Air" ],
+            [ null, "Air", "Air", "Air", "OverHome", "OverRiver", "Air", "Air", "Air" ],
+            [ null, "Air", "OverRiver", "OverRiver", "OverRiver", "OverRiver", "Air", "Air", "Air" ],
+            [ null, "Air", "OverRiver", "Air", "OverRiver", "Air", "Air", "Air", "Air" ],
+            [ null, "OverRiver", "OverRiver", "Air", "OverRiver", "Air", "Air", "Air", "Air" ],
+            [ null, "Air", "Air", "Air", "OverRiver", "Air", "Air", "Air", "Air" ]
+        ],
+        [],
+        [
+            [ null, null, null, null, null, null, null, null, "UnderRiver" ],
+            [ null, null, null, null, null, null, null, "UnderRiver" ],
+            [ null, null, null, null, null, null, null, "UnderRiver" ],
+            [ null, null, null, null, null, "UnderRiver", "UnderRiver", "UnderRiver" ],
+            [ null, null, null, null, null, "UnderRiver" ],
+            [ null, null, null, null, null, "UnderRiver" ],
+            [ null, null, "UnderRiver", "UnderRiver", "UnderRiver", "UnderRiver" ],
+            [ null, null, "UnderRiver", null, "UnderRiver" ],
+            [ "UnderRiver", "UnderRiver", "UnderRiver", null, "UnderRiver"],
+            [ null, null, null, null, "UnderRiver" ],
+            [ null, null, null, null, "UnderRiver" ]
+        ]
+    ],
+    "styles": {
+        "Edge": {
+            "description": "You're near the edge of the massive cavern. The walls are occasionally perferated by holes too small for you to enter, which at least keep enough fresh air flowing to keep things from going too stale.",
+            "preview": "It looks like the walls slope down to the ground over there. You probably can't go much farther that way, and the ceiling gets too low to really fly.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "rat attack"
+                }
+            ],
+            "actions": [ "hunt" ]
+        },
+        "Middle": {
+            "description": "You're in the middle of a vast cavern.",
+            "preview": "It looks like an unremarkable area in the middle of the cavern. You don't really see much of anything for some distance.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "rat attack"
+                }
+            ],
+            "actions": [ "hunt" ]
+        },
+        "Air": {
+            "description": "You're flying in a vast cavern.",
+            "preview": "It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": "flying free"
+                },
+                {
+                    "chance": 1,
+                    "event": "bat attack"
+                }
+            ],
+            "actions": [ "hunt2" ]
+        },
+        "Dragonhome": {
+            "description": "You're in the center of a vast cavern, in the place you call home.",
+            "preview": "You see the center of the cavern, the place you've called home for longer than you can remember.",
+            "events": [
+                {
+                    "chance": 1,
+                    "if": {
+                        "condition": "stateis",
+                        "fact": "query/nsfw",
+                        "rule": "!=",
+                        "value": "true"
+                    },
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "if": {
+                        "condition": "stateis",
+                        "fact": "query/nsfw",
+                        "rule": "=",
+                        "value": "true"
+                    },
+                    "event": "acknowledge nsfw"
+                }
+            ],
+            "actions": [ "rest" , "test" ]
+        },
+        "OverRiver": {
+            "description": "You're flying over an underground river.",
+            "preview": "It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": "flying free"
+                },
+                {
+                    "chance": 1,
+                    "event": "bat attack"
+                }
+            ],
+            "actions": [ "hunt2" ]
+        },
+        "OverHome": {
+            "description": "You're flying in the middle of a vast cavern, over the place you call home.",
+            "preview": "It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [ "hunt2" ]
+        },
+        "River": {
+            "description": "The cavern here is split by a shallow river, flowing generally northeast.",
+            "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "newt attack"
+                }
+            ],
+            "actions": [ "hunt3" ],
+            "directionOverrides": {
+                "down": { "z": 4 }
+            }
+        },
+        "UnderRiver": {
+            "description": "You are swimming through the water in the underground river.",
+            "preview": "The water is cool, clear and free-flowing through here, occupied by the occassional fish or giant newt.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "newt attack"
+                }
+            ],
+            "actions": [ "hunt3" ],
+            "directionOverrides": {
+                "up": { "z": -4 }
+            }
+        },
+        "RiverStart": {
+            "description": "The underground river here enters the cave from beneath a pile of rocks, the end result of a long ago cave-in.",
+            "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "newt attack"
+                }
+            ],
+            "actions": [ "hunt3" ],
+            "directionOverrides": {
+                "down": { "z": 4 }
+            }
+        },
+        "RiverEnd": {
+            "description": "The underground river here leaves the cave, flowing down into a deep, dark tunnel of unknown length.",
+            "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "newt attack"
+                }
+            ],
+            "actions": [ "hunt3" ],
+            "directionOverrides": {
+                "down": { "z": 4 }
+            }
+        },
+        "Skull": {
+            "description": "Your mother's skull lies here, much of it covered in rocks from a cave-in. One massive spike of stone in particular pierces the center, the top still black from the lightning blast that knocked it loose.",
+            "preview": "You can see your mother's skull over there, stuck in a cave-in from before you hatched.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "spider attack"
+                }
+            ],
+            "actions": [ "commune" ]
+        },
+        "UnderSpine": {
+            "description": "Your mother's spine arches above you here, morbid reminder of the silent guardian who died well before you hatched.",
+            "preview": "You can see your mother's skeletal spine arching far over the ground over there, an easy landmark to spot, even at a distance.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "spider attack"
+                }
+            ],
+            "actions": [ "hunt" ]
+        },
+        "Spine": {
+            "description": "Your mother's spine arches through the air here, far above the ground, nearly reaching the ceiling.",
+            "preview": "The airspace over there is broken up by your mother's spine arching close to the ceiling, massive ribs arching away from it to either side.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "spider attack"
+                }
+            ],
+            "actions": [ "harvest", "hunt2" ]
+        },
+        "Ribs": {
+            "description": "Your mother's massive ribs arch down to the ground here like massive columns, chipped and worn in places where something has been breaking off pieces.",
+            "preview": "Your mother's ribs arch down through the area over there, massive columns visible from a distance.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 10,
+                    "event": "spider attack"
+                }
+            ],
+            "actions": [ "harvest", "hunt" ]
+        },
+        "Tailbone": {
+            "description": "Your mother's tail bones extend through this area, creating a sort of wall splitting the area here. The river used to flow here, but her massive tail redirected it a bit south.",
+            "preview": "Your mother's massive tail bone cuts through the area like a wall.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "spider attack"
+                }
+            ],
+            "actions": [ "harvest" ]
+        }
+    },
+"events":{
+    "rat attack": {
+        "verb": "attack",
+        "details": { "enemy": "cave rat" }
+    },
+    "bat attack": {
+        "verb": "attack",
+        "details": { "enemy": "cave bat" }
+    },
+    "spider attack": {
+        "verb": "attack",
+        "details": { "enemy": "cave spider" }
+    },
+    "newt attack": {
+        "verb": "attack",
+        "details": { "enemy": "cave newt" }
+    },
+    "flying free": {
+        "verb": "flavor",
+        "details": { "text": "You fly carelessly through the air, enjoying the wind across your scales. It's peaceful here, if a bit boring. Some large bats wing through the air in the area but none of them are bothering you at the moment." }
+    },
+    "acknowledge nsfw": {
+        "verb": "flavor",
+        "details":  { "text": "NOTE: You have NSFW content enabled. If you are playing in an environment where that is a problem, leave off the '?nsfw=true' part of the URL."}
+    }
+},
+"actions":{
+    "rest": {
+        "type": "actButton",
+        "display": "Rest",
+        "verb": "rest",
+        "details": {},
+        "help": "Fast forward time to recover from your trevails. In addition, you may have a resting event, and also save a checkpoint in case you die or want to rewind."
+    },
+    "test": {
+        "type": "actButton",
+        "display": "Test",
+        "verb": "flavor",
+        "details": { "text": "Test mode is on" },
+        "help": "This button should only appear if the query string has test=true, and only enabled if your save's debug=enabled.",
+        "enabled": {
+            "condition": "stateis",
+            "fact": "debug",
+            "rule": "=",
+            "value": "enabled"
+        },
+        "visible": {
+            "condition": "stateis",
+            "fact": "query/test",
+            "rule": "=",
+            "value": "true"
+        }
+    },
+    "harvest": {
+        "type": "actButton",
+        "display": "Harvest bone",
+        "verb": "gather",
+        "details": { "item": "Dragonbone shard" },
+        "help": "Spend some time gathering dragonbone from your mother's remains. It's quite sturdy and hard, as well as being elementally aligned with fire, giving it some nice properties as a material."
+    },
+    "commune": {
+        "type": "actButton",
+        "display": "Commune",
+        "verb": "commune",
+        "details": { "spirit": "Mother" },
+        "help": "Connect your soul to the lingering shade of your mother's spirit. Every mother loves it when their son calls, even those that have been dead since before their son hatched. She can advise you, and help you focus your powers."
+    },
+    "hunt": {
+        "type": "actButton",
+        "display": "Hunt",
+        "verb": "hunt",
+        "details": {
+            "targets": [
+                {
+                    "chance": 2,
+                    "name": "cave rat"
+                },
+                {
+                    "chance": 1,
+                    "name": "cave spider"
+                }
+            ]
+        },
+        "help": "Search the area for prey to kill, or whatever, initiating a combat."
+    },
+    "hunt2": {
+        "type": "actButton",
+        "display": "Hunt",
+        "verb": "hunt",
+        "details": {
+            "targets": [
+                {
+                    "chance": 2,
+                    "name": "cave bat"
+                },
+                {
+                    "chance": 1,
+                    "name": "cave spider"
+                }
+            ]
+        },
+        "help": "Search the area for prey to kill, or whatever, initiating a combat."
+    },
+    "hunt3": {
+        "type": "actButton",
+        "display": "Fish",
+        "verb": "hunt",
+        "details": {
+            "targets": [
+                {
+                    "chance": 1,
+                    "name": "cave fish"
+                },
+                {
+                    "chance": 1,
+                    "name": "cave newt"
+                }
+            ]
+        },
+        "help": "Dive into the water to find aquatic prey, initiating a combat."
+    }
+}}

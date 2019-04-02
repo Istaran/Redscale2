@@ -5,6 +5,28 @@ var pusher = new Pusher('91450cc1727e582f15c1', {
   forceTLS: true
 });
 
+var helper;
+
+class HelpDisplayer extends React.Component {
+	constructor(props) {
+		super(props);
+		helper = this;
+		this.state = {help: null};
+		this.oldHelp = null;
+	}
+	
+	render() {
+		if (this.state.help) {
+			this.oldHelp = this.state.help;
+			return <div className='div-help'>{this.state.help}</div>;
+		}
+		if (this.oldHelp) {
+		return <div className='div-unhelp'>{this.oldHelp}</div>;
+		}
+		return null;
+	}
+}
+
 class ChatDisplayer extends React.Component {
 	constructor(props) {
 		super(props);
@@ -46,10 +68,103 @@ class ChatDisplayer extends React.Component {
 						<input type='textbox' id='chatInput' className='chatInput' onKeyUp={(event) => this.handleChatKeyUp(event)}></input>
 						<input type='button' id='chatSend' className='chatSend' onClick={(event) => this.handleClickSend(event)} value='Send'></input>
 					</div>
+					<HelpDisplayer />
 				</div>);
 	}
 }
 
+class ActButton extends React.Component {
+	constructor(props) {
+		super(props);
+	};
+	
+	takeAction = function() {
+		let self=this;
+		fetch('/act' + location.search, {
+				method: 'post',
+				headers: {
+				   "Content-Type": "application/json; charset=utf-8",
+				},
+				body: JSON.stringify({ 'body': { 'verb':self.props.verb, 'details':self.props.details, 'username':self.props.parent.state.username }})
+			  }).then(function(response) {
+				return response.json();
+			  }).then(function(data) {
+				self.props.parent.setState({gameState: data});
+			  });
+	}
+	
+	render() {
+        return <input type='button' className='actButton' onClick={(event) => this.takeAction(event)} value={this.props.display} disabled={!this.props.enabled} onMouseOver={(event)=>helper.setState({help:this.props.help})} onMouseOut={(event)=>helper.setState({help:null})} />;
+	}
+}
+
+
+
+class Navigator extends React.Component {
+	constructor(props) {
+		super(props);
+	};
+	
+	navigate(event, dir) {
+		let gameDisp = this.props.parent;
+		let details = this.props.details[dir];
+		if (details) {
+            fetch('/act' + location.search, {
+				method: 'post',
+				headers: {
+				   "Content-Type": "application/json; charset=utf-8",
+				},
+				body: JSON.stringify({ 'body': { 'verb':'travel', 'details':details, 'username':gameDisp.state.username }})
+			  }).then(function(response) {
+				return response.json();
+			  }).then(function(data) {
+				gameDisp.setState({gameState: data});
+			  });
+		}
+	}
+	
+	render() {
+		let upColor = (this.props.details.up) ? "skyblue" : "slateblue";
+		let upColor2 = (this.props.details.up) ? "white" : "darkgray";
+		let northColor = (this.props.details.north) ? "red" : "darkred";
+		let westColor = (this.props.details.west) ? "lightgray" : "darkgray";
+		let specialColor = (this.props.details.special) ? "lightgray" : "white";
+		let eastColor = (this.props.details.east) ? "lightgray" : "darkgray";
+		let southColor = (this.props.details.south) ? "lightgray" : "darkgray";
+		let downColor = (this.props.details.down) ? "peru" : "saddlebrown";
+		let downColor2 = (this.props.details.down) ? "lime" : "green";
+		
+		let upHelp = (this.props.details.up) ? "Go up.\n" + this.props.details.up.preview : "You can't go up from here.";
+		let northHelp = (this.props.details.north) ? "Go north.\n" + this.props.details.north.preview : "You can't go north from here.";
+		let westHelp = (this.props.details.west) ? "Go west.\n" + this.props.details.west.preview : "You can't go west from here.";
+		let specialHelp = (this.props.details.special) ? this.props.details.special.help + this.props.details.special.preview : null;
+		let eastHelp = (this.props.details.east) ? "Go east.\n" + this.props.details.east.preview : "You can't go east from here.";
+		let southHelp = (this.props.details.south) ? "Go south.\n" + this.props.details.south.preview : "You can't go south from here.";
+		let downHelp = (this.props.details.down) ? "Go down.\n" + this.props.details.down.preview : "You can't go down from here.";
+
+		return <svg className='navigator' width='100' height='145'>
+		<defs>
+			<linearGradient id="groundGradient" x1="0" x2="0" y1="0" y2="1">
+				<stop offset="50%" stopColor={downColor2}/>
+				<stop offset="95%" stopColor={downColor}/>
+			</linearGradient>
+			<linearGradient id="skyGradient" x1="0" x2="0" y1="0" y2="1">
+				<stop offset="5%" stopColor={upColor2}/>
+				<stop offset="50%" stopColor={upColor}/>
+			</linearGradient>
+		</defs>
+		<polygon points="0,73 0,0 99,0 99,73 75,22 25,22" fill="url(#skyGradient)" stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'up')} onMouseOver={(event)=>helper.setState({help:upHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+		<polygon points="50,22 40,63 50,58 60,63" fill={northColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'north')} onMouseOver={(event)=>helper.setState({help:northHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+		<polygon points="0,73 40,63 35,73 40,83" fill={westColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'west')} onMouseOver={(event)=>helper.setState({help:westHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+		<circle cx='50' cy='73' r='10' fill={specialColor} strokeWidth="0" onClick={(event) => this.navigate(event, 'special')} onMouseOver={(event)=>helper.setState({help:specialHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+		<polygon points="99,73 60,63 64,73 60,83" fill={eastColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'east')} onMouseOver={(event)=>helper.setState({help:eastHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+		<polygon points="50,122 40,83 50,87, 60,83" fill={southColor} stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'south')} onMouseOver={(event)=>helper.setState({help:southHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+		<polygon points="0,73 0,144 99,144, 99,73 75,122 25,122" fill="url(#groundGradient)" stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'down')} onMouseOver={(event)=>helper.setState({help:downHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
+
+		</svg>;
+	}
+	
+}
 
 class GameDisplayer extends React.Component {
 	constructor(props) {
@@ -101,7 +216,7 @@ class GameDisplayer extends React.Component {
 				}
 			});
 			
-			fetch('/act', {
+            fetch('/act' + location.search, {
 				method: 'post',
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
@@ -118,13 +233,25 @@ class GameDisplayer extends React.Component {
 
 	
 	render() {
-
+		let self = this;
 		
 		if (!this.state.username) {
-			return (<input type='textbox' id='usernameInput' className='usernameInput' onKeyUp={(event) => this.handleUsernameKeyUp(event)}></input>);
+			return (<div>Username:<input type='textbox' id='usernameInput' className='usernameInput' onKeyUp={(event) => this.handleUsernameKeyUp(event)}/></div>);
 		} else if (this.state.gameState) {
-			
-			return (<div><div>{this.state.gameState.status}</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);				
+			let controlTable = this.state.gameState.controls.map((column, colIndex) => {
+				let controlColumn = column.map((control, rowIndex) => {
+					switch (control.type) {
+						case 'actButton': 
+                            return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} details={control.details} help={control.help} enabled={control.enabled} />;
+						case 'navigator':
+						return <Navigator parent={self} key={colIndex * 10 + rowIndex} details={control.details} />;
+						default:
+						return '';
+					}
+				});
+				return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
+			});			
+			return (<div><div className='statusDisplay'>{this.state.gameState.status}</div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);				
 		} else {
 			
 		return (<div><div>Welcome, {this.state.username}. Please wait while we load your game state.</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);
