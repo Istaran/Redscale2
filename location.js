@@ -1,31 +1,65 @@
-var cache = require('./cache');
+let cache = require('./cache');
+var gameengine = undefined;
 
 let spotExists = function(zone, x, y, z) {
 	return (zone && zone.map && zone.map[z] && zone.map[z][y] && zone.map[z][y][x]);
 }
 
-let getSpotDetails = function(zone, x, y, z, dir) {
+let getSpotDetails = function(zone, x, y, z) {
 	let spot = zone.map[z][y][x];
 	let style = zone.styles[spot];
-	return {direction: dir, preview: style.preview};
+	return {preview: style.preview};
+}
+
+let setupDirection = async function (loc, zone, x, y, z, dir, controlDetails, hereStyle) {
+    let overrided = hereStyle.directionOverrides && hereStyle.directionOverrides[dir];
+    let over = (overrided ? hereStyle.directionOverrides[dir] : {}); // Direction override pretends 'here' is in the zone specified and offset by dimensions specified for purpose of calculating links in the given direction.
+    let targetZone = zone;
+    if (over.zone) targetZone = await cache.load('./data/locations/' + over.zone + '.json');
+    let targetX = x + (over.x || 0);
+    let targetY = y + (over.y || 0);
+    let targetZ = z + (over.z || 0);
+
+    switch (dir) {
+        case "up": targetZ += 1; break;
+        case "north": targetY -= 1; break;
+        case "east": targetX += 1; break;
+        case "west": targetX -= 1; break;
+        case "south": targetY += 1; break;
+        case "down": targetZ -= 1; break;
+    }
+
+    if (spotExists(targetZone, targetX, targetY, targetZ)) {
+        controlDetails[dir] = getSpotDetails(targetZone, targetX, targetY, targetZ);
+        if (!overrided)
+            controlDetails[dir].direction = dir;
+        else
+            controlDetails[dir] = Object.assign(controlDetails[dir], { location: (over.zone || loc), x: targetX, y: targetY, z: targetZ });
+    }
 }
 
 let getControls = async function (state) {
 	let zone = await cache.load('./data/locations/' + state.location + '.json');
-	let controls = [[{type:"navigator", details:{}}],[]];
-	if (spotExists(zone, state.x, state.y, state.z + 1)) controls[0][0].details.up = getSpotDetails(zone, state.x, state.y, state.z + 1, "up");
-	if (spotExists(zone, state.x, state.y - 1, state.z)) controls[0][0].details.north = getSpotDetails(zone, state.x, state.y - 1, state.z, "north");
-	if (spotExists(zone, state.x + 1, state.y, state.z)) controls[0][0].details.east = getSpotDetails(zone, state.x + 1, state.y, state.z, "east");
-	if (spotExists(zone, state.x - 1, state.y, state.z)) controls[0][0].details.west = getSpotDetails(zone, state.x - 1, state.y, state.z, "west");
-	if (spotExists(zone, state.x, state.y + 1, state.z)) controls[0][0].details.south = getSpotDetails(zone, state.x, state.y + 1, state.z, "south");
-	if (spotExists(zone, state.x, state.y, state.z - 1)) controls[0][0].details.down = getSpotDetails(zone, state.x, state.y, state.z - 1, "down");
-	
+    let controls = [[{ type: "navigator", details: {} }], []];
+    if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
+
 	if (spotExists(zone, state.x, state.y, state.z)) {
 		let spot = zone.map[state.z][state.y][state.x];
 		let style = zone.styles[spot];
-		
-		if (style.actions) {
-			style.actions.forEach((action) => controls[1].push(zone.actions[action]));
+
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "up", controls[0][0].details, style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "north", controls[0][0].details, style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "east", controls[0][0].details, style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "west", controls[0][0].details, style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "south", controls[0][0].details, style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "down", controls[0][0].details, style);
+
+        if (style.actions) {
+            for (var i = 0; i < style.actions.length; i++) {
+                let ctrl = await gameengine.getControl(state, zone.actions[style.actions[i]]);
+                if (ctrl)
+                    controls[1].push(ctrl);
+            }
 		}
 	} else {
 		// If someone ends up stuck in a wall, so to speak, add a location reset button.
@@ -38,9 +72,37 @@ let explore = async function (state) {
 	let zone = await cache.load('./data/locations/' + state.location + '.json');
 	//Temp:
 	if (spotExists(zone, state.x, state.y, state.z)) {
-		let spot = zone.map[state.z][state.y][state.x];
-		let style = zone.styles[spot];
-		state.view.status = style.description;
+        if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
+
+        let spot = zone.map[state.z][state.y][state.x];
+        let style = zone.styles[spot];
+
+        // TODO: before checking random explore event, check for clock-based events.
+        let eventList = style.events.slice() || [];
+        let maxChance = 0, i = 0;
+        for (; i < eventList.length; i++) {
+            if (await gameengine.conditionMet(state, eventList[i].if)) {
+                maxChance += eventList[i].chance;
+            } else {
+                eventList.splice(i, 1);
+                i--; // to counter the default i++.
+            }
+        }
+        let roll = Math.random() * maxChance;
+        console.log("Rolled: " + (Math.floor(roll) + 1) + " of " + maxChance);
+        // Doing the simple method for now, may re-implement the Redscale's version someday.
+        for (i = 0; roll > eventList[i].chance; roll -= eventList[i].chance, i++) { }
+        if (eventList[i].event) {
+            state.view.status = "";
+            let event = zone.events[eventList[i].event];
+            console.log("triggered random event: " + event.verb + ": " + JSON.stringify(event.details));
+            await gameengine.doVerb(event.verb, state, event.details);
+            state.view.status = style.description + "\n\n" + state.view.status;
+        } else {
+            state.view.status = style.description;
+            // Nothing happens
+        }
+
 	} else {
 		state.view.status = "Ooops, you somehow ended up outside reality.";
 	}

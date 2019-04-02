@@ -1,3 +1,7 @@
+div.statusDisplay {
+    white-space: pre-wrap;
+}
+
 div.controlTable {
     position: absolute;
     bottom: 235px;

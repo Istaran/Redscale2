@@ -80,7 +80,7 @@ class ActButton extends React.Component {
 	
 	takeAction = function() {
 		let self=this;
-		fetch('/act', {
+		fetch('/act' + location.search, {
 				method: 'post',
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
@@ -94,7 +94,7 @@ class ActButton extends React.Component {
 	}
 	
 	render() {
-		return <input type='button' className='actButton' onClick={(event)=>this.takeAction(event)} value={this.props.display} onMouseOver={(event)=>helper.setState({help:this.props.help})} onMouseOut={(event)=>helper.setState({help:null})} />;
+        return <input type='button' className='actButton' onClick={(event) => this.takeAction(event)} value={this.props.display} disabled={!this.props.enabled} onMouseOver={(event)=>helper.setState({help:this.props.help})} onMouseOut={(event)=>helper.setState({help:null})} />;
 	}
 }
 
@@ -109,7 +109,7 @@ class Navigator extends React.Component {
 		let gameDisp = this.props.parent;
 		let details = this.props.details[dir];
 		if (details) {
-			fetch('/act', {
+            fetch('/act' + location.search, {
 				method: 'post',
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
@@ -216,7 +216,7 @@ class GameDisplayer extends React.Component {
 				}
 			});
 			
-			fetch('/act', {
+            fetch('/act' + location.search, {
 				method: 'post',
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
@@ -242,7 +242,7 @@ class GameDisplayer extends React.Component {
 				let controlColumn = column.map((control, rowIndex) => {
 					switch (control.type) {
 						case 'actButton': 
-						return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} details={control.details} help={control.help} />;
+                            return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} details={control.details} help={control.help} enabled={control.enabled} />;
 						case 'navigator':
 						return <Navigator parent={self} key={colIndex * 10 + rowIndex} details={control.details} />;
 						default:
@@ -251,7 +251,7 @@ class GameDisplayer extends React.Component {
 				});
 				return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
 			});			
-			return (<div><div>{this.state.gameState.status}</div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);				
+			return (<div><div className='statusDisplay'>{this.state.gameState.status}</div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);				
 		} else {
 			
 		return (<div><div>Welcome, {this.state.username}. Please wait while we load your game state.</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);

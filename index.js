@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const querystring = require('querystring');
 const app = express();
 const port = process.env.PORT || 8161;
 const chat = require('./chatserver');
@@ -28,8 +29,8 @@ app.get('/chat', function (req, res) {
 
 app.post('/act', async function (req, res) {
 	const body = req.body.body;
-	
-	const state = await game.act(body);
+    console.log("Query:" + JSON.stringify(req.query));
+	const state = await game.act(body, req.query);
 	
 	res.set('Content-Type', 'Application/JSON');
 	res.send(JSON.stringify(state));

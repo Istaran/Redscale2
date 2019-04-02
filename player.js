@@ -1,4 +1,6 @@
-let addControls = function(state, controls) {
+// Future note: GameEngine reference will be needed eventually. it needs to lazy load like location.js does, because of circular dependency.
+
+let addControls = function (state, controls) {
 	// TODO
 }
 
@@ -13,5 +15,6 @@ let getStatusDisplay = function() {
 }
 
 module.exports = {
-	addControls: addControls
+	addControls: addControls,
+	getStatusDisplay: getStatusDisplay
 };
