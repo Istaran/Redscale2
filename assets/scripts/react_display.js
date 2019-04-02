@@ -79,7 +79,8 @@ class ActButton extends React.Component {
 	};
 	
 	takeAction = function() {
-		let self=this;
+        let self = this;
+        helper.setState({ help: null });
 		fetch('/act' + location.search, {
 				method: 'post',
 				headers: {
@@ -107,7 +108,8 @@ class Navigator extends React.Component {
 	
 	navigate(event, dir) {
 		let gameDisp = this.props.parent;
-		let details = this.props.details[dir];
+        let details = this.props.details[dir];
+        helper.setState({ help: null });
 		if (details) {
             fetch('/act' + location.search, {
 				method: 'post',

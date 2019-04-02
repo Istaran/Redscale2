@@ -1,0 +1,99 @@
+{
+    "display": "cave bat",
+    "attack announce": "A massive cave bat comes out from behind a rock, rushing towards you!\n\nThe gray furred creature blends in with the surroundings, but now that it is intent to do you harm it is quite obvious. Long, powerful teeth remind you of the countless bites you've suffered over the years. But as much as it might want to eat you, you know from experience how delicious it can be as well.",
+    "hunt announce":  "You find a massive cave bat hiding among the rocks. The gray fur serves well as camoflage, but now that you've gotten close enough the game of hide and seek is over.\n\nNow it's time for a game of eat or be eaten.",
+    "max health": 30,
+    "evasion": 10,
+    "reshuffle": 5,
+    "nutrition": 15,
+    "cardsets": [
+        {
+            "tell": "The bat is growling aggressively.",
+            "cards": [
+                {
+                    "aggress display": "The bat lunges forward to bite you!",
+                    "accuracy": 10,
+                    "damagedice": 2,
+                    "damagedie": 10,
+                    "damageplus": 5,
+                    "damagetype": "piercing",
+                    "attacks": 1,
+                    "abjure display": "The bat endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5
+                },
+                {
+                    "aggress display": "The bat lunges forward to bite you!",
+                    "accuracy": 10,
+                    "damagedice": 2,
+                    "damagedie": 10,
+                    "damageplus": 5,
+                    "damagetype": "piercing",
+                    "attacks": 1,
+                    "abjure display": "The bat deflects one of your attacks!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0
+                },
+                {
+                    "aggress display": "The bat makes several quick bites at you!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "piercing",
+                    "attacks": 3,
+                    "abjure display": "The bat endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5
+                }
+            ]
+        },
+        {
+            "tell": "The bat is watching your carefully.",
+            "cards": [
+                {
+                    "aggress display": "The bat darts in for a carefully aimed bite!",
+                    "accuracy": 15,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "piercing",
+                    "attacks": 1,
+                    "abjure display": "The bat deflects one of your attacks!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0
+                },
+                {
+                    "aggress display": "The bat darts in for a couple carefully aimed bite!",
+                    "accuracy": 15,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "piercing",
+                    "attacks": 1,
+                    "abjure display": "The bat endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5
+                },
+                {
+                    "aggress display": "The bat makes several quick bites at you!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "piercing",
+                    "attacks": 3,
+                    "abjure display": "The bat deflects one of your attacks!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0
+                }
+            ]
+        }
+    ]
+}

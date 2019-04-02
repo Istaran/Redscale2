@@ -15,7 +15,7 @@ let setupDirection = async function (loc, zone, x, y, z, dir, controlDetails, he
     let overrided = hereStyle.directionOverrides && hereStyle.directionOverrides[dir];
     let over = (overrided ? hereStyle.directionOverrides[dir] : {}); // Direction override pretends 'here' is in the zone specified and offset by dimensions specified for purpose of calculating links in the given direction.
     let targetZone = zone;
-    if (over.zone) targetZone = await cache.load('./data/locations/' + over.zone + '.json');
+    if (over.zone) targetZone = await cache.load(`./data/locations/${over.zone}.json`);
     let targetX = x + (over.x || 0);
     let targetY = y + (over.y || 0);
     let targetZ = z + (over.z || 0);
@@ -39,7 +39,7 @@ let setupDirection = async function (loc, zone, x, y, z, dir, controlDetails, he
 }
 
 let getControls = async function (state) {
-	let zone = await cache.load('./data/locations/' + state.location + '.json');
+	let zone = await cache.load(`./data/locations/${state.location}.json`);
     let controls = [[{ type: "navigator", details: {} }], []];
     if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
 
@@ -69,7 +69,7 @@ let getControls = async function (state) {
 };
 
 let explore = async function (state) {
-	let zone = await cache.load('./data/locations/' + state.location + '.json');
+	let zone = await cache.load(`./data/locations/${state.location}.json`);
 	//Temp:
 	if (spotExists(zone, state.x, state.y, state.z)) {
         if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
@@ -78,26 +78,15 @@ let explore = async function (state) {
         let style = zone.styles[spot];
 
         // TODO: before checking random explore event, check for clock-based events.
-        let eventList = style.events.slice() || [];
-        let maxChance = 0, i = 0;
-        for (; i < eventList.length; i++) {
-            if (await gameengine.conditionMet(state, eventList[i].if)) {
-                maxChance += eventList[i].chance;
-            } else {
-                eventList.splice(i, 1);
-                i--; // to counter the default i++.
-            }
-        }
-        let roll = Math.random() * maxChance;
-        console.log("Rolled: " + (Math.floor(roll) + 1) + " of " + maxChance);
-        // Doing the simple method for now, may re-implement the Redscale's version someday.
-        for (i = 0; roll > eventList[i].chance; roll -= eventList[i].chance, i++) { }
-        if (eventList[i].event) {
+
+        let randomEvent = await gameengine.randomChoice(state, style.events);
+
+        if (randomEvent && randomEvent.event) {
             state.view.status = "";
-            let event = zone.events[eventList[i].event];
-            console.log("triggered random event: " + event.verb + ": " + JSON.stringify(event.details));
+            let event = zone.events[randomEvent.event];
+            console.log(`Triggered random event: ${event.verb}: ${JSON.stringify(event.details)}`);
             await gameengine.doVerb(event.verb, state, event.details);
-            state.view.status = style.description + "\n\n" + state.view.status;
+            state.view.status = `${style.description}\n\n${state.view.status}`;
         } else {
             state.view.status = style.description;
             // Nothing happens

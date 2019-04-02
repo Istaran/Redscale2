@@ -9,14 +9,18 @@ cache.load(saveMigrationPath);
 var conditions = {};
 var verbs = {};
 
+var combat = require('./combatengine');
+var events = require('./eventengine');
 var loc = require('./location');
 var player = require('./player');
 
 let doVerb = async function (verbName, state, details) {
     if (verbs[verbName] === undefined) {
         try {
-            verbs[verbName] = require('./verbs/' + verbName);
-        } catch (e){
+            verbs[verbName] = require(`./verbs/${verbName}`);
+        } catch (e) {
+            console.log(`Couldn't load verb ${verbName}`);
+            console.log(e);
             verbs[verbName] = null;
         }
     }
@@ -30,18 +34,18 @@ let conditionMet = async function (state, details) {
     let conditionName = details.condition;
     if (conditions[conditionName] === undefined) {
         try {
-            conditions[conditionName] = require('./conditions/' + conditionName);
+            conditions[conditionName] = require(`./conditions/${conditionName}`);
         } catch (e) {
             condtions[conditionName] = null;
         }
     }
     if (conditions[conditionName]) {
-        console.log("Questioning:" + conditionName + "\n" + JSON.stringify(state) + "\n" + JSON.stringify(details));
+        console.log(`Questioning:${conditionName}\n${JSON.stringify(state)}\n${JSON.stringify(details)}`);
         let result = await conditions[conditionName].satisfied(state, details);
-        console.log("Answer: " + result);
+        console.log(`Answer: ${result}`);
         return result;
     }
-    console.log("Condition " + conditionName + "failed because no JS file");
+    console.log(`Condition ${conditionName} failed because no JS file`);
     return false; // Lack of js file is a fail.
 }
 
@@ -56,11 +60,11 @@ let getControl = async function (state, details) {
 
 let controls = async function (state) {
 	if (state.event2 !== undefined) {
-		return state.event2.getControls();
+		return await events.getControls(state.event2);
 	} else if (state.enemy !== undefined) {
-		return [];
+		return await combat.getControls(state);
 	} else if (state.event !== undefined) {
-		return state.event.getControls();
+        return await events.getControls(state.event);
 	} else {
 		let controls = await loc.getControls(state);
 		player.addControls(state, controls);
@@ -71,7 +75,7 @@ let controls = async function (state) {
 
 let act = async function (action, query) {
 	console.log(action);
-	let savePath = './saves/' + action.username + '.json';
+	let savePath = `./saves/${action.username}.json`;
 	
 	// Load current existence.
 	let state = await cache.load(savePath);
@@ -93,10 +97,15 @@ let act = async function (action, query) {
 	state.view.controls = await controls(state);
 
 	//Determine which character should be shown on left. By default, it's the player
-	state.view.leftStatus = player.getStatusDisplay();
+	state.view.leftStatus = player.getStatusDisplay(state);
 	
 	//Determine which character should be shown on right. By default, it's none.
-	state.view.rightStatus = null;
+    if (state.enemy) {
+        state.view.rightStatus = null;
+    } else {
+        state.view.rightStatus = null;
+    }
+
 	
 	// Save current state;
 	cache.save(savePath, state);
@@ -104,9 +113,31 @@ let act = async function (action, query) {
 	return state.view;
 };
 
+// Choices is an array. Each element is an object with a chance (number), and possibly an if (condition). 
+let randomChoice = async function (state, choices) {
+
+    let choiceList = choices ? choices.slice() : [];
+    let maxChance = 0, i = 0;
+    for (; i < choiceList.length; i++) {
+        if (await conditionMet(state, choiceList[i].if)) {
+            maxChance += choiceList[i].chance;
+        } else {
+            choiceList.splice(i, 1);
+            i--; // to counter the default i++.
+        }
+    }
+    let roll = Math.random() * maxChance;
+    console.log(`Rolled: ${Math.floor(roll) + 1} of ${maxChance}`);
+    // Doing the simple method for now, may re-implement the Redscale's version someday.
+    for (i = 0; roll > choiceList[i].chance; roll -= choiceList[i].chance, i++) { }
+
+    return choiceList[i];
+};
+
 module.exports = {
     act: act,
     conditionMet: conditionMet,
     doVerb: doVerb,
-    getControl: getControl
+    getControl: getControl,
+    randomChoice: randomChoice
 };

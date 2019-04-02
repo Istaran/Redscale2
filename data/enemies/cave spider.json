@@ -1,0 +1,99 @@
+{
+    "display": "cave spider",
+    "attack announce": "You suddenly feel the sticky strands of a massive web upon you! You literally walked right into that, and before you can pull yourself free, the web's creator descends on you to attack!",
+    "hunt announce":  "You find a massive cave spider hanging out above you. Had you not been on the lookout for it specifically, you might have stumbled into its web. As it is, the fight is on, starting on your terms.",
+    "max health": 20,
+    "evasion": 15,
+    "reshuffle": 4,
+    "nutrition": 10,
+    "cardsets": [
+        {
+            "tell": "The spider chitters aggressively.",
+            "cards": [
+                {
+                    "aggress display": "The lashes its limbs at you!",
+                    "accuracy": 10,
+                    "damagedice": 1,
+                    "damagedie": 4,
+                    "damageplus": 3,
+                    "damagetype": "bludgeoning",
+                    "attacks": 3,
+                    "abjure display": "The spider dodges your attacks!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0
+                },
+                {
+                    "aggress display": "The lashes its limbs at you!",
+                    "accuracy": 10,
+                    "damagedice": 1,
+                    "damagedie": 4,
+                    "damageplus": 3,
+                    "damagetype": "bludgeoning",
+                    "attacks": 3,
+                    "abjure display": "The spider deflects one of your attacks!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0
+                },
+                {
+                    "aggress display": "The spider makes a couple quick bites at you!",
+                    "accuracy": 15,
+                    "damagedice": 1,
+                    "damagedie": 4,
+                    "damageplus": 3,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The spider dodges your attacks!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0
+                }
+            ]
+        },
+        {
+            "tell": "The spider drools hungrily.",
+            "cards": [
+                {
+                    "aggress display": "The spider darts in for a carefully aimed bite, poison dripping from its fangs!",
+                    "accuracy": 10,
+                    "damagedice": 3,
+                    "damagedie": 4,
+                    "damageplus": 9,
+                    "damagetype": "poison",
+                    "attacks": 1,
+                    "abjure display": "The spider deflects one of your attacks!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0
+                },
+                {
+                    "aggress display": "The spider darts in for a carefully aimed bite, poison dripping from its fangs!",
+                    "accuracy": 10,
+                    "damagedice": 3,
+                    "damagedie": 4,
+                    "damageplus": 9,
+                    "damagetype": "poison",
+                    "attacks": 1,
+                    "abjure display": "The spider dodges your attacks!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0
+                },
+                {
+                    "aggress display": "The spider makes a couple quick bites at you!",
+                    "accuracy": 15,
+                    "damagedice": 1,
+                    "damagedie": 4,
+                    "damageplus": 3,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The spider deflects one of your attacks!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0
+                }
+            ]
+        }
+    ]
+}

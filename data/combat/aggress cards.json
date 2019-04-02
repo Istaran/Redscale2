@@ -1,0 +1,29 @@
+{
+    "Instinctive Bite": {
+        "display": "You bite at your foe, twice!",
+        "accuracy": 15,
+        "damagedice": 1,
+        "damagedie": 6,
+        "damageplus": 2,
+        "damagetype": "piercing",
+        "attacks": 2
+    },
+    "Instinctive Claws": {
+        "display": "You slash at your foe repeatedly!",
+        "accuracy": 5,
+        "damagedice": 2,
+        "damagedie": 6,
+        "damageplus": 4,
+        "damagetype": "slashing",
+        "attacks": 3
+    },
+    "Instinctive Tail Slap": {
+        "display": "You swing your tail at your foe!",
+        "accuracy": 10,
+        "damagedice": 3,
+        "damagedie": 6,
+        "damageplus": 6,
+        "damagetype": "bludgeoning",
+        "attacks": 1
+    }
+}
