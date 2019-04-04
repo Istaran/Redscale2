@@ -2,43 +2,29 @@
     "map": 
     [
         [
-            [ "Edge", "Edge", "Edge", "Edge", "Edge", "Edge", "Edge", "Edge", "RiverEnd", "Edge" ],
-            [ "Edge", "Middle", "Middle", "Middle", "Middle", "Middle", "Middle", "River", "Middle", "Edge" ],
-            [ "Edge", "Middle", "Middle", "Ribs", "Ribs", "Tailbone", "Tailbone", "River", "Middle", "Edge" ],
-            [ "Skull", "UnderSpine", "UnderSpine", "UnderSpine", "UnderSpine", "River", "River", "River", "Middle", "Edge" ],
-            [ "Edge", "Middle", "Middle", "Ribs", "Ribs", "River", "Middle", "Middle", "Middle", "Edge" ],
-            [ "Edge", "Middle", "Middle", "Middle", "Dragonhome", "River", "Middle", "Middle", "Middle", "Edge" ],
-            [ "Edge", "Middle", "River", "River", "River", "River", "Middle", "Middle", "Middle", "Edge" ],
-            [ "Edge", "Middle", "River", "Middle", "River", "Middle", "Middle", "Middle", "Middle", "Edge" ],
-            [ "RiverStart", "River", "River", "Middle", "River", "Middle", "Middle", "Middle", "Middle", "Edge" ],
-            [ "Edge", "Middle", "Middle", "Middle", "River", "Middle", "Middle", "Middle", "Middle", "Edge" ],
-            [ "Edge", "Edge", "Edge", "Edge", "RiverStart", "Edge", "Edge", "Edge", "Edge", "Edge" ]
+            [ "Edge",   "Edge",         "Edge",         "Edge",         "Edge",         "Edge",     "Edge",     "Edge",     "RiverEnd", "Edge" ],
+            [ "Edge",   "Middle",       "Middle",       "Middle",       "Middle",       "Middle",   "Middle",   "River",    "River",    "Edge" ],
+            [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "Tailbone", "Tailbone", "River",    "Middle",   "Edge" ],
+            [ "Skull",  "UnderSpine",   "UnderSpine",   "UnderSpine",   "UnderSpine",   "River",    "River",    "River",    "Middle",   "Edge" ],
+            [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "Edge",   "Middle",       "Middle",       "Middle",       "Dragonhome",   "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "Edge",   "Middle",       "River",        "River",        "River",        "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "Edge",   "Middle",       "River",        "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "RiverStart", "River",     "River",       "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "Edge",   "Middle",       "Middle",       "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "Edge",   "Edge",         "Edge",         "Edge",         "RiverStart",   "Edge",     "Edge",     "Edge",     "Edge",     "Edge" ]
         ],
         [
             [],
-            [ null, "Air", "Air", "Air", "Air", "Air", "Air", "OverRiver", "Air" ],
-            [ null, "Air", "Air", "Air", "Air", "Air", "Air", "OverRiver", "Air" ],
-            [ null, "Spine", "Spine", "Spine", "Spine", "OverRiver", "OverRiver", "OverRiver", "Air" ],
-            [ null, "Air", "Air", "Air", "Air", "OverRiver", "Air", "Air", "Air" ],
-            [ null, "Air", "Air", "Air", "OverHome", "OverRiver", "Air", "Air", "Air" ],
-            [ null, "Air", "OverRiver", "OverRiver", "OverRiver", "OverRiver", "Air", "Air", "Air" ],
-            [ null, "Air", "OverRiver", "Air", "OverRiver", "Air", "Air", "Air", "Air" ],
-            [ null, "OverRiver", "OverRiver", "Air", "OverRiver", "Air", "Air", "Air", "Air" ],
-            [ null, "Air", "Air", "Air", "OverRiver", "Air", "Air", "Air", "Air" ]
-        ],
-        [],
-        [
-            [ null, null, null, null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, "UnderRiver", "UnderRiver", "UnderRiver" ],
-            [ null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, "UnderRiver" ],
-            [ null, null, "UnderRiver", "UnderRiver", "UnderRiver", "UnderRiver" ],
-            [ null, null, "UnderRiver", null, "UnderRiver" ],
-            [ "UnderRiver", "UnderRiver", "UnderRiver", null, "UnderRiver"],
-            [ null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, "UnderRiver" ]
+            [ null,     "Air",          "Air",          "Air",          "Air",          "Air",      "Air",      "OverRiver","OverRiver" ],
+            [ null,     "Air",          "Air",          "Air",          "Air",          "Air",      "Air",      "OverRiver","Air" ],
+            [ null,     "Spine",        "Spine",        "Spine",        "Spine",        "OverRiver","OverRiver","OverRiver","Air" ],
+            [ null,     "Air",          "Air",          "Air",          "Air",          "OverRiver","Air",      "Air",      "Air" ],
+            [ null,     "Air",          "Air",          "Air",          "OverHome",     "OverRiver","Air",      "Air",      "Air" ],
+            [ null,     "Air",          "OverRiver",    "OverRiver",    "OverRiver",    "OverRiver","Air",      "Air",      "Air" ],
+            [ null,     "Air",          "OverRiver",    "Air",          "OverRiver",    "Air",      "Air",      "Air",      "Air" ],
+            [ null,     "OverRiver",    "OverRiver",    "Air",          "OverRiver",    "Air",      "Air",      "Air",      "Air" ],
+            [ null,     "Air",          "Air",          "Air",          "OverRiver",    "Air",      "Air",      "Air",      "Air" ]
         ]
     ],
     "styles": {
@@ -155,30 +141,17 @@
             ],
             "actions": [ "hunt3" ],
             "directionOverrides": {
-                "down": { "z": 4 }
-            }
-        },
-        "UnderRiver": {
-            "description": "You are swimming through the water in the underground river.",
-            "preview": "The water is cool, clear and free-flowing through here, occupied by the occassional fish or giant newt.",
-            "events": [
-                {
-                    "chance": 10,
-                    "event": null
-                },
-                {
-                    "chance": 1,
-                    "event": "newt attack"
+                "down": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "zone": "Undermountain Waterways"
                 }
-            ],
-            "actions": [ "hunt3" ],
-            "directionOverrides": {
-                "up": { "z": -4 }
             }
         },
         "RiverStart": {
             "description": "The underground river here enters the cave from beneath a pile of rocks, the end result of a long ago cave-in.",
-            "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+            "preview": "A river enters the cavern over there. A good place to go fishing or take a drink, or even a bath.",
             "events": [
                 {
                     "chance": 10,
@@ -191,12 +164,17 @@
             ],
             "actions": [ "hunt3" ],
             "directionOverrides": {
-                "down": { "z": 4 }
+                "down": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "zone": "Undermountain Waterways"
+                }
             }
         },
         "RiverEnd": {
             "description": "The underground river here leaves the cave, flowing down into a deep, dark tunnel of unknown length.",
-            "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+            "preview": "A river leaves the cavern over there. A good place to go fishing or take a drink, or even a bath.",
             "events": [
                 {
                     "chance": 10,
@@ -209,7 +187,12 @@
             ],
             "actions": [ "hunt3" ],
             "directionOverrides": {
-                "down": { "z": 4 }
+                "down": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "zone": "Undermountain Waterways"
+                }
             }
         },
         "Skull": {
@@ -300,10 +283,6 @@
     "spider attack": {
         "verb": "attack",
         "details": { "enemy": "cave spider" }
-    },
-    "newt attack": {
-        "verb": "attack",
-        "details": { "enemy": "cave newt" }
     },
     "flying free": {
         "verb": "flavor",

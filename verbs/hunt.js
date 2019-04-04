@@ -1,18 +1,10 @@
-
-var cache = require('../cache');
+var combatengine = require('../combatengine');
 var gameengine = require('../gameengine');
 
 let act = async function (state, details) {
     let target = await gameengine.randomChoice(state, details.targets);
-    let targetDef = await cache.load(`data/enemies/${target.name}.json`);
-    let enemy = {
-        name: target.name,
-        health: targetDef.health,
-        cardsets: JSON.parse(JSON.stringify(targetDef.cardsets)),
-        phasequeue: ["aggress","abjure","assess","assist"]
-    };
-    state.enemy = enemy;
-    state.view.status = targetDef["hunt announce"];
+    
+    return await combatengine.configureEnemy(state, target.name, "hunt");
 };
 
 

@@ -1,0 +1,16 @@
+{
+    "Press the attack": {
+        "display": "You take the initiative to try to take down your foe.",
+        "help": "Attack first! Draw: 1 Abjure, 1 Aggress",
+        "queue": [ "aggress", "abjure", "assess" ],
+        "abjuredraw": 1,
+        "aggressdraw": 1
+    },
+    "Fight defensively": {
+        "display": "You take the time to consider your options",
+        "help": "Defend first! Draw: 2 Abjure, 2 Aggress",
+        "queue": [ "abjure", "aggress", "assess" ],
+        "abjuredraw": 2,
+        "aggressdraw": 2
+    }
+}
