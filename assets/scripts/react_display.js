@@ -164,8 +164,21 @@ class Navigator extends React.Component {
 		<polygon points="0,73 0,144 99,144, 99,73 75,122 25,122" fill="url(#groundGradient)" stroke="gray" strokeWidth="1" onClick={(event) => this.navigate(event, 'down')} onMouseOver={(event)=>helper.setState({help:downHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
 
 		</svg>;
+	}	
+}
+
+class LeftStatus extends React.Component {
+	constructor(props) {
+		super(props);
+		
 	}
 	
+	render() {
+		var statuslines = this.props.source.lines.map((line, lineIdx) => {
+			return <div key={lineIdx} className='statusRow' onMouseOver={(event)=>helper.setState({help:line.help})} onMouseOut={(event)=>helper.setState({help:null})}>{line.text}</div>
+		});
+		return <div className='leftStatus'>{statuslines}</div>;
+	}
 }
 
 class GameDisplayer extends React.Component {
@@ -253,7 +266,7 @@ class GameDisplayer extends React.Component {
 				});
 				return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
 			});			
-			return (<div><div className='statusDisplay'>{this.state.gameState.status}</div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);				
+			return (<div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);				
 		} else {
 			
 		return (<div><div>Welcome, {this.state.username}. Please wait while we load your game state.</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);
