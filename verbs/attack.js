@@ -2,7 +2,7 @@ var combatengine = require('../combatengine');
 
 let act = async function (state, details) {
 
-    combatengine.configureEnemy(state, details.enemy, "attack");
+    state.view.status = await combatengine.configureEnemy(state, details.enemy, "attack");
 };
 
 

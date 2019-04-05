@@ -27,7 +27,7 @@ let act = async function(state, details) {
 	if (details.y !== undefined) state.y = details.y;
 	if (details.z !== undefined) state.z = details.z;
 	
-	loc.explore(state);
+	await loc.explore(state);
 };
 
 
