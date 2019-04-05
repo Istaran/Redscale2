@@ -83,6 +83,8 @@ let act = async function (action, query) {
 		state = await cache.load(newGamePath);
     }
     state.query = query;
+    player.setDefaults(state);
+
 	let migrations = await cache.load(saveMigrationPath);
 	
 	while (state["save version"] < migrations.length) {

@@ -100,6 +100,14 @@ let progress = async function (state) {
     let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
     if (!enemyDef) return `Failed to load enemy type in mid combat: ${state.enemy.name}`;
 
+    if (state.parties[0].leader.health <= 0) {
+        await (require('./player').reloadArchive(state));
+        return "You were defeated! (reloading last save)"; // TEMP: need to flesh this out sometime. 
+    }
+    if (state.parties[state.activeParty].leader.health <= 0) {
+        state.enemy = undefined;
+        return "You lost, but it wasn't you so whatever."; // TODO: flesh out side-party death scenario.
+    }
     if (state.enemy.health <= 0) {
         state.enemy = undefined;
         return "You win!"; // TEMP: need to transition to victory options/results.

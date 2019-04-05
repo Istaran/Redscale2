@@ -24,13 +24,14 @@ let act = async function (state, details) {
                 if (damage <= 0) {
                     engineResult += enemyCard["aggress soak display"] || "You shrugged it off!\n";
                 } else {
-                    console.log(`You took ${damage} damage, except player health is not implemented.`);
+                    state.parties[state.activeParty].leader.health -= damage;
                     engineResult += `You received ${damage} damage!\n`;
                 }
             }
         }
     }
     let engineProgress = await combatengine.progress(state);
+    console.log("State: " + JSON.stringify(state));
     state.view.status = `${card.display}\n${enemyCard["aggress display"]}\n\n${engineResult}\n\n${engineProgress}`;
 }
 
