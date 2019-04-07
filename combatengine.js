@@ -79,10 +79,12 @@ let attackRoll = function (accuracy, evasion) {
     if (accuracy <= 0) return 0;
     let roll = Math.random();
     let hit = 0;
+	console.log(`Rolling: Chance: ${accuracy} / ${evasion}, Roll: ${roll}`);
     while (accuracy > roll * evasion) {
         hit++;
         accuracy -= evasion;
     }
+	console.log(`${hit} hit${hit == 1 ? "" : "s"}`);
     return hit;
 };
 

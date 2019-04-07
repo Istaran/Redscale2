@@ -284,13 +284,13 @@
         "verb": "attack",
         "details": { "enemy": "cave spider" }
     },
+    "newt attack": {
+        "verb": "attack",
+        "details": { "enemy": "cave newt" }
+    },
     "flying free": {
         "verb": "flavor",
         "details": { "text": "You fly carelessly through the air, enjoying the wind across your scales. It's peaceful here, if a bit boring. Some large bats wing through the air in the area but none of them are bothering you at the moment." }
-    },
-    "acknowledge nsfw": {
-        "verb": "flavor",
-        "details":  { "text": "NOTE: You have NSFW content enabled. If you are playing in an environment where that is a problem, leave off the '?nsfw=true' part of the URL."}
     }
 },
 "actions":{
@@ -301,30 +301,11 @@
         "details": {},
         "help": "Fast forward time to recover from your trevails. In addition, you may have a resting event, and also save a checkpoint in case you die or want to rewind."
     },
-    "test": {
-        "type": "actButton",
-        "display": "Test",
-        "verb": "flavor",
-        "details": { "text": "Test mode is on" },
-        "help": "This button should only appear if the query string has test=true, and only enabled if your save's debug=enabled.",
-        "enabled": {
-            "condition": "stateis",
-            "fact": "debug",
-            "rule": "=",
-            "value": "enabled"
-        },
-        "visible": {
-            "condition": "stateis",
-            "fact": "query/test",
-            "rule": "=",
-            "value": "true"
-        }
-    },
     "harvest": {
         "type": "actButton",
         "display": "Harvest bone",
         "verb": "gather",
-        "details": { "item": "Dragonbone shard" },
+        "details": { "item": "Dragonbone shard", "dice":1, "die":4, "plus":2 },
         "help": "Spend some time gathering dragonbone from your mother's remains. It's quite sturdy and hard, as well as being elementally aligned with fire, giving it some nice properties as a material."
     },
     "commune": {
