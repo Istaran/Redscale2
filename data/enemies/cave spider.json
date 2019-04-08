@@ -1,7 +1,7 @@
 {
     "display": "cave spider",
     "attack announce": "You suddenly feel the sticky strands of a massive web upon you! You literally walked right into that, and before you can pull yourself free, the web's creator descends on you to attack!",
-    "hunt announce":  "You find a massive cave spider hanging out above you. Had you not been on the lookout for it specifically, you might have stumbled into its web. As it is, the fight is on, starting on your terms.",
+    "hunt announce": "You find a massive cave spider hanging out above you. Had you not been on the lookout for it specifically, you might have stumbled into its web. As it is, the fight is on, starting on your terms.",
     "max health": 20,
     "evasion": 15,
     "reshuffle": 4,
@@ -95,5 +95,17 @@
                 }
             ]
         }
-    ]
+    ],
+    "acquirecards": {
+        "devour": {
+            "display": "Devour",
+            "verb": "eat",
+            "details": {
+                "text": "You crack open the spider's spindly legs one by one to suck out the juicy meats before doing much the same to its midsection. It's a bit time consuming, but still.",
+                "nutrition": 10
+            },
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +10 nutrition."
+
+        }
+    }
 }

@@ -8,18 +8,36 @@ let getControls = async function (state) {
 
     let phase = state.enemy.phasequeue[0] || "assess";
 
-    // TEMP: Just add all defined cards as basic buttons
-    let cards = await cache.load(`data/combat/${phase} cards.json`);
-    for (var card in cards) {
-        let ctrl = {
-            "type": "actButton",
-            "display": card,
-            "verb": phase,
-            "details": { "card": card },
-            "help": cards[card].help,
-            "enabled": true
-        };
-        controls[0].push(ctrl);
+    if (phase == 'acquire') {
+        let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
+        for (var acqCard in enemyDef.acquirecards) {
+            if (await gameengine.conditionMet(state, enemyDef.acquirecards[acqCard].if)) {
+                let enabled = await gameengine.conditionMet(state, enemyDef.acquirecards[acqCard].enabled);
+                let acq = {
+                    "type": "actButton",
+                    "display": enemyDef.acquirecards[acqCard].display,
+                    "verb": "acquire",
+                    "details": { "card": acqCard },
+                    "help": enemyDef.acquirecards[acqCard].help,
+                    "enabled": enabled
+                }
+                controls[0].push(acq);
+            }
+        }
+    } else {
+        // TEMP: Just add all defined cards as basic buttons
+        let cards = await cache.load(`data/combat/${phase} cards.json`);
+        for (var card in cards) {
+            let ctrl = {
+                "type": "actButton",
+                "display": card,
+                "verb": phase,
+                "details": { "card": card },
+                "help": cards[card].help,
+                "enabled": true
+            };
+            controls[0].push(ctrl);
+        }
     }
 
     return controls;		
@@ -98,6 +116,11 @@ let damageRoll = function (damageDice, damageDie, damagePlus) {
     return damage > 0 ? damage : 0;
 };
 
+let clearCombat = async function (state) {
+    // Not sure if anything else will prove necessary, but let's route it through this one place.
+    state.enemy = undefined;
+};
+
 let progress = async function (state) {
     let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
     if (!enemyDef) return `Failed to load enemy type in mid combat: ${state.enemy.name}`;
@@ -107,12 +130,12 @@ let progress = async function (state) {
         return "You were defeated! (reloading last save)"; // TEMP: need to flesh this out sometime. 
     }
     if (state.parties[state.activeParty].leader.health <= 0) {
-        state.enemy = undefined;
+        await clearCombat(state);
         return "You lost, but it wasn't you so whatever."; // TODO: flesh out side-party death scenario.
     }
     if (state.enemy.health <= 0) {
-        state.enemy = undefined;
-        return "You win!"; // TEMP: need to transition to victory options/results.
+        state.enemy.phasequeue = ["acquire"];
+        return `${enemyDef.killText || "You slew the " + state.enemy.name + "!"}\n\nIt's time to acquire! Pick a card...`; 
     }
     state.enemy.phasequeue.shift();
     if (state.enemy.phasequeue.length < 1) return "Ran out of phases. This should never happen, as Assess should add phases or end combat.";
@@ -129,10 +152,12 @@ let progress = async function (state) {
     return `${enemyDef.cardsets[state.enemy.cardqueue[0].set].tell}\n\nIt's time to ${newPhase}! Pick a card...`;
 };
 
+
 module.exports = {
     attackRoll: attackRoll,
     damageRoll: damageRoll,
     getControls: getControls,
+    clearCombat: clearCombat,
     configureEnemy: configureEnemy,
     progress: progress
 };

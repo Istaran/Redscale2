@@ -1,7 +1,7 @@
 {
     "display": "cave fish",
     "attack announce": "A massive cave fish slips around a bend in the river and surges toward you, hoping for a meal! It obviously hasn't thought this though, but then fish never were very smart.",
-    "hunt announce":  "You spot one of the larger fish in the river and dive toward it. At this size, though, it isn't easily intimidated, and turns to meet you in combat!",
+    "hunt announce": "You spot one of the larger fish in the river and dive toward it. At this size, though, it isn't easily intimidated, and turns to meet you in combat!",
     "max health": 20,
     "evasion": 15,
     "reshuffle": 3,
@@ -61,5 +61,17 @@
                 }
             ]
         }
-    ]
+    ],
+    "acquirecards": {
+        "devour": {
+            "display": "Devour",
+            "verb": "eat",
+            "details": {
+                "text": "You force the fish's remains down your throat, devouring the whole thing in one smooth motion. Ah, quite satisfying.",
+                "nutrition": 20
+            },
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +20 nutrition."
+
+        }
+    }
 }

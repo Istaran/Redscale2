@@ -5,7 +5,6 @@
     "max health": 20,
     "evasion": 15,
     "reshuffle": 3,
-    "nutrition": 15,
     "cardsets": [
         {
             "tell": "The bat flits about nervously.",
@@ -88,7 +87,7 @@
                     "damageplus": 2,
                     "damagetype": "sonic",
                     "attacks": 1,
-                    "aggress deflect display":  "You cover your ears to block out the sound!",
+                    "aggress deflect display": "You cover your ears to block out the sound!",
                     "abjure display": "The bat dodges about!",
                     "dodge": 5,
                     "deflect": 0,
@@ -96,5 +95,17 @@
                 }
             ]
         }
-    ]
+    ],
+    "acquirecards": {
+        "devour": {
+            "display": "Devour",
+            "verb": "eat",
+            "details": {
+                "text": "You tear the bat's remains to shreds, gulping down each bite and enjoying the inner warmth as your inner fire burns away the flesh.",
+                "nutrition": 15
+            },
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +15 nutrition."
+
+        }
+    }
 }

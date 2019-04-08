@@ -1,7 +1,7 @@
 {
     "display": "cave newt",
     "attack announce": "A massive cave newt from the river rushes you! These amphibious creatures can be quite agressive at times, attacking you on land or underwater.",
-    "hunt announce":  "You spot a cave newt treading water in the river. The creature is about your size without the wings, though its fin-like tail is better in the water. Not enough to save it from your hunger, though.",
+    "hunt announce": "You spot a cave newt treading water in the river. The creature is about your size without the wings, though its fin-like tail is better in the water. Not enough to save it from your hunger, though.",
     "max health": 30,
     "evasion": 10,
     "reshuffle": 2,
@@ -51,5 +51,17 @@
                 }
             ]
         }
-    ]
+    ],
+    "acquirecards": {
+        "devour": {
+            "display": "Devour",
+            "verb": "eat",
+            "details": {
+                "text": "You devour the newt's body, limb by limb. Slimy, yet satisfying.",
+                "nutrition": 15
+            },
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +15 nutrition."
+
+        }
+    }
 }

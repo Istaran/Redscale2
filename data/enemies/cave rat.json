@@ -1,7 +1,7 @@
 {
     "display": "cave rat",
     "attack announce": "A massive cave rat comes out from behind a rock, rushing towards you!\n\nThe gray furred creature blends in with the surroundings, but now that it is intent to do you harm it is quite obvious. Long, powerful teeth remind you of the countless bites you've suffered over the years. But as much as it might want to eat you, you know from experience how delicious it can be as well.",
-    "hunt announce":  "You find a massive cave rat hiding among the rocks. The gray fur serves well as camoflage, but now that you've gotten close enough the game of hide and seek is over.\n\nNow it's time for a game of eat or be eaten.",
+    "hunt announce": "You find a massive cave rat hiding among the rocks. The gray fur serves well as camoflage, but now that you've gotten close enough the game of hide and seek is over.\n\nNow it's time for a game of eat or be eaten.",
     "max health": 30,
     "evasion": 10,
     "reshuffle": 5,
@@ -68,7 +68,7 @@
                     "soak": 0
                 },
                 {
-                    "aggress display": "The rat darts in for a couple carefully aimed bite!",
+                    "aggress display": "The rat darts in for a carefully aimed bite!",
                     "accuracy": 15,
                     "damagedice": 2,
                     "damagedie": 6,
@@ -95,5 +95,17 @@
                 }
             ]
         }
-    ]
+    ],
+    "acquirecards": {
+        "devour": {
+            "display": "Devour",
+            "verb": "eat",
+            "details": {
+                "text": "You rip open the rat's guts, dining on the delicious organs within. You need a bit of care to avoid getting a bunch of fur stuck in your teeth, but not so much as to truly slow you down.",
+                "nutrition": 15
+            },
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +15 nutrition."
+
+        }
+    }
 }

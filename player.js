@@ -82,6 +82,7 @@ let reloadArchive = async function (state) {
     if (!oldState && state.archive)
         oldState = await cache.load('./data/newGame.json');
     setDefaults(oldState);
+    // TODO: run any pending migrations.
 
     let archive = state.archive;
 
