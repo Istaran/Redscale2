@@ -10,7 +10,7 @@ var conditions = {};
 var verbs = {};
 
 var combat = require('./combatengine');
-var events = require('./eventengine');
+var scenes = require('./sceneengine');
 var loc = require('./location');
 var player = require('./player');
 
@@ -59,12 +59,12 @@ let getControl = async function (state, details) {
 }
 
 let controls = async function (state) {
-	if (state.event2 !== undefined) {
-		return await events.getControls(state.event2);
+	if (state.scene2 !== undefined) {
+		return await scenes.getControls(state.scene2);
 	} else if (state.enemy !== undefined) {
 		return await combat.getControls(state);
-	} else if (state.event !== undefined) {
-        return await events.getControls(state.event);
+	} else if (state.scene !== undefined) {
+        return await scenes.getControls(state.scene);
 	} else {
 		let controls = await loc.getControls(state);
 		player.addControls(state, controls);

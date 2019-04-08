@@ -2,7 +2,7 @@ var cache = require('./cache');
 
 let getControls = async function (state) {
     let controls = [];
-    // Add options based on event unfolding.
+    // Add options based on scene unfolding.
     return controls;
 }
 

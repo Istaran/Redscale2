@@ -10,8 +10,10 @@ div.statusWrapper {
 
 div.leftStatus {
 	width: 200px;
+    height: 100%;
 	border-color: black;
-	background-color: light-gray;
+    border-style: groove;
+	background-color: lightgray;
 	display: flex;
 	flex-direction: column;
 }
@@ -25,7 +27,7 @@ div.controlTable {
     bottom: 235px;
 	width: 680px;
 	height: 150px;
-	background-color: light-gray;
+	background-color: lightgray;
 	display: flex;
     flex-direction: row;
 }
@@ -78,7 +80,7 @@ div.div-unhelp {
 	animation-name: fade-out-to-top;
 	animation-duration: 1s;
 	opacity:0;
-	overflow: none;
+	overflow: hidden;
 	white-space: pre-wrap;
 }
 
