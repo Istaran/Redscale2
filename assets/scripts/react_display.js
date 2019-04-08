@@ -86,7 +86,7 @@ class ActButton extends React.Component {
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
 				},
-				body: JSON.stringify({ 'body': { 'verb':self.props.verb, 'details':self.props.details, 'username':self.props.parent.state.username }})
+				body: JSON.stringify({ 'body': { 'verb':self.props.verb, 'id':self.props.id, 'username':self.props.parent.state.username }})
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
@@ -108,7 +108,7 @@ class Navigator extends React.Component {
 	
 	navigate(event, dir) {
 		let gameDisp = this.props.parent;
-        let details = this.props.details[dir];
+        let id = this.props.details[dir];
         helper.setState({ help: null });
 		if (details) {
             fetch('/act' + location.search, {
@@ -116,7 +116,7 @@ class Navigator extends React.Component {
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
 				},
-				body: JSON.stringify({ 'body': { 'verb':'travel', 'details':details, 'username':gameDisp.state.username }})
+				body: JSON.stringify({ 'body': { 'verb':'travel', 'id':id, 'username':gameDisp.state.username }})
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
@@ -257,7 +257,7 @@ class GameDisplayer extends React.Component {
 				let controlColumn = column.map((control, rowIndex) => {
 					switch (control.type) {
 						case 'actButton': 
-                            return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} details={control.details} help={control.help} enabled={control.enabled} />;
+                            return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
 						case 'navigator':
 						return <Navigator parent={self} key={colIndex * 10 + rowIndex} details={control.details} />;
 						default:

@@ -59,18 +59,37 @@ let getControl = async function (state, details) {
 }
 
 let controls = async function (state) {
+
+    let controls = null;
 	if (state.scene2 !== undefined) {
-		return await scenes.getControls(state.scene2);
+		controls = await scenes.getControls(state.scene2);
 	} else if (state.enemy !== undefined) {
-		return await combat.getControls(state);
+        controls = await combat.getControls(state);
 	} else if (state.scene !== undefined) {
-        return await scenes.getControls(state.scene);
+        controls = await scenes.getControls(state.scene);
 	} else {
-		let controls = await loc.getControls(state);
+		controls = await loc.getControls(state);
 		player.addControls(state, controls);
 		// Get description from location, and combine controls from location and player modules.
-		return controls;		
-	}	
+    }	
+    let id = Date.now() % 100000;
+
+    let details = {};
+    for (var col = 0; col < controls.length; col++) {
+        let column = controls[col];
+        if (column) {
+            for (var row = 0; row < column.length; row++) {
+                if (column[row]) {
+                    details[id] = column[row].details;
+                    column[row].details = undefined;
+                    column[row].id = id++;
+                }
+            }
+        }
+    }
+
+    state.details = details;
+    state.view.controls = controls;
 }
 
 let act = async function (action, query) {
@@ -94,9 +113,13 @@ let act = async function (action, query) {
 	}
 	
 	// Apply action
-    await doVerb(action.verb, state, action.details);
-	
-	state.view.controls = await controls(state);
+    if (action.id && state.details[action.id]) {
+        await doVerb(action.verb, state, state.details[action.id]);
+    } else {
+        await doVerb("status", state, null);
+    }
+
+    await controls(state);
 
 	//Determine which character should be shown on left. By default, it's the player
 	state.view.leftStatus = player.getStatusDisplay(state);
