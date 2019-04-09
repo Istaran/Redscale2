@@ -114,7 +114,8 @@ let act = async function (action, query) {
 	
 	// Apply action
     if (action.id && state.details[action.id]) {
-        await doVerb(action.verb, state, state.details[action.id]);
+        let details = (action.sub ? state.details[action.id][action.sub] : state.details[action.id]);
+        await doVerb(action.verb, state, details);
     } else {
         await doVerb("status", state, null);
     }

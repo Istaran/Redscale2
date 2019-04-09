@@ -8,10 +8,10 @@ let spotExists = function(zone, x, y, z) {
 let getSpotDetails = function(zone, x, y, z) {
 	let spot = zone.map[z][y][x];
 	let style = zone.styles[spot];
-	return {preview: style.preview};
+	return style.preview;
 }
 
-let setupDirection = async function (loc, zone, x, y, z, dir, controlDetails, hereStyle) {
+let setupDirection = async function (loc, zone, x, y, z, dir, control, hereStyle) {
     let overrided = hereStyle.directionOverrides && hereStyle.directionOverrides[dir];
     let over = (overrided ? hereStyle.directionOverrides[dir] : {}); // Direction override pretends 'here' is in the zone specified and offset by dimensions specified for purpose of calculating links in the given direction.
     let targetZone = zone;
@@ -30,29 +30,30 @@ let setupDirection = async function (loc, zone, x, y, z, dir, controlDetails, he
     }
 
     if (spotExists(targetZone, targetX, targetY, targetZ)) {
-        controlDetails[dir] = getSpotDetails(targetZone, targetX, targetY, targetZ);
+        control.sub[dir] = getSpotDetails(targetZone, targetX, targetY, targetZ);
         if (!overrided)
-            controlDetails[dir].direction = dir;
+            control.details[dir] = { direction: dir };
         else
-            controlDetails[dir] = Object.assign(controlDetails[dir], { location: (over.zone || loc), x: targetX, y: targetY, z: targetZ });
+            control.details[dir] = { location: (over.zone || loc), x: targetX, y: targetY, z: targetZ };
     }
+
 }
 
 let getControls = async function (state) {
 	let zone = await cache.load(`./data/locations/${state.location}.json`);
-    let controls = [[{ type: "navigator", details: {} }], []];
+    let controls = [[{ type: "navigator", details: {}, sub: {} }], []];
     if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
 
 	if (spotExists(zone, state.x, state.y, state.z)) {
 		let spot = zone.map[state.z][state.y][state.x];
 		let style = zone.styles[spot];
 
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "up", controls[0][0].details, style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "north", controls[0][0].details, style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "east", controls[0][0].details, style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "west", controls[0][0].details, style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "south", controls[0][0].details, style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "down", controls[0][0].details, style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "up", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "north", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "east", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "west", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "south", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "down", controls[0][0], style);
 
         if (style.actions) {
             for (var i = 0; i < style.actions.length; i++) {
