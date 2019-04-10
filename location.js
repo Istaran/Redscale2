@@ -14,6 +14,7 @@ let getSpotDetails = function(zone, x, y, z) {
 let setupDirection = async function (loc, zone, x, y, z, dir, control, hereStyle) {
     let overrided = hereStyle.directionOverrides && hereStyle.directionOverrides[dir];
     let over = (overrided ? hereStyle.directionOverrides[dir] : {}); // Direction override pretends 'here' is in the zone specified and offset by dimensions specified for purpose of calculating links in the given direction.
+    if (over.disabled) return;
     let targetZone = zone;
     if (over.zone) targetZone = await cache.load(`./data/locations/${over.zone}.json`);
     let targetX = x + (over.x || 0);
@@ -31,12 +32,36 @@ let setupDirection = async function (loc, zone, x, y, z, dir, control, hereStyle
 
     if (spotExists(targetZone, targetX, targetY, targetZ)) {
         control.sub[dir] = getSpotDetails(targetZone, targetX, targetY, targetZ);
-        if (!overrided)
-            control.details[dir] = { direction: dir };
-        else
-            control.details[dir] = { location: (over.zone || loc), x: targetX, y: targetY, z: targetZ };
+        control.details[dir] = { location: (over.zone || loc), x: targetX, y: targetY, z: targetZ };
+    }
+}
+
+let setupDiagnol = async function (loc, zone, x, y, z, dir, control, hereStyle) {
+    let overrided = hereStyle.directionOverrides && hereStyle.directionOverrides[dir];
+    let over = (overrided ? hereStyle.directionOverrides[dir] : {}); // Direction override pretends 'here' is in the zone specified and offset by dimensions specified for purpose of calculating links in the given direction.
+    if (over.disabled) return;
+    let targetZone = zone;
+    if (over.zone) targetZone = await cache.load(`./data/locations/${over.zone}.json`);
+    let targetX = x + (over.x || 0);
+    let targetY = y + (over.y || 0);
+    let targetZ = z + (over.z || 0);
+
+    let reqNS = "north";
+    let reqEW = "west";
+
+    switch (dir) {
+        case "nw": targetX -= 1; targetY -= 1; break;
+        case "ne": targetX += 1; targetY -= 1; reqEW = "west"; break;
+        case "sw": targetX -= 1; targetY += 1; reqNS = "south"; break;
+        case "se": targetX += 1; targetY += 1; reqNS = "south"; reqEW = "west"; break;
     }
 
+    if (overrided || (control.sub[reqNS] && control.sub[reqEW])) {
+        if (spotExists(targetZone, targetX, targetY, targetZ)) {
+            control.sub[dir] = getSpotDetails(targetZone, targetX, targetY, targetZ);
+            control.details[dir] = { location: (over.zone || loc), x: targetX, y: targetY, z: targetZ };
+        }
+    }
 }
 
 let getControls = async function (state) {
@@ -54,6 +79,11 @@ let getControls = async function (state) {
         await setupDirection(state.location, zone, state.x, state.y, state.z, "west", controls[0][0], style);
         await setupDirection(state.location, zone, state.x, state.y, state.z, "south", controls[0][0], style);
         await setupDirection(state.location, zone, state.x, state.y, state.z, "down", controls[0][0], style);
+
+        await setupDiagnol(state.location, zone, state.x, state.y, state.z, "nw", controls[0][0], style);
+        await setupDiagnol(state.location, zone, state.x, state.y, state.z, "ne", controls[0][0], style);
+        await setupDiagnol(state.location, zone, state.x, state.y, state.z, "sw", controls[0][0], style);
+        await setupDiagnol(state.location, zone, state.x, state.y, state.z, "se", controls[0][0], style);
 
         if (style.actions) {
             for (var i = 0; i < style.actions.length; i++) {

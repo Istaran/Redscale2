@@ -5,7 +5,7 @@
             [ "Edge",   "Edge",         "Edge",         "Edge",         "Edge",         "Edge",     "Edge",     "Edge",     "RiverEnd", "Edge" ],
             [ "Edge",   "Middle",       "Middle",       "Middle",       "Middle",       "Middle",   "Middle",   "River",    "River",    "Edge" ],
             [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "Tailbone", "Tailbone", "River",    "Middle",   "Edge" ],
-            [ "Skull",  "UnderSpine",   "UnderSpine",   "UnderSpine",   "UnderSpine",   "River",    "River",    "River",    "Middle",   "Edge" ],
+            [ "Skull",  "UnderSpine",   "UnderSpine",   "UnderSpine",   "UnderSpine",   "RiverTB",  "RiverTB",  "River",    "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "Middle",       "Middle",       "Dragonhome",   "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "River",        "River",        "River",        "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
@@ -98,7 +98,7 @@
                     "event": "acknowledge nsfw"
                 }
             ],
-            "actions": [ "rest" , "test" ]
+            "actions": [ "rest", "test" ]
         },
         "OverRiver": {
             "description": "You're flying over an underground river.",
@@ -146,6 +146,32 @@
                     "y": 10,
                     "z": 10,
                     "zone": "Undermountain Waterways"
+                }
+            }
+        },
+        "RiverTB": {
+            "description": "The river here has been diverted a bit further south than it used to be by the massive wall of bone that is your mother's tail's remains. The bone is massive enough you would need to fly if you wanted to head north.",
+            "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "newt attack"
+                }
+            ],
+            "actions": [ "hunt3" ],
+            "directionOverrides": {
+                "down": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "zone": "Undermountain Waterways"
+                },
+                "north": {
+                    "disabled": true
                 }
             }
         },
@@ -223,7 +249,12 @@
                     "event": "spider attack"
                 }
             ],
-            "actions": [ "hunt" ]
+            "actions": [ "hunt" ],
+            "directionOverrides": {
+                "up": {
+                    "disabled": true
+                }
+            }
         },
         "Spine": {
             "description": "Your mother's spine arches through the air here, far above the ground, nearly reaching the ceiling.",
@@ -238,7 +269,12 @@
                     "event": "spider attack"
                 }
             ],
-            "actions": [ "harvest", "hunt2" ]
+            "actions": [ "harvest", "hunt2" ],
+            "directionOverrides": {
+                "down": {
+                    "disabled": true
+                }
+            }
         },
         "Ribs": {
             "description": "Your mother's massive ribs arch down to the ground here like massive columns, chipped and worn in places where something has been breaking off pieces.",
@@ -268,7 +304,12 @@
                     "event": "spider attack"
                 }
             ],
-            "actions": [ "harvest" ]
+            "actions": [ "harvest" ],
+            "directionOverrides": {
+                "south": {
+                    "disabled": true
+                }
+            }
         }
     },
 "events":{

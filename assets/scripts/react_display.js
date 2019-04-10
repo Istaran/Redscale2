@@ -142,6 +142,14 @@ class Navigator extends React.Component {
         let eastColor2 = (this.props.details.east) ? compassDark : compassDisabled;
         let southColor = (this.props.details.south) ? compassLight : compassDisabled;
         let southColor2 = (this.props.details.south) ? compassDark : compassDisabled;
+        let nwColor = ( this.props.details.nw ) ? compassLight : compassDisabled;
+        let nwColor2 = ( this.props.details.nw ) ? compassDark : compassDisabled;
+        let neColor = ( this.props.details.ne ) ? compassLight : compassDisabled;
+        let neColor2 = ( this.props.details.ne ) ? compassDark : compassDisabled;
+        let swColor = ( this.props.details.sw ) ? compassLight : compassDisabled;
+        let swColor2 = ( this.props.details.sw ) ? compassDark : compassDisabled;
+        let seColor = ( this.props.details.se ) ? compassLight : compassDisabled;
+        let seColor2 = ( this.props.details.se ) ? compassDark : compassDisabled;
 		let downColor = (this.props.details.down) ? "peru" : "saddlebrown";
 		let downColor2 = (this.props.details.down) ? "lime" : "green";
 		
@@ -152,6 +160,12 @@ class Navigator extends React.Component {
 		let eastHelp = (this.props.details.east) ? "Go east.\n" + this.props.details.east : "You can't go east from here.";
 		let southHelp = (this.props.details.south) ? "Go south.\n" + this.props.details.south : "You can't go south from here.";
 		let downHelp = (this.props.details.down) ? "Go down.\n" + this.props.details.down : "You can't go down from here.";
+
+        let nwHelp = (this.props.details.nw) ? "Go northwest.\n" + this.props.details.nw : "You can't go northwest from here.";
+        let neHelp = (this.props.details.ne) ? "Go northeast.\n" + this.props.details.nw : "You can't go northeast from here.";
+        let swHelp = (this.props.details.sw) ? "Go southwest.\n" + this.props.details.nw : "You can't go southwest from here.";
+        let seHelp = (this.props.details.se) ? "Go southeast.\n" + this.props.details.nw : "You can't go southeast from here.";
+
 
 		return <svg className='navigator' width='100' height='145'>
 		    <defs>
@@ -187,6 +201,16 @@ class Navigator extends React.Component {
             <line x1="38.4" y1="116.5" x2="37" y2="121" stroke="black" strokeWidth="1" />
             <line x1="61.6" y1="29.5" x2="63" y2="25" stroke="black" strokeWidth="1" />
             <line x1="61.6" y1="116.5" x2="63" y2="121" stroke="black" strokeWidth="1" />
+            <polygon points="15,38 40,63 50,53" fill={nwColor} onClick={(event) => this.navigate(event, 'nw')} onMouseOver={(event) => helper.setState({ help: nwHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
+            <polygon points="15,38 30,73 40,63" fill={nwColor2} onClick={(event) => this.navigate(event, 'nw')} onMouseOver={(event) => helper.setState({ help: nwHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
+            <polygon points="15,108 30,73 40,83" fill={swColor} onClick={(event) => this.navigate(event, 'sw')} onMouseOver={(event) => helper.setState({ help: swHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
+            <polygon points="15,108 40,83 50,93" fill={swColor2} onClick={(event) => this.navigate(event, 'sw')} onMouseOver={(event) => helper.setState({ help: swHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
+            <polygon points="85,38 60,63 50,53" fill={neColor} onClick={(event) => this.navigate(event, 'ne')} onMouseOver={(event) => helper.setState({ help: neHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
+            <polygon points="85,38 70,73 60,63" fill={neColor2} onClick={(event) => this.navigate(event, 'ne')} onMouseOver={(event) => helper.setState({ help: neHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
+            <polygon points="85,108 70,73 60,83" fill={seColor} onClick={(event) => this.navigate(event, 'se')} onMouseOver={(event) => helper.setState({ help: seHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
+            <polygon points="85,108 60,83 50,93" fill={seColor2} onClick={(event) => this.navigate(event, 'se')} onMouseOver={(event) => helper.setState({ help: seHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
+
+
             <polygon points="50,22 40,63 50,58" fill={northColor} onClick={(event) => this.navigate(event, 'north')} onMouseOver={(event) => helper.setState({ help: northHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
             <polygon points="50,22 50,58 60,63" fill={northColor2} onClick={(event) => this.navigate(event, 'north')} onMouseOver={(event) => helper.setState({ help: northHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
 		    <polygon points="0,73 40,63 35,73" fill={westColor} onClick={(event) => this.navigate(event, 'west')} onMouseOver={(event)=>helper.setState({help:westHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
@@ -197,10 +221,6 @@ class Navigator extends React.Component {
 		    <polygon points="50,122 40,83 50,87" fill={southColor} onClick={(event) => this.navigate(event, 'south')} onMouseOver={(event)=>helper.setState({help:southHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
             <polygon points="50,122 50,87 60,83" fill={southColor2} onClick={(event) => this.navigate(event, 'south')} onMouseOver={(event) => helper.setState({ help: southHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
 
-            <polygon points="15,38 45,73 50,68" fill={compassDisabled} />
-            <polygon points="15,108 45,73 50,78" fill={compassDisabled} />
-            <polygon points="85,38 55,73 50,68" fill={compassDisabled} />
-            <polygon points="85,108 55,73 50,78" fill={compassDisabled} />
 
 		</svg>;
 	}	
