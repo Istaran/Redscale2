@@ -26,8 +26,8 @@
             [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver", "UnderRiver", "UnderRiver" ],
             [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver" ],
             [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver", "UnderRiver", "UnderRiver", "UnderRiver" ],
-            [ null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver", null, "UnderRiver" ],
+            [ null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver", "UnderRiver", "WestBranch", "Fork" ],
+            [ null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver", null, "SouthBranch" ],
             [ null, null, null, null, null, null, null, null, null, null, "UnderRiver", "UnderRiver", "UnderRiver", null, "UnderRiver" ],
             [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver" ],
             [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver" ]
@@ -60,8 +60,101 @@
                     "zone": "Dragonbone Cave"
                 }
             }
+        },
+        "Fork": {
+            "description": "You are swimming through the water in the underground river. The river here merges from two streams, one coming from the west, the other from the southwest.",
+            "preview": "The water is warm, clear and free-flowing through here, occupied by the occassional fish or giant newt.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "newt attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "fish attack"
+                }
+            ],
+            "actions": [ "hunt" ],
+            "directionOverrides": {
+                "up": {
+                    "x": -10,
+                    "y": -10,
+                    "z": -10,
+                    "zone": "Dragonbone Cave"
+                },
+                "sw": {
+                    "disabled": false
+                }
+            }
+        },
+        "SouthBranch": {
+            "description": "You are swimming through the water in the underground river.",
+            "preview": "The water is warm, clear and free-flowing through here, occupied by the occassional fish or giant newt.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "newt attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "fish attack"
+                }
+            ],
+            "actions": [ "hunt" ],
+            "directionOverrides": {
+                "up": {
+                    "x": -10,
+                    "y": -10,
+                    "z": -10,
+                    "zone": "Dragonbone Cave"
+                },
+                "north": {
+                    "disabled": true
+                },
+                "ne": {
+                    "disabled": false
+                }
+            }
+        },
+        "WestBranch": {
+            "description": "You are swimming through the water in the underground river.",
+            "preview": "The water is warm, clear and free-flowing through here, occupied by the occassional fish or giant newt.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "newt attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "fish attack"
+                }
+            ],
+            "actions": [ "hunt" ],
+            "directionOverrides": {
+                "up": {
+                    "x": -10,
+                    "y": -10,
+                    "z": -10,
+                    "zone": "Dragonbone Cave"
+                },
+                "south": {
+                    "disabled": true
+                }
+            }
         }
- 
+
     },
     "events": {
         "newt attack": {
