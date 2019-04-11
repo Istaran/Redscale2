@@ -6,7 +6,7 @@ var loc = require('../location');
 let act = async function (state, details) {
     let cards = await cache.load('data/combat/assess cards.json');
     let card = cards[details.card];
-    let engineResult = `TEMP: you assess!`;
+    let engineResult = "";
     state.enemy.phasequeue = ["assess"].concat(card.queue);
 
     if (card.escaperolls) {
@@ -25,6 +25,12 @@ let act = async function (state, details) {
 
         engineResult = "But you can't get away!";
     }
+
+    let leader = state.parties[state.activeParty].leader;
+    if (card.abjuredraw)
+        combatengine.drawCards(leader.abjureHand, leader.abjureCards, card.abjuredraw);
+    if (card.aggressdraw)
+        combatengine.drawCards(leader.aggressHand, leader.aggressCards, card.aggressdraw);
 
     let engineProgress = await combatengine.progress(state);
     state.view.status = `${card.display}\n\n${engineResult}\n\n${engineProgress}`;

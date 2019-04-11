@@ -2,7 +2,7 @@
     "Instinctive Bite": {
         "display": "You bite at your foe, twice!",
         "cardlines": "Instinctive Bite\n\nAccuracy: \u2b24\u2b24\u2b24\nDamage: \u2b24\nAttacks: \u2b24\u2b24",
-        "help": "Bite attack:\nAccuracy: 15\nDamage: 1d6+2\nAttacks:2\nStrong vs dodge, weak vs brace.",
+        "help": "Bite attack:\nAccuracy: 15\nDamage: 1d6+2\nAttacks:2\nStrong vs dodge, weak vs brace.\nDuplicates: Increase accuracy by 5",
         "accuracy": 15,
         "damagedice": 1,
         "damagedie": 6,
@@ -14,7 +14,7 @@
     "Instinctive Claws": {
         "display": "You slash at your foe repeatedly!",
         "cardlines": "Instinctive Claws\n\nAccuracy: \u2b24\nDamage: \u2b24\u2b24\nAttacks: \u2b24\u2b24\u2b24",
-        "help": "Claw attack:\nAccuracy: 5\nDamage: 2d6+4\nAttacks:3\nStrong vs deflect, weak vs dodge.",
+        "help": "Claw attack:\nAccuracy: 5\nDamage: 2d6+4\nAttacks:3\nStrong vs deflect, weak vs dodge.\nDuplicates: Increase attacks by 1",
         "accuracy": 5,
         "damagedice": 2,
         "damagedie": 6,
@@ -25,7 +25,7 @@
     },
     "Instinctive Tail Slap": {
         "display": "You swing your tail at your foe!",
-        "cardlines": "Instinctive Tail Slap\n\nAccuracy: \u2b24\u2b24\nDamage: \u2b24\u2b24\u2b24\nAttacks: \u2b24",
+        "cardlines": "Instinctive Tail Slap\n\nAccuracy: \u2b24\u2b24\nDamage: \u2b24\u2b24\u2b24\nAttacks: \u2b24\nDuplicates: Increase damage by 1d6+2",
         "help": "Tail attack:\nAccuracy: 10\nDamage: 3d6+6\nAttacks:1\nStrong vs brace, weak vs deflect.",
         "accuracy": 10,
         "damagedice": 3,

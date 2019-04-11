@@ -122,7 +122,9 @@ class Card extends React.Component {
     }
 
     render() {
-        return <div className='card' onClick={(event) => this.takeAction(event)} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} >{ this.props.display }</div >;
+        display = this.props.display;
+        if (this.props.count) display += "\n\nCopies: " + this.props.count; // TODO: beautify how we display this.
+        return <div className='card' onClick={(event) => this.takeAction(event)} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} >{ display }</div >;
     }
 }
 
@@ -344,7 +346,7 @@ class GameDisplayer extends React.Component {
 						case 'actButton': 
                             return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
                         case 'card':
-                            return <Card parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
+                            return <Card parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
 						case 'navigator':
                             return <Navigator parent={self} key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
 						default:

@@ -109,8 +109,7 @@ let getQueueFromSets = function (sets, max) {
     return queue;
 }
 
-let configureEnemy = async function (state, target, flavor)
-{
+let configureEnemy = async function (state, target, flavor) {
     let leader = state.parties[state.activeParty].leader;
     leader.aggressHand = Object.assign({}, leader.aggressDefaultHand);
     leader.abjureHand = Object.assign({}, leader.abjureDefaultHand);
@@ -143,7 +142,47 @@ let configureEnemy = async function (state, target, flavor)
     let tell = targetDef.cardsets[enemy.cardqueue[0].set].tell;
 
     return `${announce}\n\n${tell}`;
-}
+};
+
+let drawCards = function (hand, pool, count) {
+    let shuffle = [];
+    for (var card in pool) {
+        let num = pool[card] - (hand[card] ? hand[card] : 0);
+        for (var i = 0; i < num; i++) {
+            shuffle.push(card);
+        }
+    }
+    console.log(`Drawing ${count} from ${JSON.stringify(shuffle)}`);
+    for (; count > 0 && shuffle.length > 0; count--) {
+        let card = shuffle.splice(Math.floor(Math.random() & shuffle.length), 1)[0];
+        console.log(card);
+        if (hand[card])
+            hand[card]++;
+        else
+            hand[card] = 1;
+    }
+
+};
+
+
+let discardCards = function (hand, count) {
+    let shuffle = [];
+    for (var card in hand) {
+        let num = (hand[card] ? hand[card] : 0);
+        for (var i = 0; i < num; i++) {
+            shuffle.push(card);
+        }
+    }
+    console.log(`Discarding ${count} from ${JSON.stringify(shuffle)}`);
+    for (; count > 0 && shuffle.length > 0; count--) {
+        let card = shuffle.splice(Math.floor(Math.random() & shuffle.length), 1)[0];
+        console.log(card);
+        hand[card]--;
+        if (hand[card] == 0)
+            hand[card] = undefined;
+    }
+
+};
 
 // Given (net) accuracy of attacker and evasion of defender, roll to hit, return damage multiplier (1 for standard hit, 0 for miss, >1 for crit)
 let attackRoll = function (accuracy, evasion) {
@@ -212,5 +251,7 @@ module.exports = {
     getControls: getControls,
     clearCombat: clearCombat,
     configureEnemy: configureEnemy,
-    progress: progress
+    progress: progress,
+    drawCards: drawCards,
+    discardCards: discardCards
 };
