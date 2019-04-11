@@ -44,9 +44,11 @@ let setDefaults = function (state) {
                     "staminaRecover": 10,
                     "manaRecover": 1,
                     "evasion": 10,
-                    "aggressCards": [{ "card": "Instinctive Bite", "count": 5 }, { "card": "Instinctive Claw", "count": 5 }, { "card": "Instinctive Tail Slap", "count": 5 }],
-                    "abjureCards": [{ "card": "Instinctive Dodge", "count": 5 }, { "card": "Instinctive Deflect", "count": 5 }, { "card": "Instinctive Brace", "count": 5 }],
-                    "assessCards": [{ "card": "Press the attack" }, { "card": "Fight defensively" }]
+                    "aggressCards": { "Instinctive Bite": 5, "Instinctive Claws": 5, "Instinctive Tail Slap": 5 },
+                    "abjureCards": { "Instinctive Dodge": 5, "Instinctive Deflect": 5, "Instinctive Brace": 5 },
+                    "assessCards": [{ "card": "Press the attack" }, { "card": "Fight defensively" }],
+                    "aggressDefaultHand": { "Instinctive Bite": 1 , "Instinctive Claws": 1, "Instinctive Tail Slap": 1 },
+                    "abjureDefaultHand": { "Instinctive Dodge": 1, "Instinctive Deflect": 1, "Instinctive Brace": 1 }
                 },
                 "followers": [],
                 "pawns": [],

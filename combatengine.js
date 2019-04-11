@@ -41,13 +41,45 @@ let getControls = async function (state) {
                 controls.push([acq]);
             }
         }
-    } else {
-        // TEMP: Just add all defined cards as basic buttons
-        let cards = await cache.load(`data/combat/${phase} cards.json`);
+    } else if (phase == 'assess') {
+        // TODO: add additional assess cards from enemy public/private defs. Maybe someday do some optional personal choices.
+        let cards = await cache.load(`data/combat/assess cards.json`);
         for (var card in cards) {
             let ctrl = {
                 "type": "card",
                 "display": cards[card].cardlines,
+                "verb": phase,
+                "details": { "card": card },
+                "help": cards[card].help,
+                "enabled": true
+            };
+            controls.push([ctrl]);
+        }
+    } else {
+        
+        let cards = await cache.load(`data/combat/${phase} cards.json`);
+        let leader = state.parties[state.activeParty].leader;
+        let hand = leader[`${phase}Hand`];
+        for (var card in hand) {
+            if (hand[card]) { // Oddly, this still brings up undefined cards if save is cached.
+                let ctrl = {
+                    "type": "card",
+                    "display": cards[card].cardlines,
+                    "count": hand[card],
+                    "verb": phase,
+                    "details": { "card": card },
+                    "help": cards[card].help,
+                    "enabled": true
+                };
+                controls.push([ctrl]);
+            }
+        }
+        if (controls.length == 0) {
+            let card = "NoCard";
+            let ctrl = {
+                "type": "card",
+                "display": cards[card].cardlines,
+                "count": hand[card],
                 "verb": phase,
                 "details": { "card": card },
                 "help": cards[card].help,
@@ -79,6 +111,10 @@ let getQueueFromSets = function (sets, max) {
 
 let configureEnemy = async function (state, target, flavor)
 {
+    let leader = state.parties[state.activeParty].leader;
+    leader.aggressHand = Object.assign({}, leader.aggressDefaultHand);
+    leader.abjureHand = Object.assign({}, leader.abjureDefaultHand);
+
     let targetDef = await cache.load(`data/enemies/${target}.json`);
     if (!targetDef) return `Failed to load enemy type: ${target}`;
 

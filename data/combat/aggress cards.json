@@ -8,7 +8,8 @@
         "damagedie": 6,
         "damageplus": 2,
         "damagetype": "piercing",
-        "attacks": 2
+        "attacks": 2,
+        "scaleaccuracy": 5
     },
     "Instinctive Claws": {
         "display": "You slash at your foe repeatedly!",
@@ -19,7 +20,8 @@
         "damagedie": 6,
         "damageplus": 4,
         "damagetype": "slashing",
-        "attacks": 3
+        "attacks": 3,
+        "scaleattacks": 1
     },
     "Instinctive Tail Slap": {
         "display": "You swing your tail at your foe!",
@@ -30,6 +32,19 @@
         "damagedie": 6,
         "damageplus": 6,
         "damagetype": "bludgeoning",
-        "attacks": 1
+        "attacks": 1,
+        "scaledice": 1,
+        "scaleplus": 2
+    },
+    "NoCard": {
+        "display": "You thrash wildly!",
+        "cardlines": "Wild Thrash\n\nAccuracy: \u2b24\nDamage: \u2b24\nAttacks: \u2b24",
+        "help": "Tail attack:\nAccuracy: 7\nDamage: 1d10\nAttacks:1.1\nWeak vs everything.",
+        "accuracy": 7,
+        "damagedice": 1,
+        "damagedie": 10,
+        "damageplus": 0,
+        "damagetype": "bludgeoning",
+        "attacks": 1.1
     }
 }
