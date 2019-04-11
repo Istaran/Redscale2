@@ -8,14 +8,15 @@ let spotExists = function(zone, x, y, z) {
 let getSpotDetails = function(zone, x, y, z) {
 	let spot = zone.map[z][y][x];
 	let style = zone.styles[spot];
-	return {preview: style.preview};
+	return style.preview;
 }
 
-let setupDirection = async function (loc, zone, x, y, z, dir, controlDetails, hereStyle) {
+let setupDirection = async function (loc, zone, x, y, z, dir, control, hereStyle) {
     let overrided = hereStyle.directionOverrides && hereStyle.directionOverrides[dir];
     let over = (overrided ? hereStyle.directionOverrides[dir] : {}); // Direction override pretends 'here' is in the zone specified and offset by dimensions specified for purpose of calculating links in the given direction.
+    if (over.disabled) return;
     let targetZone = zone;
-    if (over.zone) targetZone = await cache.load('./data/locations/' + over.zone + '.json');
+    if (over.zone) targetZone = await cache.load(`./data/locations/${over.zone}.json`);
     let targetX = x + (over.x || 0);
     let targetY = y + (over.y || 0);
     let targetZ = z + (over.z || 0);
@@ -30,29 +31,59 @@ let setupDirection = async function (loc, zone, x, y, z, dir, controlDetails, he
     }
 
     if (spotExists(targetZone, targetX, targetY, targetZ)) {
-        controlDetails[dir] = getSpotDetails(targetZone, targetX, targetY, targetZ);
-        if (!overrided)
-            controlDetails[dir].direction = dir;
-        else
-            controlDetails[dir] = Object.assign(controlDetails[dir], { location: (over.zone || loc), x: targetX, y: targetY, z: targetZ });
+        control.sub[dir] = getSpotDetails(targetZone, targetX, targetY, targetZ);
+        control.details[dir] = { location: (over.zone || loc), x: targetX, y: targetY, z: targetZ };
+    }
+}
+
+let setupDiagnol = async function (loc, zone, x, y, z, dir, control, hereStyle) {
+    let overrided = hereStyle.directionOverrides && hereStyle.directionOverrides[dir];
+    let over = (overrided ? hereStyle.directionOverrides[dir] : {}); // Direction override pretends 'here' is in the zone specified and offset by dimensions specified for purpose of calculating links in the given direction.
+    if (over.disabled) return;
+    let targetZone = zone;
+    if (over.zone) targetZone = await cache.load(`./data/locations/${over.zone}.json`);
+    let targetX = x + (over.x || 0);
+    let targetY = y + (over.y || 0);
+    let targetZ = z + (over.z || 0);
+
+    let reqNS = "north";
+    let reqEW = "west";
+
+    switch (dir) {
+        case "nw": targetX -= 1; targetY -= 1; break;
+        case "ne": targetX += 1; targetY -= 1; reqEW = "west"; break;
+        case "sw": targetX -= 1; targetY += 1; reqNS = "south"; break;
+        case "se": targetX += 1; targetY += 1; reqNS = "south"; reqEW = "west"; break;
+    }
+
+    if (overrided || (control.sub[reqNS] && control.sub[reqEW])) {
+        if (spotExists(targetZone, targetX, targetY, targetZ)) {
+            control.sub[dir] = getSpotDetails(targetZone, targetX, targetY, targetZ);
+            control.details[dir] = { location: (over.zone || loc), x: targetX, y: targetY, z: targetZ };
+        }
     }
 }
 
 let getControls = async function (state) {
-	let zone = await cache.load('./data/locations/' + state.location + '.json');
-    let controls = [[{ type: "navigator", details: {} }], []];
+	let zone = await cache.load(`./data/locations/${state.location}.json`);
+    let controls = [[{ type: "navigator", details: {}, sub: {} }], []];
     if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
 
 	if (spotExists(zone, state.x, state.y, state.z)) {
 		let spot = zone.map[state.z][state.y][state.x];
 		let style = zone.styles[spot];
 
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "up", controls[0][0].details, style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "north", controls[0][0].details, style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "east", controls[0][0].details, style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "west", controls[0][0].details, style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "south", controls[0][0].details, style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "down", controls[0][0].details, style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "up", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "north", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "east", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "west", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "south", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "down", controls[0][0], style);
+
+        await setupDiagnol(state.location, zone, state.x, state.y, state.z, "nw", controls[0][0], style);
+        await setupDiagnol(state.location, zone, state.x, state.y, state.z, "ne", controls[0][0], style);
+        await setupDiagnol(state.location, zone, state.x, state.y, state.z, "sw", controls[0][0], style);
+        await setupDiagnol(state.location, zone, state.x, state.y, state.z, "se", controls[0][0], style);
 
         if (style.actions) {
             for (var i = 0; i < style.actions.length; i++) {
@@ -69,7 +100,7 @@ let getControls = async function (state) {
 };
 
 let explore = async function (state) {
-	let zone = await cache.load('./data/locations/' + state.location + '.json');
+	let zone = await cache.load(`./data/locations/${state.location}.json`);
 	//Temp:
 	if (spotExists(zone, state.x, state.y, state.z)) {
         if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
@@ -78,26 +109,15 @@ let explore = async function (state) {
         let style = zone.styles[spot];
 
         // TODO: before checking random explore event, check for clock-based events.
-        let eventList = style.events.slice() || [];
-        let maxChance = 0, i = 0;
-        for (; i < eventList.length; i++) {
-            if (await gameengine.conditionMet(state, eventList[i].if)) {
-                maxChance += eventList[i].chance;
-            } else {
-                eventList.splice(i, 1);
-                i--; // to counter the default i++.
-            }
-        }
-        let roll = Math.random() * maxChance;
-        console.log("Rolled: " + (Math.floor(roll) + 1) + " of " + maxChance);
-        // Doing the simple method for now, may re-implement the Redscale's version someday.
-        for (i = 0; roll > eventList[i].chance; roll -= eventList[i].chance, i++) { }
-        if (eventList[i].event) {
+
+        let randomEvent = await gameengine.randomChoice(state, style.events);
+
+        if (randomEvent && randomEvent.event) {
             state.view.status = "";
-            let event = zone.events[eventList[i].event];
-            console.log("triggered random event: " + event.verb + ": " + JSON.stringify(event.details));
+            let event = zone.events[randomEvent.event];
+            console.log(`Triggered random event: ${event.verb}: ${JSON.stringify(event.details)}`);
             await gameengine.doVerb(event.verb, state, event.details);
-            state.view.status = style.description + "\n\n" + state.view.status;
+            state.view.status = `${style.description}\n\n${state.view.status}`;
         } else {
             state.view.status = style.description;
             // Nothing happens

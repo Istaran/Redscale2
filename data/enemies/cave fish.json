@@ -1,0 +1,77 @@
+{
+    "display": "cave fish",
+    "attack announce": "A massive cave fish slips around a bend in the river and surges toward you, hoping for a meal! It obviously hasn't thought this though, but then fish never were very smart.",
+    "hunt announce": "You spot one of the larger fish in the river and dive toward it. At this size, though, it isn't easily intimidated, and turns to meet you in combat!",
+    "max health": 20,
+    "evasion": 15,
+    "reshuffle": 3,
+    "nutrition": 20,
+    "cardsets": [
+        {
+            "tell": "The fish swims about evasively.",
+            "cards": [
+                {
+                    "aggress display": "The fish snaps at you repeatedly.",
+                    "accuracy": 15,
+                    "damagedice": 1,
+                    "damagedie": 8,
+                    "damageplus": 1,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The fish dodges about!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0
+                }
+            ]
+        },
+        {
+            "tell": "The fish fixates on you.",
+            "cards": [
+                {
+                    "aggress display": "The fish lunges forward to bite you!",
+                    "accuracy": 10,
+                    "damagedice": 3,
+                    "damagedie": 8,
+                    "damageplus": 3,
+                    "damagetype": "piercing",
+                    "attacks": 1,
+                    "abjure display": "The fish endures your blows!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5
+                }
+            ]
+        },
+        {
+            "tell": "The fish turns tail, getting some distance.",
+            "cards": [
+                {
+                    "aggress display": "The fish slaps you with its tail repeatedly!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 8,
+                    "damageplus": 2,
+                    "damagetype": "piercing",
+                    "attacks": 3,
+                    "abjure display": "The fish slaps your blow aside with its tail!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0
+                }
+            ]
+        }
+    ],
+    "acquirecards": {
+        "devour": {
+            "display": "Devour",
+            "verb": "eat",
+            "details": {
+                "text": "You force the fish's remains down your throat, devouring the whole thing in one smooth motion. Ah, quite satisfying.",
+                "nutrition": 20
+            },
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +20 nutrition."
+
+        }
+    }
+}

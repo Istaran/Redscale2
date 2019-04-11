@@ -1,7 +1,11 @@
 var loc = require('../location');
+let player = require('../player');
 
 let act = async function(state, details) {
 	if (state.event || state.event2 || state.enemy) return; // Somehow you cheaty-clicked to travel
+	
+	player.passiveRecoverAll(state); // Travelling gives time passage, allowing basic recovery.
+	
 	switch (details.direction) {
 		case 'north': 
 			state.y = (state.y ? state.y : 0) - 1;
@@ -27,7 +31,7 @@ let act = async function(state, details) {
 	if (details.y !== undefined) state.y = details.y;
 	if (details.z !== undefined) state.z = details.z;
 	
-	loc.explore(state);
+	await loc.explore(state);
 };
 
 

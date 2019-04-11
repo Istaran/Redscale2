@@ -1,0 +1,23 @@
+{
+    "Instinctive Dodge": {
+        "display": "You dodge about, making yourself harder to hit.",
+		"help": "Attempt to dodge.\nReduces enemy accuracy by 5.",
+        "dodge": 5,
+        "soak": 0,
+        "deflect": 0
+    },
+    "Instinctive Deflect": {
+        "display": "You ready yourself and deflect the first attack.",
+		"help": "Attempt to deflect.\nPrevents 1 attack.",
+        "dodge": 0,
+        "soak": 0,
+        "deflect": 1
+    },
+    "Instinctive Brace": {
+        "display": "You brace yourself, blocking the incoming blows.",
+		"help": "Attempt to brace against the damage.\nReduces enemy damage per hit by 5.",
+        "dodge": 0,
+        "soak": 5,
+        "deflect": 0
+    }
+}

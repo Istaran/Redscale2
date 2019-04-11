@@ -1,10 +1,11 @@
-var loc = require('../location');
+var combatengine = require('../combatengine');
 
-let act = async function(state, details) {
-    state.view.status = "You are attacked by a " + details.enemy + "! (But nothing really happens because combat isn't implemented yet)";
+let act = async function (state, details) {
+
+    state.view.status = await combatengine.configureEnemy(state, details.enemy, "attack");
 };
 
 
 module.exports = {
-	act: act
+    act: act
 };

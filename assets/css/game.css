@@ -2,26 +2,46 @@ div.statusDisplay {
     white-space: pre-wrap;
 }
 
+div.statusWrapper {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+div.leftStatus {
+	width: 200px;
+    height: 100%;
+	border-color: black;
+    border-style: groove;
+	background-color: lightgray;
+	display: flex;
+	flex-direction: column;
+}
+
+div.statusRow {
+	width: 100%;
+}
+
 div.controlTable {
     position: absolute;
     bottom: 235px;
-	width: 480px;
+	width: 680px;
 	height: 150px;
-	background-color: light-gray;
+	background-color: lightgray;
 	display: flex;
     flex-direction: row;
 }
 
 div.controlColumn {
 	height: 100%;
-	width: 100px;
+	width: 150px;
 	margin-right: 5px;
 	display:flex; 
 	flex-direction:column;
 }
 
 input.actButton {
-	width: 100px;
+	width: 150px;
 	height: 20px;
 	margin-bottom: 5px;
 }
@@ -60,7 +80,7 @@ div.div-unhelp {
 	animation-name: fade-out-to-top;
 	animation-duration: 1s;
 	opacity:0;
-	overflow: none;
+	overflow: hidden;
 	white-space: pre-wrap;
 }
 

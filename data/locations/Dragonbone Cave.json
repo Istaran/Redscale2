@@ -2,43 +2,29 @@
     "map": 
     [
         [
-            [ "Edge", "Edge", "Edge", "Edge", "Edge", "Edge", "Edge", "Edge", "RiverEnd", "Edge" ],
-            [ "Edge", "Middle", "Middle", "Middle", "Middle", "Middle", "Middle", "River", "Middle", "Edge" ],
-            [ "Edge", "Middle", "Middle", "Ribs", "Ribs", "Tailbone", "Tailbone", "River", "Middle", "Edge" ],
-            [ "Skull", "UnderSpine", "UnderSpine", "UnderSpine", "UnderSpine", "River", "River", "River", "Middle", "Edge" ],
-            [ "Edge", "Middle", "Middle", "Ribs", "Ribs", "River", "Middle", "Middle", "Middle", "Edge" ],
-            [ "Edge", "Middle", "Middle", "Middle", "Dragonhome", "River", "Middle", "Middle", "Middle", "Edge" ],
-            [ "Edge", "Middle", "River", "River", "River", "River", "Middle", "Middle", "Middle", "Edge" ],
-            [ "Edge", "Middle", "River", "Middle", "River", "Middle", "Middle", "Middle", "Middle", "Edge" ],
-            [ "RiverStart", "River", "River", "Middle", "River", "Middle", "Middle", "Middle", "Middle", "Edge" ],
-            [ "Edge", "Middle", "Middle", "Middle", "River", "Middle", "Middle", "Middle", "Middle", "Edge" ],
-            [ "Edge", "Edge", "Edge", "Edge", "RiverStart", "Edge", "Edge", "Edge", "Edge", "Edge" ]
+            [ "Edge",   "Edge",         "Edge",         "Edge",         "Edge",         "Edge",     "Edge",     "Edge",     "RiverEnd", "Edge" ],
+            [ "Edge",   "Middle",       "Middle",       "Middle",       "Middle",       "Middle",   "Middle",   "River",    "River",    "Edge" ],
+            [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "Tailbone", "Tailbone", "River",    "Middle",   "Edge" ],
+            [ "Skull",  "UnderSpine",   "UnderSpine",   "UnderSpine",   "UnderSpine",   "RiverTB",  "RiverTB",  "River",    "Middle",   "Edge" ],
+            [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "Edge",   "Middle",       "Middle",       "Middle",       "Dragonhome",   "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "Edge",   "Middle",       "River",        "River",        "River",        "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "Edge",   "Middle",       "River",        "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "RiverStart", "River",     "River",       "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "Edge",   "Middle",       "Middle",       "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "Edge",   "Edge",         "Edge",         "Edge",         "RiverStart",   "Edge",     "Edge",     "Edge",     "Edge",     "Edge" ]
         ],
         [
             [],
-            [ null, "Air", "Air", "Air", "Air", "Air", "Air", "OverRiver", "Air" ],
-            [ null, "Air", "Air", "Air", "Air", "Air", "Air", "OverRiver", "Air" ],
-            [ null, "Spine", "Spine", "Spine", "Spine", "OverRiver", "OverRiver", "OverRiver", "Air" ],
-            [ null, "Air", "Air", "Air", "Air", "OverRiver", "Air", "Air", "Air" ],
-            [ null, "Air", "Air", "Air", "OverHome", "OverRiver", "Air", "Air", "Air" ],
-            [ null, "Air", "OverRiver", "OverRiver", "OverRiver", "OverRiver", "Air", "Air", "Air" ],
-            [ null, "Air", "OverRiver", "Air", "OverRiver", "Air", "Air", "Air", "Air" ],
-            [ null, "OverRiver", "OverRiver", "Air", "OverRiver", "Air", "Air", "Air", "Air" ],
-            [ null, "Air", "Air", "Air", "OverRiver", "Air", "Air", "Air", "Air" ]
-        ],
-        [],
-        [
-            [ null, null, null, null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, "UnderRiver", "UnderRiver", "UnderRiver" ],
-            [ null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, "UnderRiver" ],
-            [ null, null, "UnderRiver", "UnderRiver", "UnderRiver", "UnderRiver" ],
-            [ null, null, "UnderRiver", null, "UnderRiver" ],
-            [ "UnderRiver", "UnderRiver", "UnderRiver", null, "UnderRiver"],
-            [ null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, "UnderRiver" ]
+            [ null,     "Air",          "Air",          "Air",          "Air",          "Air",      "Air",      "OverRiver","OverRiver" ],
+            [ null,     "Air",          "Air",          "Air",          "Air",          "Air",      "Air",      "OverRiver","Air" ],
+            [ null,     "Spine",        "Spine",        "Spine",        "Spine",        "OverRiver","OverRiver","OverRiver","Air" ],
+            [ null,     "Air",          "Air",          "Air",          "Air",          "OverRiver","Air",      "Air",      "Air" ],
+            [ null,     "Air",          "Air",          "Air",          "OverHome",     "OverRiver","Air",      "Air",      "Air" ],
+            [ null,     "Air",          "OverRiver",    "OverRiver",    "OverRiver",    "OverRiver","Air",      "Air",      "Air" ],
+            [ null,     "Air",          "OverRiver",    "Air",          "OverRiver",    "Air",      "Air",      "Air",      "Air" ],
+            [ null,     "OverRiver",    "OverRiver",    "Air",          "OverRiver",    "Air",      "Air",      "Air",      "Air" ],
+            [ null,     "Air",          "Air",          "Air",          "OverRiver",    "Air",      "Air",      "Air",      "Air" ]
         ]
     ],
     "styles": {
@@ -112,7 +98,7 @@
                     "event": "acknowledge nsfw"
                 }
             ],
-            "actions": [ "rest" , "test" ]
+            "actions": [ "rest", "test" ]
         },
         "OverRiver": {
             "description": "You're flying over an underground river.",
@@ -155,12 +141,17 @@
             ],
             "actions": [ "hunt3" ],
             "directionOverrides": {
-                "down": { "z": 4 }
+                "down": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "zone": "Undermountain Waterways"
+                }
             }
         },
-        "UnderRiver": {
-            "description": "You are swimming through the water in the underground river.",
-            "preview": "The water is cool, clear and free-flowing through here, occupied by the occassional fish or giant newt.",
+        "RiverTB": {
+            "description": "The river here has been diverted a bit further south than it used to be by the massive wall of bone that is your mother's tail's remains. The bone is massive enough you would need to fly if you wanted to head north.",
+            "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
             "events": [
                 {
                     "chance": 10,
@@ -173,12 +164,20 @@
             ],
             "actions": [ "hunt3" ],
             "directionOverrides": {
-                "up": { "z": -4 }
+                "down": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "zone": "Undermountain Waterways"
+                },
+                "north": {
+                    "disabled": true
+                }
             }
         },
         "RiverStart": {
             "description": "The underground river here enters the cave from beneath a pile of rocks, the end result of a long ago cave-in.",
-            "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+            "preview": "A river enters the cavern over there. A good place to go fishing or take a drink, or even a bath.",
             "events": [
                 {
                     "chance": 10,
@@ -191,12 +190,17 @@
             ],
             "actions": [ "hunt3" ],
             "directionOverrides": {
-                "down": { "z": 4 }
+                "down": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "zone": "Undermountain Waterways"
+                }
             }
         },
         "RiverEnd": {
             "description": "The underground river here leaves the cave, flowing down into a deep, dark tunnel of unknown length.",
-            "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+            "preview": "A river leaves the cavern over there. A good place to go fishing or take a drink, or even a bath.",
             "events": [
                 {
                     "chance": 10,
@@ -209,7 +213,12 @@
             ],
             "actions": [ "hunt3" ],
             "directionOverrides": {
-                "down": { "z": 4 }
+                "down": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "zone": "Undermountain Waterways"
+                }
             }
         },
         "Skull": {
@@ -240,7 +249,12 @@
                     "event": "spider attack"
                 }
             ],
-            "actions": [ "hunt" ]
+            "actions": [ "hunt" ],
+            "directionOverrides": {
+                "up": {
+                    "disabled": true
+                }
+            }
         },
         "Spine": {
             "description": "Your mother's spine arches through the air here, far above the ground, nearly reaching the ceiling.",
@@ -255,7 +269,12 @@
                     "event": "spider attack"
                 }
             ],
-            "actions": [ "harvest", "hunt2" ]
+            "actions": [ "harvest", "hunt2" ],
+            "directionOverrides": {
+                "down": {
+                    "disabled": true
+                }
+            }
         },
         "Ribs": {
             "description": "Your mother's massive ribs arch down to the ground here like massive columns, chipped and worn in places where something has been breaking off pieces.",
@@ -285,7 +304,12 @@
                     "event": "spider attack"
                 }
             ],
-            "actions": [ "harvest" ]
+            "actions": [ "harvest" ],
+            "directionOverrides": {
+                "south": {
+                    "disabled": true
+                }
+            }
         }
     },
 "events":{
@@ -308,10 +332,6 @@
     "flying free": {
         "verb": "flavor",
         "details": { "text": "You fly carelessly through the air, enjoying the wind across your scales. It's peaceful here, if a bit boring. Some large bats wing through the air in the area but none of them are bothering you at the moment." }
-    },
-    "acknowledge nsfw": {
-        "verb": "flavor",
-        "details":  { "text": "NOTE: You have NSFW content enabled. If you are playing in an environment where that is a problem, leave off the '?nsfw=true' part of the URL."}
     }
 },
 "actions":{
@@ -322,30 +342,11 @@
         "details": {},
         "help": "Fast forward time to recover from your trevails. In addition, you may have a resting event, and also save a checkpoint in case you die or want to rewind."
     },
-    "test": {
-        "type": "actButton",
-        "display": "Test",
-        "verb": "flavor",
-        "details": { "text": "Test mode is on" },
-        "help": "This button should only appear if the query string has test=true, and only enabled if your save's debug=enabled.",
-        "enabled": {
-            "condition": "stateis",
-            "fact": "debug",
-            "rule": "=",
-            "value": "enabled"
-        },
-        "visible": {
-            "condition": "stateis",
-            "fact": "query/test",
-            "rule": "=",
-            "value": "true"
-        }
-    },
     "harvest": {
         "type": "actButton",
         "display": "Harvest bone",
         "verb": "gather",
-        "details": { "item": "Dragonbone shard" },
+        "details": { "item": "Dragonbone shard", "dice":1, "die":4, "plus":2 },
         "help": "Spend some time gathering dragonbone from your mother's remains. It's quite sturdy and hard, as well as being elementally aligned with fire, giving it some nice properties as a material."
     },
     "commune": {
