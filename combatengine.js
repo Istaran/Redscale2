@@ -3,25 +3,42 @@ var gameengine = null;
 
 let getControls = async function (state) {
     if (!gameengine) gameengine = require('./gameengine');
-    let controls = [[]];
+    let controls = [];
     // Add cards based on phase, etc
 
     let phase = state.enemy.phasequeue[0] || "assess";
 
     if (phase == 'acquire') {
         let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
+        let enemyPrivateDef = (state.query.nsfw ? await cache.load(`data/private/enemies/${state.enemy.name}.json`) : null);
+        if (enemyPrivateDef) {
+            for (var acqCard in enemyPrivateDef.acquirecards) {
+                if (await gameengine.conditionMet(state, enemyPrivateDef.acquirecards[acqCard].if)) {
+                    let enabled = await gameengine.conditionMet(state, enemyPrivateDef.acquirecards[acqCard].enabled);
+                    let acq = {
+                        "type": "card",
+                        "display": enemyPrivateDef.acquirecards[acqCard].display,
+                        "verb": "acquire",
+                        "details": { "card": acqCard },
+                        "help": enemyPrivateDef.acquirecards[acqCard].help,
+                        "enabled": enabled
+                    }
+                    controls.push([acq]);
+                }
+            }
+        }
         for (var acqCard in enemyDef.acquirecards) {
-            if (await gameengine.conditionMet(state, enemyDef.acquirecards[acqCard].if)) {
+            if (!enemyPrivateDef || !enemyPrivateDef[acqCard] || await gameengine.conditionMet(state, enemyDef.acquirecards[acqCard].if)) {
                 let enabled = await gameengine.conditionMet(state, enemyDef.acquirecards[acqCard].enabled);
                 let acq = {
-                    "type": "actButton",
+                    "type": "card",
                     "display": enemyDef.acquirecards[acqCard].display,
                     "verb": "acquire",
                     "details": { "card": acqCard },
                     "help": enemyDef.acquirecards[acqCard].help,
                     "enabled": enabled
                 }
-                controls[0].push(acq);
+                controls.push([acq]);
             }
         }
     } else {
@@ -29,14 +46,14 @@ let getControls = async function (state) {
         let cards = await cache.load(`data/combat/${phase} cards.json`);
         for (var card in cards) {
             let ctrl = {
-                "type": "actButton",
-                "display": card,
+                "type": "card",
+                "display": cards[card].cardlines,
                 "verb": phase,
                 "details": { "card": card },
                 "help": cards[card].help,
                 "enabled": true
             };
-            controls[0].push(ctrl);
+            controls.push([ctrl]);
         }
     }
 

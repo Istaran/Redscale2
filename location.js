@@ -109,7 +109,21 @@ let explore = async function (state) {
 	}
 };
 
+let getDescription = async function (state) {
+    let zone = await cache.load(`./data/locations/${state.location}.json`);
+
+    if (spotExists(zone, state.x, state.y, state.z)) {
+        if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
+
+        let spot = zone.map[state.z][state.y][state.x];
+        let style = zone.styles[spot];
+        return style.description;
+    }
+    return "Ooops, you somehow ended up outside reality.";
+};
+
 module.exports = {
 	explore: explore,
-	getControls: getControls
+    getControls: getControls,
+    getDescription: getDescription
 };

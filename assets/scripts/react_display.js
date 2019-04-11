@@ -95,10 +95,36 @@ class ActButton extends React.Component {
 	}
 	
 	render() {
-        return <input type='button' className='actButton' onClick={(event) => this.takeAction(event)} value={this.props.display} disabled={!this.props.enabled} onMouseOver={(event)=>helper.setState({help:this.props.help})} onMouseOut={(event)=>helper.setState({help:null})} />;
+        return <input type='button' className='actButton' onClick={(event) => this.takeAction(event)} value={this.props.display} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} />;
 	}
 }
 
+
+class Card extends React.Component {
+    constructor(props) {
+        super(props);
+    };
+
+    takeAction = function () {
+        let self = this;
+        helper.setState({ help: null });
+        fetch('/act' + location.search, {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'id': self.props.id, 'username': self.props.parent.state.username } })
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            self.props.parent.setState({ gameState: data });
+        });
+    }
+
+    render() {
+        return <div className='card' onClick={(event) => this.takeAction(event)} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} >{ this.props.display }</div >;
+    }
+}
 
 
 class Navigator extends React.Component {
@@ -317,6 +343,8 @@ class GameDisplayer extends React.Component {
 					switch (control.type) {
 						case 'actButton': 
                             return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
+                        case 'card':
+                            return <Card parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
 						case 'navigator':
                             return <Navigator parent={self} key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
 						default:

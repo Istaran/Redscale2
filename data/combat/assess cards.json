@@ -1,6 +1,7 @@
 {
     "Press the attack": {
         "display": "You take the initiative to try to take down your foe.",
+        "cardlines": "Press the attack\n\nAttack first\nAbjure Draw: \u2b24\nAggress Draw: \u2b24",
         "help": "Attack first! Draw: 1 Abjure, 1 Aggress",
         "queue": [ "aggress", "abjure", "assess" ],
         "abjuredraw": 1,
@@ -8,13 +9,14 @@
     },
     "Fight defensively": {
         "display": "You take the time to consider your options.",
-        "help": "Defend first! Draw: 2 Abjure, 2 Aggress",
+        "cardlines": "Fight defensively\n\nAttack last\nAbjure Draw: \u2b24\u2b24\nAggress Draw: \u2b24\u2b24",
         "queue": [ "abjure", "aggress", "assess" ],
         "abjuredraw": 2,
         "aggressdraw": 2
     },
     "Flee!": {
         "display": "You try to escape!",
+        "cardlines": "Flee!\n\nEscape rolls: \u2b24\nAbjure Draw:\nAggress Draw:",
         "help": "Attempt to escape in a random direction. No draw or aggress phase.",
         "queue": [ "abjure", "assess" ],
         "abjuredraw": 0,

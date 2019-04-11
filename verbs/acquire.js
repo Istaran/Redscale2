@@ -4,9 +4,12 @@ var cache = require('../cache');
 
 let act = async function (state, details) {
     let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
-    let acquireCard = enemyDef.acquirecards[details.card];
+    let enemyPrivateDef = (state.query.nsfw ? await cache.load(`data/private/enemies/${state.enemy.name}.json`) : null);
+    let acquireCard = (enemyPrivateDef && enemyPrivateDef.acquirecards && enemyPrivateDef.acquirecards[details.card]) ? enemyPrivateDef.acquirecards[details.card] : enemyDef.acquirecards[details.card];
     await combatengine.clearCombat(state);
-    await gameengine.doVerb(acquireCard.verb, state, acquireCard.details);
+    if (acquireCard) { // Switching modes my end in a no-op maybe? Actually, status call should prevent.
+        await gameengine.doVerb(acquireCard.verb, state, acquireCard.details);
+    }
 }
 
 
