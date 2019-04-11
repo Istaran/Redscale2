@@ -7,10 +7,18 @@
         "aggressdraw": 1
     },
     "Fight defensively": {
-        "display": "You take the time to consider your options",
+        "display": "You take the time to consider your options.",
         "help": "Defend first! Draw: 2 Abjure, 2 Aggress",
         "queue": [ "abjure", "aggress", "assess" ],
         "abjuredraw": 2,
         "aggressdraw": 2
+    },
+    "Flee!": {
+        "display": "You try to escape!",
+        "help": "Attempt to escape in a random direction. No draw or aggress phase.",
+        "queue": [ "abjure", "assess" ],
+        "abjuredraw": 0,
+        "aggressdraw": 0,
+        "escaperolls": 1
     }
 }

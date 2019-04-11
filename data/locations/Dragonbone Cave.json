@@ -2,29 +2,29 @@
     "map": 
     [
         [
-            [ "Edge",   "Edge",         "Edge",         "Edge",         "Edge",         "Edge",     "Edge",     "Edge",     "RiverEnd", "Edge" ],
-            [ "Edge",   "Middle",       "Middle",       "Middle",       "Middle",       "Middle",   "Middle",   "River",    "River",    "Edge" ],
+            [ "Edge",   "Edge",         "Edge",         null,           null,           "Edge",     "Edge",     "Edge",     "RiverEnd", "Edge" ],
+            [ "Edge",   "Middle",       "Middle",       "Edge",         "Edge",         "Middle",   "Middle",   "River",    "River",    "Edge" ],
             [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "Tailbone", "Tailbone", "River",    "Middle",   "Edge" ],
             [ "Skull",  "UnderSpine",   "UnderSpine",   "UnderSpine",   "UnderSpine",   "RiverTB",  "RiverTB",  "River",    "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "Middle",       "Middle",       "Dragonhome",   "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "River",        "River",        "River",        "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "River",        "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
-            [ "RiverStart", "River",     "River",       "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
-            [ "Edge",   "Middle",       "Middle",       "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
-            [ "Edge",   "Edge",         "Edge",         "Edge",         "RiverStart",   "Edge",     "Edge",     "Edge",     "Edge",     "Edge" ]
+            [ "RiverStart", "River",    "River",        "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Edge"],
+            [ "Edge",   "Middle",       "Middle",       "Middle",       "River",        "Middle",   "Edge",     "Edge" ],
+            [ null,     "Edge",         "Edge",         "Edge",         "RiverStart",   "Edge"]
         ],
         [
             [],
-            [ null,     "Air",          "Air",          "Air",          "Air",          "Air",      "Air",      "OverRiver","OverRiver" ],
+            [ null,     "Air",          "Air",          null,           null,           "Air",      "Air",      "OverRiver","OverRiver" ],
             [ null,     "Air",          "Air",          "Air",          "Air",          "Air",      "Air",      "OverRiver","Air" ],
             [ null,     "Spine",        "Spine",        "Spine",        "Spine",        "OverRiver","OverRiver","OverRiver","Air" ],
             [ null,     "Air",          "Air",          "Air",          "Air",          "OverRiver","Air",      "Air",      "Air" ],
             [ null,     "Air",          "Air",          "Air",          "OverHome",     "OverRiver","Air",      "Air",      "Air" ],
             [ null,     "Air",          "OverRiver",    "OverRiver",    "OverRiver",    "OverRiver","Air",      "Air",      "Air" ],
-            [ null,     "Air",          "OverRiver",    "Air",          "OverRiver",    "Air",      "Air",      "Air",      "Air" ],
-            [ null,     "OverRiver",    "OverRiver",    "Air",          "OverRiver",    "Air",      "Air",      "Air",      "Air" ],
-            [ null,     "Air",          "Air",          "Air",          "OverRiver",    "Air",      "Air",      "Air",      "Air" ]
+            [ null,     "Air",          "OverRiver",    "Air",          "OverRiver",    "Air",      "Air",      "Air" ],
+            [ null,     "OverRiver",    "OverRiver",    "Air",          "OverRiver",    "Air" ],
+            [ null,     "Air",          "Air",          "Air",          "OverRiver" ]
         ]
     ],
     "styles": {
@@ -41,7 +41,21 @@
                     "event": "rat attack"
                 }
             ],
-            "actions": [ "hunt" ]
+            "actions": [ "hunt" ],
+            "directionOverrides": {
+                "nw": {
+                    "disabled": false
+                },
+                "ne": {
+                    "disabled": false
+                },
+                "sw": {
+                    "disabled": false
+                },
+                "se": {
+                    "disabled": false
+                }
+            }
         },
         "Middle": {
             "description": "You're in the middle of a vast cavern.",
