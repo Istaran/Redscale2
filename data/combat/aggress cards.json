@@ -25,8 +25,8 @@
     },
     "Instinctive Tail Slap": {
         "display": "You swing your tail at your foe!",
-        "cardlines": "Instinctive Tail Slap\n\nAccuracy: \u2b24\u2b24\nDamage: \u2b24\u2b24\u2b24\nAttacks: \u2b24\nDuplicates: Increase damage by 1d6+2",
-        "help": "Tail attack:\nAccuracy: 10\nDamage: 3d6+6\nAttacks:1\nStrong vs brace, weak vs deflect.",
+        "cardlines": "Instinctive Tail Slap\n\nAccuracy: \u2b24\u2b24\nDamage: \u2b24\u2b24\u2b24\nAttacks: \u2b24",
+        "help": "Tail attack:\nAccuracy: 10\nDamage: 3d6+6\nAttacks:1\nStrong vs brace, weak vs deflect.\nDuplicates: Increase damage by 1d6+2",
         "accuracy": 10,
         "damagedice": 3,
         "damagedie": 6,
