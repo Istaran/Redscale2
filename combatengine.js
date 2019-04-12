@@ -154,7 +154,7 @@ let drawCards = function (hand, pool, count) {
     }
     console.log(`Drawing ${count} from ${JSON.stringify(shuffle)}`);
     for (; count > 0 && shuffle.length > 0; count--) {
-        let card = shuffle.splice(Math.floor(Math.random() & shuffle.length), 1)[0];
+        let card = shuffle.splice(Math.floor(Math.random() * shuffle.length), 1)[0];
         console.log(card);
         if (hand[card])
             hand[card]++;
@@ -175,7 +175,7 @@ let discardCards = function (hand, count) {
     }
     console.log(`Discarding ${count} from ${JSON.stringify(shuffle)}`);
     for (; count > 0 && shuffle.length > 0; count--) {
-        let card = shuffle.splice(Math.floor(Math.random() & shuffle.length), 1)[0];
+        let card = shuffle.splice(Math.floor(Math.random() * shuffle.length), 1)[0];
         console.log(card);
         hand[card]--;
         if (hand[card] == 0)
@@ -201,10 +201,13 @@ let attackRoll = function (accuracy, evasion) {
 // Given (net) dice count/faces and modifier, roll the dice and return damage.
 let damageRoll = function (damageDice, damageDie, damagePlus) {
     let damage = 0;
+    console.log(`Rolling ${damageDice}d${damageDie}+${damagePlus}`);
     for (var i = 0; i < damageDice; i++) {
         damage += Math.floor(Math.random() * damageDie) + 1;
+        console.log(damage);
     }
     damage += damagePlus;
+    console.log(damage);
     return damage > 0 ? damage : 0;
 };
 

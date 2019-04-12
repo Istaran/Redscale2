@@ -43,7 +43,7 @@ let act = async function (state, details) {
 
     let engineProgress = await combatengine.progress(state);
     console.log("State: " + JSON.stringify(state));
-    state.view.status = `${card.display}\n${enemyCard["aggress display"]}\n\n${engineResult}\n\n${engineProgress}`;
+    state.view.status = `${card.display}\n${enemyCard["aggress display"]}\n\n${engineResult}\n${engineProgress}`;
 }
 
 

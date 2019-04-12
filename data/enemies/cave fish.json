@@ -52,7 +52,7 @@
                     "damagedice": 2,
                     "damagedie": 8,
                     "damageplus": 2,
-                    "damagetype": "piercing",
+                    "damagetype": "bludgeoning",
                     "attacks": 3,
                     "abjure display": "The fish slaps your blow aside with its tail!",
                     "dodge": 0,
