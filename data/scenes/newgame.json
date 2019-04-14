@@ -1,0 +1,92 @@
+{
+  "start": {
+    "controls": [
+      [
+        {
+          "type": "actButton",
+          "display": "Male",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "newparty",
+              "details": {
+                "display": "Main party",
+                "leader": "Lord Redscale",
+                "type": "genesis"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "name": "newgame",
+                "sub": "rename"
+              }
+            },
+            {
+              "verb": "flavor",
+              "details": {
+                "text": "You are a male, the son your mother never knew in life. Your slim but muscular figure carries within it the final potential to rebuild your family's lost empire and sow the seeds of your family's continuation. But first you need to get out of this cave.\n\nAs one final step before you set out, you decide you need a name for yourself. You will call yourself..."
+              }
+            }
+          ],
+          "help": "Male dragons are a bit leaner and faster than their counterparts, giving an advantage at dodging and landing blows.\n\n+2 accuracy and dodge, +20 max stamina, +1 health recovery"
+        },
+        {
+          "type": "actButton",
+          "display": "Female",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "newParty",
+              "details": {
+                "display": "Main party",
+                "leader": "Lady Redscale",
+                "type": "genesis"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "name": "newgame",
+                "sub": "rename"
+              }
+            },
+            {
+              "verb": "flavor",
+              "details": {
+                "text": "You are a female, the daughter your mother never knew in life. Your curvaceous but muscular figure carries within it the final potential to rebuild your family's lost empire and lay the eggs that will some day continue your family. But first you need to get out of this cave.\n\nAs one final step before you set out, you decide you need a name for yourself. You will call yourself..."
+              }
+            }
+          ],
+          "help": "Female dragons are a bit stronger and tougher than their counterparts, giving an advantage at giving and receiving powerful blows.\n\n+2 damage and damage reduction, +20 max health, +2 stamina recovery"
+        }
+      ]
+    ]
+  },
+  "rename": {
+    "controls": [
+      [
+        {
+          "type": "actButton",
+          "display": "Redscale",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "rest",
+              "details": {
+                "silent": true
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "With that decided, you set out with fresh determination, ready to take on the world!",
+                "clear": true
+              }
+            }
+          ]
+        }
+      ]
+    ]
+  }
+}

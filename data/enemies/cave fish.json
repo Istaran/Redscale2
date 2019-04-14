@@ -68,9 +68,9 @@
             "verb": "eat",
             "details": {
                 "text": "You force the fish's remains down your throat, devouring the whole thing in one smooth motion. Ah, quite satisfying.",
-                "nutrition": 20
+                "nutrition": 40
             },
-            "help": "Consume your enemy's corpse to gain its calories.\nGet +20 nutrition."
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +40 nutrition."
 
         }
     }

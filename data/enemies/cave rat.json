@@ -102,9 +102,9 @@
             "verb": "eat",
             "details": {
                 "text": "You rip open the rat's guts, dining on the delicious organs within. You need a bit of care to avoid getting a bunch of fur stuck in your teeth, but not so much as to truly slow you down.",
-                "nutrition": 15
+                "nutrition": 30
             },
-            "help": "Consume your enemy's corpse to gain its calories.\nGet +15 nutrition."
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +30 nutrition."
         },
         "card": {
             "display": "Card",

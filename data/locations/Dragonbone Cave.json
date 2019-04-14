@@ -6,10 +6,10 @@
             [ "Edge",   "Middle",       "Middle",       "Edge",         "Edge",         "Middle",   "Middle",   "River",    "River",    "Edge" ],
             [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "Tailbone", "Tailbone", "River",    "Middle",   "Edge" ],
             [ "Skull",  "UnderSpine",   "UnderSpine",   "UnderSpine",   "UnderSpine",   "RiverTB",  "RiverTB",  "River",    "Middle",   "Edge" ],
-            [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "CaveinW","Middle",       "Middle",       "Ribs",         "Ribs",         "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "Middle",       "Middle",       "Dragonhome",   "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "River",        "River",        "River",        "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
-            [ "Edge",   "Middle",       "River",        "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
+            [ "Edge",   "Middle",       "River",        "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "CaveinE"],
             [ "RiverStart", "River",    "River",        "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Edge"],
             [ "Edge",   "Middle",       "Middle",       "Middle",       "River",        "Middle",   "Edge",     "Edge" ],
             [ null,     "Edge",         "Edge",         "Edge",         "RiverStart",   "Edge"]
