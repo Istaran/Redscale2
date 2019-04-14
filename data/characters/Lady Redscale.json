@@ -1,0 +1,42 @@
+{
+  "name": "Lord Redscale",
+  "display": "Redscale",
+  "health": 120,
+  "maxHealth": 120,
+  "stamina": 100,
+  "maxStamina": 100,
+  "nutrition": 100,
+  "maxNutrition": 100,
+  "mana": 100,
+  "maxMana": 100,
+  "healthRecover": 5,
+  "staminaRecover": 12,
+  "manaRecover": 1,
+  "evasion": 10,
+  "bonussoak": 2,
+  "bonusdamage": 2,
+  "aggressCards": {
+    "Instinctive Bite": 5,
+    "Instinctive Claws": 5,
+    "Instinctive Tail Slap": 5
+  },
+  "abjureCards": {
+    "Instinctive Dodge": 5,
+    "Instinctive Deflect": 5,
+    "Instinctive Brace": 5
+  },
+  "assessCards": [
+    { "card": "Press the attack" },
+    { "card": "Fight defensively" }
+  ],
+  "aggressDefaultHand": {
+    "Instinctive Bite": 1,
+    "Instinctive Claws": 1,
+    "Instinctive Tail Slap": 1
+  },
+  "abjureDefaultHand": {
+    "Instinctive Dodge": 1,
+    "Instinctive Deflect": 1,
+    "Instinctive Brace": 1
+  }
+}

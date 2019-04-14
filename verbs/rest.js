@@ -13,7 +13,7 @@ let act = async function (state, details) {
     let timestamp = Date.now();
     cache.save(`saves/archive/${timestamp}.json`, state);
     state.archive = timestamp;
-    state.view.status = "You rest peacefully, digesting your food, recovering your strength, and backing up your save.";
+    state.view.status = (details.silent ? "" : "You rest peacefully, digesting your food, recovering your strength, and backing up your save.");
 };
 
 

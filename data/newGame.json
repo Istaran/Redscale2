@@ -1,1 +1,19 @@
-{"location":"Dragonbone Cave","x":4,"y":5,"z":0,"save version":0,"view":{"status":"You're in the center of a vast cavern, in the place you call home.","controls":[[{"type":"navigator","details":{"up":{"direction":"up","preview":"It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly."},"north":{"direction":"north","preview":"Your mother's ribs arch down through the area over there, massive columns visible from a distance."},"east":{"direction":"east","preview":"A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath."},"west":{"direction":"west","preview":"It looks like an unremarkable area in the middle of the cavern. You don't really see much of anything for some distance."},"south":{"direction":"south","preview":"A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath."}}}],[{"type":"actButton","display":"Rest","verb":"rest","details":{},"help":"Fast forward time to recover from your trevails. In addition, you may have a resting event, and also save a checkpoint in case you die or want to rewind."}]]}}
+{
+  "save version": 0,
+  "activeParty": 0,
+  "gameTime": 0,
+  "parties": [
+  ],
+    "location": "Dragonbone Cave",
+    "x": 4,
+    "y": 5,
+    "z": 0,
+  "view": {
+    "status": "You are a young, redscaled dragon. You were hatched an orphan, as far as you know. Definitely alone. You have never seen another living creature capable of intelligent speech, and only even know what speech is because of your inherited knowledge. One of the perks of being a dragon.\n\nYou know for certain your mother is dead, because her massive skeletal remains arch up into the upper reaches of the cavern you live in, a body large enough to build a neighborhood under. When you hatched, she hadn't even truly begun to rot yet, and for the first few years you joined the local vermin in devouring what remained of her flesh. But now you are much bigger and have taken to eating the vermin instead. You've gotten this far, fighting on sheer instinct and will to live.\n\nBut today seems like an important new day. You've reached twenty years since hatching, finally strengthened your wings enough to take flight, and even managed to get your first bits of fire breath going. The day has come to set out.\n\nBut first, you take a moment to take stock of yourself. For example, what gender were you again? Between your youth and absolute lack of dating opportunities, it hasn't really been important yet, so you need to remind yourself." 
+  },
+  "scene": {
+    "type": "menu",
+    "name": "newgame",
+    "sub": "start"
+  }
+}

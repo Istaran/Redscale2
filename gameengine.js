@@ -63,11 +63,11 @@ let controls = async function (state) {
 
     let controls = null;
 	if (state.scene2 !== undefined) {
-		controls = await scenes.getControls(state.scene2);
+		controls = await scenes.getControls(state, state.scene2);
 	} else if (state.enemy !== undefined) {
         controls = await combat.getControls(state);
 	} else if (state.scene !== undefined) {
-        controls = await scenes.getControls(state.scene);
+        controls = await scenes.getControls(state, state.scene);
 	} else {
 		controls = await loc.getControls(state);
 		player.addControls(state, controls);
