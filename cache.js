@@ -1,5 +1,5 @@
 var fs = require('fs');
-
+var mkdirp = require('mkdirp');
 var cache = {};
 var watches = {};
 
@@ -36,15 +36,20 @@ let load = function (path) {
 
 let save = function (path, value) {
 	cache[path] = new Promise(function (resolve, reject) {
-        fs.writeFile(path, JSON.stringify(value), { encoding: 'utf8' }, (err) => {
-            if (err)
-                console.log(err);
-            else
-                console.log("Saved " + path);
-            cache[path].isGameSaving = false;
-            watch(path);
-            resolve(value);
-        });
+		mkdirp(path.substring(0, path.lastIndexOf('/')), null, (err, made) => {
+			if (err) throw err;
+			if (made) console.log(`Made directory ${made} as part of saving ${path}`);
+			
+			fs.writeFile(path, JSON.stringify(value), { encoding: 'utf8' }, (err) => {
+				if (err)
+					console.log(err);
+				else
+					console.log("Saved " + path);
+				cache[path].isGameSaving = false;
+				watch(path);
+				resolve(value);
+			});
+		});
     });
     cache[path].isGameSaving = true;
 }

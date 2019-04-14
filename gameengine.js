@@ -25,6 +25,7 @@ let doVerb = async function (verbName, state, details) {
         }
     }
     if (verbs[verbName]) {
+        if (details && details.dirty) state.dirty = true;
         await verbs[verbName].act(state, details);
     }
 }
@@ -111,11 +112,13 @@ let act = async function (action, query) {
 		// TODO: apply change. There are no migrations yet, though, so we're okay.
 		state["save version"]++;
 	}
-	
+
 	// Apply action
     if (action.id && state.details[action.id]) {
-        let details = (action.sub ? state.details[action.id][action.sub] : state.details[action.id]);
-        await doVerb(action.verb, state, details);
+        state.dirty = undefined;
+        state.view = {};
+    let details = (action.sub ? state.details[action.id][action.sub] : state.details[action.id]);
+    await doVerb(action.verb, state, details);
     } else {
         await doVerb("status", state, null);
     }

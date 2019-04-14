@@ -1,5 +1,10 @@
-let act = async function(state, details) {
-    // No-op for now. In future might need to do something like query-based censoring, or some kind of re-evaluation.
+let loc = require('../location');
+
+let act = async function (state, details) {
+    // Clear old dirty text
+    if (state.dirty && !state.query.nsfw) {
+        state.view.status = await loc.getDescription(state);
+    }
 };
 
 

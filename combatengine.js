@@ -3,40 +3,89 @@ var gameengine = null;
 
 let getControls = async function (state) {
     if (!gameengine) gameengine = require('./gameengine');
-    let controls = [[]];
+    let controls = [];
     // Add cards based on phase, etc
 
     let phase = state.enemy.phasequeue[0] || "assess";
 
     if (phase == 'acquire') {
         let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
+        let enemyPrivateDef = (state.query.nsfw ? await cache.load(`data/private/enemies/${state.enemy.name}.json`) : null);
+        if (enemyPrivateDef) {
+            for (var acqCard in enemyPrivateDef.acquirecards) {
+                if (await gameengine.conditionMet(state, enemyPrivateDef.acquirecards[acqCard].if)) {
+                    let enabled = await gameengine.conditionMet(state, enemyPrivateDef.acquirecards[acqCard].enabled);
+                    let acq = {
+                        "type": "card",
+                        "display": enemyPrivateDef.acquirecards[acqCard].display,
+                        "verb": "acquire",
+                        "details": { "card": acqCard },
+                        "help": enemyPrivateDef.acquirecards[acqCard].help,
+                        "enabled": enabled
+                    }
+                    controls.push([acq]);
+                }
+            }
+        }
         for (var acqCard in enemyDef.acquirecards) {
-            if (await gameengine.conditionMet(state, enemyDef.acquirecards[acqCard].if)) {
+            if (!enemyPrivateDef || !enemyPrivateDef[acqCard] || await gameengine.conditionMet(state, enemyDef.acquirecards[acqCard].if)) {
                 let enabled = await gameengine.conditionMet(state, enemyDef.acquirecards[acqCard].enabled);
                 let acq = {
-                    "type": "actButton",
+                    "type": "card",
                     "display": enemyDef.acquirecards[acqCard].display,
                     "verb": "acquire",
                     "details": { "card": acqCard },
                     "help": enemyDef.acquirecards[acqCard].help,
                     "enabled": enabled
                 }
-                controls[0].push(acq);
+                controls.push([acq]);
             }
         }
-    } else {
-        // TEMP: Just add all defined cards as basic buttons
-        let cards = await cache.load(`data/combat/${phase} cards.json`);
+    } else if (phase == 'assess') {
+        // TODO: add additional assess cards from enemy public/private defs. Maybe someday do some optional personal choices.
+        let cards = await cache.load(`data/combat/assess cards.json`);
         for (var card in cards) {
             let ctrl = {
-                "type": "actButton",
-                "display": card,
+                "type": "card",
+                "display": cards[card].cardlines,
                 "verb": phase,
                 "details": { "card": card },
                 "help": cards[card].help,
                 "enabled": true
             };
-            controls[0].push(ctrl);
+            controls.push([ctrl]);
+        }
+    } else {
+        
+        let cards = await cache.load(`data/combat/${phase} cards.json`);
+        let leader = state.parties[state.activeParty].leader;
+        let hand = leader[`${phase}Hand`];
+        for (var card in hand) {
+            if (hand[card]) { // Oddly, this still brings up undefined cards if save is cached.
+                let ctrl = {
+                    "type": "card",
+                    "display": cards[card].cardlines,
+                    "count": hand[card],
+                    "verb": phase,
+                    "details": { "card": card },
+                    "help": cards[card].help,
+                    "enabled": true
+                };
+                controls.push([ctrl]);
+            }
+        }
+        if (controls.length == 0) {
+            let card = "NoCard";
+            let ctrl = {
+                "type": "card",
+                "display": cards[card].cardlines,
+                "count": hand[card],
+                "verb": phase,
+                "details": { "card": card },
+                "help": cards[card].help,
+                "enabled": true
+            };
+            controls.push([ctrl]);
         }
     }
 
@@ -60,8 +109,11 @@ let getQueueFromSets = function (sets, max) {
     return queue;
 }
 
-let configureEnemy = async function (state, target, flavor)
-{
+let configureEnemy = async function (state, target, flavor) {
+    let leader = state.parties[state.activeParty].leader;
+    leader.aggressHand = Object.assign({}, leader.aggressDefaultHand);
+    leader.abjureHand = Object.assign({}, leader.abjureDefaultHand);
+
     let targetDef = await cache.load(`data/enemies/${target}.json`);
     if (!targetDef) return `Failed to load enemy type: ${target}`;
 
@@ -90,7 +142,47 @@ let configureEnemy = async function (state, target, flavor)
     let tell = targetDef.cardsets[enemy.cardqueue[0].set].tell;
 
     return `${announce}\n\n${tell}`;
-}
+};
+
+let drawCards = function (hand, pool, count) {
+    let shuffle = [];
+    for (var card in pool) {
+        let num = pool[card] - (hand[card] ? hand[card] : 0);
+        for (var i = 0; i < num; i++) {
+            shuffle.push(card);
+        }
+    }
+    console.log(`Drawing ${count} from ${JSON.stringify(shuffle)}`);
+    for (; count > 0 && shuffle.length > 0; count--) {
+        let card = shuffle.splice(Math.floor(Math.random() * shuffle.length), 1)[0];
+        console.log(card);
+        if (hand[card])
+            hand[card]++;
+        else
+            hand[card] = 1;
+    }
+
+};
+
+
+let discardCards = function (hand, count) {
+    let shuffle = [];
+    for (var card in hand) {
+        let num = (hand[card] ? hand[card] : 0);
+        for (var i = 0; i < num; i++) {
+            shuffle.push(card);
+        }
+    }
+    console.log(`Discarding ${count} from ${JSON.stringify(shuffle)}`);
+    for (; count > 0 && shuffle.length > 0; count--) {
+        let card = shuffle.splice(Math.floor(Math.random() * shuffle.length), 1)[0];
+        console.log(card);
+        hand[card]--;
+        if (hand[card] == 0)
+            hand[card] = undefined;
+    }
+
+};
 
 // Given (net) accuracy of attacker and evasion of defender, roll to hit, return damage multiplier (1 for standard hit, 0 for miss, >1 for crit)
 let attackRoll = function (accuracy, evasion) {
@@ -109,10 +201,13 @@ let attackRoll = function (accuracy, evasion) {
 // Given (net) dice count/faces and modifier, roll the dice and return damage.
 let damageRoll = function (damageDice, damageDie, damagePlus) {
     let damage = 0;
+    console.log(`Rolling ${damageDice}d${damageDie}+${damagePlus}`);
     for (var i = 0; i < damageDice; i++) {
         damage += Math.floor(Math.random() * damageDie) + 1;
+        console.log(damage);
     }
     damage += damagePlus;
+    console.log(damage);
     return damage > 0 ? damage : 0;
 };
 
@@ -159,5 +254,7 @@ module.exports = {
     getControls: getControls,
     clearCombat: clearCombat,
     configureEnemy: configureEnemy,
-    progress: progress
+    progress: progress,
+    drawCards: drawCards,
+    discardCards: discardCards
 };

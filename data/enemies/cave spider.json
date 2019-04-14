@@ -105,7 +105,16 @@
                 "nutrition": 10
             },
             "help": "Consume your enemy's corpse to gain its calories.\nGet +10 nutrition."
-
+        },
+        "card": {
+            "display": "Card",
+            "verb": "card",
+            "details": {
+                "text": "Absorbing the lingering memories of the fallen spider's spirit, you improve your speed with your claws.",
+                "fail": "You try to absorb the spider's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+                "type": "aggress",
+                "card": "Basic Claws"
+            }
         }
     }
 }

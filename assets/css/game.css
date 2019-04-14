@@ -46,6 +46,34 @@ input.actButton {
 	margin-bottom: 5px;
 }
 
+@keyframes slide-in-from-right {
+    0% { left: 1024px; }
+    10% { left: 512px; }
+    20% { left: 256px; }
+    30% { left: 128px; }
+    40% { left: 64px; }
+    50% { left: 32px; }
+    60% { left: 16px; }
+    70% { left: 8px; }
+    80% { left: 4px; }
+    90% { left: 2px; }
+    100% { left: 0px; }
+}
+
+div.card {
+    width: 150px;
+    height: 145px;
+    background-color: #FFAAAA;
+    color: darkred;
+    border-color: darkred;
+    border-style: ridge;
+    border-width: thick;
+    animation-name: slide-in-from-right;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    white-space: pre;
+}
+
 @keyframes fade-in-from-top {
   0%   {background-color:black; height:0px;}
   100% {background-color:white; height:150px;}

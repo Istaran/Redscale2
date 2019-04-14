@@ -2,29 +2,29 @@
     "map": 
     [
         [
-            [ "Edge",   "Edge",         "Edge",         "Edge",         "Edge",         "Edge",     "Edge",     "Edge",     "RiverEnd", "Edge" ],
-            [ "Edge",   "Middle",       "Middle",       "Middle",       "Middle",       "Middle",   "Middle",   "River",    "River",    "Edge" ],
+            [ "Edge",   "Edge",         "Edge",         null,           null,           "Edge",     "Edge",     "Edge",     "RiverEnd", "Edge" ],
+            [ "Edge",   "Middle",       "Middle",       "Edge",         "Edge",         "Middle",   "Middle",   "River",    "River",    "Edge" ],
             [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "Tailbone", "Tailbone", "River",    "Middle",   "Edge" ],
             [ "Skull",  "UnderSpine",   "UnderSpine",   "UnderSpine",   "UnderSpine",   "RiverTB",  "RiverTB",  "River",    "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "Middle",       "Middle",       "Dragonhome",   "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "River",        "River",        "River",        "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
             [ "Edge",   "Middle",       "River",        "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
-            [ "RiverStart", "River",     "River",       "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
-            [ "Edge",   "Middle",       "Middle",       "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "Edge" ],
-            [ "Edge",   "Edge",         "Edge",         "Edge",         "RiverStart",   "Edge",     "Edge",     "Edge",     "Edge",     "Edge" ]
+            [ "RiverStart", "River",    "River",        "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Edge"],
+            [ "Edge",   "Middle",       "Middle",       "Middle",       "River",        "Middle",   "Edge",     "Edge" ],
+            [ null,     "Edge",         "Edge",         "Edge",         "RiverStart",   "Edge"]
         ],
         [
             [],
-            [ null,     "Air",          "Air",          "Air",          "Air",          "Air",      "Air",      "OverRiver","OverRiver" ],
+            [ null,     "Air",          "Air",          null,           null,           "Air",      "Air",      "OverRiver","OverRiver" ],
             [ null,     "Air",          "Air",          "Air",          "Air",          "Air",      "Air",      "OverRiver","Air" ],
             [ null,     "Spine",        "Spine",        "Spine",        "Spine",        "OverRiver","OverRiver","OverRiver","Air" ],
             [ null,     "Air",          "Air",          "Air",          "Air",          "OverRiver","Air",      "Air",      "Air" ],
             [ null,     "Air",          "Air",          "Air",          "OverHome",     "OverRiver","Air",      "Air",      "Air" ],
             [ null,     "Air",          "OverRiver",    "OverRiver",    "OverRiver",    "OverRiver","Air",      "Air",      "Air" ],
-            [ null,     "Air",          "OverRiver",    "Air",          "OverRiver",    "Air",      "Air",      "Air",      "Air" ],
-            [ null,     "OverRiver",    "OverRiver",    "Air",          "OverRiver",    "Air",      "Air",      "Air",      "Air" ],
-            [ null,     "Air",          "Air",          "Air",          "OverRiver",    "Air",      "Air",      "Air",      "Air" ]
+            [ null,     "Air",          "OverRiver",    "Air",          "OverRiver",    "Air",      "Air",      "Air" ],
+            [ null,     "OverRiver",    "OverRiver",    "Air",          "OverRiver",    "Air" ],
+            [ null,     "Air",          "Air",          "Air",          "OverRiver" ]
         ]
     ],
     "styles": {
@@ -39,9 +39,27 @@
                 {
                     "chance": 1,
                     "event": "rat attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
                 }
             ],
-            "actions": [ "hunt" ]
+            "actions": [ "hunt" ],
+            "directionOverrides": {
+                "nw": {
+                    "disabled": false
+                },
+                "ne": {
+                    "disabled": false
+                },
+                "sw": {
+                    "disabled": false
+                },
+                "se": {
+                    "disabled": false
+                }
+            }
         },
         "Middle": {
             "description": "You're in the middle of a vast cavern.",
@@ -54,7 +72,11 @@
                 {
                     "chance": 1,
                     "event": "rat attack"
-                }
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
+               }
             ],
             "actions": [ "hunt" ]
         },
@@ -69,12 +91,16 @@
                 {
                     "chance": 1,
                     "event": "bat attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small bat"
                 }
             ],
             "actions": [ "hunt2" ]
         },
         "Dragonhome": {
-            "description": "You're in the center of a vast cavern, in the place you call home.",
+            "description": "You're in the center of a vast cavern, in the place you call home. Your mother's massive skeleton spans most of the cave to your north, with her skull off to the western edge, the ribcage just to your north leaving you comfortingly close to where her heart once was, and the tail extending off toward the east.\n\nA river winding through the cavern frames your home on the south and east, making drinking water readily available. The various vermin that populate the cave have learned to avoid this area by your lingering scent, but there are always some close enough to hunt.",
             "preview": "You see the center of the cavern, the place you've called home for longer than you can remember.",
             "events": [
                 {
@@ -98,7 +124,7 @@
                     "event": "acknowledge nsfw"
                 }
             ],
-            "actions": [ "rest", "test" ]
+            "actions": [ "rest" ]
         },
         "OverRiver": {
             "description": "You're flying over an underground river.",
@@ -111,7 +137,11 @@
                 {
                     "chance": 1,
                     "event": "bat attack"
-                }
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small bat"
+               }
             ],
             "actions": [ "hunt2" ]
         },
@@ -137,6 +167,10 @@
                 {
                     "chance": 1,
                     "event": "newt attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small fish"
                 }
             ],
             "actions": [ "hunt3" ],
@@ -160,7 +194,11 @@
                 {
                     "chance": 1,
                     "event": "newt attack"
-                }
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small fish"
+               }
             ],
             "actions": [ "hunt3" ],
             "directionOverrides": {
@@ -186,6 +224,10 @@
                 {
                     "chance": 1,
                     "event": "newt attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small fish"
                 }
             ],
             "actions": [ "hunt3" ],
@@ -209,7 +251,11 @@
                 {
                     "chance": 1,
                     "event": "newt attack"
-                }
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small fish"
+               }
             ],
             "actions": [ "hunt3" ],
             "directionOverrides": {
@@ -232,7 +278,11 @@
                 {
                     "chance": 1,
                     "event": "spider attack"
-                }
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
+               }
             ],
             "actions": [ "commune" ]
         },
@@ -247,7 +297,11 @@
                 {
                     "chance": 1,
                     "event": "spider attack"
-                }
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
+               }
             ],
             "actions": [ "hunt" ],
             "directionOverrides": {
@@ -267,6 +321,10 @@
                 {
                     "chance": 1,
                     "event": "spider attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
                 }
             ],
             "actions": [ "harvest", "hunt2" ],
@@ -283,6 +341,10 @@
                 {
                     "chance": 10,
                     "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
                 },
                 {
                     "chance": 10,
@@ -302,6 +364,10 @@
                 {
                     "chance": 1,
                     "event": "spider attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
                 }
             ],
             "actions": [ "harvest" ],
@@ -331,7 +397,30 @@
     },
     "flying free": {
         "verb": "flavor",
-        "details": { "text": "You fly carelessly through the air, enjoying the wind across your scales. It's peaceful here, if a bit boring. Some large bats wing through the air in the area but none of them are bothering you at the moment." }
+        "details": {
+            "text": "You fly carelessly through the air, enjoying the wind across your scales. It's peaceful here, if a bit boring. Some large bats wing through the air in the area but none of them are bothering you at the moment." 
+        }
+    },
+    "eat small bat": {
+        "verb": "eat",
+        "details": {
+            "text": "You chance upon a small bat in flight, and manage to surge toward it faster than it can dodge. In a single bite, its wings are shredded and its body stuck in your mouth. Your powerful tongue pulls it down into your throat and you swallow, happy with your snack.",
+            "nutrition": 1
+        }
+    },
+    "eat small rat": {
+        "verb": "eat",
+        "details": {
+            "text": "As you make your way about, you spot a small rat searching the area for food. Too late, it spots you and tries to flee. But it had ventured too far from cover, and with a powerful leap you clear the distance, deadly claws snatching the vermin. It squeaks and squirms in terror, but you have no mercy for it, and soon you are feeling those squirms work their way down your throat.",
+            "nutrition": 1
+        }
+    },
+    "eat small fish": {
+        "verb": "eat",
+        "details": {
+            "text": "Shiny scales catch your eye, and with a quick swipe of your tail you manage to launch a fish the size of your claw out of the water and onto the shore. Desperately, it flops about, trying to make its way back to the water, but you don't give it the chance. A claw through the heart ends its life, and gives you a good grip to get it into your mouth.",
+            "nutrition": 1
+        }
     }
 },
 "actions":{

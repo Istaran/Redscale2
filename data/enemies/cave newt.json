@@ -62,6 +62,16 @@
             },
             "help": "Consume your enemy's corpse to gain its calories.\nGet +15 nutrition."
 
+        },
+        "card": {
+            "display": "Card",
+            "verb": "card",
+            "details": {
+                "text": "Absorbing the lingering memories of the fallen newt's spirit, you improve the power of your tail slap.",
+                "fail": "You try to absorb the newt's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+                "type": "aggress",
+                "card": "Basic Tail Slap"
+            }
         }
     }
 }

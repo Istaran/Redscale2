@@ -1,23 +1,37 @@
 {
     "Instinctive Dodge": {
         "display": "You dodge about, making yourself harder to hit.",
-		"help": "Attempt to dodge.\nReduces enemy accuracy by 5.",
+        "cardlines": "Instinctive Dodge\n\nAccuracy: -\u2b24\nDamage:\nAttacks:",
+        "help": "Attempt to dodge.\nReduces enemy accuracy by 5.\nDuplicates: Reduce accuracy by another 3.",
         "dodge": 5,
         "soak": 0,
-        "deflect": 0
+        "deflect": 0,
+        "scaledodge": 3
     },
     "Instinctive Deflect": {
         "display": "You ready yourself and deflect the first attack.",
-		"help": "Attempt to deflect.\nPrevents 1 attack.",
+        "cardlines": "Instinctive Deflect\n\nAccuracy:\nDamage:\nAttacks: -\u2b24",
+        "help": "Attempt to deflect.\nPrevents 1 attack.\nDuplicates: +50% chance to deflect another hit.",
         "dodge": 0,
         "soak": 0,
-        "deflect": 1
+        "deflect": 1,
+        "scaledeflect": 0.5
     },
     "Instinctive Brace": {
         "display": "You brace yourself, blocking the incoming blows.",
-		"help": "Attempt to brace against the damage.\nReduces enemy damage per hit by 5.",
+        "cardlines": "Instinctive Brace\n\nAccuracy:\nDamage: -\u2b24\nAttacks:",
+        "help": "Attempt to brace against the damage.\nReduces enemy damage per hit by 5.\nDuplicates: Reduce damage by another 3 per hit.",
         "dodge": 0,
         "soak": 5,
+        "deflect": 0,
+        "scalesoak": 3
+    },
+    "NoCard": {
+        "display": "Your defenses have been worn down, and you suffer the full effect of your attacker's assault!",
+        "cardlines": "Defenseless\n\nAccuracy:\nDamage: \nAttacks:",
+        "help": "You're out of Abjure cards! This is going to hurt.",
+        "dodge": 0,
+        "soak": 0,
         "deflect": 0
     }
 }

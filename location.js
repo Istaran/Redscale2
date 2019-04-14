@@ -20,7 +20,8 @@ let setupDirection = async function (loc, zone, x, y, z, dir, control, hereStyle
     let targetX = x + (over.x || 0);
     let targetY = y + (over.y || 0);
     let targetZ = z + (over.z || 0);
-
+    let reqNS = null;
+    let reqEW = null;
     switch (dir) {
         case "up": targetZ += 1; break;
         case "north": targetY -= 1; break;
@@ -28,35 +29,14 @@ let setupDirection = async function (loc, zone, x, y, z, dir, control, hereStyle
         case "west": targetX -= 1; break;
         case "south": targetY += 1; break;
         case "down": targetZ -= 1; break;
-    }
 
-    if (spotExists(targetZone, targetX, targetY, targetZ)) {
-        control.sub[dir] = getSpotDetails(targetZone, targetX, targetY, targetZ);
-        control.details[dir] = { location: (over.zone || loc), x: targetX, y: targetY, z: targetZ };
-    }
-}
-
-let setupDiagnol = async function (loc, zone, x, y, z, dir, control, hereStyle) {
-    let overrided = hereStyle.directionOverrides && hereStyle.directionOverrides[dir];
-    let over = (overrided ? hereStyle.directionOverrides[dir] : {}); // Direction override pretends 'here' is in the zone specified and offset by dimensions specified for purpose of calculating links in the given direction.
-    if (over.disabled) return;
-    let targetZone = zone;
-    if (over.zone) targetZone = await cache.load(`./data/locations/${over.zone}.json`);
-    let targetX = x + (over.x || 0);
-    let targetY = y + (over.y || 0);
-    let targetZ = z + (over.z || 0);
-
-    let reqNS = "north";
-    let reqEW = "west";
-
-    switch (dir) {
-        case "nw": targetX -= 1; targetY -= 1; break;
-        case "ne": targetX += 1; targetY -= 1; reqEW = "west"; break;
-        case "sw": targetX -= 1; targetY += 1; reqNS = "south"; break;
+        case "nw": targetX -= 1; targetY -= 1; reqNS = "north"; reqEW = "east"; break;
+        case "ne": targetX += 1; targetY -= 1; reqNS = "north"; reqEW = "west"; break;
+        case "sw": targetX -= 1; targetY += 1; reqNS = "south"; reqEW = "east"; break;
         case "se": targetX += 1; targetY += 1; reqNS = "south"; reqEW = "west"; break;
     }
 
-    if (overrided || (control.sub[reqNS] && control.sub[reqEW])) {
+    if (overrided || ((!reqNS || control.sub[reqNS]) && (!reqEW || control.sub[reqEW]))) {
         if (spotExists(targetZone, targetX, targetY, targetZ)) {
             control.sub[dir] = getSpotDetails(targetZone, targetX, targetY, targetZ);
             control.details[dir] = { location: (over.zone || loc), x: targetX, y: targetY, z: targetZ };
@@ -80,10 +60,10 @@ let getControls = async function (state) {
         await setupDirection(state.location, zone, state.x, state.y, state.z, "south", controls[0][0], style);
         await setupDirection(state.location, zone, state.x, state.y, state.z, "down", controls[0][0], style);
 
-        await setupDiagnol(state.location, zone, state.x, state.y, state.z, "nw", controls[0][0], style);
-        await setupDiagnol(state.location, zone, state.x, state.y, state.z, "ne", controls[0][0], style);
-        await setupDiagnol(state.location, zone, state.x, state.y, state.z, "sw", controls[0][0], style);
-        await setupDiagnol(state.location, zone, state.x, state.y, state.z, "se", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "nw", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "ne", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "sw", controls[0][0], style);
+        await setupDirection(state.location, zone, state.x, state.y, state.z, "se", controls[0][0], style);
 
         if (style.actions) {
             for (var i = 0; i < style.actions.length; i++) {
@@ -94,7 +74,8 @@ let getControls = async function (state) {
 		}
 	} else {
 		// If someone ends up stuck in a wall, so to speak, add a location reset button.
-		 controls[0][0].details.special = {location:"Dragonbone Cave", x:4, y:5, z:0, help:"Debug warp to home.", preview:"You see your home through the mysterious portal of Ooops, how'd you get somewhere that isn't adjacent to anywhere?!"};
+        controls[0][0].details.special = { location: "Dragonbone Cave", x: 4, y: 5, z: 0, help: "Debug warp to home." };
+        controls[0][0].sub.special = "You see your home through the mysterious portal of Ooops, how'd you get somewhere that isn't adjacent to anywhere?!";
 	}
 	return controls;
 };
@@ -128,7 +109,21 @@ let explore = async function (state) {
 	}
 };
 
+let getDescription = async function (state) {
+    let zone = await cache.load(`./data/locations/${state.location}.json`);
+
+    if (spotExists(zone, state.x, state.y, state.z)) {
+        if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
+
+        let spot = zone.map[state.z][state.y][state.x];
+        let style = zone.styles[spot];
+        return style.description;
+    }
+    return "Ooops, you somehow ended up outside reality.";
+};
+
 module.exports = {
 	explore: explore,
-	getControls: getControls
+    getControls: getControls,
+    getDescription: getDescription
 };
