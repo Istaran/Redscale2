@@ -113,22 +113,20 @@ app.get('/chat', function (req, res) {
 });
 
 app.get('/', async function (req, res) {
-    if (!req.user) {
-        res.redirect('/login/google');
-    } else {
-        let homepage = await new Promise(function (resolve, reject) {
+    let path = (req.user ? 'hidden assets/home.html' : 'assets/home.html');
 
-            fs.readFile('assets/home.html', { encoding: 'utf8' }, (err, data) => {
-                if (err) {
-                    console.log(err);
-                    resolve('500');
-                } else {
-                    resolve(data);
-                }
-            });
+    let homepage = await new Promise(function (resolve, reject) {
+
+        fs.readFile(path, { encoding: 'utf8' }, (err, data) => {
+            if (err) {
+                console.log(err);
+                resolve('500');
+            } else {
+                resolve(data);
+            }
         });
-        res.status(homepage === '500' ? 500 : 200).send(homepage);
-    }
+    });
+    res.status(homepage === '500' ? 500 : 200).send(homepage);
 });
 
 app.post('/act', async function (req, res) {

@@ -14,7 +14,9 @@ let getStatusDisplay = function (state) {
     let nutritionText = `Nutrition: ${leader.nutrition} / ${leader.maxNutrition}`;
     let manaText = `Mana: ${leader.mana} / ${leader.maxMana}`;
 	let statusDisplay = {
-        lines: [{ "text": healthText, "help":"Health.\nWhen your health drops to zero, you will be force to rewind to your last rest point. Over time, nutrition converts to stamina and then to health." },
+        lines: [
+            { "text": leader.display },
+            { "text": healthText, "help": "Health.\nWhen your health drops to zero, you will be force to rewind to your last rest point. Over time, nutrition converts to stamina and then to health." },
             { "text": staminaText, "help":"Stamina.\nWhen your stamina drops to zero, you will need to digest food to recover. Some actions spend stamina, and also it converts to health over time."},
             { "text": nutritionText, "help": "Nutrition.\nEat food to fill up so you can recover and heal." },
             { "text": manaText, "help": "Mana.\nThe mystical energy that wells up within you over time." }

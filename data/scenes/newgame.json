@@ -65,28 +65,40 @@
   },
   "rename": {
     "controls": [
-      [
-        {
-          "type": "actButton",
-          "display": "Redscale",
-          "verb": "chain",
-          "details": [
+        [
             {
-              "verb": "rest",
-              "details": {
-                "silent": true
-              }
+                "type": "textBox",
+                "name": "name",
+                "default": "Redscale"
             },
             {
-              "verb": "setscene",
-              "details": {
-                "text": "With that decided, you set out with fresh determination, ready to take on the world!",
-                "clear": true
-              }
+                "type": "actButton",
+                "display": "Yes, that's it.",
+                "verb": "chain",
+                "details": [
+                    {
+                        "verb": "setstate",
+                        "details": {
+                            "statename": "parties/0/leader/display",
+                            "dataname": "name"
+                        }
+                    },
+                    {
+                        "verb": "rest",
+                        "details": {
+                            "silent": true
+                        }
+                    },
+                    {
+                        "verb": "setscene",
+                        "details": {
+                            "text": "With that decided, you set out with fresh determination, ready to take on the world!",
+                            "clear": true
+                        }
+                    }
+                ]
             }
-          ]
-        }
-      ]
+        ]
     ]
   }
 }
