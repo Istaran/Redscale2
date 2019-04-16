@@ -117,8 +117,9 @@ let act = async function (profile, action, query) {
     if (action.id && state.details[action.id]) {
         state.dirty = undefined;
         state.view = {};
-    let details = (action.sub ? state.details[action.id][action.sub] : state.details[action.id]);
-    await doVerb(action.verb, state, details);
+        let details = (action.sub ? state.details[action.id][action.sub] : state.details[action.id]);
+        state.data = action.data;
+        await doVerb(action.verb, state, details);
     } else {
         await doVerb("status", state, null);
     }

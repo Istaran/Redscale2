@@ -7,6 +7,7 @@ var pusher = new Pusher('91450cc1727e582f15c1', {
 
 var helper;
 var gameDisplayer;
+var formData = {};
 
 class HelpDisplayer extends React.Component {
 	constructor(props) {
@@ -87,7 +88,7 @@ class ActButton extends React.Component {
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
 				},
-				body: JSON.stringify({ 'body': { 'verb':self.props.verb, 'id':self.props.id }})
+            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'id': self.props.id, 'data': formData }})
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
@@ -255,6 +256,24 @@ class Navigator extends React.Component {
 	}	
 }
 
+class TextInputer extends React.Component {
+    constructor(props) {
+        super(props);
+
+        formData[this.props.name] = this.props.default;
+    }
+
+    purgeCharacters(event) {
+        event.target.value = event.target.value.replace(/[^a-zA-Z0-9 ]/, '');
+
+        formData[this.props.name] = event.target.value || this.props.default;
+    }
+
+    render() {
+        return <input type="text" placeholder={this.props.default} onInput={(event) => this.purgeCharacters(event)} />;
+    }
+}
+
 class LeftStatus extends React.Component {
 	constructor(props) {
 		super(props);
@@ -291,7 +310,7 @@ class GameDisplayer extends React.Component {
 	
 	render() {
 		let self = this;
-		
+        formData = {}; // Caution: if this causes unexpected rerenderers I might have issues with setting this here.
         if (this.state.gameState) {
 			let controlTable = this.state.gameState.controls.map((column, colIndex) => {
 				let controlColumn = column.map((control, rowIndex) => {
@@ -302,8 +321,10 @@ class GameDisplayer extends React.Component {
                             return <Card parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
 						case 'navigator':
                             return <Navigator parent={self} key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
+                        case 'textBox':
+                            return <TextInputer parent={self} key={colIndex * 10 + rowIndex} id={control.id} default={control.default} name={control.name} />;
 						default:
-						return '';
+    						return '';
 					}
 				});
 				return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
