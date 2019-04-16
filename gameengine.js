@@ -93,9 +93,9 @@ let controls = async function (state) {
     state.view.controls = controls;
 }
 
-let act = async function (action, query) {
+let act = async function (profile, action, query) {
 	console.log(action);
-	let savePath = `./saves/${action.username}.json`;
+	let savePath = `./saves/${profile.id}.json`; // TEMP: need to make save selectable.
 	
 	// Load current existence.
 	let state = await cache.load(savePath);

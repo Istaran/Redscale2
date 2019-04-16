@@ -19,34 +19,25 @@ pusher.trigger('Redscale_main_chat', 'chat message', {
 var chatFD = fs.openSync('./data/chat_main.log', 'a+');
 
 var chatArchive = fs.readFileSync(chatFD, {encoding: 'utf8'}).split('\n');
-while (chatArchive.length > 100)
+while (chatArchive.length > 10000)
   chatArchive.shift();
 
 var chatStream = fs.createWriteStream('', { fd: chatFD });
 // TODO: separate by channel, private messages
 
-let sendChat = function (message, local) {
-	  console.log(message);
-	 var parts = message.split('\t');
-	 var data = parts.length > 1 ? ({ message: parts[1], username: parts[0]}) : ({message: parts[0]});
-	 if (data.message[0] == '/') {
-		if (local) {
-			if (data.message == "/clear cache") {
-				cache.clear();
-				pusher.trigger('Redscale_main_chat', 'chat message', 'Server cache was cleared');
-			} 
-		}
-	 }else {
-		  pusher.trigger('Redscale_main_chat', 'chat message', data);
-		  chatArchive.push(message);
-		  while (chatArchive.length > 100)
+let sendChat = function (user, message, debug) {
+    let data = { username: user.displayName, message: message };
+	  console.log(JSON.stringify(data));
+    pusher.trigger('Redscale_main_chat', 'chat message', );
+    chatArchive.push(JSON.stringify(data));
+		  while (chatArchive.length > 10000)
 			  chatArchive.shift();
-		  chatStream.write(message + '\n');
-	 }
+    chatStream.write(JSON.stringify(data) + '\n');
+
 };
 
 let getChats = function () {
-	return chatArchive.map((line) => { var parts = line.split('\t'); return parts.length > 1 ? ({ message: parts[1], username: parts[0]}) : ({message: parts[0]})});;
+	return chatArchive.map((line) => JSON.parse(line));
 };
 
 module.exports = {

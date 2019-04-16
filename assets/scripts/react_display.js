@@ -6,6 +6,7 @@ var pusher = new Pusher('91450cc1727e582f15c1', {
 });
 
 var helper;
+var gameDisplayer;
 
 class HelpDisplayer extends React.Component {
 	constructor(props) {
@@ -39,7 +40,7 @@ class ChatDisplayer extends React.Component {
 		headers: {
 		   "Content-Type": "application/json; charset=utf-8",
 		},
-		body: JSON.stringify({ 'body': (this.props.username + '\t' + chatText.value) })
+		body: JSON.stringify({ 'body': chatText.value })
 	  }).then(function(response) {
 		return response.text();
 	  }).then(function(data) {
@@ -86,7 +87,7 @@ class ActButton extends React.Component {
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
 				},
-				body: JSON.stringify({ 'body': { 'verb':self.props.verb, 'id':self.props.id, 'username':self.props.parent.state.username }})
+				body: JSON.stringify({ 'body': { 'verb':self.props.verb, 'id':self.props.id }})
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
@@ -113,7 +114,7 @@ class Card extends React.Component {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'id': self.props.id, 'username': self.props.parent.state.username } })
+            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'id': self.props.id } })
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
@@ -144,7 +145,7 @@ class Navigator extends React.Component {
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
 				},
-				body: JSON.stringify({ 'body': { 'verb':'travel', 'id':id, 'sub':dir, 'username':gameDisp.state.username }})
+                body: JSON.stringify({ 'body': { 'verb': 'travel', 'id': id, 'sub': dir }})
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
@@ -270,11 +271,11 @@ class LeftStatus extends React.Component {
 
 class GameDisplayer extends React.Component {
 	constructor(props) {
-		super(props);
+        super(props);
+        gameDisplayer = this;
 		var log = [];
 		for (var i = 0; i < 100; i++) { log.push(''); }; // Default chat log to empty
 		this.state = {
-		  username: null,
 		  chatLog: log,
 		  gameState: null,
 		};
@@ -288,58 +289,10 @@ class GameDisplayer extends React.Component {
 	  this.setState({chatLog: newLog});
 	};
 	
-  
-	handleUsernameKeyUp(event) {
-		var self = this;
-		if (event.keyCode === 13) {
-			event.preventDefault();
-			
-			var username =  document.getElementById('usernameInput').value;
-			self.setState( {username: username });
-			
-			var channel = pusher.subscribe('Redscale_main_chat');
-			channel.bind('chat message', self.pushTextToChatLog.bind(self));
-			
-			fetch('/chat', {
-				method: 'get'
-			}).then (function(response) {
-				return response.json();
-			}).then(function(chatlog) {
-				if (chatlog && chatlog.length) {
-					
-					var newLog = self.state.chatLog.slice();
-					chatlog.forEach(function (data) {
-						newLog.shift();
-						var message = data.username ? (data.username + '> ' + data.message) : data.message;
-						newLog.push(message);
-					});
-					self.setState({chatLog: newLog});
-				
-				}
-			});
-			
-            fetch('/act' + location.search, {
-				method: 'post',
-				headers: {
-				   "Content-Type": "application/json; charset=utf-8",
-				},
-				body: JSON.stringify({ 'body': { 'verb':'status', 'username':username }})
-			  }).then(function(response) {
-				return response.json();
-			  }).then(function(data) {
-				self.setState({gameState: data});
-			  });
-
-		}	
-	}
-
-	
 	render() {
 		let self = this;
 		
-		if (!this.state.username) {
-			return (<div>Username:<input type='textbox' id='usernameInput' className='usernameInput' onKeyUp={(event) => this.handleUsernameKeyUp(event)}/></div>);
-		} else if (this.state.gameState) {
+        if (this.state.gameState) {
 			let controlTable = this.state.gameState.controls.map((column, colIndex) => {
 				let controlColumn = column.map((control, rowIndex) => {
 					switch (control.type) {
@@ -355,10 +308,10 @@ class GameDisplayer extends React.Component {
 				});
 				return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
 			});			
-			return (<div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);				
+			return (<div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);				
 		} else {
 			
-		return (<div><div>Welcome, {this.state.username}. Please wait while we load your game state.</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);
+		return (<div><div>Welcome, {name}. Please wait while we load your game state.</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
 		}
 	}
 }
@@ -369,3 +322,15 @@ ReactDOM.render(
   <GameDisplayer />,
   document.getElementById('reactroot')
 );
+
+fetch('/act' + location.search, {
+    method: 'post',
+    headers: {
+        "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify({ 'body': { 'verb': 'status' } })
+}).then(function (response) {
+    return response.json();
+}).then(function (data) {
+    gameDisplayer.setState({ gameState: data });
+});
