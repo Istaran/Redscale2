@@ -41,7 +41,7 @@ let conditionMet = async function (state, details) {
         }
     }
     if (conditions[conditionName]) {
-        console.log(`Questioning:${conditionName}\n${JSON.stringify(state)}\n${JSON.stringify(details)}`);
+        console.log(`Questioning:${conditionName}\n${JSON.stringify(details)}`);
         let result = await conditions[conditionName].satisfied(state, details);
         console.log(`Answer: ${result}`);
         return result;
