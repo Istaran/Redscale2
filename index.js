@@ -1,5 +1,5 @@
 const fs = require('fs');
-let google_oauth_config = JSON.parse(fs.readFileSync('config/private/google-oauth-config.json'));
+let google_oauth_config = JSON.parse(fs.readFileSync('private/config/google-oauth-config.json') || '{}');
 console.log(`Configuration: ${JSON.stringify(google_oauth_config)}`);
 
 // NOTE: this config is blocked from loading onto github, you will need your own if forking this project.
@@ -38,19 +38,20 @@ function extractProfile(profile) {
 
     return `${profile.provider}.${profile.id}`;
 }
-passport.use(new GoogleStrategy(google_oauth_config,
-    function (accessToken, refreshToken, profile, cb) {
-        return cb(null, extractProfile(profile));
-    }
-));
+
+if (google_oauth_config.clientID) {
+    passport.use(new GoogleStrategy(google_oauth_config,
+        function (accessToken, refreshToken, profile, cb) {
+            return cb(null, extractProfile(profile));
+        }
+    ));
+}
 
 passport.serializeUser(function (user, cb) {
-    console.log("Serialize user:" + JSON.stringify(user));
     cb(null, user);
 });
 
 passport.deserializeUser(function (obj, cb) {
-    console.log("Deserialize user:" + JSON.stringify(obj));
     cb(null, obj);
 });
 
@@ -81,17 +82,25 @@ app.use(passport.session());
 
 app.use(express.static(__dirname + '/assets'));
 
-app.get('/login/google',
-    passport.authenticate('google', { scope: ['email', 'profile'] })
-);
+if (google_oauth_config.clientID) {
+    app.get('/login/google',
+        passport.authenticate('google', { scope: ['email', 'profile'] })
+    );
 
-app.get(
-    '/login/google/callback',
-    passport.authenticate('google'),
-    (req, res) => {
-        res.redirect('/');
-    }
-);
+    app.get(
+        '/login/google/callback',
+        passport.authenticate('google'),
+        (req, res) => {
+            res.redirect('/');
+        }
+    );
+} else {
+    app.get('/login/google',
+        (req, res) => {
+            res.redirect('/');
+        }
+    );
+}
 
 
 
@@ -113,6 +122,7 @@ app.get('/chat', function (req, res) {
 });
 
 app.get('/', async function (req, res) {
+    if (!google_oauth_config.clientID) { req.user = 'localDev' };
     let path = (req.user ? 'hidden assets/home.html' : 'assets/home.html');
 
     let homepage = await new Promise(function (resolve, reject) {
@@ -130,6 +140,7 @@ app.get('/', async function (req, res) {
 });
 
 app.post('/act', async function (req, res) {
+    if (!google_oauth_config.clientID) { req.user = 'localDev' };
     if (!req.user) {
         res.set('Content-Type', 'Application/JSON');
         res.send(JSON.stringify({ status: "Sorry to tell you this, but your session has become disconnected. Please click reconnect to sign back in. This may be because the server was reset.", controls: [[{ type: "reconnector" }]] }));

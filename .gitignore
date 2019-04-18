@@ -2,5 +2,4 @@ logs/
 node_modules/
 saves/
 data/chat_main.log
-data/private/
-config/private/
+private/
