@@ -2,6 +2,10 @@ let act = async function (state, details) {
     let value = details.value || state.data[details.dataname];
     let statePath = details.statename.split('/');
     let subState = state;
+    switch (details.context) {
+        case "party":
+            subState = state.parties[state.activeParty];
+    }
     let parent = undefined;
     let subPath = undefined;
     for (var i = 0; i < statePath.length; i++) {

@@ -79,7 +79,8 @@
                     {
                         "verb": "setstate",
                         "details": {
-                            "statename": "parties/0/leader/display",
+                            "context": "party",
+                            "statename": "leader/display",
                             "dataname": "name"
                         }
                     },

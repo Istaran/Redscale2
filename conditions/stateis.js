@@ -2,6 +2,10 @@
 let satisfied = function (state, details) {
     let factPath = details.fact.split('/');
     let subState = state;
+    switch (details.context) {
+        case "party":
+            subState = state.parties[state.activeParty];
+    }
     for (var i = 0; i < factPath.length - 1; i++) {
         if (!subState[factPath[i]]) return false; // Various forms of falsiness can derail us, but generally it's that part of the state object doesn't exist.
         subState = subState[factPath[i]];
