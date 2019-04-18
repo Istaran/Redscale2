@@ -37,7 +37,7 @@ let act = async function (state, details) {
                     engineResult += enemyCard["aggress soak display"] || "You shrugged it off!\n";
                 } else {
                     state.parties[state.activeParty].leader.health -= damage;
-                    engineResult += `You received ${damage} damage!\n`;
+                    engineResult += `You received ${damage} ${enemyCard.damagetype} damage!\n`;
                 }
             }
         }

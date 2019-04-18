@@ -92,7 +92,7 @@
                     {
                         "verb": "setscene",
                         "details": {
-                            "text": "With that decided, you set out with fresh determination, ready to take on the world!",
+                            "text": "With that decided, you set out with fresh determination, ready to take on the world!\n\nYou're currently in good health and well rested, but you're getting hungry. You'll need to find something to eat, perhaps one of the larger, more aggressive creatures who cohabitate the cave. Your scent keeps them from your home, here, but when they encounter you in the wild they can be a dangerous challenge. Of course, taking the initiative to hunt them can help.",
                             "clear": true
                         }
                     }

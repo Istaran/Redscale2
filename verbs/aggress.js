@@ -40,7 +40,7 @@ let act = async function (state, details) {
                     engineResult += card["aggress soak display"] || "They shrugged it off!\n";
                 } else {
                     state.enemy.health -= damage;
-                    engineResult += `You dealt ${damage} damage!\n`;
+                    engineResult += `You dealt ${damage} ${card.damagetype} damage!\n`;
                 }
             }
         }
