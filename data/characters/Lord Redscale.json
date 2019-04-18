@@ -5,7 +5,7 @@
   "maxHealth": 100,
   "stamina": 120,
   "maxStamina": 120,
-  "nutrition": 100,
+  "nutrition": 50,
   "maxNutrition": 100,
   "mana": 100,
   "maxMana": 100,
