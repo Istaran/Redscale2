@@ -130,7 +130,10 @@ app.get('/', async function (req, res) {
 });
 
 app.post('/act', async function (req, res) {
-
+    if (!req.user) {
+        res.set('Content-Type', 'Application/JSON');
+        res.send(JSON.stringify({ status: "Sorry to tell you this, but your session has become disconnected. Please click reconnect to sign back in. This may be because the server was reset.", controls: [[{ type: "reconnector" }]] }));
+    }
     let profile = await cache.load(`saves/profiles/${req.user}.json`);
 
 	const body = req.body.body;
