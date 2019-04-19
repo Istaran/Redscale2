@@ -102,9 +102,9 @@
             "verb": "eat",
             "details": {
                 "text": "You crack open the spider's spindly legs one by one to suck out the juicy meats before doing much the same to its midsection. It's a bit time consuming, but still.",
-                "nutrition": 10
+                "nutrition": 20
             },
-            "help": "Consume your enemy's corpse to gain its calories.\nGet +10 nutrition."
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +20 nutrition."
         },
         "card": {
             "display": "Card",

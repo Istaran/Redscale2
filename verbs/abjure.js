@@ -4,6 +4,8 @@ var cache = require('../cache');
 let act = async function (state, details) {
     let cards = await cache.load('data/combat/abjure cards.json');
     let card = cards[details.card];
+    console.log(`Abjure card: ${JSON.stringify(card)}`);
+
     let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
     let enemyCardId = state.enemy.cardqueue[0];
     let enemyCard = enemyDef.cardsets[enemyCardId.set].cards[enemyCardId.card];
@@ -11,9 +13,11 @@ let act = async function (state, details) {
 
     let leader = state.parties[state.activeParty].leader;
 
-    let deflect = Math.floor(card.deflect + (card.scaledeflect ? card.scaledeflect * (leader.abjureHand[details.card] - 1): 0) + Math.random());
-    let dodge = card.dodge + (card.scaledodge ? card.scaledodge * (leader.abjureHand[details.card] - 1): 0);
-    let soak = card.soak + (card.scalesoak ? card.scalesoak * (leader.abjureHand[details.card] - 1): 0);
+    let deflect = Math.floor(card.deflect + (leader.bonusdeflect || 0) + (card.scaledeflect ? card.scaledeflect * (leader.abjureHand[details.card] - 1): 0) + Math.random());
+    let dodge = card.dodge + (leader.bonusdodge || 0) + (card.scaledodge ? card.scaledodge * (leader.abjureHand[details.card] - 1): 0);
+    let soak = card.soak + (leader.bonussoak || 0) + (card.scalesoak ? card.scalesoak * (leader.abjureHand[details.card] - 1): 0);
+    let staminacost = card.staminacost + (card.scalestaminacost ? card.scalestaminacost * (leader.abjureHand[details.card] - 1) : 0);
+    leader.stamina -= staminacost;
 
     let attacks = Math.floor(enemyCard.attacks + Math.random());
 
@@ -33,13 +37,19 @@ let act = async function (state, details) {
                     engineResult += enemyCard["aggress soak display"] || "You shrugged it off!\n";
                 } else {
                     state.parties[state.activeParty].leader.health -= damage;
-                    engineResult += `You received ${damage} damage!\n`;
+                    engineResult += `You received ${damage} ${enemyCard.damagetype} damage!\n`;
                 }
             }
         }
     }
 
     leader.abjureHand[details.card] = undefined;
+    if (leader.stamina < 0) {
+        engineResult += `\nYou discard ${Math.min(leader.aggressHand.length, -leader.stamina)} aggress cards and ${Math.min(leader.abjureHand.length, -leader.stamina)} abjure cards due to low stamina!\n`
+        combatengine.discardCards(leader.aggressHand, -leader.stamina);
+        combatengine.discardCards(leader.abjureHand, -leader.stamina);
+        leader.stamina = 0;
+    }
 
     let engineProgress = await combatengine.progress(state);
     console.log("State: " + JSON.stringify(state));

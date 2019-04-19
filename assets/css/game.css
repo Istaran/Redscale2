@@ -40,6 +40,14 @@ div.controlColumn {
 	flex-direction:column;
 }
 
+div.refresher {
+    height: 25px;
+    width: 150px;
+    text-align:center;
+    background-color:ButtonFace;
+    color:ButtonText;
+}
+
 input.actButton {
 	width: 150px;
 	height: 20px;
@@ -61,11 +69,8 @@ input.actButton {
 }
 
 div.card {
-    width: 150px;
+    width: 145px;
     height: 145px;
-    background-color: #FFAAAA;
-    color: darkred;
-    border-color: darkred;
     border-style: ridge;
     border-width: thick;
     animation-name: slide-in-from-right;
@@ -73,6 +78,30 @@ div.card {
     animation-fill-mode: forwards;
     white-space: pre;
 }
+
+div.card.abjure {
+    background-color: #AAAAFF;
+    color: darkblue;
+    border-color: darkblue;
+}
+
+    div.card.acquire {
+        background-color: gold;
+        color: black;
+        border-color: darkgoldenrod;
+    }
+
+    div.card.aggress {
+        background-color: #FFAAAA;
+        color: darkred;
+        border-color: darkred;
+    }
+
+    div.card.assess {
+        background-color: #AAFFAA;
+        color: darkgreen;
+        border-color: darkgreen;
+    }
 
 @keyframes fade-in-from-top {
   0%   {background-color:black; height:0px;}

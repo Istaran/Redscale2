@@ -6,6 +6,24 @@ var pusher = new Pusher('91450cc1727e582f15c1', {
 });
 
 var helper;
+var gameDisplayer;
+var formData = {};
+
+function getStatus() {
+    fetch('/act' + location.search, {
+        method: 'post',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify({ 'body': { 'verb': 'status' } })
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        gameDisplayer.setState({ gameState: data });
+    }).catch(function (err) {
+        gameDisplayer.setState({ gameState: { status: "There was an error trying to load your game. Click refresh when you want to try again. If the problem persists, email istaran@redscalesadventure.online and include your google email address for reference.", controls: [[{ type: "refresher" }]] } });
+    });
+}
 
 class HelpDisplayer extends React.Component {
 	constructor(props) {
@@ -39,7 +57,7 @@ class ChatDisplayer extends React.Component {
 		headers: {
 		   "Content-Type": "application/json; charset=utf-8",
 		},
-		body: JSON.stringify({ 'body': (this.props.username + '\t' + chatText.value) })
+		body: JSON.stringify({ 'body': chatText.value })
 	  }).then(function(response) {
 		return response.text();
 	  }).then(function(data) {
@@ -86,7 +104,7 @@ class ActButton extends React.Component {
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
 				},
-				body: JSON.stringify({ 'body': { 'verb':self.props.verb, 'id':self.props.id, 'username':self.props.parent.state.username }})
+            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'id': self.props.id, 'data': formData }})
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
@@ -113,18 +131,20 @@ class Card extends React.Component {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'id': self.props.id, 'username': self.props.parent.state.username } })
+            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'id': self.props.id } })
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
             self.props.parent.setState({ gameState: data });
+        }).catch(function (err) {
+            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
         });
     }
 
     render() {
         let display = this.props.display;
         if (this.props.count) display += "\n\nCopies: " + this.props.count; // TODO: beautify how we display this.
-        return <div className='card' onClick={(event) => this.takeAction(event)} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} >{ display }</div >;
+        return <div className={'card ' + this.props.verb} onClick={(event) => this.takeAction(event)} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} >{ display }</div >;
     }
 }
 
@@ -144,12 +164,14 @@ class Navigator extends React.Component {
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
 				},
-				body: JSON.stringify({ 'body': { 'verb':'travel', 'id':id, 'sub':dir, 'username':gameDisp.state.username }})
+                body: JSON.stringify({ 'body': { 'verb': 'travel', 'id': id, 'sub': dir }})
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
 				gameDisp.setState({gameState: data});
-			  });
+              }).catch(function (err) {
+                  gameDisplayer.setState({ gameState: { status: "There was an error trying to go there. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+              });
 		}
 	}
 	
@@ -254,13 +276,32 @@ class Navigator extends React.Component {
 	}	
 }
 
+class TextInputer extends React.Component {
+    constructor(props) {
+        super(props);
+
+        formData[this.props.name] = this.props.default;
+    }
+
+    purgeCharacters(event) {
+        event.target.value = event.target.value.replace(/[^a-zA-Z0-9 ]/, '');
+
+        formData[this.props.name] = event.target.value || this.props.default;
+    }
+
+    render() {
+        return <input type="text" placeholder={this.props.default} onInput={(event) => this.purgeCharacters(event)} />;
+    }
+}
+
 class LeftStatus extends React.Component {
 	constructor(props) {
 		super(props);
 		
 	}
 	
-	render() {
+    render() {
+        if (!this.props.source || !this.props.source.lines) return <div display='none'></div>;
 		var statuslines = this.props.source.lines.map((line, lineIdx) => {
 			return <div key={lineIdx} className='statusRow' onMouseOver={(event)=>helper.setState({help:line.help})} onMouseOut={(event)=>helper.setState({help:null})}>{line.text}</div>
 		});
@@ -268,13 +309,37 @@ class LeftStatus extends React.Component {
 	}
 }
 
+
+class Refresher extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return <div className='refresher' onClick={getStatus}>&#x1f503;Refresh&#x1f503;</div>;
+    }
+}
+
+class Reconnector extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    
+
+    render() {
+        return <a href="login/google" className='refresher'>&#x1F4F6;Reconnect&#x1F4F6;</a>;
+    }
+}
+
+
 class GameDisplayer extends React.Component {
 	constructor(props) {
-		super(props);
+        super(props);
+        gameDisplayer = this;
 		var log = [];
 		for (var i = 0; i < 100; i++) { log.push(''); }; // Default chat log to empty
 		this.state = {
-		  username: null,
 		  chatLog: log,
 		  gameState: null,
 		};
@@ -288,77 +353,34 @@ class GameDisplayer extends React.Component {
 	  this.setState({chatLog: newLog});
 	};
 	
-  
-	handleUsernameKeyUp(event) {
-		var self = this;
-		if (event.keyCode === 13) {
-			event.preventDefault();
-			
-			var username =  document.getElementById('usernameInput').value;
-			self.setState( {username: username });
-			
-			var channel = pusher.subscribe('Redscale_main_chat');
-			channel.bind('chat message', self.pushTextToChatLog.bind(self));
-			
-			fetch('/chat', {
-				method: 'get'
-			}).then (function(response) {
-				return response.json();
-			}).then(function(chatlog) {
-				if (chatlog && chatlog.length) {
-					
-					var newLog = self.state.chatLog.slice();
-					chatlog.forEach(function (data) {
-						newLog.shift();
-						var message = data.username ? (data.username + '> ' + data.message) : data.message;
-						newLog.push(message);
-					});
-					self.setState({chatLog: newLog});
-				
-				}
-			});
-			
-            fetch('/act' + location.search, {
-				method: 'post',
-				headers: {
-				   "Content-Type": "application/json; charset=utf-8",
-				},
-				body: JSON.stringify({ 'body': { 'verb':'status', 'username':username }})
-			  }).then(function(response) {
-				return response.json();
-			  }).then(function(data) {
-				self.setState({gameState: data});
-			  });
-
-		}	
-	}
-
-	
 	render() {
 		let self = this;
-		
-		if (!this.state.username) {
-			return (<div>Username:<input type='textbox' id='usernameInput' className='usernameInput' onKeyUp={(event) => this.handleUsernameKeyUp(event)}/></div>);
-		} else if (this.state.gameState) {
-			let controlTable = this.state.gameState.controls.map((column, colIndex) => {
-				let controlColumn = column.map((control, rowIndex) => {
-					switch (control.type) {
-						case 'actButton': 
+        formData = {}; // Caution: if this causes unexpected rerenderers I might have issues with setting this here.
+        if (this.state.gameState) {
+            let controlTable = this.state.gameState.controls.map((column, colIndex) => {
+                let controlColumn = column.map((control, rowIndex) => {
+                    switch (control.type) {
+                        case 'actButton':
                             return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
                         case 'card':
                             return <Card parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
-						case 'navigator':
+                        case 'navigator':
                             return <Navigator parent={self} key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
-						default:
-						return '';
-					}
-				});
-				return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
-			});			
-			return (<div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);				
-		} else {
-			
-		return (<div><div>Welcome, {this.state.username}. Please wait while we load your game state.</div><ChatDisplayer chatLog={this.state.chatLog} username={this.state.username} /></div>);
+                        case 'textBox':
+                            return <TextInputer parent={self} key={colIndex * 10 + rowIndex} id={control.id} default={control.default} name={control.name} />;
+                        case 'refresher':
+                            return <Refresher />;
+                        case 'reconnector':
+                            return <Reconnector />;
+                        default:
+                            return '';
+                    }
+                });
+                return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
+            });
+            return (<div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
+        } else {		
+		    return (<div><div>Welcome, {name}. Please wait while we load your game state.</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
 		}
 	}
 }
@@ -369,3 +391,5 @@ ReactDOM.render(
   <GameDisplayer />,
   document.getElementById('reactroot')
 );
+
+getStatus();

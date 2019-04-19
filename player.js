@@ -6,13 +6,17 @@ let addControls = function (state, controls) {
 }
 
 let getStatusDisplay = function (state) {
+    if (state.parties.length == 0) return { lines: [] };
+
     let leader = state.parties[state.activeParty].leader;
     let healthText = `Health: ${leader.health} / ${leader.maxHealth}`;
     let staminaText = `Stamina: ${leader.stamina} / ${leader.maxStamina}`;
     let nutritionText = `Nutrition: ${leader.nutrition} / ${leader.maxNutrition}`;
     let manaText = `Mana: ${leader.mana} / ${leader.maxMana}`;
 	let statusDisplay = {
-        lines: [{ "text": healthText, "help":"Health.\nWhen your health drops to zero, you will be force to rewind to your last rest point. Over time, nutrition converts to stamina and then to health." },
+        lines: [
+            { "text": leader.display },
+            { "text": healthText, "help": "Health.\nWhen your health drops to zero, you will be force to rewind to your last rest point. Over time, nutrition converts to stamina and then to health." },
             { "text": staminaText, "help":"Stamina.\nWhen your stamina drops to zero, you will need to digest food to recover. Some actions spend stamina, and also it converts to health over time."},
             { "text": nutritionText, "help": "Nutrition.\nEat food to fill up so you can recover and heal." },
             { "text": manaText, "help": "Mana.\nThe mystical energy that wells up within you over time." }
@@ -25,37 +29,6 @@ let getStatusDisplay = function (state) {
 let setDefaults = function (state) {
     // Backfill default values not already in the save. Difference between this and migrations is migrations are to change existing data that has been transformed or rebalanced.
 
-    if (!state.parties) {
-        state.parties = [
-            {
-                "display": "Main party",
-                "leader": {
-                    "name": "Redscale",
-                    "display": "Redscale",
-                    "health": 100,
-                    "maxHealth": 100,
-                    "stamina": 100,
-                    "maxStamina": 100,
-                    "nutrition": 100,
-                    "maxNutrition": 100,
-                    "mana": 100,
-                    "maxMana": 100,
-                    "healthRecover": 5,
-                    "staminaRecover": 10,
-                    "manaRecover": 1,
-                    "evasion": 10,
-                    "aggressCards": { "Instinctive Bite": 5, "Instinctive Claws": 5, "Instinctive Tail Slap": 5 },
-                    "abjureCards": { "Instinctive Dodge": 5, "Instinctive Deflect": 5, "Instinctive Brace": 5 },
-                    "assessCards": [{ "card": "Press the attack" }, { "card": "Fight defensively" }],
-                    "aggressDefaultHand": { "Instinctive Bite": 1 , "Instinctive Claws": 1, "Instinctive Tail Slap": 1 },
-                    "abjureDefaultHand": { "Instinctive Dodge": 1, "Instinctive Deflect": 1, "Instinctive Brace": 1 }
-                },
-                "followers": [],
-                "pawns": [],
-                "inventory": []
-            }];
-    }
-    state.activeParty = state.activeParty || 0;
 }
 
 let passiveRecoverAll = function (state) {
@@ -63,6 +36,7 @@ let passiveRecoverAll = function (state) {
         passiveRecover(party.leader);
         // TODO recover the rest of the party
     });
+    state.gameTime++;
 };
 
 let passiveRecover = function (character) {

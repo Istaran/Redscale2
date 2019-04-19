@@ -10,7 +10,7 @@ let getControls = async function (state) {
 
     if (phase == 'acquire') {
         let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
-        let enemyPrivateDef = (state.query.nsfw ? await cache.load(`data/private/enemies/${state.enemy.name}.json`) : null);
+        let enemyPrivateDef = (state.query.nsfw ? await cache.load(`private/enemies/${state.enemy.name}.json`) : null);
         if (enemyPrivateDef) {
             for (var acqCard in enemyPrivateDef.acquirecards) {
                 if (await gameengine.conditionMet(state, enemyPrivateDef.acquirecards[acqCard].if)) {

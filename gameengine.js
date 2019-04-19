@@ -41,7 +41,7 @@ let conditionMet = async function (state, details) {
         }
     }
     if (conditions[conditionName]) {
-        console.log(`Questioning:${conditionName}\n${JSON.stringify(state)}\n${JSON.stringify(details)}`);
+        console.log(`Questioning:${conditionName}\n${JSON.stringify(details)}`);
         let result = await conditions[conditionName].satisfied(state, details);
         console.log(`Answer: ${result}`);
         return result;
@@ -63,11 +63,11 @@ let controls = async function (state) {
 
     let controls = null;
 	if (state.scene2 !== undefined) {
-		controls = await scenes.getControls(state.scene2);
+		controls = await scenes.getControls(state, state.scene2);
 	} else if (state.enemy !== undefined) {
         controls = await combat.getControls(state);
 	} else if (state.scene !== undefined) {
-        controls = await scenes.getControls(state.scene);
+        controls = await scenes.getControls(state, state.scene);
 	} else {
 		controls = await loc.getControls(state);
 		player.addControls(state, controls);
@@ -93,9 +93,9 @@ let controls = async function (state) {
     state.view.controls = controls;
 }
 
-let act = async function (action, query) {
+let act = async function (profile, action, query) {
 	console.log(action);
-	let savePath = `./saves/${action.username}.json`;
+	let savePath = `./saves/${profile.id}.json`; // TEMP: need to make save selectable.
 	
 	// Load current existence.
 	let state = await cache.load(savePath);
@@ -117,8 +117,9 @@ let act = async function (action, query) {
     if (action.id && state.details[action.id]) {
         state.dirty = undefined;
         state.view = {};
-    let details = (action.sub ? state.details[action.id][action.sub] : state.details[action.id]);
-    await doVerb(action.verb, state, details);
+        let details = (action.sub ? state.details[action.id][action.sub] : state.details[action.id]);
+        state.data = action.data;
+        await doVerb(action.verb, state, details);
     } else {
         await doVerb("status", state, null);
     }
