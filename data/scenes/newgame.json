@@ -37,7 +37,7 @@
           "verb": "chain",
           "details": [
             {
-              "verb": "newParty",
+              "verb": "newparty",
               "details": {
                 "display": "Main party",
                 "leader": "Lady Redscale",
