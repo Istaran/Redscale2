@@ -72,6 +72,25 @@
       ],
       "actions": [ ]
     },
+    "CaveinE": {
+      "description": "The east wall of the cave here has a small, collapsed tunnel entrance, large enough for someone about twice your size in each direction to traverse comfortably, if all the rocks were removed. You think with some effort you could dig it free, and open a path beyond.\n\nThere's a faint scent from beyond, something you'd call 'vaguely draconic', not a family member to be sure, but perhaps other dragons or something like them lie beyond? You'll never know while these rocks block your path. The very idea makes you nervous and excited at once.",
+      "preview": "Loose rocks block the entrance to a smaller tunnel there, potentially a route you could open in the future.",
+      "events": [
+        {
+          "chance": 10,
+          "event": null
+        },
+        {
+          "chance": 1,
+          "event": "rat attack"
+        },
+        {
+          "chance": 1,
+          "event": "eat small rat"
+        }
+      ],
+      "actions": [ "hunt" ]
+    },
     "Middle": {
       "description": "You're in the middle of a vast cavern.",
       "preview": "It looks like an unremarkable area in the middle of the cavern. You don't really see much of anything for some distance.",
