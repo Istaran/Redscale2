@@ -212,9 +212,9 @@ class Navigator extends React.Component {
 		let downHelp = (this.props.details.down) ? "Go down.\n" + this.props.details.down : "You can't go down from here.";
 
         let nwHelp = (this.props.details.nw) ? "Go northwest.\n" + this.props.details.nw : "You can't go northwest from here.";
-        let neHelp = (this.props.details.ne) ? "Go northeast.\n" + this.props.details.nw : "You can't go northeast from here.";
-        let swHelp = (this.props.details.sw) ? "Go southwest.\n" + this.props.details.nw : "You can't go southwest from here.";
-        let seHelp = (this.props.details.se) ? "Go southeast.\n" + this.props.details.nw : "You can't go southeast from here.";
+        let neHelp = (this.props.details.ne) ? "Go northeast.\n" + this.props.details.ne : "You can't go northeast from here.";
+        let swHelp = (this.props.details.sw) ? "Go southwest.\n" + this.props.details.sw : "You can't go southwest from here.";
+        let seHelp = (this.props.details.se) ? "Go southeast.\n" + this.props.details.se : "You can't go southeast from here.";
 
 
 		return <svg className='navigator' width='100' height='145'>
