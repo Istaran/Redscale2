@@ -3,19 +3,29 @@ div.statusDisplay {
 }
 
 div.statusWrapper {
-	width: 100%;
-	display: flex;
-	flex-direction: row;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 div.leftStatus {
-	width: 200px;
+	width: 250px;
     height: 100%;
 	border-color: black;
     border-style: groove;
 	background-color: lightgray;
 	display: flex;
 	flex-direction: column;
+}
+div.rightStatus {
+    width: 250px;
+    height: 100%;
+    border-color: black;
+    border-style: groove;
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
 }
 
 div.statusRow {

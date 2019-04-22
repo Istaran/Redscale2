@@ -89,6 +89,8 @@ let getControls = async function (state) {
         }
     }
 
+
+
     return controls;		
 }
 
@@ -129,6 +131,8 @@ let configureEnemy = async function (state, target, flavor) {
     let enemy = {
         name: target,
         health: targetDef["max health"],
+        stamina: targetDef["max stamina"],
+        mana: targetDef["max mana"],
         phasequeue: phasequeue
     };
 
@@ -248,6 +252,31 @@ let progress = async function (state) {
 };
 
 
+let getStatusDisplay = async function (state) {
+    if (!state.enemy) return { lines: [] };
+
+    let enemy = state.enemy;
+    let enemyDef = await cache.load(`data/enemies/${enemy.name}.json`);
+
+    let health = Math.floor(enemy.health / enemyDef["max health"] * 10);
+    let stamina = Math.floor(enemy.stamina / enemyDef["max stamina"] * 10);
+    let mana = Math.floor(enemy.mana / enemyDef["max mana"] * 10);
+
+    let healthText = `Health: ${health}0%`;
+    let staminaText = `Stamina: ${stamina}0%`;
+    let manaText = `Mana: ${mana}0%`;
+    let statusDisplay = {
+        lines: [
+            { "text": enemy.display },
+            { "text": healthText, "help": "Health.\nWhen their health drops to zero, they will die and you can harvest your reward from their corpse." },
+            { "text": staminaText, "help": "Stamina.\nWhen their stamina drops to zero, they will be forced to submit and you can choose between mercy and murder." },
+            { "text": manaText, "help": "Mana.\nNot all creatures know how to use mana, but all of them possess at least some." }
+        ]
+    };
+
+    return statusDisplay;
+}
+
 module.exports = {
     attackRoll: attackRoll,
     damageRoll: damageRoll,
@@ -256,5 +285,6 @@ module.exports = {
     configureEnemy: configureEnemy,
     progress: progress,
     drawCards: drawCards,
-    discardCards: discardCards
+    discardCards: discardCards,
+    getStatusDisplay: getStatusDisplay
 };

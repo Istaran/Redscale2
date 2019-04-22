@@ -203,21 +203,39 @@ class Navigator extends React.Component {
 		let downColor = (this.props.details.down) ? "peru" : "saddlebrown";
 		let downColor2 = (this.props.details.down) ? "lime" : "green";
 		
-		let upHelp = (this.props.details.up) ? "Go up.\n" + this.props.details.up : "You can't go up from here.";
-		let northHelp = (this.props.details.north) ? "Go north.\n" + this.props.details.north : "You can't go north from here.";
-		let westHelp = (this.props.details.west) ? "Go west.\n" + this.props.details.west : "You can't go west from here.";
-		let specialHelp = (this.props.details.special) ? this.props.details.special : null;
-		let eastHelp = (this.props.details.east) ? "Go east.\n" + this.props.details.east : "You can't go east from here.";
-		let southHelp = (this.props.details.south) ? "Go south.\n" + this.props.details.south : "You can't go south from here.";
-		let downHelp = (this.props.details.down) ? "Go down.\n" + this.props.details.down : "You can't go down from here.";
+        let dirs = [{ header: 'Up', prop: 'up' },
+            { header: 'NW', prop: 'nw' },
+            { header: 'N', prop: 'north' },
+            { header: 'NE', prop: 'ne' },
+            { header: 'W', prop: 'west' },
+            { header: 'E', prop: 'east' },
+            { header: 'SW', prop: 'sw' },
+            { header: 'S', prop: 'south' },
+            { header: 'SE', prop: 'se' },
+            { header: 'Down', prop: 'down' },
+            { header: 'Special', prop: 'special' }];
+        let navHelp = "";
+        while (dirs.length) {
+            var dir = dirs.shift();
+            var header = dir.header;
+            if (this.props.details[dir.prop]) {
+                for (var i = 0; i < dirs.length;) {
+                    if (this.props.details[dirs[i].prop]) {
+                        if (this.props.details[dir.prop] == this.props.details[dirs[i].prop]) {
+                            header += ", " + dirs[i].header;
+                            dirs.splice(i, 1);
+                        } else {
+                            i++;
+                        }
+                    } else {
+                        dirs.splice(i, 1);
+                    }
+                }
+                navHelp += `${header}:${this.props.details[dir.prop]}\n`;
+            }
+        }
 
-        let nwHelp = (this.props.details.nw) ? "Go northwest.\n" + this.props.details.nw : "You can't go northwest from here.";
-        let neHelp = (this.props.details.ne) ? "Go northeast.\n" + this.props.details.nw : "You can't go northeast from here.";
-        let swHelp = (this.props.details.sw) ? "Go southwest.\n" + this.props.details.nw : "You can't go southwest from here.";
-        let seHelp = (this.props.details.se) ? "Go southeast.\n" + this.props.details.nw : "You can't go southeast from here.";
-
-
-		return <svg className='navigator' width='100' height='145'>
+        return <svg className='navigator' width='100' height='145' onMouseOver={(event) => helper.setState({ help: navHelp })} onMouseOut={(event) => helper.setState({ help: null })}>
 		    <defs>
 			    <linearGradient id="groundGradient" x1="0" x2="0" y1="0" y2="1">
 				    <stop offset="50%" stopColor={downColor2}/>
@@ -232,8 +250,8 @@ class Navigator extends React.Component {
                     <stop offset="85%" stopColor={specialColor2} />
                 </linearGradient>
             </defs>
-            <polygon points="0,73 0,0 99,0 99,73" fill="url(#skyGradient)" onClick={(event) => this.navigate(event, 'up')} onMouseOver={(event) => helper.setState({ help: upHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
-            <polygon points="0,73 0,144 99,144, 99,73" fill="url(#groundGradient)" onClick={(event) => this.navigate(event, 'down')} onMouseOver={(event) => helper.setState({ help: downHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
+            <polygon points="0,73 0,0 99,0 99,73" fill="url(#skyGradient)" onClick={(event) => this.navigate(event, 'up')} />
+            <polygon points="0,73 0,144 99,144, 99,73" fill="url(#groundGradient)" onClick={(event) => this.navigate(event, 'down')} />
             <circle cx='50' cy='73' r='50' fill={backgroundColor} />
             <line x1="11.3" y1="50.5" x2="7" y2="48" stroke="black" strokeWidth="1" />
             <line x1="11.3" y1="95.5" x2="7" y2="98" stroke="black" strokeWidth="1" />
@@ -251,25 +269,25 @@ class Navigator extends React.Component {
             <line x1="38.4" y1="116.5" x2="37" y2="121" stroke="black" strokeWidth="1" />
             <line x1="61.6" y1="29.5" x2="63" y2="25" stroke="black" strokeWidth="1" />
             <line x1="61.6" y1="116.5" x2="63" y2="121" stroke="black" strokeWidth="1" />
-            <polygon points="15,38 40,63 50,53" fill={nwColor} onClick={(event) => this.navigate(event, 'nw')} onMouseOver={(event) => helper.setState({ help: nwHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
-            <polygon points="15,38 30,73 40,63" fill={nwColor2} onClick={(event) => this.navigate(event, 'nw')} onMouseOver={(event) => helper.setState({ help: nwHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
-            <polygon points="15,108 30,73 40,83" fill={swColor} onClick={(event) => this.navigate(event, 'sw')} onMouseOver={(event) => helper.setState({ help: swHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
-            <polygon points="15,108 40,83 50,93" fill={swColor2} onClick={(event) => this.navigate(event, 'sw')} onMouseOver={(event) => helper.setState({ help: swHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
-            <polygon points="85,38 60,63 50,53" fill={neColor} onClick={(event) => this.navigate(event, 'ne')} onMouseOver={(event) => helper.setState({ help: neHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
-            <polygon points="85,38 70,73 60,63" fill={neColor2} onClick={(event) => this.navigate(event, 'ne')} onMouseOver={(event) => helper.setState({ help: neHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
-            <polygon points="85,108 70,73 60,83" fill={seColor} onClick={(event) => this.navigate(event, 'se')} onMouseOver={(event) => helper.setState({ help: seHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
-            <polygon points="85,108 60,83 50,93" fill={seColor2} onClick={(event) => this.navigate(event, 'se')} onMouseOver={(event) => helper.setState({ help: seHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
+            <polygon points="15,38 40,63 50,53" fill={nwColor} onClick={(event) => this.navigate(event, 'nw')} />
+            <polygon points="15,38 30,73 40,63" fill={nwColor2} onClick={(event) => this.navigate(event, 'nw')} />
+            <polygon points="15,108 30,73 40,83" fill={swColor} onClick={(event) => this.navigate(event, 'sw')} />
+            <polygon points="15,108 40,83 50,93" fill={swColor2} onClick={(event) => this.navigate(event, 'sw')} />
+            <polygon points="85,38 60,63 50,53" fill={neColor} onClick={(event) => this.navigate(event, 'ne')} />
+            <polygon points="85,38 70,73 60,63" fill={neColor2} onClick={(event) => this.navigate(event, 'ne')} />
+            <polygon points="85,108 70,73 60,83" fill={seColor} onClick={(event) => this.navigate(event, 'se')} />
+            <polygon points="85,108 60,83 50,93" fill={seColor2} onClick={(event) => this.navigate(event, 'se')} />
 
 
-            <polygon points="50,22 40,63 50,58" fill={northColor} onClick={(event) => this.navigate(event, 'north')} onMouseOver={(event) => helper.setState({ help: northHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
-            <polygon points="50,22 50,58 60,63" fill={northColor2} onClick={(event) => this.navigate(event, 'north')} onMouseOver={(event) => helper.setState({ help: northHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
-		    <polygon points="0,73 40,63 35,73" fill={westColor} onClick={(event) => this.navigate(event, 'west')} onMouseOver={(event)=>helper.setState({help:westHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
-            <polygon points="0,73 35,73 40,83" fill={westColor2} onClick={(event) => this.navigate(event, 'west')} onMouseOver={(event) => helper.setState({ help: westHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
-            <circle cx='50' cy='73' r='10' fill="url(#specialGradient)" onClick={(event) => this.navigate(event, 'special')} onMouseOver={(event)=>helper.setState({help:specialHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
-		    <polygon points="99,73 60,63 64,73" fill={eastColor} onClick={(event) => this.navigate(event, 'east')} onMouseOver={(event)=>helper.setState({help:eastHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
-            <polygon points="99,73 64,73 60,83" fill={eastColor2} onClick={(event) => this.navigate(event, 'east')} onMouseOver={(event) => helper.setState({ help: eastHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
-		    <polygon points="50,122 40,83 50,87" fill={southColor} onClick={(event) => this.navigate(event, 'south')} onMouseOver={(event)=>helper.setState({help:southHelp})} onMouseOut={(event)=>helper.setState({help:null})} />
-            <polygon points="50,122 50,87 60,83" fill={southColor2} onClick={(event) => this.navigate(event, 'south')} onMouseOver={(event) => helper.setState({ help: southHelp })} onMouseOut={(event) => helper.setState({ help: null })} />
+            <polygon points="50,22 40,63 50,58" fill={northColor} onClick={(event) => this.navigate(event, 'north')} />
+            <polygon points="50,22 50,58 60,63" fill={northColor2} onClick={(event) => this.navigate(event, 'north')} />
+		    <polygon points="0,73 40,63 35,73" fill={westColor} onClick={(event) => this.navigate(event, 'west')} />
+            <polygon points="0,73 35,73 40,83" fill={westColor2} onClick={(event) => this.navigate(event, 'west')}  />
+            <circle cx='50' cy='73' r='10' fill="url(#specialGradient)" onClick={(event) => this.navigate(event, 'special')} />
+		    <polygon points="99,73 60,63 64,73" fill={eastColor} onClick={(event) => this.navigate(event, 'east')} />
+            <polygon points="99,73 64,73 60,83" fill={eastColor2} onClick={(event) => this.navigate(event, 'east')} />
+		    <polygon points="50,122 40,83 50,87" fill={southColor} onClick={(event) => this.navigate(event, 'south')}  />
+            <polygon points="50,122 50,87 60,83" fill={southColor2} onClick={(event) => this.navigate(event, 'south')} />
 
 
 		</svg>;
@@ -308,6 +326,22 @@ class LeftStatus extends React.Component {
 		return <div className='leftStatus'>{statuslines}</div>;
 	}
 }
+
+class RightStatus extends React.Component {
+    constructor(props) {
+        super(props);
+
+    }
+
+    render() {
+        if (!this.props.source || !this.props.source.lines) return <div display='none'></div>;
+        var statuslines = this.props.source.lines.map((line, lineIdx) => {
+            return <div key={lineIdx} className='statusRow' onMouseOver={(event) => helper.setState({ help: line.help })} onMouseOut={(event) => helper.setState({ help: null })}>{line.text}</div>
+        });
+        return <div className='rightStatus'>{statuslines}</div>;
+    }
+}
+
 
 
 class Refresher extends React.Component {
@@ -378,7 +412,7 @@ class GameDisplayer extends React.Component {
                 });
                 return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
             });
-            return (<div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
+            return (<div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
         } else {		
 		    return (<div><div>Welcome, {name}. Please wait while we load your game state.</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
 		}

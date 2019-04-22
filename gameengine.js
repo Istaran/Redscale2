@@ -127,11 +127,11 @@ let act = async function (profile, action, query) {
     await controls(state);
 
 	//Determine which character should be shown on left. By default, it's the player
-	state.view.leftStatus = player.getStatusDisplay(state);
+    state.view.leftStatus = player.getStatusDisplay(state);
 	
 	//Determine which character should be shown on right. By default, it's none.
     if (state.enemy) {
-        state.view.rightStatus = null;
+        state.view.rightStatus = await require('./combatengine').getStatusDisplay(state);
     } else {
         state.view.rightStatus = null;
     }
