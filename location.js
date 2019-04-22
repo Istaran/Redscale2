@@ -101,6 +101,7 @@ let explore = async function (state) {
 
         if (randomEvent && randomEvent.event) {
             state.view.status = "";
+            console.log(`triggered event: ${randomEvent.event}\nPrivate: ${private && private.events && private.events[randomEvent.event] ? JSON.stringify(private.events[randomEvent.event]) : undefined}\nNormal: ${JSON.stringify(zone.events[randomEvent.event])}`);
             let event = (private && private.events && private.events[randomEvent.event]) || zone.events[randomEvent.event];
             console.log(`Triggered random event: ${event.verb}: ${JSON.stringify(event.details)}`);
             await gameengine.doVerb(event.verb, state, event.details);

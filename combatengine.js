@@ -8,54 +8,59 @@ let getControls = async function (state) {
 
     let phase = state.enemy.phasequeue[0] || "assess";
 
-    if (phase == 'acquire') {
+    if (phase == 'acquire' || phase == 'apprehend' || phase == 'assess') {
+        // Add in order: private (NSWF) cards, normal cards, and player cards. Earlier in that list trumps later versions, even if the earlier version is hidden/disabled.
+
         let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
         let enemyPrivateDef = (state.query.nsfw ? await cache.load(`private/enemies/${state.enemy.name}.json`) : null);
         if (enemyPrivateDef) {
-            for (var acqCard in enemyPrivateDef.acquirecards) {
-                if (await gameengine.conditionMet(state, enemyPrivateDef.acquirecards[acqCard].if)) {
-                    let enabled = await gameengine.conditionMet(state, enemyPrivateDef.acquirecards[acqCard].enabled);
+            for (var acqCard in enemyPrivateDef[`${phase}cards`]) {
+                if (await gameengine.conditionMet(state, enemyPrivateDef[`${phase}cards`][acqCard].if)) {
+                    let enabled = await gameengine.conditionMet(state, enemyPrivateDef[`${phase}cards`][acqCard].enabled);
                     let acq = {
                         "type": "card",
-                        "display": enemyPrivateDef.acquirecards[acqCard].display,
-                        "verb": "acquire",
+                        "display": enemyPrivateDef[`${phase}cards`][acqCard].display,
+                        "verb": phase,
                         "details": { "card": acqCard },
-                        "help": enemyPrivateDef.acquirecards[acqCard].help,
+                        "help": enemyPrivateDef[`${phase}cards`][acqCard].help,
                         "enabled": enabled
                     }
                     controls.push([acq]);
                 }
             }
         }
-        for (var acqCard in enemyDef.acquirecards) {
-            if (!enemyPrivateDef || !enemyPrivateDef[acqCard] || await gameengine.conditionMet(state, enemyDef.acquirecards[acqCard].if)) {
-                let enabled = await gameengine.conditionMet(state, enemyDef.acquirecards[acqCard].enabled);
+        for (var acqCard in enemyDef[`${phase}cards`]) {
+            if (!(enemyPrivateDef && enemyPrivateDef[`${phase}cards`] && enemyPrivateDef[`${phase}cards`][acqCard]) && await gameengine.conditionMet(state, enemyDef[`${phase}cards`][acqCard].if)) {
+                let enabled = await gameengine.conditionMet(state, enemyDef[`${phase}cards`][acqCard].enabled);
                 let acq = {
                     "type": "card",
-                    "display": enemyDef.acquirecards[acqCard].display,
-                    "verb": "acquire",
+                    "display": enemyDef[`${phase}cards`][acqCard].display,
+                    "verb": phase,
                     "details": { "card": acqCard },
-                    "help": enemyDef.acquirecards[acqCard].help,
+                    "help": enemyDef[`${phase}cards`][acqCard].help,
                     "enabled": enabled
                 }
                 controls.push([acq]);
             }
         }
-    } else if (phase == 'assess') {
-        // TODO: add additional assess cards from enemy public/private defs. Maybe someday do some optional personal choices.
-        let cards = await cache.load(`data/combat/assess cards.json`);
-        for (var card in cards) {
-            let ctrl = {
-                "type": "card",
-                "display": cards[card].cardlines,
-                "verb": phase,
-                "details": { "card": card },
-                "help": cards[card].help,
-                "enabled": true
-            };
-            controls.push([ctrl]);
+
+        let playercards = await cache.load(`data/combat/${phase} cards.json`);
+        for (var card in playercards) {
+            if (!(enemyPrivateDef && enemyPrivateDef[`${phase}cards`] && enemyPrivateDef[`${phase}cards`][card]) && !(enemyDef && enemyDef[`${phase}cards`] && enemyDef[`${phase}cards`][card]) && await gameengine.conditionMet(state, playercards[card].if)) {
+                let enabled = await gameengine.conditionMet(state, playercards[card].enabled);
+                let ctrl = {
+                    "type": "card",
+                    "display": playercards[card].cardlines,
+                    "verb": phase,
+                    "details": { "card": card },
+                    "help": playercards[card].help,
+                    "enabled": enabled
+                };
+                controls.push([ctrl]);
+            }
         }
-    } else {
+    }
+    if (phase == 'abjure' || phase == 'aggress') {
         
         let cards = await cache.load(`data/combat/${phase} cards.json`);
         let leader = state.parties[state.activeParty].leader;
@@ -236,6 +241,16 @@ let progress = async function (state) {
         state.enemy.phasequeue = ["acquire"];
         return `${enemyDef.killText || "You slew the " + state.enemy.name + "!"}\n\nIt's time to acquire! Pick a card...`; 
     }
+
+    if (state.enemy.phasequeue[1] == "assess") {
+        state.enemy.stamina -= enemyDef.cardsets[state.enemy.cardqueue[0].set].cards[state.enemy.cardqueue[0].card].staminacost; // Pay stamina cost just before assess.
+    }
+
+    if (state.enemy.stamina <= 0) {
+        state.enemy.phasequeue = ["apprehend"];
+        return `${enemyDef.captureText || state.enemy.name + " collapsed from exhaustion, unable to fight back any longer!"}\n\nIt's time to apprehend! Pick a card...`; 
+    }
+
     state.enemy.phasequeue.shift();
     if (state.enemy.phasequeue.length < 1) return "Ran out of phases. This should never happen, as Assess should add phases or end combat.";
     let newPhase = state.enemy.phasequeue[0];

@@ -1,128 +1,128 @@
 {
-  "display": "cave rat",
-  "attack announce": "A massive cave rat comes out from behind a rock, rushing towards you!\n\nThe gray furred creature blends in with the surroundings, but now that it is intent to do you harm it is quite obvious. Long, powerful teeth remind you of the countless bites you've suffered over the years. But as much as it might want to eat you, you know from experience how delicious it can be as well.",
-  "hunt announce": "You find a massive cave rat hiding among the rocks. The gray fur serves well as camoflage, but now that you've gotten close enough the game of hide and seek is over.\n\nNow it's time for a game of eat or be eaten.",
-  "max health": 30,
-  "max stamina": 10,
-  "max mana": 10,
-  "evasion": 10,
-  "reshuffle": 5,
-  "nutrition": 15,
-  "cardsets": [
-    {
-      "tell": "The rat is growling aggressively.",
-      "cards": [
+    "display": "cave rat",
+    "attack announce": "A massive cave rat comes out from behind a rock, rushing towards you!\n\nThe gray furred creature blends in with the surroundings, but now that it is intent to do you harm it is quite obvious. Long, powerful teeth remind you of the countless bites you've suffered over the years. But as much as it might want to eat you, you know from experience how delicious it can be as well.",
+    "hunt announce": "You find a massive cave rat hiding among the rocks. The gray fur serves well as camoflage, but now that you've gotten close enough the game of hide and seek is over.\n\nNow it's time for a game of eat or be eaten.",
+    "max health": 30,
+    "max stamina": 10,
+    "max mana": 10,
+    "evasion": 10,
+    "reshuffle": 5,
+    "nutrition": 15,
+    "cardsets": [
         {
-          "aggress display": "The rat lunges forward to bite you!",
-          "accuracy": 10,
-          "damagedice": 2,
-          "damagedie": 10,
-          "damageplus": 5,
-          "damagetype": "piercing",
-          "attacks": 1,
-          "abjure display": "The rat endures your attacks!",
-          "dodge": 0,
-          "deflect": 0,
-          "soak": 5,
-          "stamaniacost": 1
+            "tell": "The rat is growling aggressively.",
+            "cards": [
+                {
+                    "aggress display": "The rat lunges forward to bite you!",
+                    "accuracy": 10,
+                    "damagedice": 2,
+                    "damagedie": 10,
+                    "damageplus": 5,
+                    "damagetype": "piercing",
+                    "attacks": 1,
+                    "abjure display": "The rat endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The rat lunges forward to bite you!",
+                    "accuracy": 10,
+                    "damagedice": 2,
+                    "damagedie": 10,
+                    "damageplus": 5,
+                    "damagetype": "piercing",
+                    "attacks": 1,
+                    "abjure display": "The rat deflects one of your attacks!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The rat makes several quick bites at you!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "piercing",
+                    "attacks": 3,
+                    "abjure display": "The rat endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                }
+            ]
         },
         {
-          "aggress display": "The rat lunges forward to bite you!",
-          "accuracy": 10,
-          "damagedice": 2,
-          "damagedie": 10,
-          "damageplus": 5,
-          "damagetype": "piercing",
-          "attacks": 1,
-          "abjure display": "The rat deflects one of your attacks!",
-          "dodge": 0,
-          "deflect": 1,
-          "soak": 0,
-          "stamaniacost": 1
-        },
-        {
-          "aggress display": "The rat makes several quick bites at you!",
-          "accuracy": 5,
-          "damagedice": 2,
-          "damagedie": 6,
-          "damageplus": 4,
-          "damagetype": "piercing",
-          "attacks": 3,
-          "abjure display": "The rat endures your attacks!",
-          "dodge": 0,
-          "deflect": 0,
-          "soak": 5,
-          "stamaniacost": 1
+            "tell": "The rat is watching your carefully.",
+            "cards": [
+                {
+                    "aggress display": "The rat darts in for a carefully aimed bite!",
+                    "accuracy": 15,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "piercing",
+                    "attacks": 1,
+                    "abjure display": "The rat deflects one of your attacks!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The rat darts in for a carefully aimed bite!",
+                    "accuracy": 15,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "piercing",
+                    "attacks": 1,
+                    "abjure display": "The rat endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The rat makes several quick bites at you!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "piercing",
+                    "attacks": 3,
+                    "abjure display": "The rat deflects one of your attacks!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0,
+                    "staminacost": 1
+                }
+            ]
         }
-      ]
-    },
-    {
-      "tell": "The rat is watching your carefully.",
-      "cards": [
-        {
-          "aggress display": "The rat darts in for a carefully aimed bite!",
-          "accuracy": 15,
-          "damagedice": 2,
-          "damagedie": 6,
-          "damageplus": 4,
-          "damagetype": "piercing",
-          "attacks": 1,
-          "abjure display": "The rat deflects one of your attacks!",
-          "dodge": 0,
-          "deflect": 1,
-          "soak": 0,
-          "stamaniacost": 1
+    ],
+    "acquirecards": {
+        "devour": {
+            "display": "Devour",
+            "verb": "eat",
+            "details": {
+                "text": "You rip open the rat's guts, dining on the delicious organs within. You need a bit of care to avoid getting a bunch of fur stuck in your teeth, but not so much as to truly slow you down.",
+                "nutrition": 30
+            },
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +30 nutrition."
         },
-        {
-          "aggress display": "The rat darts in for a carefully aimed bite!",
-          "accuracy": 15,
-          "damagedice": 2,
-          "damagedie": 6,
-          "damageplus": 4,
-          "damagetype": "piercing",
-          "attacks": 1,
-          "abjure display": "The rat endures your attacks!",
-          "dodge": 0,
-          "deflect": 0,
-          "soak": 5,
-          "stamaniacost": 1
-        },
-        {
-          "aggress display": "The rat makes several quick bites at you!",
-          "accuracy": 5,
-          "damagedice": 2,
-          "damagedie": 6,
-          "damageplus": 4,
-          "damagetype": "piercing",
-          "attacks": 3,
-          "abjure display": "The rat deflects one of your attacks!",
-          "dodge": 0,
-          "deflect": 1,
-          "soak": 0,
-          "stamaniacost": 1
+        "card": {
+            "display": "Card",
+            "verb": "card",
+            "details": {
+                "text": "Absorbing the lingering memories of the fallen rat's spirit, you improve your skill at biting.",
+                "fail": "You try to absorb the rat's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+                "type": "aggress",
+                "card": "Basic Bite"
+            }
         }
-      ]
     }
-  ],
-  "acquirecards": {
-    "devour": {
-      "display": "Devour",
-      "verb": "eat",
-      "details": {
-        "text": "You rip open the rat's guts, dining on the delicious organs within. You need a bit of care to avoid getting a bunch of fur stuck in your teeth, but not so much as to truly slow you down.",
-        "nutrition": 30
-      },
-      "help": "Consume your enemy's corpse to gain its calories.\nGet +30 nutrition."
-    },
-    "card": {
-      "display": "Card",
-      "verb": "card",
-      "details": {
-        "text": "Absorbing the lingering memories of the fallen rat's spirit, you improve your skill at biting.",
-        "fail": "You try to absorb the rat's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
-        "type": "aggress",
-        "card": "Basic Bite"
-      }
-    }
-  }
 }
