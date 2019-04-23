@@ -16,9 +16,9 @@
     "aggressdraw": 2
   },
   "Total defense": {
-    "dislay": "You concentrate completely on defense.",
+    "display": "You concentrate completely on defense.",
     "cardlines": "Total defense\n\nStamina to Health: \u2b24\nAbjure Draw:\u2b24\u2b24\u2b24\nAggress Draw:",
-    "help": "Convert some stamina into health! Draw: 3 Abjure",
+    "help": "Convert some stamina into health!\nDraw: 3 Abjure.\nNo aggress phase.",
     "queue": [ "abjure", "assess" ],
     "abjuredraw": 3,
     "aggressdraw": 0,
@@ -27,7 +27,7 @@
   "Flee!": {
     "display": "You try to escape!",
     "cardlines": "Flee!\n\nEscape rolls: \u2b24\nAbjure Draw:\nAggress Draw:",
-    "help": "Attempt to escape in a random direction. No draw or aggress phase.",
+    "help": "Attempt to escape in a random direction.\nNo draw or aggress phase.",
     "queue": [ "abjure", "assess" ],
     "abjuredraw": 0,
     "aggressdraw": 0,
