@@ -104,7 +104,7 @@ let list = async function (profile) {
         let subPath = path.substring(0, path.length - 5);
         previews.push({
             slot: subPath,
-            text: player.getSavePreview(data)
+            text: await player.getSavePreview(data)
         });
     }
     return previews;
