@@ -1,0 +1,167 @@
+{
+    "map": [
+        [],
+        [],
+        [],
+        [],
+        [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [   null,       null,       null,       null,       "Bend",         "HewnTunnel","Torchfork",   "HewnTunnel",   "Bend"],
+            [   null,       null,       null,       null,       "HewnTunnel",   null,       "HewnTunnel",   null,           "HewnTunnel"],
+            [   null,       null,       null,       "DragonPath","Torchfork",   null,       "Torchfork",    "HewnTunnel",   "Bend" ],
+            [   null,       null,       null,       null,       "HewnTunnel",   null,       "HewnTunnel" ],
+            [   null,       null,       "DeadEnd",  "HewnTunnel","Torchfork",   "HewnTunnel","Torchfork",   "HewnTunnel",   "DeadEnd"]
+        ]
+    ],
+    "styles": {
+        "DragonPath": {
+            "description": "The tunnel here is littered with shattered wooden beams, mixed in with the rubble of stone, and a careful look shows some telltale tool marks on the fallen rock as well. It rather gives the impression that the cavein was intentional, like someone didn't want your home connected with this area.\n\nBut that was then, and this is now. Your will has opened this path for your own purposes. To the northwest, your cave yawns open in all its glory, your mother's immense skeleton framed by the opening.\n\nTo the east, the tunnel continues to a torchlit fork, from which it can be seen going north and south.",
+            "preview": "The tunnel there connects the Dragonbone Cave to the carved out tunnels beyond.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "directionOverrides": {
+                "nw": {
+                    "disabled": false,
+                    "x": 7,
+                    "y": -11,
+                    "z": -4,
+                    "zone": "Dragonbone Cave"
+                }
+            }
+        },
+        "Bend": {
+            "description": "You've come to a bend in the tunnels, a blind corner that makes it all the more likely to stumble into someone unexpectedly, or a great place to setup an ambush.",
+            "preview": "The hewn tunnels bend there, making a good spot to lay an ambush, or get caught in one.",
+            "events": [
+                {
+                    "chance": 3,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "kobold spearman attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "kobold spearwoman attack"
+                }
+            ],
+            "actions": [ "ambush" ]
+        },
+        "HewnTunnel": {
+            "description": "You're in a long, straight segment of the tunnels, lined with wooden support beams along the way to increase stability and prevent caveins. It's clear this place was intentionally made, but less clear there was any intent in the layout. Corners and forks abound, and the lighting is quite dim, making you glad dragons see so well in the dark.",
+            "preview": "The tunnel continues straight for some time, supported by periodic wooden support beams.",
+            "events": [
+                {
+                    "chance": 5,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "kobold spearman attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "kobold spearwoman attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "dart trap"
+                }
+            ]
+        },
+        "Torchfork": {
+            "description": "The tunnels connect here, creating a T-shaped fork, with a torch embedded in the wall on the long side, illuminating the area slightly.",
+            "preview": "The tunnel continues straight for some time, supported by periodic wooden support beams.",
+            "events": [
+                {
+                    "chance": 7,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "kobold spearman attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "kobold spearwoman attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "flame trap"
+                }
+            ]
+        },
+        "DeadEnd": {
+            "description": "You come to the end of the tunnel, where there are a few tools discarded. The tunnelling process is apparently ongoing here, and you can see the gleam of copper veins in the walls, still in the process of being excavated.\nDragons aren't well suited to tool use, but they are well suited to enslaving less species to use tools for them. Your mind immediately jumps to the idea of all the things that could be made from the metal here: coins, weapons, coins, armor, coins, art pieces, even coins.",
+            "preview": "The tunnel comes to a haphazard end.",
+            "events": [
+                {
+                    "chance": 1,
+                    "event": "kobold spearman attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "kobold spearwoman attack"
+                }
+            ]
+        }
+    },
+    "events": {
+        "kobold spearman attack": {
+            "verb": "attack",
+            "details": { "enemy": "kobold spearman" }
+        },
+        "kobold spearwoman attack": {
+            "verb": "attack",
+            "details": { "enemy": "kobold spearwoman" }
+        },
+        "dart trap": {
+            "verb": "flavor",
+            "details": { "text": "A dart flies out from the wall suddenly, then glitches out of existence because Istaran hasn't implemented traps yet. Whew. Next time you might not be so lucky." }
+        },
+        "flame trap": {
+            "verb": "flavor",
+            "details": { "text": "The torch suddenly flares with arcane energy and its flames suddenly expand, engulfing you in fire! Fortunately for you, you're a red dragon and this actually just feels really nice. You'd probably hate it if you weren't a red dragon."}
+        }
+    },
+"actions":{
+     "hunt": {
+        "type": "actButton",
+        "display": "Ambush",
+        "verb": "hunt",
+        "details": {
+            "targets": [
+                {
+                    "chance": 1,
+                    "name": "kobold spearman"
+                },
+                {
+                    "chance": 1,
+                    "name": "kobold spearwoman"
+                }
+            ]
+        },
+        "help": "Lie in wait for someone to come around the corner."
+    }
+}}

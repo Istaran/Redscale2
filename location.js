@@ -1,22 +1,31 @@
 let cache = require('./cache');
 var gameengine = undefined;
 
-let spotExists = function(zone, x, y, z) {
-	return (zone && zone.map && zone.map[z] && zone.map[z][y] && zone.map[z][y][x]);
+let spotStyle = async function (state, zoneName, x, y, z) {
+    let zone = await cache.load(`./data/locations/${zoneName}.json`);
+    if (!(zone && zone.map && zone.map[z] && zone.map[z][y] && zone.map[z][y][x]))
+        return null;
+    if (state.world && state.world.locations) {
+        zoneOverride = state.world.locations[zoneName];
+        if (zoneOverride && zoneOverride[z] && zoneOverride[z][y] && zoneOverride[z][y][x] && zoneOverride[z][y][x].style)
+            return zoneOverride[z][y][x].style;
+    }
+    return zone.map[z][y][x];
 }
 
-let getSpotDetails = function(zone, x, y, z) {
-	let spot = zone.map[z][y][x];
-	let style = zone.styles[spot];
+let getSpotDetails = async function(state, zoneName, x, y, z) {
+    let spot = await spotStyle(state, zoneName, x, y, z);
+    let zone = await cache.load(`./data/locations/${zoneName}.json`);
+    let style = zone.styles[spot];
 	return style.preview;
 }
 
-let setupDirection = async function (loc, zone, x, y, z, dir, control, hereStyle) {
+let setupDirection = async function (state, zoneName, x, y, z, dir, control, hereStyle) {
     let overrided = hereStyle.directionOverrides && hereStyle.directionOverrides[dir];
     let over = (overrided ? hereStyle.directionOverrides[dir] : {}); // Direction override pretends 'here' is in the zone specified and offset by dimensions specified for purpose of calculating links in the given direction.
     if (over.disabled) return;
-    let targetZone = zone;
-    if (over.zone) targetZone = await cache.load(`./data/locations/${over.zone}.json`);
+    let targetZone = zoneName;
+    if (over.zone) targetZone = over.zone;
     let targetX = x + (over.x || 0);
     let targetY = y + (over.y || 0);
     let targetZ = z + (over.z || 0);
@@ -37,9 +46,9 @@ let setupDirection = async function (loc, zone, x, y, z, dir, control, hereStyle
     }
 
     if (overrided || ((!reqNS || control.sub[reqNS]) && (!reqEW || control.sub[reqEW]))) {
-        if (spotExists(targetZone, targetX, targetY, targetZ)) {
-            control.sub[dir] = getSpotDetails(targetZone, targetX, targetY, targetZ);
-            control.details[dir] = { location: (over.zone || loc), x: targetX, y: targetY, z: targetZ };
+        if (await spotStyle(state, targetZone, targetX, targetY, targetZ)) {
+            control.sub[dir] = await getSpotDetails(state, targetZone, targetX, targetY, targetZ);
+            control.details[dir] = { location: (over.zone || zoneName), x: targetX, y: targetY, z: targetZ };
         }
     }
 }
@@ -50,22 +59,13 @@ let getControls = async function (state) {
     let controls = [[{ type: "navigator", details: {}, sub: {} }], []];
     if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
 
-	if (spotExists(zone, state.x, state.y, state.z)) {
-		let spot = zone.map[state.z][state.y][state.x];
+    let spot = await spotStyle(state, state.location, state.x, state.y, state.z);
+	if (spot) {
 		let style = zone.styles[spot];
         let pStyle = (private && private.styles && private.styles[spot]) ? private.styles[spot] : {};
 
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "up", controls[0][0], style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "north", controls[0][0], style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "east", controls[0][0], style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "west", controls[0][0], style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "south", controls[0][0], style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "down", controls[0][0], style);
-
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "nw", controls[0][0], style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "ne", controls[0][0], style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "sw", controls[0][0], style);
-        await setupDirection(state.location, zone, state.x, state.y, state.z, "se", controls[0][0], style);
+        await Promise.all(["up", "north", "east", "west", "south", "down"].map((dir) => setupDirection(state, state.location, state.x, state.y, state.z, dir, controls[0][0], style)));
+        await Promise.all(["nw", "ne", "sw", "se"].map((dir) => setupDirection(state, state.location, state.x, state.y, state.z, dir, controls[0][0], style)));
 
         let actions = pStyle.actions ? (style.actions || []).concat(pStyle.actions) : style.actions;
         if (actions) {
@@ -88,10 +88,10 @@ let explore = async function (state) {
     let zone = await cache.load(`./data/locations/${state.location}.json`);
     let private = state.query.nsfw == 'true' && await cache.load(`./private/locations/${state.location}.json`);
 	//Temp:
-	if (spotExists(zone, state.x, state.y, state.z)) {
+    let spot = await spotStyle(state, state.location, state.x, state.y, state.z);
+	if (spot) {
         if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
 
-        let spot = zone.map[state.z][state.y][state.x];
         let style = zone.styles[spot];
         let pStyle = (private && private.styles && private.styles[spot]) ? private.styles[spot] : {};
 
@@ -118,11 +118,10 @@ let explore = async function (state) {
 
 let getDescription = async function (state) {
     let zone = await cache.load(`./data/locations/${state.location}.json`);
-
-    if (spotExists(zone, state.x, state.y, state.z)) {
+    let spot = await spotStyle(state, state.location, state.x, state.y, state.z);
+    if (spot) {
         if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
 
-        let spot = zone.map[state.z][state.y][state.x];
         let style = zone.styles[spot];
         return style.description;
     }
@@ -131,11 +130,10 @@ let getDescription = async function (state) {
 
 let getTitle = async function (state) {
     let zone = await cache.load(`./data/locations/${state.location}.json`);
-
-    if (spotExists(zone, state.x, state.y, state.z)) {
+    let spot = await spotStyle(state, state.location, state.x, state.y, state.z);
+    if (spot) {
         if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
 
-        let spot = zone.map[state.z][state.y][state.x];
         let style = zone.styles[spot];
         return style.title;
     }

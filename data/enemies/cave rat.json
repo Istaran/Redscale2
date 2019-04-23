@@ -7,7 +7,6 @@
     "max mana": 10,
     "evasion": 10,
     "reshuffle": 5,
-    "nutrition": 15,
     "cardsets": [
         {
             "tell": "The rat is growling aggressively.",

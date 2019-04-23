@@ -29,7 +29,11 @@ let getStatusDisplay = function (state) {
 
 let setDefaults = function (state) {
     // Backfill default values not already in the save. Difference between this and migrations is migrations are to change existing data that has been transformed or rebalanced.
-
+    if (!state.world) {
+        state.world = {
+            locations: {}
+        }
+    }
 }
 
 let passiveRecoverAll = function (state) {
@@ -71,9 +75,10 @@ let reloadArchive = async function (state) {
 let getSavePreview = async function (state) {
     let leader = state.parties[state.activeParty] && state.parties[state.activeParty].leader;
     let locTitle = await loc.getTitle(state);
+    let time = require('./time');
     var prev = "";
     if (leader) {
-        prev = `${leader.display}\nAt ${locTitle}\nH:${leader.health}/${leader.maxHealth} S:${leader.stamina}/${leader.maxStamina} M:${leader.mana}/${leader.maxMana}`;
+        prev = `${leader.display}\n${time.getTimeString(state)}\nAt ${locTitle}\nH:${leader.health}/${leader.maxHealth} S:${leader.stamina}/${leader.maxStamina} M:${leader.mana}/${leader.maxMana}`;
         if (state.enemy) {
             let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
             prev += `\nFighting ${enemyDef.display}`;
