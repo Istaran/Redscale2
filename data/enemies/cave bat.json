@@ -1,129 +1,129 @@
 {
-  "display": "cave bat",
-  "attack announce": "A massive cave bat swoops down to attack you!\n\n",
-  "hunt announce": "You find a massive cave bat hanging from the ceiling. In your younger days they annoyed you greatly, swooping in to harrass you and then escaping into the air when you fought back. But now your wings are strong enough to carry you and there is nowhere left for them to hide.",
-  "max health": 20,
-  "max stamina": 10,
-  "max mana": 10,
-  "evasion": 15,
-  "reshuffle": 3,
-  "cardsets": [
-    {
-      "tell": "The bat flits about nervously.",
-      "cards": [
+    "display": "cave bat",
+    "attack announce": "A massive cave bat swoops down to attack you!\n\n",
+    "hunt announce": "You find a massive cave bat hanging from the ceiling. In your younger days they annoyed you greatly, swooping in to harrass you and then escaping into the air when you fought back. But now your wings are strong enough to carry you and there is nowhere left for them to hide.",
+    "max health": 20,
+    "max stamina": 10,
+    "max mana": 10,
+    "evasion": 15,
+    "reshuffle": 3,
+    "cardsets": [
         {
-          "aggress display": "The bat lunges forward to bite you!",
-          "accuracy": 15,
-          "damagedice": 1,
-          "damagedie": 8,
-          "damageplus": 1,
-          "damagetype": "piercing",
-          "attacks": 2,
-          "abjure display": "The bat endures your attacks!",
-          "dodge": 0,
-          "deflect": 0,
-          "soak": 5,
-          "stamaniacost": 1
+            "tell": "The bat flits about nervously.",
+            "cards": [
+                {
+                    "aggress display": "The bat lunges forward to bite you!",
+                    "accuracy": 15,
+                    "damagedice": 1,
+                    "damagedie": 8,
+                    "damageplus": 1,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The bat endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The bat lunges forward to bite you!",
+                    "accuracy": 15,
+                    "damagedice": 1,
+                    "damagedie": 8,
+                    "damageplus": 1,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The bat dodges about!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The bat strikes you with a flurry of wing slaps!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 8,
+                    "damageplus": 2,
+                    "damagetype": "bludgeoning",
+                    "attacks": 3,
+                    "abjure display": "The bat endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                }
+            ]
         },
         {
-          "aggress display": "The bat lunges forward to bite you!",
-          "accuracy": 15,
-          "damagedice": 1,
-          "damagedie": 8,
-          "damageplus": 1,
-          "damagetype": "piercing",
-          "attacks": 2,
-          "abjure display": "The bat dodges about!",
-          "dodge": 5,
-          "deflect": 0,
-          "soak": 0,
-          "stamaniacost": 1
-        },
-        {
-          "aggress display": "The bat strikes you with a flurry of wing slaps!",
-          "accuracy": 5,
-          "damagedice": 2,
-          "damagedie": 8,
-          "damageplus": 2,
-          "damagetype": "bludgeoning",
-          "attacks": 3,
-          "abjure display": "The bat endures your attacks!",
-          "dodge": 0,
-          "deflect": 0,
-          "soak": 5,
-          "stamaniacost": 1
+            "tell": "The bat screeches painfully.",
+            "cards": [
+                {
+                    "aggress display": "The bat strikes you with a flurry of wing slaps!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 8,
+                    "damageplus": 2,
+                    "damagetype": "bludgeoning",
+                    "attacks": 3,
+                    "abjure display": "The bat deflects one of your attacks!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The bat strikes you with a flurry of wing slaps!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 8,
+                    "damageplus": 2,
+                    "damagetype": "bludgeoning",
+                    "attacks": 3,
+                    "abjure display": "The bat dodges about!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The bat screeches as loud as it can! Your eardrums are killing you!",
+                    "accuracy": 15,
+                    "damagedice": 2,
+                    "damagedie": 8,
+                    "damageplus": 2,
+                    "damagetype": "sonic",
+                    "attacks": 1,
+                    "aggress deflect display": "You cover your ears to block out the sound!",
+                    "abjure display": "The bat dodges about!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 1
+                }
+            ]
         }
-      ]
-    },
-    {
-      "tell": "The bat screeches painfully.",
-      "cards": [
-        {
-          "aggress display": "The bat strikes you with a flurry of wing slaps!",
-          "accuracy": 5,
-          "damagedice": 2,
-          "damagedie": 8,
-          "damageplus": 2,
-          "damagetype": "bludgeoning",
-          "attacks": 3,
-          "abjure display": "The bat deflects one of your attacks!",
-          "dodge": 0,
-          "deflect": 1,
-          "soak": 0,
-          "stamaniacost": 1
-        },
-        {
-          "aggress display": "The bat strikes you with a flurry of wing slaps!",
-          "accuracy": 5,
-          "damagedice": 2,
-          "damagedie": 8,
-          "damageplus": 2,
-          "damagetype": "bludgeoning",
-          "attacks": 3,
-          "abjure display": "The bat dodges about!",
-          "dodge": 5,
-          "deflect": 0,
-          "soak": 0,
-          "stamaniacost": 1
-        },
-        {
-          "aggress display": "The bat screeches as loud as it can! Your eardrums are killing you!",
-          "accuracy": 15,
-          "damagedice": 2,
-          "damagedie": 8,
-          "damageplus": 2,
-          "damagetype": "sonic",
-          "attacks": 1,
-          "aggress deflect display": "You cover your ears to block out the sound!",
-          "abjure display": "The bat dodges about!",
-          "dodge": 5,
-          "deflect": 0,
-          "soak": 0,
-          "stamaniacost": 1
-        }
-      ]
-    }
-  ],
-  "acquirecards": {
-    "devour": {
-      "display": "Devour",
-      "verb": "eat",
-      "details": {
-        "text": "You tear the bat's remains to shreds, gulping down each bite and enjoying the inner warmth as your inner fire burns away the flesh.",
-        "nutrition": 30
-      },
-      "help": "Consume your enemy's corpse to gain its calories.\nGet +30 nutrition."
+    ],
+    "acquirecards": {
+        "devour": {
+            "display": "Devour",
+            "verb": "eat",
+            "details": {
+                "text": "You tear the bat's remains to shreds, gulping down each bite and enjoying the inner warmth as your inner fire burns away the flesh.",
+                "nutrition": 30
+            },
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +30 nutrition."
 
-    },
-    "card": {
-      "display": "Card",
-      "verb": "card",
-      "details": {
-        "text": "Absorbing the lingering memories of the fallen bat's spirit, you improve your knowledge of attacking with your wings.",
-        "fail": "You try to absorb the bat's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
-        "type": "aggress",
-        "card": "Basic Wing Flurry"
-      }
+        },
+        "card": {
+            "display": "Card",
+            "verb": "card",
+            "details": {
+                "text": "Absorbing the lingering memories of the fallen bat's spirit, you improve your knowledge of attacking with your wings.",
+                "fail": "You try to absorb the bat's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+                "type": "aggress",
+                "card": "Basic Wing Flurry"
+            }
+        }
     }
-  }
 }

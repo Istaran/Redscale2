@@ -93,9 +93,24 @@ let controls = async function (state) {
     state.view.controls = controls;
 }
 
+let list = async function (profile) {
+    console.log(`Getting list for ${profile.id}`);
+    var saves = cache.loadDir(`./saves/${profile.id}`);
+    var previews = [];
+    for (var i = 0; i < saves.length; i++) {
+        let path = saves[i].path;
+        let subPath = path.substring(path.lastIndexOf('/') + 1, path.length - 5);
+        previews.push({
+            slot: subPath,
+            text: saves[i].data.savePreview || "An older save with no preview."
+        });
+    }
+    return previews;
+}
+
 let act = async function (profile, action, query) {
 	console.log(action);
-	let savePath = `./saves/${profile.id}.json`; // TEMP: need to make save selectable.
+	let savePath = `./saves/${profile.id}/${action.slot}.json`; 
 	
 	// Load current existence.
 	let state = await cache.load(savePath);
@@ -169,5 +184,6 @@ module.exports = {
     conditionMet: conditionMet,
     doVerb: doVerb,
     getControl: getControl,
+    list: list,
     randomChoice: randomChoice
 };

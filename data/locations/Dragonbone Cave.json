@@ -135,23 +135,7 @@
       "events": [
         {
           "chance": 1,
-          "if": {
-            "condition": "stateis",
-            "fact": "query/nsfw",
-            "rule": "!=",
-            "value": "true"
-          },
           "event": null
-        },
-        {
-          "chance": 1,
-          "if": {
-            "condition": "stateis",
-            "fact": "query/nsfw",
-            "rule": "=",
-            "value": "true"
-          },
-          "event": "acknowledge nsfw"
         }
       ],
       "actions": [ "rest" ]

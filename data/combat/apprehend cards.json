@@ -1,0 +1,21 @@
+{
+    "Murder the captive": {
+        "display": "Murder the captive",
+        "cardlines": "Murder the captive\n\nKill your foe,\nand reap the rewards.",
+        "help": "Instantly kill your disabled foe, and gain the same benefits as killing them in combat. Against some foes, this may effect your reputation.",
+        "verb": "setqueue",
+        "details": {
+            "text": "Now that your foe is defenseless, you take the chance to put them to death.",
+            "queue": [ "acquire" ]
+        }
+    },
+    "Release": {
+        "display": "Release",
+        "cardlines": "Release\n\nShow mercy,\nlet them go.",
+        "help": "Release your disabled foe. Against some foes, this may effect your reputation.",
+        "verb": "flavor",
+        "details": {
+            "text": "You turn away from your downed foe, and take your leave."
+        }
+    }
+}

@@ -1,26 +1,30 @@
 div.statusDisplay {
     white-space: pre-wrap;
+    width:100%;
+    margin: 3px;
 }
 
 div.statusWrapper {
     width: 100%;
+    height: calc(100vh - 420px);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    overflow-y:auto;
 }
 
 div.leftStatus {
-	width: 250px;
-    height: 100%;
-	border-color: black;
+    width: 250px;
+    min-height: calc(100vh - 425px);
+    border-color: black;
     border-style: groove;
-	background-color: lightgray;
-	display: flex;
-	flex-direction: column;
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
 }
 div.rightStatus {
     width: 250px;
-    height: 100%;
+    min-height: calc(100vh - 425px);
     border-color: black;
     border-style: groove;
     background-color: lightgray;
@@ -35,7 +39,7 @@ div.statusRow {
 div.controlTable {
     position: absolute;
     bottom: 235px;
-	width: 680px;
+	width: 100%;
 	height: 150px;
 	background-color: lightgray;
 	display: flex;
@@ -44,7 +48,7 @@ div.controlTable {
 
 div.controlColumn {
 	height: 100%;
-	width: 150px;
+	min-width: 150px;
 	margin-right: 5px;
 	display:flex; 
 	flex-direction:column;
@@ -64,18 +68,9 @@ input.actButton {
 	margin-bottom: 5px;
 }
 
-@keyframes slide-in-from-right {
-    0% { left: 1024px; }
-    10% { left: 512px; }
-    20% { left: 256px; }
-    30% { left: 128px; }
-    40% { left: 64px; }
-    50% { left: 32px; }
-    60% { left: 16px; }
-    70% { left: 8px; }
-    80% { left: 4px; }
-    90% { left: 2px; }
-    100% { left: 0px; }
+div.cardBox {
+    display: flex;
+    flex-direction: row;
 }
 
 div.card {
@@ -83,35 +78,46 @@ div.card {
     height: 145px;
     border-style: ridge;
     border-width: thick;
-    animation-name: slide-in-from-right;
-    animation-duration: 3s;
-    animation-fill-mode: forwards;
     white-space: pre;
 }
 
-div.card.abjure {
+div.abjure {
     background-color: #AAAAFF;
     color: darkblue;
     border-color: darkblue;
 }
 
-    div.card.acquire {
-        background-color: gold;
-        color: black;
-        border-color: darkgoldenrod;
-    }
+div.acquire {
+    background-color: gold;
+    color: black;
+    border-color: darkgoldenrod;
+}
 
-    div.card.aggress {
-        background-color: #FFAAAA;
-        color: darkred;
-        border-color: darkred;
-    }
+div.aggress {
+    background-color: #FFAAAA;
+    color: darkred;
+    border-color: darkred;
+}
 
-    div.card.assess {
-        background-color: #AAFFAA;
-        color: darkgreen;
-        border-color: darkgreen;
-    }
+div.assess {
+    background-color: #AAFFAA;
+    color: darkgreen;
+    border-color: darkgreen;
+}
+
+div.apprehend {
+    background-color: #FFDDAA;
+    color: darkorange;
+    border-color: darkorange;
+}
+
+div.stack {
+    width: 5px;
+    height: 145px;
+    border-style: ridge;
+    border-left-style: none;
+    border-width: thick;
+}
 
 @keyframes fade-in-from-top {
   0%   {background-color:black; height:0px;}

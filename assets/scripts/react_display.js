@@ -8,6 +8,7 @@ var pusher = new Pusher('91450cc1727e582f15c1', {
 var helper;
 var gameDisplayer;
 var formData = {};
+var saveSlot = 0;
 
 function getStatus() {
     fetch('/act' + location.search, {
@@ -15,7 +16,7 @@ function getStatus() {
         headers: {
             "Content-Type": "application/json; charset=utf-8",
         },
-        body: JSON.stringify({ 'body': { 'verb': 'status' } })
+        body: JSON.stringify({ 'body': { 'verb': 'status', 'slot': saveSlot } })
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -104,7 +105,7 @@ class ActButton extends React.Component {
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
 				},
-            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'id': self.props.id, 'data': formData }})
+            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'slot': saveSlot, 'id': self.props.id, 'data': formData }})
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
@@ -131,7 +132,7 @@ class Card extends React.Component {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'id': self.props.id } })
+            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'slot': saveSlot, 'id': self.props.id } })
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
@@ -143,8 +144,11 @@ class Card extends React.Component {
 
     render() {
         let display = this.props.display;
-        if (this.props.count) display += "\n\nCopies: " + this.props.count; // TODO: beautify how we display this.
-        return <div className={'card ' + this.props.verb} onClick={(event) => this.takeAction(event)} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} >{ display }</div >;
+        let stacks = [];
+        for (var i = 1; i < this.props.count; i++) {
+            stacks.push(<div className={'stack ' + this.props.verb} />);
+        }
+        return <div className='cardBox'><div className={'card ' + this.props.verb} onClick={(event) => this.takeAction(event)} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} >{display}</div>{stacks}</div>;
     }
 }
 
@@ -164,7 +168,7 @@ class Navigator extends React.Component {
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
 				},
-                body: JSON.stringify({ 'body': { 'verb': 'travel', 'id': id, 'sub': dir }})
+                body: JSON.stringify({ 'body': { 'verb': 'travel', 'slot': saveSlot, 'id': id, 'sub': dir }})
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
