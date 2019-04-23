@@ -68,25 +68,27 @@ let reloadArchive = async function (state) {
     state.archive = archive; // preserve linking. TODO: support jumping back multiple steps.
 }
 
-let setSavePreview = async function (state) {
+let getSavePreview = async function (state) {
     let leader = state.parties[state.activeParty].leader;
     let locTitle = await loc.getTitle(state);
+    var prev = "";
     if (leader) {
-        state.savePreview = `${leader.display}\nAt ${locTitle}\nH:${leader.health}/${leader.maxHealth} S:${leader.stamina}/${leader.maxStamina} M:${leader.mana}/${leader.maxMana}`;
+        prev = `${leader.display}\nAt ${locTitle}\nH:${leader.health}/${leader.maxHealth} S:${leader.stamina}/${leader.maxStamina} M:${leader.mana}/${leader.maxMana}`;
         if (state.enemy) {
             let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
-            state.savePreview += `\nFighting ${enemyDef.display}`;
+            prev += `\nFighting ${enemyDef.display}`;
         }
     } else {
-        "Resume character creation...";
+        prev = "Resume character creation...";
     }
+    return prev;
 }
 
 module.exports = {
 	addControls: addControls,
     getStatusDisplay: getStatusDisplay,
     setDefaults: setDefaults,
-    setSavePreview: setSavePreview,
+    getSavePreview: getSavePreview,
     reloadArchive: reloadArchive,
     passiveRecoverAll: passiveRecoverAll
 };
