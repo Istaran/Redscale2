@@ -35,6 +35,7 @@
     ],
     "styles": {
         "UnderRiver": {
+            "title": "Undermountain Waterways - Dragonbone Cave river",
             "description": "You are swimming through the water in the underground river.",
             "preview": "The water is warm, clear and free-flowing through here, occupied by the occassional fish or giant newt.",
             "events": [
@@ -62,6 +63,7 @@
             }
         },
         "Fork": {
+            "title": "Undermountain Waterways - Dragonbone Cave river fork",
             "description": "You are swimming through the water in the underground river. The river here merges from two streams, one coming from the west, the other from the southwest.",
             "preview": "The water is warm, clear and free-flowing through here, occupied by the occassional fish or giant newt.",
             "events": [
@@ -92,6 +94,7 @@
             }
         },
         "SouthBranch": {
+            "title": "Undermountain Waterways - Dragonbone Cave river",
             "description": "You are swimming through the water in the underground river.",
             "preview": "The water is warm, clear and free-flowing through here, occupied by the occassional fish or giant newt.",
             "events": [
@@ -125,6 +128,7 @@
             }
         },
         "WestBranch": {
+            "title": "Undermountain Waterways - Dragonbone Cave river",
             "description": "You are swimming through the water in the underground river.",
             "preview": "The water is warm, clear and free-flowing through here, occupied by the occassional fish or giant newt.",
             "events": [

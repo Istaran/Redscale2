@@ -1,0 +1,9 @@
+{
+    "display": "fire moss",
+    "descriptionSingular": "Some reddish moss, warm to the touch and slightly glowing. It helps fill the cave with its dim ambient light.",
+    "descriptionPlural": "Some reddish moss, warm to the touch and slightly glowing. It helps fill the cave with its dim ambient light.",
+    "hands": 0.01,
+    "weight": 0.01,
+    "nutrition": 1,
+    "gather": "You find some unusually thick fire moss. The red, glowing stuff grows all over your cave, and provides the base of the ecosystem here. It's usually too sparse for you to get a decent grip on, but this bit is thick enough for you to take some for yourself."
+}

@@ -44,6 +44,14 @@
                 {
                     "chance": 1,
                     "event": "eat small rat"
+                },
+                {
+                    "chance": 1,
+                    "event": "find copper"
+                },
+                {
+                    "chance": 1,
+                    "event": "find moss"
                 }
             ],
             "actions": [ "hunt" ],
@@ -81,7 +89,7 @@
             "events": [
                 {
                     "chance": 10,
-                    "event": null
+                    "event": "can dig it E"
                 },
                 {
                     "chance": 1,
@@ -130,6 +138,14 @@
                 {
                     "chance": 1,
                     "event": "eat small rat"
+                },
+                {
+                    "chance": 1,
+                    "event": "find copper"
+                },
+                {
+                    "chance": 1,
+                    "event": "find moss"
                 }
             ],
             "actions": [ "hunt" ]
@@ -397,7 +413,7 @@
                     "event": "eat small rat"
                 },
                 {
-                    "chance": 10,
+                    "chance": 1,
                     "event": "spider attack"
                 }
             ],
@@ -429,51 +445,93 @@
             }
         }
     },
-"events":{
-    "rat attack": {
-        "verb": "attack",
-        "details": { "enemy": "cave rat" }
-    },
-    "bat attack": {
-        "verb": "attack",
-        "details": { "enemy": "cave bat" }
-    },
-    "spider attack": {
-        "verb": "attack",
-        "details": { "enemy": "cave spider" }
-    },
-    "newt attack": {
-        "verb": "attack",
-        "details": { "enemy": "cave newt" }
-    },
-    "flying free": {
-        "verb": "flavor",
-        "details": {
-            "text": "You fly carelessly through the air, enjoying the wind across your scales. It's peaceful here, if a bit boring. Some large bats wing through the air in the area but none of them are bothering you at the moment." 
+    "events": {
+        "rat attack": {
+            "verb": "attack",
+            "details": { "enemy": "cave rat" }
+        },
+        "bat attack": {
+            "verb": "attack",
+            "details": { "enemy": "cave bat" }
+        },
+        "spider attack": {
+            "verb": "attack",
+            "details": { "enemy": "cave spider" }
+        },
+        "newt attack": {
+            "verb": "attack",
+            "details": { "enemy": "cave newt" }
+        },
+        "flying free": {
+            "verb": "flavor",
+            "details": {
+                "text": "You fly carelessly through the air, enjoying the wind across your scales. It's peaceful here, if a bit boring. Some large bats wing through the air in the area but none of them are bothering you at the moment."
+            }
+        },
+        "eat small bat": {
+            "verb": "eat",
+            "details": {
+                "text": "You chance upon a small bat in flight, and manage to surge toward it faster than it can dodge. In a single bite, its wings are shredded and its body stuck in your mouth. Your powerful tongue pulls it down into your throat and you swallow, happy with your snack.",
+                "nutrition": 1
+            }
+        },
+        "eat small rat": {
+            "verb": "eat",
+            "details": {
+                "text": "As you make your way about, you spot a small rat searching the area for food. Too late, it spots you and tries to flee. But it had ventured too far from cover, and with a powerful leap you clear the distance, deadly claws snatching the vermin. It squeaks and squirms in terror, but you have no mercy for it, and soon you are feeling those squirms work their way down your throat.",
+                "nutrition": 1
+            }
+        },
+        "eat small fish": {
+            "verb": "eat",
+            "details": {
+                "text": "Shiny scales catch your eye, and with a quick swipe of your tail you manage to launch a fish the size of your claw out of the water and onto the shore. Desperately, it flops about, trying to make its way back to the water, but you don't give it the chance. A claw through the heart ends its life, and gives you a good grip to get it into your mouth.",
+                "nutrition": 1
+            }
+        },
+        "find copper": {
+            "verb": "gather",
+            "details": {
+                "item": "copper coin",
+                "dice": 0,
+                "die": 0,
+                "plus": 1
+            }
+        },
+        "find moss": {
+            "verb": "gather",
+            "details": {
+                "item": "fire moss",
+                "dice": 10,
+                "die": 1,
+                "plus": 0
+            }
+        },
+        "can dig it E": {
+            "verb": "first",
+            "details": [
+                {
+                    "if": {
+                        "condition": "stateis",
+                        "context": "party",
+                        "fact": "leader/aggressCards/Basic Claws",
+                        "rule": ">=",
+                        "value": 3
+                    },
+                    "verb": "flavor",
+                    "details": {
+                        "text": "Looking at the rocks, you can see they're small and loose enough you can dig them out with your claws, but you'll have to be fast. Once you get going, more rocks will be coming quickly, and you'll have to keep things moving to avoid getting crushed in a fresh rock-slide. That said, you're confident that you're ready."
+                    }
+                },
+                {
+                    "verb": "flavor",
+                    "details": {
+                        "text": "Looking at the rocks, you can see they're small and loose enough you can dig them out with your claws, but you'd have to be fast. Once you get going, more rocks will be coming quickly, and you'll be buried and crushed to death. You need to practice first, and figure out how to move your claws faster."
+                    }
+                }
+            ]
         }
     },
-    "eat small bat": {
-        "verb": "eat",
-        "details": {
-            "text": "You chance upon a small bat in flight, and manage to surge toward it faster than it can dodge. In a single bite, its wings are shredded and its body stuck in your mouth. Your powerful tongue pulls it down into your throat and you swallow, happy with your snack.",
-            "nutrition": 1
-        }
-    },
-    "eat small rat": {
-        "verb": "eat",
-        "details": {
-            "text": "As you make your way about, you spot a small rat searching the area for food. Too late, it spots you and tries to flee. But it had ventured too far from cover, and with a powerful leap you clear the distance, deadly claws snatching the vermin. It squeaks and squirms in terror, but you have no mercy for it, and soon you are feeling those squirms work their way down your throat.",
-            "nutrition": 1
-        }
-    },
-    "eat small fish": {
-        "verb": "eat",
-        "details": {
-            "text": "Shiny scales catch your eye, and with a quick swipe of your tail you manage to launch a fish the size of your claw out of the water and onto the shore. Desperately, it flops about, trying to make its way back to the water, but you don't give it the chance. A claw through the heart ends its life, and gives you a good grip to get it into your mouth.",
-            "nutrition": 1
-        }
-    }
-},
 "actions":{
     "rest": {
         "type": "actButton",
@@ -552,6 +610,13 @@
     },
     "digEast": {
         "type": "actButton",
+        "enabled": {
+            "condition": "stateis",
+            "context": "party",
+            "fact": "leader/aggressCards/Basic Claws",
+            "rule": ">=",
+            "value": 3
+        },
         "display": "Dig",
         "verb": "setstate",
         "details": {

@@ -23,6 +23,10 @@ let satisfied = function (state, details) {
             return (subState < details.value);
         case ">":
             return (subState > details.value);
+        case "<=":
+            return (subState <= details.value);
+        case ">=":
+            return (subState >= details.value);
     }
     console.log("Forgot to set a rule. Assuming false. Details:\n" + JSON.stringify(details));
     return false;
