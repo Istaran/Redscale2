@@ -11,11 +11,13 @@ let act = async function (state, details) {
         leader[`${details.type}Cards`][details.card] = existingCount + 1;
         let cards = await cache.load(`data/combat/${details.type} cards.json`);
         let autoreplace = cards[details.card].autoreplace;
+        let replaced = "";
         if (autoreplace && leader[`${details.type}DefaultHand`][autoreplace]) {
             leader[`${details.type}DefaultHand`][autoreplace] = undefined;
             leader[`${details.type}DefaultHand`][details.card] = 1;
+            replaced = `\nYou replaced ${autoreplace} with it in your starting hand.`;
         }
-        state.view.status = details.text;
+        state.view.status = `${details.text}\n\nYou now have ${existingCount + 1} copy of ${details.card}${replaced}`;
     }
 };
 

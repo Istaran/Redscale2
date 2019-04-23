@@ -54,6 +54,27 @@ div.controlColumn {
 	flex-direction:column;
 }
 
+div.saveList {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: calc(100vw - 50px);
+    max-height: calc(100vh - 50px);
+    background-color: dimgray;
+    overflow-y: auto;
+    display:flex;
+    flex-direction:column;
+}
+
+div.save {
+    width: calc(100% - 30px);
+    height: 100px;
+    margin: 15px;
+    background-color: whitesmoke;
+    color: firebrick;
+    white-space: pre-wrap;
+}
+
 div.refresher {
     height: 25px;
     width: 150px;

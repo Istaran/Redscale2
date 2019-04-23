@@ -152,6 +152,7 @@ app.post('/act', async function (req, res) {
         if (!req.user) {
             res.set('Content-Type', 'Application/JSON');
             res.send(JSON.stringify({ status: "Sorry to tell you this, but your session has become disconnected. Please click reconnect to sign back in. This may be because the server was reset.", controls: [[{ type: "reconnector" }]] }));
+            return;
         }
         profile = await cache.load(`saves/profiles/${req.user}.json`);
     }
@@ -163,5 +164,20 @@ app.post('/act', async function (req, res) {
 	res.set('Content-Type', 'Application/JSON');
 	res.send(JSON.stringify(state));
 });
+
+app.get('/list', async function (req, res) {
+    var profile;
+    if (!google_oauth_config) {
+        profile = { id: "localdev", givenName: "Developer" };
+    } else {
+        if (!req.user) {
+            res.sendStatus(403).send("No active session");
+        }
+        profile = await cache.load(`saves/profiles/${req.user}.json`);
+    }
+    let saveList = await game.list(profile);
+    res.set('Content-Type', 'Application/JSON');
+    res.send(JSON.stringify(saveList));
+})
 
 app.listen(port, () => console.log(`Redscale is listening on port ${port}!`));

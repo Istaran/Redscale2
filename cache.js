@@ -34,6 +34,19 @@ let load = function (path) {
 	return cache[path];
 };
 
+let loadDir = function (path) {
+    var promise = new Promise(function (resolve, reject) {
+        fs.readdir(path, (err, files) => {
+            if (err) {
+                resolve([]);
+            } else {
+                resolve(files);
+            }
+        });
+    });
+    return promise;
+};
+
 let save = function (path, value) {
 	cache[path] = new Promise(function (resolve, reject) {
 		mkdirp(path.substring(0, path.lastIndexOf('/')), null, (err, made) => {
@@ -58,6 +71,7 @@ let clear = function () { cache = {} };
 
 module.exports = {
 	clear: clear,
-	load: load,
+    load: load,
+    loadDir: loadDir,
 	save: save
 };
