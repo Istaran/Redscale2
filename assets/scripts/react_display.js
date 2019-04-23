@@ -1,3 +1,4 @@
+
 Pusher.logToConsole = true;
 
 var pusher = new Pusher('91450cc1727e582f15c1', {
@@ -402,7 +403,7 @@ class GameDisplayer extends React.Component {
         super(props);
         gameDisplayer = this;
 		var log = [];
-		for (var i = 0; i < 100; i++) { log.push(''); }; // Default chat log to empty
+        for (var i = 0; i < 100; i++) { log.push(''); }; // Default chat log to empty
 		this.state = {
 		  chatLog: log,
 		  gameState: null,
@@ -444,6 +445,30 @@ class GameDisplayer extends React.Component {
             });
             return (<div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
         } else if (this.state.saveList) {
+            // initialize chat
+            if (!this.chatInit) {
+                this.chatInit = true;
+                var channel = pusher.subscribe('Redscale_main_chat');
+                channel.bind('chat message', self.pushTextToChatLog.bind(self));
+
+                fetch('/chat', {
+                    method: 'get'
+                }).then(function (response) {
+                    return response.json();
+                }).then(function (chatlog) {
+                    if (chatlog && chatlog.length) {
+
+                        var newLog = self.state.chatLog.slice();
+                        chatlog.forEach(function (data) {
+                            newLog.shift();
+                            var message = data.username ? (data.username + '> ' + data.message) : data.message;
+                            newLog.push(message);
+                        });
+                        self.setState({ chatLog: newLog });
+                    }
+                });
+            }
+
             let newSlot = 0;
             let saveTable = this.state.saveList.map((save) => {
                 if (parseInt(save.slot, 10) >= newSlot) newSlot = parseInt(save.slot, 10) + 1; 

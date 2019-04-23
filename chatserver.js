@@ -28,7 +28,7 @@ var chatStream = fs.createWriteStream('', { fd: chatFD });
 let sendChat = function (user, message, debug) {
     let data = { username: user.displayName, message: message };
 	  console.log(JSON.stringify(data));
-    pusher.trigger('Redscale_main_chat', 'chat message', );
+    pusher.trigger('Redscale_main_chat', 'chat message', data);
     chatArchive.push(JSON.stringify(data));
 		  while (chatArchive.length > 10000)
 			  chatArchive.shift();
@@ -37,7 +37,7 @@ let sendChat = function (user, message, debug) {
 };
 
 let getChats = function () {
-	return chatArchive.map((line) => JSON.parse(line));
+	return chatArchive.map((line) => line ? JSON.parse(line) : undefined);
 };
 
 module.exports = {

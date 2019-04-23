@@ -112,11 +112,18 @@ if (google_oauth_config) {
 app.post('/chat', async function (req, res) {
   const body = req.body.body;
   const local = (req.ip == "::1" || req.ip == "127.0.0.1");
-    let profile = await cache.load(`saves/profiles/${req.user}.json`);
-    chat.sendChat(profile.displayName, body, local);
-  
-  res.set('Content-Type', 'text/plain');
-  res.send(`chat received: ${body}`);
+    var profile;
+    
+    if (!google_oauth_config) {
+        profile = { id: "localdev", displayName: "Developer" };
+    } else if (req.user) {
+        profile = await cache.load(`saves/profiles/${req.user}.json`);
+    }
+    if (profile) {
+        chat.sendChat(profile, body, local);
+    }
+    res.set('Content-Type', 'text/plain');
+    res.send(`chat received: ${body}`);
 });
 
 app.get('/chat', function (req, res) {
@@ -147,7 +154,7 @@ app.get('/', async function (req, res) {
 app.post('/act', async function (req, res) {
     var profile;
     if (!google_oauth_config) {
-        profile = { id: "localdev", givenName: "Developer" };
+        profile = { id: "localdev", displayName: "Developer" };
     } else {
         if (!req.user) {
             res.set('Content-Type', 'Application/JSON');
