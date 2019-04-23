@@ -69,7 +69,7 @@ let reloadArchive = async function (state) {
 }
 
 let getSavePreview = async function (state) {
-    let leader = state.parties && state.parties[state.activeParty].leader;
+    let leader = state.parties[state.activeParty] && state.parties[state.activeParty].leader;
     let locTitle = await loc.getTitle(state);
     var prev = "";
     if (leader) {
