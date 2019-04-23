@@ -32,7 +32,7 @@ let act = async function (state, details) {
     if (card.aggressdraw)
         combatengine.drawCards(leader.aggressHand, leader.aggressCards, card.aggressdraw);
     if (card.recoverHealth) {
-        let deltaHealth = Math.min(leader['max health'] - leader.health, card.useMagic ? leader.mana : leader.stamina, leader.healthRecover * card.recoverHealth);
+        let deltaHealth = Math.min(leader.maxHealth - leader.health, card.useMagic ? leader.mana : leader.stamina, leader.healthRecover * card.recoverHealth);
         leader.health += deltaHealth;
         if (card.useMagic) leader.mana -= deltaHealth;
         else leader.stamina -= deltaHealth;
