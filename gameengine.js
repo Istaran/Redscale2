@@ -104,7 +104,7 @@ let list = async function (profile) {
         let subPath = path.substring(0, path.length - 5);
         previews.push({
             slot: subPath,
-            text: data.savePreview || "An older save with no preview."
+            text: player.getSavePreview(data)
         });
     }
     return previews;
@@ -153,7 +153,7 @@ let act = async function (profile, action, query) {
         state.view.rightStatus = null;
     }
 
-    player.setSavePreview(state);
+    
 	
 	// Save current state;
 	cache.save(savePath, state);
