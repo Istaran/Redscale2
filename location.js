@@ -129,8 +129,22 @@ let getDescription = async function (state) {
     return "Ooops, you somehow ended up outside reality.";
 };
 
+let getTitle = async function (state) {
+    let zone = await cache.load(`./data/locations/${state.location}.json`);
+
+    if (spotExists(zone, state.x, state.y, state.z)) {
+        if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
+
+        let spot = zone.map[state.z][state.y][state.x];
+        let style = zone.styles[spot];
+        return style.title;
+    }
+    return "Outside Space and Time";
+};
+
 module.exports = {
 	explore: explore,
     getControls: getControls,
-    getDescription: getDescription
+    getDescription: getDescription,
+    getTitle: getTitle
 };

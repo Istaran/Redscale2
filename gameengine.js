@@ -95,14 +95,16 @@ let controls = async function (state) {
 
 let list = async function (profile) {
     console.log(`Getting list for ${profile.id}`);
-    var saves = cache.loadDir(`./saves/${profile.id}`);
+    var saveDir = `./saves/${profile.id}`;
+    var savePaths = await cache.loadDir(saveDir);
     var previews = [];
-    for (var i = 0; i < saves.length; i++) {
-        let path = saves[i].path;
-        let subPath = path.substring(path.lastIndexOf('/') + 1, path.length - 5);
+    for (var i = 0; i < savePaths.length; i++) {
+        let path = savePaths[i];
+        let data = await cache.load(`${saveDir}/${path}`);
+        let subPath = path.substring(0, path.length - 5);
         previews.push({
             slot: subPath,
-            text: saves[i].data.savePreview || "An older save with no preview."
+            text: data.savePreview || "An older save with no preview."
         });
     }
     return previews;
@@ -151,6 +153,7 @@ let act = async function (profile, action, query) {
         state.view.rightStatus = null;
     }
 
+    player.setSavePreview(state);
 	
 	// Save current state;
 	cache.save(savePath, state);

@@ -106,7 +106,7 @@
     ],
     "acquirecards": {
         "devour": {
-            "display": "Devour",
+            "display": "Devour\n\n+30 nutrition",
             "verb": "eat",
             "details": {
                 "text": "You rip open the rat's guts, dining on the delicious organs within. You need a bit of care to avoid getting a bunch of fur stuck in your teeth, but not so much as to truly slow you down.",
@@ -114,15 +114,16 @@
             },
             "help": "Consume your enemy's corpse to gain its calories.\nGet +30 nutrition."
         },
-        "card": {
-            "display": "Card",
-            "verb": "card",
-            "details": {
-                "text": "Absorbing the lingering memories of the fallen rat's spirit, you improve your skill at biting.",
-                "fail": "You try to absorb the rat's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
-                "type": "aggress",
-                "card": "Basic Bite"
-            }
-        }
+      "card": {
+        "display": "Card\n\nChance to gain:\nBasic Bite",
+        "verb": "card",
+        "details": {
+          "text": "Absorbing the lingering memories of the fallen rat's spirit, you improve your skill at biting.",
+          "fail": "You try to absorb the rat's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+          "type": "aggress",
+          "card": "Basic Bite"
+        },
+        "help": "Consume your enemy's spirit to learn from it.\nChance to gain Basic Bite based on how many copies you have.\nA more accurate pair of bites, great against dodging opponents, but easy to brace against."
+      }
     }
 }

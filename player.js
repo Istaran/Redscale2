@@ -1,5 +1,6 @@
 // Future note: GameEngine reference will be needed eventually. it needs to lazy load like location.js does, because of circular dependency.
 let cache = require('./cache');
+let loc = require('./location');
 
 let addControls = function (state, controls) {
 	// TODO
@@ -67,10 +68,25 @@ let reloadArchive = async function (state) {
     state.archive = archive; // preserve linking. TODO: support jumping back multiple steps.
 }
 
+let setSavePreview = async function (state) {
+    let leader = state.parties[state.activeParty].leader;
+    let locTitle = await loc.getTitle(state);
+    if (leader) {
+        state.savePreview = `${leader.display}\nAt ${locTitle}\nH:${leader.health}/${leader.maxHealth} S:${leader.stamina}/${leader.maxStamina} M:${leader.mana}/${leader.maxMana}`;
+        if (state.enemy) {
+            let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
+            state.savePreview += `\nFighting ${enemyDef.display}`;
+        }
+    } else {
+        "Resume character creation...";
+    }
+}
+
 module.exports = {
 	addControls: addControls,
     getStatusDisplay: getStatusDisplay,
     setDefaults: setDefaults,
+    setSavePreview: setSavePreview,
     reloadArchive: reloadArchive,
     passiveRecoverAll: passiveRecoverAll
 };

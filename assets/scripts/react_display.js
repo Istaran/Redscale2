@@ -26,6 +26,18 @@ function getStatus() {
     });
 }
 
+function getSaveList() {
+    fetch('/list', {
+        method: 'get'
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        gameDisplayer.setState({ saveList: data, gameState: null });
+    }).catch(function (err) {
+        gameDisplayer.setState({ gameState: { status: "There was an error trying to load your save list. Click reconnect when you want to try again. If the problem persists, email istaran@redscalesadventure.online and include your google email address for reference.", controls: [[{ type: "reconnector" }]] } });
+    });
+}
+
 class HelpDisplayer extends React.Component {
 	constructor(props) {
 		super(props);
@@ -370,6 +382,20 @@ class Reconnector extends React.Component {
     }
 }
 
+class Loader extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    onClick(event) {
+        saveSlot = this.props.slot;
+        getStatus();
+    }
+
+    render() {
+        return <div className='save' onClick={(event) => this.onClick(event)}>{this.props.text}</div>;
+    }
+}
 
 class GameDisplayer extends React.Component {
 	constructor(props) {
@@ -417,6 +443,13 @@ class GameDisplayer extends React.Component {
                 return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
             });
             return (<div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
+        } else if (this.state.saveList) {
+            let newSlot = 0;
+            let saveTable = this.state.saveList.map((save) => {
+                if (parseInt(save.slot, 10) >= newSlot) newSlot = parseInt(save.slot, 10) + 1; 
+                return <Loader key={save.slot} slot={save.slot} text={save.text} />;
+            });
+            return <div className='saveList'>{saveTable}<Loader slot={newSlot} key={newSlot} text='Start a new game.' /></div>;
         } else {		
 		    return (<div><div>Welcome, {name}. Please wait while we load your game state.</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
 		}
@@ -430,4 +463,4 @@ ReactDOM.render(
   document.getElementById('reactroot')
 );
 
-getStatus();
+getSaveList();

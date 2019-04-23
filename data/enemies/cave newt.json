@@ -7,7 +7,6 @@
     "max mana": 10,
     "evasion": 10,
     "reshuffle": 2,
-    "nutrition": 15,
     "cardsets": [
         {
             "tell": "The newt studies you with inscrutable eyes.",
@@ -58,25 +57,27 @@
         }
     ],
     "acquirecards": {
-        "devour": {
-            "display": "Devour",
-            "verb": "eat",
-            "details": {
-                "text": "You devour the newt's body, limb by limb. Slimy, yet satisfying.",
-                "nutrition": 45
-            },
-            "help": "Consume your enemy's corpse to gain its calories.\nGet +45 nutrition."
-
+      "devour": {
+        "display": "Devour\n\n+45 nutrition",
+        "verb": "eat",
+        "details": {
+          "text": "You devour the newt's body, limb by limb. Slimy, yet satisfying.",
+          "nutrition": 45
         },
-        "card": {
-            "display": "Card",
-            "verb": "card",
-            "details": {
-                "text": "Absorbing the lingering memories of the fallen newt's spirit, you improve the power of your tail slap.",
-                "fail": "You try to absorb the newt's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
-                "type": "aggress",
-                "card": "Basic Tail Slap"
-            }
-        }
+        "help": "Consume your enemy's corpse to gain its calories.\nGet +45 nutrition."
+
+      },
+      "card": {
+        "display": "Card\n\nChance to gain:\nBasic Tail Slap",
+        "verb": "card",
+        "details": {
+          "text": "Absorbing the lingering memories of the fallen newt's spirit, you improve the power of your tail slap.",
+          "fail": "You try to absorb the newt's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+          "type": "aggress",
+          "card": "Basic Tail Slap"
+        },
+        "help": "Consume your enemy's spirit to learn from it.\nChance to gain Basic Tail Slap based on how many copies you have.\nA harder hitting tail slap, great against braced opponents, but easy to deflect."
+
+      }
     }
 }
