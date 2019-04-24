@@ -178,6 +178,10 @@
                 {
                     "chance": 1,
                     "event": null
+                },
+                {
+                    "chance": 10000,
+                    "event": "noonbeam"
                 }
             ],
             "actions": [ "rest" ]
@@ -185,7 +189,7 @@
         "OverRiver": {
             "title": "Dragonbone Cave - above the river",
             "description": "You're flying over an underground river.",
-            "preview": "It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly.",
+            "preview": "It's open air over there, above the underground river.",
             "events": [
                 {
                     "chance": 10,
@@ -495,7 +499,8 @@
                 "item": "copper coin",
                 "dice": 0,
                 "die": 0,
-                "plus": 1
+                "plus": 1,
+                "text": "You come across a loose coin on the ground, a tiny remnant of your mother's hoard that has managed to go unnoticed until now. You take it, of course."
             }
         },
         "find moss": {
@@ -504,7 +509,8 @@
                 "item": "fire moss",
                 "dice": 10,
                 "die": 1,
-                "plus": 0
+                "plus": 0,
+                "text": "You find some unusually thick fire moss. The red, glowing stuff grows all over your cave, and provides the base of the ecosystem here. It's usually too sparse for you to get a decent grip on, but this bit is thick enough for you to take some for yourself."
             }
         },
         "can dig it E": {
@@ -530,6 +536,16 @@
                     }
                 }
             ]
+        },
+        "noonbeam": {
+            "if": {
+                "condition": "timeis",
+                "time": "Noon"
+            },
+            "verb": "flavor",
+            "details": {
+                "text": "A beam of sunlight shines down upon your little home, a daily reminder of this thing your ancestral memories call the 'sun', and the existence of a tiny hole in the ceiling that lets its light shine down upon you once a day, however briefly."
+            }
         }
     },
 "actions":{
@@ -544,7 +560,13 @@
         "type": "actButton",
         "display": "Harvest bone",
         "verb": "gather",
-        "details": { "item": "Dragonbone shard", "dice":1, "die":4, "plus":2 },
+        "details": {
+            "item": "Dragonbone shard",
+            "dice": 1,
+            "die": 4,
+            "plus": 2,
+            "text": "You chip away at the massive bones your mother left behind, earning yourself some small shards, vaguely round and quite sharp."
+        },
         "help": "Spend some time gathering dragonbone from your mother's remains. It's quite sturdy and hard, as well as being elementally aligned with fire, giving it some nice properties as a material."
     },
     "commune": {

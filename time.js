@@ -52,35 +52,64 @@ let months = [
     }
 ]
 
-let getTimeString = function (state) {
+let getTimeOfDay = function (state) {
     let timeOfDay = state.gameTime % 60;
-    let dayOfWeek = ((state.gameTime - timeOfDay) / 60) % 7;
-    let weekOfMonth = ((state.gameTime - timeOfDay - 60 * dayOfWeek) / 420) % 5;
-    let monthOfYear = ((state.gameTime - timeOfDay - 60 * dayOfWeek - weekOfMonth * 420) / 2100) % 10;
-    let ageInYears = ((state.gameTime - timeOfDay - 60 * dayOfWeek - weekOfMonth * 420 - monthOfYear * 2100) / 21000) + 20;
-
-    let preface = "";
+    let monthOfYear = Math.floor(state.gameTime / 2100) % 10;
     if (timeOfDay == 0) {
-        preface = "Midnight";
+        return "Midnight";
     } else if (timeOfDay < months[monthOfYear].dawn) {
-        preface = "Predawn";
+        return "Predawn";
     } else if (timeOfDay == months[monthOfYear].dawn) {
-        preface = "Dawn";
+        return "Dawn";
     } else if (timeOfDay < 12) {
-        preface = "Morning";
+        return "Morning";
     } else if (timeOfDay == 12) {
-        preface = "Noon";
+        return "Noon";
     } else if (timeOfDay < months[monthOfYear].dusk) {
-        preface = "Afternoon";
+        return "Afternoon";
     } else if (timeOfDay == months[monthOfYear].dusk) {
-        preface = "Dusk";
+        return "Dusk";
     } else {
-        preface = "Evening";
-    }
-    
-    return `${preface} on the ${weeks[weekOfMonth]} ${days[dayOfWeek]} of ${months[monthOfYear].name}, ${1000 + ageInYears}`;
+        return "Evening";
+    } 
+}
+
+let getDayOfWeek = function (state) {
+    let dayOfWeek = Math.floor(state.gameTime / 60) % 7;
+    return days[dayOfWeek];
+}
+
+let getWeekOfMonth = function (state) {
+    let weekOfMonth = Math.floor(state.gameTime / 420) % 5;
+    return weeks[weekOfMonth];
+}
+
+let getMonthOfYear = function (state) {
+    let monthOfYear = Math.floor(state.gameTime / 2100) % 10;
+    return months[monthOfYear].name;
+}
+
+let getAgeInYears = function (state) {
+    let ageInYears = Math.floor(state.gameTime / 21000) +20;
+    return ageInYears;
+}
+
+
+let getTimeString = function (state) {
+    return `${getTimeOfDay(state)} on the ${getWeekOfMonth(state)} ${getDayOfWeek(state)} of ${getMonthOfYear(state)}, ${1000 + getAgeInYears(state)}`;
 };
 
+let verifyTime = function (state, timing) {
+    if (timing.time && timing.time != getTimeOfDay(state)) return false;
+    if (timing.day && timing.day != getDayOfWeek(state)) return false;
+    if (timing.week && timing.week != getWeekOfMonth(state)) return false;
+    if (timing.month && timing.month != getMonthOfYear(state)) return false;
+    if (timing.years && timing.years != getAgeInYears(state)) return false;
+
+    return true;
+}
+
 module.exports = {
-    getTimeString: getTimeString
+    getTimeString: getTimeString,
+    verifyTime: verifyTime
 };

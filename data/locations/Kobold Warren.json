@@ -15,18 +15,19 @@
             [],
             [],
             [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [   null,       null,       null,       null,       "Bend",         "HewnTunnel","Torchfork",   "HewnTunnel",   "Bend"],
-            [   null,       null,       null,       null,       "HewnTunnel",   null,       "HewnTunnel",   null,           "HewnTunnel"],
-            [   null,       null,       null,       "DragonPath","Torchfork",   null,       "Torchfork",    "HewnTunnel",   "Bend" ],
-            [   null,       null,       null,       null,       "HewnTunnel",   null,       "HewnTunnel" ],
-            [   null,       null,       "DeadEnd",  "HewnTunnel","Torchfork",   "HewnTunnel","Torchfork",   "HewnTunnel",   "DeadEnd"]
+            [ null, null, null, null ],
+            [ null, null, null, null ],
+            [ null, null, null, null ],
+            [ null, null, null, null ],
+            [ null, null, null, null ],
+            [ null, null, null, null ],
+            [ null, null, null, null ],
+            [ null, null, null, null, "Bend", "HewnTunnel", "Torchfork", "HewnTunnel", "Bend" ],
+            [ null, null, null, null, "HewnTunnel", null, "HewnTunnel", null, "HewnTunnel" ],
+            [ null, null, null, "DragonPath", "Torchfork", null, "Torchfork", "HewnTunnel", "Bend" ],
+            [ null, null, null, null, "HewnTunnel", null, "HewnTunnel", null, null, "EmptyCell", "JackCell" ],
+            [ null, null, "Bend", "HewnTunnel", "Torchfork", "HewnTunnel", "Torchfork", "HewnTunnel", "BrokenDoor", "CellHall", "CellHall", "EmptyCell" ],
+            [ null, null, "DeadEnd", null, null, null, null, null, null, "EmptyCell", "EmptyCell"]
         ]
     ],
     "styles": {
@@ -60,10 +61,6 @@
                 {
                     "chance": 1,
                     "event": "kobold spearman attack"
-                },
-                {
-                    "chance": 1,
-                    "event": "kobold spearwoman attack"
                 }
             ],
             "actions": [ "ambush" ]
@@ -79,10 +76,6 @@
                 {
                     "chance": 1,
                     "event": "kobold spearman attack"
-                },
-                {
-                    "chance": 1,
-                    "event": "kobold spearwoman attack"
                 },
                 {
                     "chance": 1,
@@ -104,10 +97,6 @@
                 },
                 {
                     "chance": 1,
-                    "event": "kobold spearwoman attack"
-                },
-                {
-                    "chance": 1,
                     "event": "flame trap"
                 }
             ]
@@ -119,10 +108,16 @@
                 {
                     "chance": 1,
                     "event": "kobold spearman attack"
-                },
+                }
+            ]
+        },
+        "BrokenDoor": {
+            "description": "You've arrived at an old wooden door, faded with time despite the lack of weather down here. It has a window near the top with copper bars, and you can smell foul odors from beyond.\n\nThe door has a nice looking lock that currently serves no purpose, as the door's hinges have been destroyed, and the door is merely propped in place.",
+            "preview": "You see an old wooden door with a small set of copper bars set into a window. The hinges are destroyed, and the door propped up awkwardly.",
+            "events": [
                 {
                     "chance": 1,
-                    "event": "kobold spearwoman attack"
+                    "event": "kobold spearman attack"
                 }
             ]
         }
@@ -131,10 +126,6 @@
         "kobold spearman attack": {
             "verb": "attack",
             "details": { "enemy": "kobold spearman" }
-        },
-        "kobold spearwoman attack": {
-            "verb": "attack",
-            "details": { "enemy": "kobold spearwoman" }
         },
         "dart trap": {
             "verb": "flavor",
@@ -155,10 +146,6 @@
                 {
                     "chance": 1,
                     "name": "kobold spearman"
-                },
-                {
-                    "chance": 1,
-                    "name": "kobold spearwoman"
                 }
             ]
         },

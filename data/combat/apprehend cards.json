@@ -13,7 +13,7 @@
         "display": "Release",
         "cardlines": "Release\n\nShow mercy,\nlet them go.",
         "help": "Release your disabled foe. Against some foes, this may effect your reputation.",
-        "verb": "flavor",
+        "verb": "clearenemy",
         "details": {
             "text": "You turn away from your downed foe, and take your leave."
         }

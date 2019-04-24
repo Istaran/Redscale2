@@ -11,9 +11,6 @@ let act = async function (state, details) {
         apprehendCard = playercards[details.card];
     }
     state.view.status = "";
-    if (apprehendCard && apprehendCard.verb != 'setqueue') {
-        await combatengine.clearCombat(state);
-    }
 
     if (apprehendCard) { // Switching modes my end in a no-op maybe? Actually, status call should prevent.
         await gameengine.doVerb(apprehendCard.verb, state, apprehendCard.details);

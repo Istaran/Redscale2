@@ -143,6 +143,16 @@ let configureEnemy = async function (state, target, flavor) {
 
     enemy.cardqueue = getQueueFromSets(targetDef.cardsets, targetDef.reshuffle);
 
+    enemy.tags = {};
+    if (targetDef.tags) {
+        for (var i = 0; i < targetDef.tags.length; i++) {
+            if (Array.isArray(targetDef.tags[i]))
+                enemy.tags[targetDef.tags[i][Math.floor(Math.random() * targetDef.tags[i].length)]] = true;
+            else
+                enemy.tags[targetDef.tags[i]] = true;
+        }
+    }
+
     console.log(`Configured enemy: ${JSON.stringify(enemy)}`);
 
     state.enemy = enemy;
