@@ -66,20 +66,22 @@ const game = require('./gameengine');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const session = require('express-session');
 // [START session]
 // Configure the session and session storage.
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+
 const sessionConfig = {
     resave: false,
     saveUninitialized: false,
     secret: google_oauth_config ? google_oauth_config.clientSecret : "16777216",
     signed: true,
-  /*  store: new DatastoreStore({
-        dataset: new Datastore({ kind: 'express-sessions' }),
-    }),*/ // TODO worry about a proper store. Default apparently sucks.
+    store: new FileStore({})
 };
 
 app.use(session(sessionConfig));
+
+
 // [END session]
 
 app.use(passport.initialize());

@@ -82,14 +82,14 @@
             "cards": [
                 {
                     "aggress display": "The kobold stabs at you hastily.",
-                    "accuracy": 10,
+                    "accuracy": 15,
                     "damagedice": 1,
                     "damagedie": 6,
                     "damageplus": 2,
                     "damagetype": "piercing",
                     "attacks": 3,
-                    "abjure display": "The kobold dodges swiftly!",
-                    "dodge": 10,
+                    "abjure display": "The kobold left itself unguarded!",
+                    "dodge": 0,
                     "deflect": 0,
                     "soak": 0,
                     "staminacost": 2
@@ -97,13 +97,13 @@
                 {
                     "aggress display": "The kobold stabs at you furiously.",
                     "accuracy": 15,
-                    "damagedice": 1,
+                    "damagedice": 3,
                     "damagedie": 6,
-                    "damageplus": 2,
+                    "damageplus": 6,
                     "damagetype": "piercing",
-                    "attacks": 3,
-                    "abjure display": "The kobold tries to dodge!",
-                    "dodge": 5,
+                    "attacks": 1,
+                    "abjure display": "The kobold left itself unguarded!",
+                    "dodge": 0,
                     "deflect": 0,
                     "soak": 0,
                     "staminacost": 2
