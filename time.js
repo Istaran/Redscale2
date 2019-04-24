@@ -61,9 +61,9 @@ let getTimeOfDay = function (state) {
         return "Predawn";
     } else if (timeOfDay == months[monthOfYear].dawn) {
         return "Dawn";
-    } else if (timeOfDay < 12) {
+    } else if (timeOfDay < 30) {
         return "Morning";
-    } else if (timeOfDay == 12) {
+    } else if (timeOfDay == 30) {
         return "Noon";
     } else if (timeOfDay < months[monthOfYear].dusk) {
         return "Afternoon";
@@ -100,11 +100,31 @@ let getTimeString = function (state) {
 };
 
 let verifyTime = function (state, timing) {
-    if (timing.time && timing.time != getTimeOfDay(state)) return false;
-    if (timing.day && timing.day != getDayOfWeek(state)) return false;
-    if (timing.week && timing.week != getWeekOfMonth(state)) return false;
-    if (timing.month && timing.month != getMonthOfYear(state)) return false;
-    if (timing.years && timing.years != getAgeInYears(state)) return false;
+    if (timing.time) {
+        let time = getTimeOfDay(state);
+        console.log(`${timing.time} == ${time}? ${timing.time != time}`);
+        if (timing.time != time) return false;
+    }
+    if (timing.day) {
+        let day = getDayOfWeek(state);
+        console.log(`${timing.day} == ${day}? ${timing.day != day}`);
+        if (timing.day != day) return false;
+    }
+    if (timing.week) {
+        let week = getWeekOfMonth(state);
+        console.log(`${timing.week} == ${week}? ${timing.week != week}`);
+        if (timing.week != week) return false;
+    }
+    if (timing.month) {
+        let month = getMonthOfYear(state);
+        console.log(`${timing.month} == ${month}? ${timing.month != month}`);
+        if (timing.month != month) return false;
+    }
+    if (timing.years) {
+        let age = getAgeInYears(state);
+        console.log(`${timing.years} == ${age}? ${timing.years != age}`);
+        if (timing.years != age) return false;
+    }
 
     return true;
 }

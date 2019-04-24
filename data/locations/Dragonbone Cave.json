@@ -180,6 +180,10 @@
                     "event": null
                 },
                 {
+                    "if": {
+                        "condition": "timeis",
+                        "time": "Noon"
+                    },
                     "chance": 10000,
                     "event": "noonbeam"
                 }
@@ -538,10 +542,6 @@
             ]
         },
         "noonbeam": {
-            "if": {
-                "condition": "timeis",
-                "time": "Noon"
-            },
             "verb": "flavor",
             "details": {
                 "text": "A beam of sunlight shines down upon your little home, a daily reminder of this thing your ancestral memories call the 'sun', and the existence of a tiny hole in the ceiling that lets its light shine down upon you once a day, however briefly."
