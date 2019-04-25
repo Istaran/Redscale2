@@ -79,6 +79,7 @@ const sessionConfig = {
     store: new FileStore({})
 };
 
+app.set('trust proxy', 1);
 app.use(session(sessionConfig));
 
 
