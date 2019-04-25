@@ -1,0 +1,38 @@
+{
+    "display": "kobold",
+    "maxHealth": 15,
+    "safeHealth": 5,
+    "maxNutrition": 60,
+    "assistcards": [
+        {
+            "display": "Your kobold ally distracts your foe with a pointy spear, making it easier for you to aim.",
+            "cardlines": "Kobold\nDistracting Spear\n\nAccuracy: +2",
+            "help": "Distracting Spear\n\nGrants your attacks this round +2 Accuracy, helping avoid misses and score critical hit multipliers.",
+            "bonusaccuracy": 2
+        },
+        {
+            "display": "Your kobold ally readies to deflect with their spear.",
+            "cardlines": "Kobold\nDeflecting Spear\n\nDeflect chance: 40%",
+            "help": "nDeflecting Spear\n\n40% to deflect an incoming attack, independant your own.",
+            "allydeflect": 0.4,
+            "allydeflecttext": "Your kobold knocked a blow aside with its spear!\n"
+        }
+    ],
+    "workercard": {
+        "cardlines": "Kobold\nWork Rating: 1\nSecurity Rating: 1\nDarkvision: +/- 1\nMining bonus +1\nUpkeep: 1 nutrition\n(Omnivore)",
+        "help": "Kobolds are small, numerous, and reliable workers, well suited to the underground.\nDarkvision: Get a bonus to work and security in dark times/places, and a penalty in bright times/places.\nOmnivore: kobolds can eat anything.",
+        "work": {
+            "base": 1,
+            "dark": 1,
+            "bright": -1,
+            "mining": 1
+        },
+        "security": {
+            "base": 1,
+            "dark": 1,
+            "bright": -1
+        },
+        "nutritioncost": 1,
+        "eats": [ "animal", "vegetable" ]
+    }
+}

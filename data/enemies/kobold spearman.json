@@ -179,9 +179,11 @@
     "apprehendcards": {
         "recruit": {
             "display": "Recruit\n\nDemand the kobold's\nloyalty henceforth.",
-            "verb": "clearenemy",
+            "verb": "recruit",
             "details": {
-                "text": "You demand the kobold swear fealty to you in exchange for its life. Even as you do, you press your will into its mind. It's like the creature was made for this, and easily accepts your connection. But there's another presence there already, one you find yourself forcibly pushing out.\n\nIf you had to describe the presence, the color 'blue' comes to mind.\n\nUnfortunately, recruiting is not yet implemented, so the kobold glitches out of existence."
+                "name": "kobold spearman",
+                "tags": "enemy",
+                "text": "You demand the kobold swear fealty to you in exchange for its life. Even as you do, you press your will into its mind. It's like the creature was made for this, and easily accepts your connection. But there's another presence there already, one you find yourself forcibly pushing out.\n\nIf you had to describe the presence, the color 'blue' comes to mind.\n\nReadying their spear, they salute you and grin, eager to serve."
             }
         },
         "stuff": {
