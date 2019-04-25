@@ -460,9 +460,11 @@ class GameDisplayer extends React.Component {
 
                         var newLog = self.state.chatLog.slice();
                         chatlog.forEach(function (data) {
-                            newLog.shift();
-                            var message = data.username ? (data.username + '> ' + data.message) : data.message;
-                            newLog.push(message);
+                            if (data) {
+                                newLog.shift();
+                                var message = data.username ? (data.username + '> ' + data.message) : data.message;
+                                newLog.push(message);
+                            }
                         });
                         self.setState({ chatLog: newLog });
                     }
