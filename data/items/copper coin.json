@@ -1,0 +1,7 @@
+{
+	"display": "copper coin",
+	"descriptionSingular": "A small metal disk made of brownish metal. It's imprinted on one side with a shape similar to your face, but subtly different. One of your parents, perhaps.",
+	"descriptionPlural": "Small metal disks made of brownish metal. Each is imprinted with a draconic head on one side, perhaps one of your parents.",
+	"hands": 0.01,
+	"weight": 0.01
+}

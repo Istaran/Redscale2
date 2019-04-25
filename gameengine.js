@@ -37,7 +37,7 @@ let conditionMet = async function (state, details) {
         try {
             conditions[conditionName] = require(`./conditions/${conditionName}`);
         } catch (e) {
-            condtions[conditionName] = null;
+            conditions[conditionName] = null;
         }
     }
     if (conditions[conditionName]) {
@@ -163,7 +163,6 @@ let act = async function (profile, action, query) {
 
 // Choices is an array. Each element is an object with a chance (number), and possibly an if (condition). 
 let randomChoice = async function (state, choices) {
-
     let choiceList = choices ? choices.slice() : [];
     let maxChance = 0, i = 0;
     for (; i < choiceList.length; i++) {
@@ -172,7 +171,7 @@ let randomChoice = async function (state, choices) {
         } else {
             choiceList.splice(i, 1);
             i--; // to counter the default i++.
-        }
+       }
     }
     let roll = Math.random() * maxChance;
     console.log(`Rolled: ${Math.floor(roll) + 1} of ${maxChance}`);

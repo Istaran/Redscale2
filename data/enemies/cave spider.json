@@ -1,5 +1,11 @@
 {
     "display": "cave spider",
+    "tags": [
+        "spider",
+        "living",
+        "animal",
+        [ "male", "female" ]
+    ],
     "attack announce": "You suddenly feel the sticky strands of a massive web upon you! You literally walked right into that, and before you can pull yourself free, the web's creator descends on you to attack!",
     "hunt announce": "You find a massive cave spider hanging out above you. Had you not been on the lookout for it specifically, you might have stumbled into its web. As it is, the fight is on, starting on your terms.",
     "max health": 20,
@@ -106,25 +112,60 @@
     ],
     "acquirecards": {
         "devour": {
-            "display": "Devour\n\n+20 nutrition",
-            "verb": "eat",
-            "details": {
-                "text": "You crack open the spider's spindly legs one by one to suck out the juicy meats before doing much the same to its midsection. It's a bit time consuming, but still.",
-                "nutrition": 20
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/body",
+                "rule": "!=",
+                "value": true
             },
+            "display": "Devour\n\n+20 nutrition",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "eat",
+                    "details": {
+                        "text": "You crack open the spider's spindly legs one by one to suck out the juicy meats before doing much the same to its midsection. It's a bit time consuming, but still.",
+                        "nutrition": 20
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/body"
+                    }
+                }
+            ],
             "help": "Consume your enemy's corpse to gain its calories.\nGet +20 nutrition."
         },
-      "card": {
-        "display": "Card\n\nChance to gain:\nBasic Claws",
-        "verb": "card",
-        "details": {
-          "text": "Absorbing the lingering memories of the fallen spider's spirit, you improve your speed with your claws.",
-          "fail": "You try to absorb the spider's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
-          "type": "aggress",
-          "card": "Basic Claws"
-        },
-        "help": "Consume your enemy's spirit to learn from it.\nChance to gain Basic Claws based on how many copies you have.\nEven more slashes, great against deflection, but easy to dodge."
-
-      }
+        "card": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/soul",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Card\n\nChance to gain:\nBasic Claws",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "card",
+                    "details": {
+                        "text": "Absorbing the lingering memories of the fallen spider's spirit, you improve your speed with your claws.",
+                        "fail": "You try to absorb the spider's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+                        "type": "aggress",
+                        "card": "Basic Claws"
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/soul"
+                    }
+                }
+            ],
+            "help": "Consume your enemy's spirit to learn from it.\nChance to gain Basic Claws based on how many copies you have.\nEven more slashes, great against deflection, but easy to dodge."
+        }
     }
 }

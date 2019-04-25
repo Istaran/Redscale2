@@ -26,11 +26,11 @@ let act = async function (state, details) {
 
     for (var i = 0; i < attacks; i++) {
         if (deflect > i)
-            engineResult += card["aggress deflect display"] || (state.enemy.name + " deflected your attack!\n");
+            engineResult += card["aggress deflect display"] || (`The ${enemyDef.display} deflected your attack!\n`);
         else {
             let hitMulti = combatengine.attackRoll(accuracy - enemyCard.dodge, enemyDef.evasion);
             if (hitMulti == 0)
-                engineResult += card["aggress dodge display"] || (state.enemy.name + " avoided your attack!\n");
+                engineResult += card["aggress dodge display"] || (`The ${enemyDef.display} avoided your attack!\n`);
             else {
                 engineResult += `You hit ${state.enemy.name}. `;
                 if (hitMulti > 1)

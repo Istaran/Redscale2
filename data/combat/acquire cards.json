@@ -1,2 +1,11 @@
 {
+    "Done": {
+        "display": "You move on.",
+        "cardlines": "Done",
+        "help": "Decline any remaining acquire options, and move on.",
+        "verb": "clearenemy",
+        "details": {
+            "text": ""
+        }
+    }
 }

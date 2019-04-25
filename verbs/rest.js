@@ -1,13 +1,12 @@
 var cache = require('../cache');
 var player = require('../player');
+const whilesPerRest = 10;
 
 let act = async function (state, details) {
-    player.passiveRecoverAll(state);
-    player.passiveRecoverAll(state);
-    player.passiveRecoverAll(state);
-    player.passiveRecoverAll(state);
-    player.passiveRecoverAll(state);
-    player.passiveRecoverAll(state);
+    for (var i = 0; i < whilesPerRest; i++) {
+        player.passiveRecoverAll(state);
+        // TODO: apply other passages of time, with a flag in place to be clear you are asleep.
+    }
 
     state.view.status = "You restore the previous moment of time.";
     let timestamp = Date.now();

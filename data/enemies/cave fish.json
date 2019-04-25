@@ -1,5 +1,11 @@
 {
     "display": "cave fish",
+    "tags": [
+        "fish",
+        "living",
+        "animal",
+        [ "male", "female" ]
+    ],
     "attack announce": "A massive cave fish slips around a bend in the river and surges toward you, hoping for a meal! It obviously hasn't thought this though, but then fish never were very smart.",
     "hunt announce": "You spot one of the larger fish in the river and dive toward it. At this size, though, it isn't easily intimidated, and turns to meet you in combat!",
     "max health": 20,
@@ -67,15 +73,32 @@
         }
     ],
     "acquirecards": {
-      "devour": {
-        "display": "Devour\n\n+40 nutrition",
-        "verb": "eat",
-        "details": {
-          "text": "You force the fish's remains down your throat, devouring the whole thing in one smooth motion. Ah, quite satisfying.",
-          "nutrition": 40
-        },
-        "help": "Consume your enemy's corpse to gain its calories.\nGet +40 nutrition."
-
-      }
+        "devour": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/body",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Devour\n\n+40 nutrition",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "eat",
+                    "details": {
+                        "text": "You force the fish's remains down your throat, devouring the whole thing in one smooth motion. Ah, quite satisfying.",
+                        "nutrition": 40
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/body"
+                    }
+                }
+            ],
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +40 nutrition."
+        }
     }
 }

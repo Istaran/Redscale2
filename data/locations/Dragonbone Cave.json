@@ -27,433 +27,527 @@
             [ null,     "Air",          "Air",          "Air",          "OverRiver" ]
         ]
     ],
-  "styles": {
-    "Edge": {
-      "title": "Dragonbone Cave - edge",
-      "description": "You're near the edge of the massive cavern. The walls are occasionally perferated by holes too small for you to enter, which at least keep enough fresh air flowing to keep things from going too stale.",
-      "preview": "It looks like the walls slope down to the ground over there. You probably can't go much farther that way, and the ceiling gets too low to really fly.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
+    "styles": {
+        "Edge": {
+            "title": "Dragonbone Cave - edge",
+            "description": "You're near the edge of the massive cavern. The walls are occasionally perferated by holes too small for you to enter, which at least keep enough fresh air flowing to keep things from going too stale.",
+            "preview": "It looks like the walls slope down to the ground over there. You probably can't go much farther that way, and the ceiling gets too low to really fly.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "rat attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
+                },
+                {
+                    "chance": 1,
+                    "event": "find copper"
+                },
+                {
+                    "chance": 1,
+                    "event": "find moss"
+                }
+            ],
+            "actions": [ "hunt" ],
+            "directionOverrides": {
+                "nw": {
+                    "disabled": false
+                },
+                "ne": {
+                    "disabled": false
+                },
+                "sw": {
+                    "disabled": false
+                },
+                "se": {
+                    "disabled": false
+                }
+            }
         },
-        {
-          "chance": 1,
-          "event": "rat attack"
+        "CaveinW": {
+            "title": "Dragonbone Cave - west cavein",
+            "description": "The west wall of the cave here was an entrance once, before you hatched. A massive one, too, large enough for your mother to come and go. But that was before a giant spike of stone the size of a building broke loose and pierced her skull, bringing quite a lot of other stones down with it.\n\nHer skull still lies just to the north, buried in rocks, but here the cave wall is just a pile of stones, with hot air continously flowing in between them. The depths of the cave-in glow dimly red, and sulfur tinges the air. It all promises a place of idyllic wonder on the far side, if you could dig your way out. Alas, that's a project far beyond a single, young dragon.",
+            "preview": "There is a break in the wall there, of sorts; a massive former entrance now blocked entirely by caved-in stones. The space between them glows dimly red.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": []
         },
-        {
-          "chance": 1,
-          "event": "eat small rat"
+        "CaveinE": {
+            "title": "Dragonbone Cave - east cavein",
+            "description": "The east wall of the cave here has a small, collapsed tunnel entrance, large enough for someone about twice your size in each direction to traverse comfortably, if all the rocks were removed. You think with some effort you could dig it free, and open a path beyond.\n\nThere's a faint scent from beyond, something you'd call 'vaguely draconic', not a family member to be sure, but perhaps other dragons or something like them lie beyond? You'll never know while these rocks block your path. The very idea makes you nervous and excited at once.",
+            "preview": "Loose rocks block the entrance to a smaller tunnel there, potentially a route you could open in the future.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": "can dig it E"
+                },
+                {
+                    "chance": 1,
+                    "event": "rat attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
+                }
+            ],
+            "actions": [ "hunt", "digEast" ]
+        },
+        "ClearedE": {
+            "title": "Dragonbone Cave - east passage",
+            "description": "You've dug through the cave-in here and opened a new passage beyond to a whole new area. The passages beyond are hewn stone, roughly carved away by countless blows, some of which still ring out along the passages. A fire burns on the wall up ahead, providing unfamiliar, if comforting, light.",
+            "preview": "Loose rocks are scattered there, where you've dug open a caved in tunnel.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "directionOverrides": {
+                "se": {
+                    "disabled": false,
+                    "x": -7,
+                    "y": 11,
+                    "z": 4,
+                    "zone": "Kobold Warren"
+                }
+            }
+        },
+        "Middle": {
+            "title": "Dragonbone Cave",
+            "description": "You're in the middle of a vast cavern.",
+            "preview": "It looks like an unremarkable area in the middle of the cavern. You don't really see much of anything for some distance.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "rat attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
+                },
+                {
+                    "chance": 1,
+                    "event": "find copper"
+                },
+                {
+                    "chance": 1,
+                    "event": "find moss"
+                }
+            ],
+            "actions": [ "hunt" ]
+        },
+        "Air": {
+            "title": "Dragonbone Cave - flying",
+            "description": "You're flying in a vast cavern.",
+            "preview": "It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": "flying free"
+                },
+                {
+                    "chance": 1,
+                    "event": "bat attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small bat"
+                }
+            ],
+            "actions": [ "hunt2" ]
+        },
+        "Dragonhome": {
+            "title": "Dragonbone Cave - Dragonhome",
+            "description": "You're in the center of a vast cavern, in the place you call home. Your mother's massive skeleton spans most of the cave to your north, with her skull off to the western edge, the ribcage just to your north leaving you comfortingly close to where her heart once was, and the tail extending off toward the east.\n\nA river winding through the cavern frames your home on the south and east, making drinking water readily available. The various vermin that populate the cave have learned to avoid this area by your lingering scent, but there are always some close enough to hunt.",
+            "preview": "You see the center of the cavern, the place you've called home for longer than you can remember.",
+            "events": [
+                {
+                    "chance": 1,
+                    "event": null
+                },
+                {
+                    "if": {
+                        "condition": "timeis",
+                        "time": "Noon"
+                    },
+                    "chance": 10000,
+                    "event": "noonbeam"
+                }
+            ],
+            "actions": [ "rest" ]
+        },
+        "OverRiver": {
+            "title": "Dragonbone Cave - above the river",
+            "description": "You're flying over an underground river.",
+            "preview": "It's open air over there, above the underground river.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": "flying free"
+                },
+                {
+                    "chance": 1,
+                    "event": "bat attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small bat"
+                }
+            ],
+            "actions": [ "hunt2" ]
+        },
+        "OverHome": {
+            "title": "Dragonbone Cave - above Dragonhome",
+            "description": "You're flying in the middle of a vast cavern, over the place you call home.",
+            "preview": "It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [ "hunt2" ]
+        },
+        "River": {
+            "title": "Dragonbone Cave - underground river",
+            "description": "The cavern here is split by a shallow river, flowing generally northeast.",
+            "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "newt attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small fish"
+                }
+            ],
+            "actions": [ "hunt3" ],
+            "directionOverrides": {
+                "down": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "zone": "Undermountain Waterways"
+                }
+            }
+        },
+        "RiverTB": {
+            "title": "Dragonbone Cave - underground river",
+            "description": "The river here has been diverted a bit further south than it used to be by the massive wall of bone that is your mother's tail's remains. The bone is massive enough you would need to fly if you wanted to head north.",
+            "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "newt attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small fish"
+                }
+            ],
+            "actions": [ "hunt3" ],
+            "directionOverrides": {
+                "down": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "zone": "Undermountain Waterways"
+                },
+                "north": {
+                    "disabled": true
+                }
+            }
+        },
+        "RiverStart": {
+            "title": "Dragonbone Cave - underground river",
+            "description": "The underground river here enters the cave from beneath a pile of rocks, the end result of a long ago cave-in.",
+            "preview": "A river enters the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "newt attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small fish"
+                }
+            ],
+            "actions": [ "hunt3" ],
+            "directionOverrides": {
+                "down": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "zone": "Undermountain Waterways"
+                }
+            }
+        },
+        "RiverEnd": {
+            "title": "Dragonbone Cave - underground river",
+            "description": "The underground river here leaves the cave, flowing down into a deep, dark tunnel of unknown length.",
+            "preview": "A river leaves the cavern over there. A good place to go fishing or take a drink, or even a bath.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "newt attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small fish"
+                }
+            ],
+            "actions": [ "hunt3" ],
+            "directionOverrides": {
+                "down": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "zone": "Undermountain Waterways"
+                }
+            }
+        },
+        "Skull": {
+            "title": "Dragonbone Cave - mother's skull",
+            "description": "Your mother's skull lies here, much of it covered in rocks from a cave-in. One massive spike of stone in particular pierces the center, the top still black from the lightning blast that knocked it loose.",
+            "preview": "You can see your mother's skull over there, stuck in a cave-in from before you hatched.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "spider attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
+                }
+            ],
+            "actions": [ "commune" ]
+        },
+        "UnderSpine": {
+            "title": "Dragonbone Cave - under mother's spine",
+            "description": "Your mother's spine arches above you here, morbid reminder of the silent guardian who died well before you hatched.",
+            "preview": "You can see your mother's skeletal spine arching far over the ground over there, an easy landmark to spot, even at a distance.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "spider attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
+                }
+            ],
+            "actions": [ "hunt" ],
+            "directionOverrides": {
+                "up": {
+                    "disabled": true
+                }
+            }
+        },
+        "Spine": {
+            "title": "Dragonbone Cave - mother's spine",
+            "description": "Your mother's spine arches through the air here, far above the ground, nearly reaching the ceiling.",
+            "preview": "The airspace over there is broken up by your mother's spine arching close to the ceiling, massive ribs arching away from it to either side.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "spider attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
+                }
+            ],
+            "actions": [ "harvest", "hunt2" ],
+            "directionOverrides": {
+                "down": {
+                    "disabled": true
+                }
+            }
+        },
+        "Ribs": {
+            "title": "Dragonbone Cave - mother's ribs",
+            "description": "Your mother's massive ribs arch down to the ground here like massive columns, chipped and worn in places where something has been breaking off pieces.",
+            "preview": "Your mother's ribs arch down through the area over there, massive columns visible from a distance.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
+                },
+                {
+                    "chance": 1,
+                    "event": "spider attack"
+                }
+            ],
+            "actions": [ "harvest", "hunt" ]
+        },
+        "Tailbone": {
+            "title": "Dragonbone Cave - mother's tail",
+            "description": "Your mother's tail bones extend through this area, creating a sort of wall splitting the area here. The river used to flow here, but her massive tail redirected it a bit south.",
+            "preview": "Your mother's massive tail bone cuts through the area like a wall.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "spider attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "eat small rat"
+                }
+            ],
+            "actions": [ "harvest" ],
+            "directionOverrides": {
+                "south": {
+                    "disabled": true
+                }
+            }
         }
-      ],
-      "actions": [ "hunt" ],
-      "directionOverrides": {
-        "nw": {
-          "disabled": false
-        },
-        "ne": {
-          "disabled": false
-        },
-        "sw": {
-          "disabled": false
-        },
-        "se": {
-          "disabled": false
-        }
-      }
     },
-    "CaveinW": {
-      "title": "Dragonbone Cave - west cavein",
-      "description": "The west wall of the cave here was an entrance once, before you hatched. A massive one, too, large enough for your mother to come and go. But that was before a giant spike of stone the size of a building broke loose and pierced her skull, bringing quite a lot of other stones down with it.\n\nHer skull still lies just to the north, buried in rocks, but here the cave wall is just a pile of stones, with hot air continously flowing in between them. The depths of the cave-in glow dimly red, and sulfur tinges the air. It all promises a place of idyllic wonder on the far side, if you could dig your way out. Alas, that's a project far beyond a single, young dragon.",
-      "preview": "There is a break in the wall there, of sorts; a massive former entrance now blocked entirely by caved-in stones. The space between them glows dimly red.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
-        }
-      ],
-      "actions": []
-    },
-    "CaveinE": {
-      "title": "Dragonbone Cave - east cavein",
-      "description": "The east wall of the cave here has a small, collapsed tunnel entrance, large enough for someone about twice your size in each direction to traverse comfortably, if all the rocks were removed. You think with some effort you could dig it free, and open a path beyond.\n\nThere's a faint scent from beyond, something you'd call 'vaguely draconic', not a family member to be sure, but perhaps other dragons or something like them lie beyond? You'll never know while these rocks block your path. The very idea makes you nervous and excited at once.",
-      "preview": "Loose rocks block the entrance to a smaller tunnel there, potentially a route you could open in the future.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
+    "events": {
+        "rat attack": {
+            "verb": "attack",
+            "details": { "enemy": "cave rat" }
         },
-        {
-          "chance": 1,
-          "event": "rat attack"
+        "bat attack": {
+            "verb": "attack",
+            "details": { "enemy": "cave bat" }
         },
-        {
-          "chance": 1,
-          "event": "eat small rat"
-        }
-      ],
-      "actions": [ "hunt" ]
-    },
-    "Middle": {
-      "title": "Dragonbone Cave",
-      "description": "You're in the middle of a vast cavern.",
-      "preview": "It looks like an unremarkable area in the middle of the cavern. You don't really see much of anything for some distance.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
+        "spider attack": {
+            "verb": "attack",
+            "details": { "enemy": "cave spider" }
         },
-        {
-          "chance": 1,
-          "event": "rat attack"
+        "newt attack": {
+            "verb": "attack",
+            "details": { "enemy": "cave newt" }
         },
-        {
-          "chance": 1,
-          "event": "eat small rat"
-        }
-      ],
-      "actions": [ "hunt" ]
-    },
-    "Air": {
-      "title": "Dragonbone Cave - flying",
-      "description": "You're flying in a vast cavern.",
-      "preview": "It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly.",
-      "events": [
-        {
-          "chance": 10,
-          "event": "flying free"
+        "flying free": {
+            "verb": "flavor",
+            "details": {
+                "text": "You fly carelessly through the air, enjoying the wind across your scales. It's peaceful here, if a bit boring. Some large bats wing through the air in the area but none of them are bothering you at the moment."
+            }
         },
-        {
-          "chance": 1,
-          "event": "bat attack"
+        "eat small bat": {
+            "verb": "eat",
+            "details": {
+                "text": "You chance upon a small bat in flight, and manage to surge toward it faster than it can dodge. In a single bite, its wings are shredded and its body stuck in your mouth. Your powerful tongue pulls it down into your throat and you swallow, happy with your snack.",
+                "nutrition": 1
+            }
         },
-        {
-          "chance": 1,
-          "event": "eat small bat"
-        }
-      ],
-      "actions": [ "hunt2" ]
-    },
-    "Dragonhome": {
-      "title": "Dragonbone Cave - Dragonhome",
-      "description": "You're in the center of a vast cavern, in the place you call home. Your mother's massive skeleton spans most of the cave to your north, with her skull off to the western edge, the ribcage just to your north leaving you comfortingly close to where her heart once was, and the tail extending off toward the east.\n\nA river winding through the cavern frames your home on the south and east, making drinking water readily available. The various vermin that populate the cave have learned to avoid this area by your lingering scent, but there are always some close enough to hunt.",
-      "preview": "You see the center of the cavern, the place you've called home for longer than you can remember.",
-      "events": [
-        {
-          "chance": 1,
-          "event": null
-        }
-      ],
-      "actions": [ "rest" ]
-    },
-    "OverRiver": {
-      "title": "Dragonbone Cave - above the river",
-      "description": "You're flying over an underground river.",
-      "preview": "It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly.",
-      "events": [
-        {
-          "chance": 10,
-          "event": "flying free"
+        "eat small rat": {
+            "verb": "eat",
+            "details": {
+                "text": "As you make your way about, you spot a small rat searching the area for food. Too late, it spots you and tries to flee. But it had ventured too far from cover, and with a powerful leap you clear the distance, deadly claws snatching the vermin. It squeaks and squirms in terror, but you have no mercy for it, and soon you are feeling those squirms work their way down your throat.",
+                "nutrition": 1
+            }
         },
-        {
-          "chance": 1,
-          "event": "bat attack"
+        "eat small fish": {
+            "verb": "eat",
+            "details": {
+                "text": "Shiny scales catch your eye, and with a quick swipe of your tail you manage to launch a fish the size of your claw out of the water and onto the shore. Desperately, it flops about, trying to make its way back to the water, but you don't give it the chance. A claw through the heart ends its life, and gives you a good grip to get it into your mouth.",
+                "nutrition": 1
+            }
         },
-        {
-          "chance": 1,
-          "event": "eat small bat"
-        }
-      ],
-      "actions": [ "hunt2" ]
-    },
-    "OverHome": {
-      "title": "Dragonbone Cave - above Dragonhome",
-      "description": "You're flying in the middle of a vast cavern, over the place you call home.",
-      "preview": "It looks like pretty open space up there, near the large, arching roof of the cavern. Plenty of space to fly.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
-        }
-      ],
-      "actions": [ "hunt2" ]
-    },
-    "River": {
-      "title": "Dragonbone Cave - underground river",
-      "description": "The cavern here is split by a shallow river, flowing generally northeast.",
-      "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
+        "find copper": {
+            "verb": "gather",
+            "details": {
+                "item": "copper coin",
+                "dice": 0,
+                "die": 0,
+                "plus": 1,
+                "text": "You come across a loose coin on the ground, a tiny remnant of your mother's hoard that has managed to go unnoticed until now. You take it, of course."
+            }
         },
-        {
-          "chance": 1,
-          "event": "newt attack"
+        "find moss": {
+            "verb": "gather",
+            "details": {
+                "item": "fire moss",
+                "dice": 10,
+                "die": 1,
+                "plus": 0,
+                "text": "You find some unusually thick fire moss. The red, glowing stuff grows all over your cave, and provides the base of the ecosystem here. It's usually too sparse for you to get a decent grip on, but this bit is thick enough for you to take some for yourself."
+            }
         },
-        {
-          "chance": 1,
-          "event": "eat small fish"
-        }
-      ],
-      "actions": [ "hunt3" ],
-      "directionOverrides": {
-        "down": {
-          "x": 10,
-          "y": 10,
-          "z": 10,
-          "zone": "Undermountain Waterways"
-        }
-      }
-    },
-    "RiverTB": {
-      "title": "Dragonbone Cave - underground river",
-      "description": "The river here has been diverted a bit further south than it used to be by the massive wall of bone that is your mother's tail's remains. The bone is massive enough you would need to fly if you wanted to head north.",
-      "preview": "A river is running through the cavern over there. A good place to go fishing or take a drink, or even a bath.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
+        "can dig it E": {
+            "verb": "first",
+            "details": [
+                {
+                    "if": {
+                        "condition": "stateis",
+                        "context": "party",
+                        "fact": "leader/aggressCards/Basic Claws",
+                        "rule": ">=",
+                        "value": 3
+                    },
+                    "verb": "flavor",
+                    "details": {
+                        "text": "Looking at the rocks, you can see they're small and loose enough you can dig them out with your claws, but you'll have to be fast. Once you get going, more rocks will be coming quickly, and you'll have to keep things moving to avoid getting crushed in a fresh rock-slide. That said, you're confident that you're ready."
+                    }
+                },
+                {
+                    "verb": "flavor",
+                    "details": {
+                        "text": "Looking at the rocks, you can see they're small and loose enough you can dig them out with your claws, but you'd have to be fast. Once you get going, more rocks will be coming quickly, and you'll be buried and crushed to death. You need to practice first, and figure out how to move your claws faster."
+                    }
+                }
+            ]
         },
-        {
-          "chance": 1,
-          "event": "newt attack"
-        },
-        {
-          "chance": 1,
-          "event": "eat small fish"
-        }
-      ],
-      "actions": [ "hunt3" ],
-      "directionOverrides": {
-        "down": {
-          "x": 10,
-          "y": 10,
-          "z": 10,
-          "zone": "Undermountain Waterways"
-        },
-        "north": {
-          "disabled": true
-        }
-      }
-    },
-    "RiverStart": {
-      "title": "Dragonbone Cave - underground river",
-      "description": "The underground river here enters the cave from beneath a pile of rocks, the end result of a long ago cave-in.",
-      "preview": "A river enters the cavern over there. A good place to go fishing or take a drink, or even a bath.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
-        },
-        {
-          "chance": 1,
-          "event": "newt attack"
-        },
-        {
-          "chance": 1,
-          "event": "eat small fish"
-        }
-      ],
-      "actions": [ "hunt3" ],
-      "directionOverrides": {
-        "down": {
-          "x": 10,
-          "y": 10,
-          "z": 10,
-          "zone": "Undermountain Waterways"
-        }
-      }
-    },
-    "RiverEnd": {
-      "title": "Dragonbone Cave - underground river",
-      "description": "The underground river here leaves the cave, flowing down into a deep, dark tunnel of unknown length.",
-      "preview": "A river leaves the cavern over there. A good place to go fishing or take a drink, or even a bath.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
-        },
-        {
-          "chance": 1,
-          "event": "newt attack"
-        },
-        {
-          "chance": 1,
-          "event": "eat small fish"
-        }
-      ],
-      "actions": [ "hunt3" ],
-      "directionOverrides": {
-        "down": {
-          "x": 10,
-          "y": 10,
-          "z": 10,
-          "zone": "Undermountain Waterways"
-        }
-      }
-    },
-    "Skull": {
-      "title": "Dragonbone Cave - mother's skull",
-      "description": "Your mother's skull lies here, much of it covered in rocks from a cave-in. One massive spike of stone in particular pierces the center, the top still black from the lightning blast that knocked it loose.",
-      "preview": "You can see your mother's skull over there, stuck in a cave-in from before you hatched.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
-        },
-        {
-          "chance": 1,
-          "event": "spider attack"
-        },
-        {
-          "chance": 1,
-          "event": "eat small rat"
-        }
-      ],
-      "actions": [ "commune" ]
-    },
-    "UnderSpine": {
-      "title": "Dragonbone Cave - under mother's spine",
-      "description": "Your mother's spine arches above you here, morbid reminder of the silent guardian who died well before you hatched.",
-      "preview": "You can see your mother's skeletal spine arching far over the ground over there, an easy landmark to spot, even at a distance.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
-        },
-        {
-          "chance": 1,
-          "event": "spider attack"
-        },
-        {
-          "chance": 1,
-          "event": "eat small rat"
-        }
-      ],
-      "actions": [ "hunt" ],
-      "directionOverrides": {
-        "up": {
-          "disabled": true
-        }
-      }
-    },
-    "Spine": {
-      "title": "Dragonbone Cave - mother's spine",
-      "description": "Your mother's spine arches through the air here, far above the ground, nearly reaching the ceiling.",
-      "preview": "The airspace over there is broken up by your mother's spine arching close to the ceiling, massive ribs arching away from it to either side.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
-        },
-        {
-          "chance": 1,
-          "event": "spider attack"
-        },
-        {
-          "chance": 1,
-          "event": "eat small rat"
-        }
-      ],
-      "actions": [ "harvest", "hunt2" ],
-      "directionOverrides": {
-        "down": {
-          "disabled": true
-        }
-      }
-    },
-    "Ribs": {
-      "title": "Dragonbone Cave - mother's ribs",
-      "description": "Your mother's massive ribs arch down to the ground here like massive columns, chipped and worn in places where something has been breaking off pieces.",
-      "preview": "Your mother's ribs arch down through the area over there, massive columns visible from a distance.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
-        },
-        {
-          "chance": 1,
-          "event": "eat small rat"
-        },
-        {
-          "chance": 10,
-          "event": "spider attack"
-        }
-      ],
-      "actions": [ "harvest", "hunt" ]
-    },
-    "Tailbone": {
-      "title": "Dragonbone Cave - mother's tail",
-      "description": "Your mother's tail bones extend through this area, creating a sort of wall splitting the area here. The river used to flow here, but her massive tail redirected it a bit south.",
-      "preview": "Your mother's massive tail bone cuts through the area like a wall.",
-      "events": [
-        {
-          "chance": 10,
-          "event": null
-        },
-        {
-          "chance": 1,
-          "event": "spider attack"
-        },
-        {
-          "chance": 1,
-          "event": "eat small rat"
-        }
-      ],
-      "actions": [ "harvest" ],
-      "directionOverrides": {
-        "south": {
-          "disabled": true
-        }
-      }
-    }
-  },
-"events":{
-    "rat attack": {
-        "verb": "attack",
-        "details": { "enemy": "cave rat" }
-    },
-    "bat attack": {
-        "verb": "attack",
-        "details": { "enemy": "cave bat" }
-    },
-    "spider attack": {
-        "verb": "attack",
-        "details": { "enemy": "cave spider" }
-    },
-    "newt attack": {
-        "verb": "attack",
-        "details": { "enemy": "cave newt" }
-    },
-    "flying free": {
-        "verb": "flavor",
-        "details": {
-            "text": "You fly carelessly through the air, enjoying the wind across your scales. It's peaceful here, if a bit boring. Some large bats wing through the air in the area but none of them are bothering you at the moment." 
+        "noonbeam": {
+            "verb": "flavor",
+            "details": {
+                "text": "A beam of sunlight shines down upon your little home, a daily reminder of this thing your ancestral memories call the 'sun', and the existence of a tiny hole in the ceiling that lets its light shine down upon you once a day, however briefly."
+            }
         }
     },
-    "eat small bat": {
-        "verb": "eat",
-        "details": {
-            "text": "You chance upon a small bat in flight, and manage to surge toward it faster than it can dodge. In a single bite, its wings are shredded and its body stuck in your mouth. Your powerful tongue pulls it down into your throat and you swallow, happy with your snack.",
-            "nutrition": 1
-        }
-    },
-    "eat small rat": {
-        "verb": "eat",
-        "details": {
-            "text": "As you make your way about, you spot a small rat searching the area for food. Too late, it spots you and tries to flee. But it had ventured too far from cover, and with a powerful leap you clear the distance, deadly claws snatching the vermin. It squeaks and squirms in terror, but you have no mercy for it, and soon you are feeling those squirms work their way down your throat.",
-            "nutrition": 1
-        }
-    },
-    "eat small fish": {
-        "verb": "eat",
-        "details": {
-            "text": "Shiny scales catch your eye, and with a quick swipe of your tail you manage to launch a fish the size of your claw out of the water and onto the shore. Desperately, it flops about, trying to make its way back to the water, but you don't give it the chance. A claw through the heart ends its life, and gives you a good grip to get it into your mouth.",
-            "nutrition": 1
-        }
-    }
-},
 "actions":{
     "rest": {
         "type": "actButton",
@@ -466,7 +560,13 @@
         "type": "actButton",
         "display": "Harvest bone",
         "verb": "gather",
-        "details": { "item": "Dragonbone shard", "dice":1, "die":4, "plus":2 },
+        "details": {
+            "item": "Dragonbone shard",
+            "dice": 1,
+            "die": 4,
+            "plus": 2,
+            "text": "You chip away at the massive bones your mother left behind, earning yourself some small shards, vaguely round and quite sharp."
+        },
         "help": "Spend some time gathering dragonbone from your mother's remains. It's quite sturdy and hard, as well as being elementally aligned with fire, giving it some nice properties as a material."
     },
     "commune": {
@@ -529,5 +629,22 @@
             ]
         },
         "help": "Dive into the water to find aquatic prey, initiating a combat."
+    },
+    "digEast": {
+        "type": "actButton",
+        "enabled": {
+            "condition": "stateis",
+            "context": "party",
+            "fact": "leader/aggressCards/Basic Claws",
+            "rule": ">=",
+            "value": 3
+        },
+        "display": "Dig",
+        "verb": "setstate",
+        "details": {
+            "value": "ClearedE",
+            "statename": "world/locations/Dragonbone Cave/0/7/9/style",
+            "text": "You dig your claws into the large rocks, haulting them away one by one. As the bigger ones fall away, smaller ones spill out on their own, making you scramble to keep your footing, but soon enough you've cleared a small opening. Beyond you see fire burning steadily on the wall in the distance, illuminating a corridor beyond.\n\nWith more digging, you manage to open the passage entirely, enough for you to come and go as you will. A whole new region has opened up to you."
+        }
     }
 }}

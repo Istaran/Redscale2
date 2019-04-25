@@ -143,6 +143,16 @@ let configureEnemy = async function (state, target, flavor) {
 
     enemy.cardqueue = getQueueFromSets(targetDef.cardsets, targetDef.reshuffle);
 
+    enemy.tags = {};
+    if (targetDef.tags) {
+        for (var i = 0; i < targetDef.tags.length; i++) {
+            if (Array.isArray(targetDef.tags[i]))
+                enemy.tags[targetDef.tags[i][Math.floor(Math.random() * targetDef.tags[i].length)]] = true;
+            else
+                enemy.tags[targetDef.tags[i]] = true;
+        }
+    }
+
     console.log(`Configured enemy: ${JSON.stringify(enemy)}`);
 
     state.enemy = enemy;
@@ -248,7 +258,15 @@ let progress = async function (state) {
 
     if (state.enemy.stamina <= 0) {
         state.enemy.phasequeue = ["apprehend"];
-        return `${enemyDef.captureText || state.enemy.name + " collapsed from exhaustion, unable to fight back any longer!"}\n\nIt's time to apprehend! Pick a card...`; 
+        return `${enemyDef.captureText || enemyDef.display + " collapsed from exhaustion, unable to fight back any longer!"}\n\nIt's time to apprehend! Pick a card...`; 
+    }
+
+    if (state.enemy.health <= enemyDef["yield max health"]) {
+        let yieldChance = enemyDef["yield base chance"] + enemyDef["yield scale chance"] * (enemyDef["yield max health"] - state.enemy.health);
+        if (Math.random() < yieldChance) {
+            state.enemy.phasequeue = ["apprehend"];
+            return `${enemyDef.surrenderText || enemyDef.display + " lost the will to fight, and surrendered unconditionally!"}\n\nIt's time to apprehend! Pick a card...`; 
+        }
     }
 
     state.enemy.phasequeue.shift();
@@ -282,7 +300,7 @@ let getStatusDisplay = async function (state) {
     let manaText = `Mana: ${mana}0%`;
     let statusDisplay = {
         lines: [
-            { "text": enemy.display },
+            { "text": enemyDef.display },
             { "text": healthText, "help": "Health.\nWhen their health drops to zero, they will die and you can harvest your reward from their corpse." },
             { "text": staminaText, "help": "Stamina.\nWhen their stamina drops to zero, they will be forced to submit and you can choose between mercy and murder." },
             { "text": manaText, "help": "Mana.\nNot all creatures know how to use mana, but all of them possess at least some." }

@@ -53,7 +53,7 @@ let save = function (path, value) {
 			if (err) throw err;
 			if (made) console.log(`Made directory ${made} as part of saving ${path}`);
 			
-			fs.writeFile(path, JSON.stringify(value), { encoding: 'utf8' }, (err) => {
+			fs.writeFile(path, JSON.stringify(value, null, 2), { encoding: 'utf8' }, (err) => {
 				if (err)
 					console.log(err);
 				else

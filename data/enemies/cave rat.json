@@ -1,5 +1,11 @@
 {
     "display": "cave rat",
+    "tags": [
+        "rat",
+        "living",
+        "animal",
+        [ "male", "female" ]
+    ],
     "attack announce": "A massive cave rat comes out from behind a rock, rushing towards you!\n\nThe gray furred creature blends in with the surroundings, but now that it is intent to do you harm it is quite obvious. Long, powerful teeth remind you of the countless bites you've suffered over the years. But as much as it might want to eat you, you know from experience how delicious it can be as well.",
     "hunt announce": "You find a massive cave rat hiding among the rocks. The gray fur serves well as camoflage, but now that you've gotten close enough the game of hide and seek is over.\n\nNow it's time for a game of eat or be eaten.",
     "max health": 30,
@@ -7,7 +13,6 @@
     "max mana": 10,
     "evasion": 10,
     "reshuffle": 5,
-    "nutrition": 15,
     "cardsets": [
         {
             "tell": "The rat is growling aggressively.",
@@ -106,24 +111,60 @@
     ],
     "acquirecards": {
         "devour": {
-            "display": "Devour\n\n+30 nutrition",
-            "verb": "eat",
-            "details": {
-                "text": "You rip open the rat's guts, dining on the delicious organs within. You need a bit of care to avoid getting a bunch of fur stuck in your teeth, but not so much as to truly slow you down.",
-                "nutrition": 30
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/body",
+                "rule": "!=",
+                "value": true
             },
+            "display": "Devour\n\n+30 nutrition",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "eat",
+                    "details": {
+                        "text": "You rip open the rat's guts, dining on the delicious organs within. You need a bit of care to avoid getting a bunch of fur stuck in your teeth, but not so much as to truly slow you down.",
+                        "nutrition": 30
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/body"
+                    }
+                }
+            ],
             "help": "Consume your enemy's corpse to gain its calories.\nGet +30 nutrition."
         },
-      "card": {
-        "display": "Card\n\nChance to gain:\nBasic Bite",
-        "verb": "card",
-        "details": {
-          "text": "Absorbing the lingering memories of the fallen rat's spirit, you improve your skill at biting.",
-          "fail": "You try to absorb the rat's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
-          "type": "aggress",
-          "card": "Basic Bite"
-        },
-        "help": "Consume your enemy's spirit to learn from it.\nChance to gain Basic Bite based on how many copies you have.\nA more accurate pair of bites, great against dodging opponents, but easy to brace against."
-      }
+        "card": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/soul",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Card\n\nChance to gain:\nBasic Bite",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "card",
+                    "details": {
+                        "text": "Absorbing the lingering memories of the fallen rat's spirit, you improve your skill at biting.",
+                        "fail": "You try to absorb the rat's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+                        "type": "aggress",
+                        "card": "Basic Bite"
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/soul"
+                    }
+                }
+            ],
+            "help": "Consume your enemy's spirit to learn from it.\nChance to gain Basic Bite based on how many copies you have.\nA more accurate pair of bites, great against dodging opponents, but easy to brace against."
+        }
     }
 }
