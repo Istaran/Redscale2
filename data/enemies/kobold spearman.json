@@ -6,8 +6,8 @@
         "sapient",
         [ "male", "female" ]
     ],
-    "attack announce": "A kobold ambushes you!",
-    "hunt announce": "You ambush a kobold!",
+    "attack announce": "A scaled creature comes out of the darkness with a furious cry, wielding a metal-tipped stick. The creature is about your height before you lift your head high, but since it's bipedal and upright, that puts it as about an eighth of your mass.\n\nIf not for the tool in its hand it would be no threat at all, but between that and the crude clothing you realize it's an intelligent creature, and thus inherently dangerous. And potentially valuable.",
+    "hunt announce": "You wait patiently at the corner, listening until the quiet clawed footsteps of a kobold approaching tells you the right time to leap around the corner and spring your attack. The look on its face is hilarious, but you don't have time to savor it.",
     "max health": 45,
     "max stamina": 10,
     "max mana": 10,
