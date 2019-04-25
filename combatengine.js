@@ -99,13 +99,26 @@ let getControls = async function (state) {
     return controls;		
 }
 
-let getQueueFromSets = function (sets, max) {
+let getQueueFromSets = function (sets, max, maxperset) {
 
     let pool = [];
     let queue = [];
+    var c;
     for (var s = 0; s < sets.length; s++) {
-        for (var c = 0; c < sets[s].cards.length; c++) {
-            pool.push({ set: s, card: c });
+        if (!maxperset || maxperset > sets[s].cards.leader) {
+            for (c = 0; c < sets[s].cards.length; c++) {
+                pool.push({ set: s, card: c });
+            }
+        } else {
+            let set = [];
+            for (c = 0; c < sets[s].cards.length; c++) {
+                set.push({ set: s, card: c });
+            }
+            for (c = 0; c < maxperset; c++) {
+                let r = Math.floor(Math.random() * set.length);
+                let card = set.splice(r, 1);
+                pool.push(card[0]);
+            }
         }
     }
     for (var i = 0; i < max; i++) {
@@ -125,12 +138,12 @@ let configureEnemy = async function (state, target, flavor) {
     for (var i = 0; i < state.parties[state.activeParty].pawns.length; i++) {
         let pawn = state.parties[state.activeParty].pawns[i];
         var pawnDef = await cache.load(`data/pawns/${pawn.name}.json`);
-        console.log(JSON.stringify(pawnDef, null, 1));
-        assistcardsets.push({ cards: pawnDef.assistcards });
+        if (pawn.health >= pawnDef.safeHealth) {
+            assistcardsets.push({ cards: pawnDef.assistcards });
+        }
     }
-    console.log(JSON.stringify(assistcardsets, null, 1));
 
-    leader.assistqueue = getQueueFromSets(assistcardsets, leader.maxpawnassist);
+    leader.assistqueue = getQueueFromSets(assistcardsets, leader.maxpawnassist, 1);
     leader.activeassist = null;
 
     let targetDef = await cache.load(`data/enemies/${target}.json`);
