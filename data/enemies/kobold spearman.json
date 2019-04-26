@@ -2,8 +2,8 @@
     "display": "kobold",
     "tags": [
         "kobold",
-        "living",
-        "sapient",
+        "living creature",
+        "person",
         [ "male", "female" ]
     ],
     "attack announce": "A scaled creature comes out of the darkness with a furious cry, wielding a metal-tipped stick. The creature is about your height before you lift your head high, but since it's bipedal and upright, that puts it as about an eighth of your mass.\n\nIf not for the tool in its hand it would be no threat at all, but between that and the crude clothing you realize it's an intelligent creature, and thus inherently dangerous. And potentially valuable.",

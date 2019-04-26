@@ -2,7 +2,8 @@
     "display": "cave bat",
     "tags": [
         "bat",
-        "living",
+        "flyer",
+        "living creature",
         "animal",
         [ "male", "female" ]
     ],

@@ -140,7 +140,64 @@ let getTitle = async function (state) {
     return "Outside Space and Time";
 };
 
+let checkRequirements = async function (state, details) {
+    let zone = await cache.load(`./data/locations/${details.location}.json`);
+    let spot = await spotStyle(state, details.location, details.x, details.y, details.z);
+    if (spot) {
+        let style = zone.styles[spot];
+        let party = state.parties[state.activeParty];
+        state.view.status = "";
+        if (style.requireall) {
+            for (var req in style.requireall) {
+                if (!!party.leader.tags[req] != style.requireall[req]) {
+                    state.view.status += `You can't go that way, because you ${style.requireall[req] ? "aren't" : "are"} a ${req}.\n`;
+                }
+                for (var i = 0; i < party.followers.length; i++) {
+                    if (!!party.followers[i].tags[req] != style.requireall[req]) {
+                        state.view.status += `You can't go that way, because ${party.followers[i].display} ${style.requireall[req] ? "isn't" : "is"} a ${req}.\n`;
+                    }
+                }
+                for (var i = 0; i < party.pawns.length; i++) {
+                    if (!!party.pawns[i].tags[req] != style.requireall[req]) {
+                        state.view.status += `You can't go that way, because ${party.pawns[i].display} ${style.requireall[req] ? "isn't" : "is"} a ${req}.\n`;
+                    }
+                }
+            }
+        }
+        if (style.requireone) {
+            for (var req in style.requireall) {
+                let gotOne = false;
+                if (!!party.leader.tags[req] == style.requireall[req]) {
+                    gotOne = true;
+                    continue;
+                }
+                for (var i = 0; i < party.followers.length; i++) {
+                    if (!!party.followers[i].tags[req] == style.requireall[req]) {
+                        gotOne = true;
+                        break;
+                    }
+                }
+                if (gotOne) continue;
+                for (var i = 0; i < party.pawns.length; i++) {
+                    if (!!party.pawns[i].tags[req] == style.requireall[req]) {
+                        gotOne = true;
+                        break;
+                    }
+                }
+                if (!gotOne) {
+                    state.view.status += `You can't go that way, because no one in your party ${style.requireall[req] ? "is" : "is not"} a ${req}.\n`;
+                }
+            }
+        }
+        return !(state.view.status);
+    } else {
+        state.view.status = "There isn't anywhere to go in that direction.";
+        return false;
+    }
+};
+
 module.exports = {
+    checkRequirements: checkRequirements,
 	explore: explore,
     getControls: getControls,
     getDescription: getDescription,
