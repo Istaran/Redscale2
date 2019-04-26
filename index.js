@@ -99,13 +99,13 @@ if (google_oauth_config) {
         '/login/google/callback',
         passport.authenticate('google'),
         (req, res) => {
-            res.redirect('/');
+            res.redirect(req.session.nsfw ? '/?nsfw=true' : '/');
         }
     );
 } else {
     app.get('/login/google',
         (req, res) => {
-            res.redirect('/');
+            res.redirect(req.session.nsfw ? '/?nsfw=true' : '/');
         }
     );
 }
@@ -139,7 +139,7 @@ app.get('/chat', function (req, res) {
 app.get('/', async function (req, res) {
     if (!google_oauth_config) { req.user = 'localDev' };
     let path = (req.user ? 'hidden assets/home.html' : 'assets/home.html');
-
+    req.session.nsfw = req.query.nsfw;
     let homepage = await new Promise(function (resolve, reject) {
 
         fs.readFile(path, { encoding: 'utf8' }, (err, data) => {

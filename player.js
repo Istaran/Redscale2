@@ -34,6 +34,8 @@ let setDefaults = function (state) {
             locations: {}
         }
     }
+    if (!state.parties[0].leader.maxpawnassist)
+        state.parties[0].leader.maxpawnassist = 4;
 }
 
 let passiveRecoverAll = function (state) {

@@ -12,17 +12,19 @@ let act = async function (state, details) {
     let engineResult = "";
 
     let leader = state.parties[state.activeParty].leader;
+    let assist = leader.activeassist || {};
 
     let attacks = Math.floor(card.attacks + (leader.bonusattacks || 0) + (card.scaleattacks ? card.scaleattacks * (leader.aggressHand[details.card] - 1) : 0) + Math.random());
-    let accuracy = card.accuracy + (leader.bonusaccuracy || 0) + (card.scaleaccuracy ? card.scaleaccuracy * (leader.aggressHand[details.card] - 1) : 0);
+    let accuracy = card.accuracy + (leader.bonusaccuracy || 0) + (assist.bonusaccuracy || 0) + (card.scaleaccuracy ? card.scaleaccuracy * (leader.aggressHand[details.card] - 1) : 0);
     let damagedice = card.damagedice + (card.scaledamagedice ? card.scaledamagedice * (leader.aggressHand[details.card] - 1) : 0);
     let damagedie = card.damagedie + (card.scaledamagedie ? card.scaledamagedie * (leader.aggressHand[details.card] - 1) : 0);
-    let damageplus = card.damageplus + (leader.bonusdamage || 0) + (card.scaledamageplus ? card.scaledamageplus * (leader.aggressHand[details.card] - 1) : 0);
-    let staminacost = card.staminacost + (card.scalestaminacost ? card.scalestaminacost * (leader.aggressHand[details.card] - 1) : 0);
+    let damageplus = card.damageplus + (leader.bonusdamage || 0) + (assist.bonusdamage || 0) + (card.scaledamageplus ? card.scaledamageplus * (leader.aggressHand[details.card] - 1) : 0);
+    let staminacost = (card.staminacost || 0) + (card.scalestaminacost ? card.scalestaminacost * (leader.aggressHand[details.card] - 1) : 0);
     leader.stamina -= staminacost;
 
     let deflect = Math.floor(enemyCard.deflect + Math.random());
 
+    //  TODO: add in assist bonus-attacks first.
 
     for (var i = 0; i < attacks; i++) {
         if (deflect > i)
@@ -48,7 +50,7 @@ let act = async function (state, details) {
 
     leader.aggressHand[details.card] = undefined;
     if (leader.stamina < 0) {
-        engineResult += `\nYou discard ${Math.min(leader.aggressHand.length, -leader.stamina)} aggress cards and ${Math.min(leader.abjureHand.length, -leader.stamina)} abjure cards due to low stamina!\n`
+        engineResult += `\nYou discard ${Math.min(combatengine.handSize(leader.aggressHand), -leader.stamina)} aggress cards and ${Math.min(combatengine.handSize(leader.abjureHand), -leader.stamina)} abjure cards due to low stamina!\n`
         combatengine.discardCards(leader.aggressHand, -leader.stamina);
         combatengine.discardCards(leader.abjureHand, -leader.stamina);
         leader.stamina = 0;

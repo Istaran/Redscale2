@@ -99,13 +99,26 @@ let getControls = async function (state) {
     return controls;		
 }
 
-let getQueueFromSets = function (sets, max) {
+let getQueueFromSets = function (sets, max, maxperset) {
 
     let pool = [];
     let queue = [];
+    var c;
     for (var s = 0; s < sets.length; s++) {
-        for (var c = 0; c < sets[s].cards.length; c++) {
-            pool.push({ set: s, card: c });
+        if (!maxperset || maxperset > sets[s].cards.leader) {
+            for (c = 0; c < sets[s].cards.length; c++) {
+                pool.push({ set: s, card: c });
+            }
+        } else {
+            let set = [];
+            for (c = 0; c < sets[s].cards.length; c++) {
+                set.push({ set: s, card: c });
+            }
+            for (c = 0; c < maxperset; c++) {
+                let r = Math.floor(Math.random() * set.length);
+                let card = set.splice(r, 1);
+                pool.push(card[0]);
+            }
         }
     }
     for (var i = 0; i < max; i++) {
@@ -120,6 +133,18 @@ let configureEnemy = async function (state, target, flavor) {
     let leader = state.parties[state.activeParty].leader;
     leader.aggressHand = Object.assign({}, leader.aggressDefaultHand);
     leader.abjureHand = Object.assign({}, leader.abjureDefaultHand);
+
+    let assistcardsets = [];
+    for (var i = 0; i < state.parties[state.activeParty].pawns.length; i++) {
+        let pawn = state.parties[state.activeParty].pawns[i];
+        var pawnDef = await cache.load(`data/pawns/${pawn.name}.json`);
+        if (pawn.health >= pawnDef.safeHealth) {
+            assistcardsets.push({ cards: pawnDef.assistcards });
+        }
+    }
+
+    leader.assistqueue = getQueueFromSets(assistcardsets, leader.maxpawnassist, 1);
+    leader.activeassist = null;
 
     let targetDef = await cache.load(`data/enemies/${target}.json`);
     if (!targetDef) return `Failed to load enemy type: ${target}`;
@@ -146,10 +171,12 @@ let configureEnemy = async function (state, target, flavor) {
     enemy.tags = {};
     if (targetDef.tags) {
         for (var i = 0; i < targetDef.tags.length; i++) {
-            if (Array.isArray(targetDef.tags[i]))
-                enemy.tags[targetDef.tags[i][Math.floor(Math.random() * targetDef.tags[i].length)]] = true;
-            else
+            if (Array.isArray(targetDef.tags[i])) {
+                let tag = targetDef.tags[i][Math.floor(Math.random() * targetDef.tags[i].length)];
+                if(tag) enemy.tags[tag] = true;
+            } else {
                 enemy.tags[targetDef.tags[i]] = true;
+            }
         }
     }
 
@@ -183,6 +210,15 @@ let drawCards = function (hand, pool, count) {
 
 };
 
+
+let handSize = function (hand) {
+    var size = 0;
+    for (var card in hand) {
+        let num = (hand[card] ? hand[card] : 0);
+        size += num;
+    }
+    return size;
+};
 
 let discardCards = function (hand, count) {
     let shuffle = [];
@@ -238,12 +274,13 @@ let clearCombat = async function (state) {
 let progress = async function (state) {
     let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
     if (!enemyDef) return `Failed to load enemy type in mid combat: ${state.enemy.name}`;
+    let leader = state.parties[state.activeParty].leader;
 
     if (state.parties[0].leader.health <= 0) {
         await (require('./player').reloadArchive(state));
         return "You were defeated! (reloading last save)"; // TEMP: need to flesh this out sometime. 
     }
-    if (state.parties[state.activeParty].leader.health <= 0) {
+    if (leader.health <= 0) {
         await clearCombat(state);
         return "You lost, but it wasn't you so whatever."; // TODO: flesh out side-party death scenario.
     }
@@ -272,8 +309,25 @@ let progress = async function (state) {
     state.enemy.phasequeue.shift();
     if (state.enemy.phasequeue.length < 1) return "Ran out of phases. This should never happen, as Assess should add phases or end combat.";
     let newPhase = state.enemy.phasequeue[0];
+    
     switch (newPhase) {
         case "assess":
+            let assist = leader.assistqueue.shift();
+            if (assist) {
+                let helper = state.parties[state.activeParty].pawns[assist.set];
+                let helperDef = await cache.load(`data/pawns/${helper.name}.json`);
+                console.log(`Helper:${JSON.stringify(helper)}\nHelperDef:${JSON.stringify(helperDef)}:\nCard index ${assist.card}`);
+                if (helper.health >= helperDef.safeHealth) {
+                    let assistcard = helperDef.assistcards[assist.card];
+                    console.log(`Assist card: ${JSON.stringify(assistcard)}`);
+                    leader.activeassist = {
+                        pawnIndex: assist.set
+                    }
+                    Object.assign(leader.activeassist, assistcard);
+                }
+            } else {
+                leader.activeassist = null;
+            }
             //Set new next card.
             state.enemy.cardqueue.shift();
             if (state.enemy.cardqueue.length <= 0)
@@ -281,7 +335,7 @@ let progress = async function (state) {
             break;
     }
 
-    return `${enemyDef.cardsets[state.enemy.cardqueue[0].set].tell}\n\nIt's time to ${newPhase}! Pick a card...`;
+    return `${enemyDef.cardsets[state.enemy.cardqueue[0].set].tell}${leader.activeassist ? "\n\n"+leader.activeassist.display : ""}\n\nIt's time to ${newPhase}! Pick a card...`;
 };
 
 
@@ -319,5 +373,6 @@ module.exports = {
     progress: progress,
     drawCards: drawCards,
     discardCards: discardCards,
+    handSize: handSize,
     getStatusDisplay: getStatusDisplay
 };
