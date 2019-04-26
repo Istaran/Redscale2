@@ -60,7 +60,8 @@
                     "z": -10,
                     "zone": "Dragonbone Cave"
                 }
-            }
+            },
+            "requireall": { "swimmer": true}
         },
         "Fork": {
             "title": "Undermountain Waterways - Dragonbone Cave river fork",
@@ -91,7 +92,8 @@
                 "sw": {
                     "disabled": false
                 }
-            }
+            },
+            "requireall": {"swimmer": true }
         },
         "SouthBranch": {
             "title": "Undermountain Waterways - Dragonbone Cave river",
@@ -125,7 +127,8 @@
                 "ne": {
                     "disabled": false
                 }
-            }
+            },
+            "requireall": {"swimmer": true }
         },
         "WestBranch": {
             "title": "Undermountain Waterways - Dragonbone Cave river",
@@ -156,7 +159,8 @@
                 "south": {
                     "disabled": true
                 }
-            }
+            },
+            "requireall": {"swimmer": true }
         }
 
     },

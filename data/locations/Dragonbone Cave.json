@@ -168,7 +168,8 @@
                     "event": "eat small bat"
                 }
             ],
-            "actions": [ "hunt2" ]
+            "actions": [ "hunt2" ],
+            "requireall": { "flyer": true }
         },
         "Dragonhome": {
             "title": "Dragonbone Cave - Dragonhome",
@@ -208,7 +209,8 @@
                     "event": "eat small bat"
                 }
             ],
-            "actions": [ "hunt2" ]
+            "actions": [ "hunt2" ],
+            "requireall": {"flyer": true }
         },
         "OverHome": {
             "title": "Dragonbone Cave - above Dragonhome",
@@ -220,7 +222,8 @@
                     "event": null
                 }
             ],
-            "actions": [ "hunt2" ]
+            "actions": [ "hunt2" ],
+            "requireall": { "flyer": true }
         },
         "River": {
             "title": "Dragonbone Cave - underground river",

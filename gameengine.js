@@ -13,6 +13,7 @@ var combat = require('./combatengine');
 var scenes = require('./sceneengine');
 var loc = require('./location');
 var player = require('./player');
+var time = require('./time');
 
 let doVerb = async function (verbName, state, details) {
     if (verbs[verbName] === undefined) {
@@ -56,6 +57,7 @@ let getControl = async function (state, details) {
     if (!(await conditionMet(state, details.visible))) return null;
     let ctrl = JSON.parse(JSON.stringify(details)); // Deep copy
     ctrl.enabled = await conditionMet(state, details.enabled);
+
     return ctrl;
 }
 
@@ -70,7 +72,7 @@ let controls = async function (state) {
         controls = await scenes.getControls(state, state.scene);
 	} else {
 		controls = await loc.getControls(state);
-		player.addControls(state, controls);
+		await player.addControls(state, controls);
 		// Get description from location, and combine controls from location and player modules.
     }	
     let id = Date.now() % 100000;
@@ -111,26 +113,26 @@ let list = async function (profile) {
 }
 
 let act = async function (profile, action, query) {
-	console.log(action);
-	let savePath = `./saves/${profile.id}/${action.slot}.json`; 
-	
-	// Load current existence.
-	let state = await cache.load(savePath);
-	if (state == null) {
-		state = await cache.load(newGamePath);
+    console.log(action);
+    let savePath = `./saves/${profile.id}/${action.slot}.json`;
+
+    // Load current existence.
+    let state = await cache.load(savePath);
+    if (state == null) {
+        state = await cache.load(newGamePath);
     }
     state.query = query;
-    player.setDefaults(state);
+    await player.setDefaults(state);
 
-	let migrations = await cache.load(saveMigrationPath);
-	
-	while (state["save version"] < migrations.length) {
-		let change = migrations[state["save version"]];
-		// TODO: apply change. There are no migrations yet, though, so we're okay.
-		state["save version"]++;
-	}
+    let migrations = await cache.load(saveMigrationPath);
 
-	// Apply action
+    while (state["save version"] < migrations.length) {
+        let change = migrations[state["save version"]];
+        // TODO: apply change. There are no migrations yet, though, so we're okay.
+        state["save version"]++;
+    }
+
+    // Apply action
     if (action.id && state.details[action.id]) {
         state.dirty = undefined;
         state.view = {};
@@ -143,17 +145,17 @@ let act = async function (profile, action, query) {
 
     await controls(state);
 
-	//Determine which character should be shown on left. By default, it's the player
+    //Determine which character should be shown on left. By default, it's the player
     state.view.leftStatus = player.getStatusDisplay(state);
-	
-	//Determine which character should be shown on right. By default, it's none.
+
+    //Determine which character should be shown on right. By default, it's none.
     if (state.enemy) {
         state.view.rightStatus = await require('./combatengine').getStatusDisplay(state);
     } else {
         state.view.rightStatus = null;
     }
 
-    
+    state.view.title = `${await loc.getTitle(state)} - ${time.getTimeString(state)}`;
 	
 	// Save current state;
 	cache.save(savePath, state);
