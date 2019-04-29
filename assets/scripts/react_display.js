@@ -1,6 +1,3 @@
-
-Pusher.logToConsole = true;
-
 var pusher = new Pusher('91450cc1727e582f15c1', {
   cluster: 'us2',
   forceTLS: true
@@ -122,7 +119,7 @@ class ActButton extends React.Component {
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
-				self.props.parent.setState({gameState: data});
+                  gameDisplayer.setState({gameState: data});
 			  });
 	}
 	
@@ -149,7 +146,7 @@ class Card extends React.Component {
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            self.props.parent.setState({ gameState: data });
+            gameDisplayer.setState({ gameState: data });
         }).catch(function (err) {
             gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
         });
@@ -172,7 +169,6 @@ class Navigator extends React.Component {
 	};
 	
 	navigate(event, dir) {
-		let gameDisp = this.props.parent;
         let id = this.props.id;
         helper.setState({ help: null });
 		if (this.props.details[dir]) {
@@ -185,7 +181,7 @@ class Navigator extends React.Component {
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
-				gameDisp.setState({gameState: data});
+                  gameDisplayer.setState({gameState: data});
               }).catch(function (err) {
                   gameDisplayer.setState({ gameState: { status: "There was an error trying to go there. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
               });
@@ -398,6 +394,75 @@ class Loader extends React.Component {
     }
 }
 
+class Requantifier extends React.Component {
+    constructor(props) {
+        super(props);
+
+        // track updated numbers as state.
+        var leftCounts = Object.assign({}, props.leftCounts);
+        var rightCounts = Object.assign({}, props.rightCounts);
+        var thing;
+        for (thing in props.displays) {
+            leftCounts[thing] = leftCounts[thing] || 0;
+            rightCounts[thing] = rightCounts[thing] || 0;
+        }
+
+        this.state = {
+            leftCounts: leftCounts,
+            rightCounts: rightCounts
+        }
+    }
+
+    change(thing, deltaRight) {
+        if (deltaRight > this.state.leftCounts[thing])
+            deltaRight = this.state.leftCounts[thing];
+        if (deltaRight < -this.state.rightCounts[thing])
+            deltaRight = -this.state.rightCounts[thing];
+        var newState = {
+            leftCounts: Object.assign({}, this.state.leftCounts),
+            rightCounts: Object.assign({}, this.state.rightCounts)
+        };
+        newState.leftCounts[thing] = this.state.leftCounts[thing] - deltaRight;
+        newState.rightCounts[thing] = this.state.rightCounts[thing] + deltaRight;
+        this.setState(newState);
+    }
+
+    done() {
+        let self = this;
+        fetch('/act' + location.search, {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({ 'body': { 'verb': 'requantify', 'slot': saveSlot, 'id': self.props.id, 'data': { 'left': this.state.leftCounts, 'right': this.state.rightCounts }} })
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            gameDisplayer.setState({ gameState: data });
+        }).catch(function (err) {
+            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+        });
+    }
+
+    render() {
+        var rows = [];
+        for (var thing in this.props.displays) {
+            var row = <div className="requantifierRow" key={thing + " row"}><div className="quantity" key={thing + " left"}>{this.state.leftCounts[thing]}</div>
+                <input className="requantify" type="button" value={this.state.rightCounts[thing] > 100 ? "<<100" : "<< all"} onClick={(event) => this.change(event.target.getAttribute("thing"), -100)} key={thing + " -100"} thing={thing} />
+                <input className="requantify" type="button" value="<< 10" onClick={(event) => this.change(event.target.getAttribute("thing"), -10)} key={thing + " -10"} thing={thing} />
+                <input className="requantify" type="button" value="<< 1" onClick={(event) => this.change(event.target.getAttribute("thing"), -1)} key={thing + " -1"} thing={thing} />
+                <div className={"card " + this.props.displays[thing].type} key={thing + " card"}>{this.props.displays[thing].text}</div>
+                <input className="requantify" type="button" value="1 >>" onClick={(event) => this.change(event.target.getAttribute("thing"), 1)} key={thing + " +1"} thing={thing} />
+                <input className="requantify" type="button" value="10 >>" onClick={(event) => this.change(event.target.getAttribute("thing"), 10)} key={thing + " +10"} thing={thing} />
+                <input className="requantify" type="button" value={this.state.leftCounts[thing] > 100 ? "100>>" : "all >>"} onClick={(event) => this.change(event.target.getAttribute("thing"), 100)} key={thing + " +100"} thing={thing} />
+                < div className="quantity" key={thing + " right"}>{this.state.rightCounts[thing]}</div></div>;
+            rows.push(row);
+        }
+        return <div className="screencover"><div className="requantifier"><div className="requantifierHeaderRow"><div className="requantifierColumnHeader">{this.props.leftHeader}</div><div className="requantifierHeaderSpacer"><input type='button' onClick={() => this.done()} value="Done" /></div><div className="requantifierColumnHeader">{this.props.rightHeader}</div></div>{rows}</div></div>;
+    }
+}
+        
+        
 class GameDisplayer extends React.Component {
 	constructor(props) {
         super(props);
@@ -409,12 +474,17 @@ class GameDisplayer extends React.Component {
 		  gameState: null,
 		};
 	}
-  
+
+    stringFromMessageData(data) {
+        var datestring = data.timestamp ? new Date(data.timestamp).toLocaleString() + ": " : "Unknown time & date: ";
+        var message = datestring + (data.username ? (data.username + '> ' + data.message) : data.message);
+        return message;
+    }
+
   	pushTextToChatLog = function(data) {
 	  var newLog = this.state.chatLog.slice();
-	  newLog.shift();
-	  var message = data.username ? (data.username + '> ' + data.message) : data.message;
-	  newLog.push(message);
+            newLog.shift();
+            newLog.push(this.stringFromMessageData(data));
 	  this.setState({chatLog: newLog});
 	};
 	
@@ -428,17 +498,19 @@ class GameDisplayer extends React.Component {
                     controlColumn = column.map((control, rowIndex) => {
                         switch (control.type) {
                             case 'actButton':
-                                return <ActButton parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
+                                return <ActButton key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
                             case 'card':
-                                return <Card parent={self} key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
+                                return <Card key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
                             case 'navigator':
-                                return <Navigator parent={self} key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
+                                return <Navigator key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
                             case 'textBox':
-                                return <TextInputer parent={self} key={colIndex * 10 + rowIndex} id={control.id} default={control.default} name={control.name} />;
+                                return <TextInputer key={colIndex * 10 + rowIndex} id={control.id} default={control.default} name={control.name} />;
                             case 'refresher':
                                 return <Refresher />;
                             case 'reconnector':
                                 return <Reconnector />;
+                            case 'requantifier':
+                                return <Requantifier key={colIndex * 10 + rowIndex}  leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} rightCounts={control.rightCounts} displays={control.displays} id={control.id}/>;
                             default:
                                 return '';
                         }
@@ -446,6 +518,7 @@ class GameDisplayer extends React.Component {
                 }
                 return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
             });
+
             return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
         } else if (this.state.saveList) {
             // initialize chat
@@ -465,8 +538,7 @@ class GameDisplayer extends React.Component {
                         chatlog.forEach(function (data) {
                             if (data) {
                                 newLog.shift();
-                                var message = data.username ? (data.username + '> ' + data.message) : data.message;
-                                newLog.push(message);
+                                newLog.push(self.stringFromMessageData(data));
                             }
                         });
                         self.setState({ chatLog: newLog });

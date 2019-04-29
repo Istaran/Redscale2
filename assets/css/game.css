@@ -204,3 +204,61 @@ div.div-unhelp {
 	white-space: pre-wrap;
 }
 
+div.screencover {
+    position:fixed;
+    top:0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.50);    
+    display:flex;
+    justify-content:center;
+}
+
+div.requantifier {
+    position: center;
+    width: 1000px;
+    height: calc(100vh - 445px);
+    overflow-y: scroll;
+    border: thick;
+    border-color: black;
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+div.requantifierRow {
+    height: 160px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+input.requantify {
+    width: 50px;
+    height: 30px;
+}
+
+div.requantifierHeaderRow {
+    height: 30px;
+    display: flex;
+    border-bottom-color: black;
+    border-bottom-style: dashed;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div.quantity {
+    width:125px;
+    text-align:right;
+}
+div.requantifierColumnHeader {
+    width: 125px;
+    text-align: right;
+}
+
+div.requantifierHeaderSpacer {
+    width: 750px;
+    justify-content:center;
+    display:flex;
+}

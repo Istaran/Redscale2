@@ -26,9 +26,12 @@ let addControls = async function (state, controls) {
             let inventoryButton = await gameengine.getControl(state, {
                     "type": "actButton",
                     "display": "Manage inventory",
-                    "verb": "flavor",
+                    "verb": "setscene",
                     "details": {
-                        "text": `You try to manage your inventory, but you can't get the darn UI to come up. Damnit, Istaran.`
+                        "text": "",
+                        "type": "requantify",
+                        "name": "inventory",
+                        "sub": "start" 
                     },
                     "help": "Leave some of your possessions here, or pick some back up to carry with you."
             });

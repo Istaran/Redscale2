@@ -12,7 +12,8 @@ var pusher = new Pusher({
 });
 
 pusher.trigger('Redscale_main_chat', 'chat message', {
-  "message": "Server was restarted"
+    "message": "Server was restarted",
+    "timestamp": Date.now()
 });
 
 
@@ -26,7 +27,7 @@ var chatStream = fs.createWriteStream('', { fd: chatFD });
 // TODO: separate by channel, private messages
 
 let sendChat = function (user, message, debug) {
-    let data = { username: user.displayName, message: message };
+    let data = { username: user.displayName, message: message, timestamp: Date.now() };
 	  console.log(JSON.stringify(data));
     pusher.trigger('Redscale_main_chat', 'chat message', data);
     chatArchive.push(JSON.stringify(data));

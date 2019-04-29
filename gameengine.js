@@ -51,12 +51,66 @@ let conditionMet = async function (state, details) {
     return false; // Lack of js file is a fail.
 }
 
+let getContext = function (state, context) {
+    switch (context) {
+        case "party":
+            return state.parties[state.activeParty];
+        case "location":
+            // Make sure state.locations.<zone>.<z>.<y>.<x> exists, and return it as a context
+            let locations = state.world.locations;
+            if (!locations[state.location])
+                locations[state.location] = {};
+            let location = locations[state.location];
+            if (!location[state.z]) location[state.z] = {};
+            let locZ = location[state.z];
+            if (!locZ[state.y]) locZ[state.y] = {};
+            let locY = locZ[state.y];
+            if (!locY[state.x]) locY[state.x] = {};
+            return locY[state.x];
+        default:
+            console.log(`Invalid context: ${context}\nState:${JSON.stringify(state)}`);
+            throw "Invalid context";
+    }
+}
+
+let getRequantifierDisplay = async function (name, dataset) {
+    var data;
+    switch (dataset) {
+        // This helper needs to know where to find the source and what the display type is.
+        case "inventory":
+            let item = await cache.load(`data/items/${name}.json`);
+            data = { "type": "item", "text": item.cardtext };
+            break;
+    }
+
+    return data;
+}
+
 // Does situational processing for a permanently defined control.
 let getControl = async function (state, details) {
     if (!details) return null;
     if (!(await conditionMet(state, details.visible))) return null;
     let ctrl = JSON.parse(JSON.stringify(details)); // Deep copy
     ctrl.enabled = await conditionMet(state, details.enabled);
+
+    if (ctrl.type == "requantifier") {
+        // setup the numbers based on context/dataset
+        let leftContext = getContext(state, details.details.leftDataContext);
+        if (!leftContext[details.details.dataset]) leftContext[details.details.dataset] = {};
+        ctrl.leftCounts = leftContext[details.details.dataset];
+        let rightContext = getContext(state, details.details.rightDataContext);
+        if (!rightContext[details.details.dataset]) rightContext[details.details.dataset] = {};
+        ctrl.rightCounts = rightContext[details.details.dataset];
+        ctrl.displays = {};
+        var name;
+        for (name in ctrl.leftCounts) {            
+            ctrl.displays[name] = await getRequantifierDisplay(name, details.details.dataset);
+        }
+        for (name in ctrl.rightCounts) {
+            if (ctrl.displays[name] === undefined) 
+                ctrl.displays[name] = await getRequantifierDisplay(name, details.details.dataset);
+        }
+    }
 
     return ctrl;
 }
@@ -186,6 +240,7 @@ let randomChoice = async function (state, choices) {
 module.exports = {
     act: act,
     conditionMet: conditionMet,
+    getContext: getContext,
     doVerb: doVerb,
     getControl: getControl,
     list: list,

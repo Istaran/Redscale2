@@ -1,0 +1,25 @@
+{
+    "start": {
+        "controls": [
+            [
+                {
+                    "type": "requantifier",
+                    "details": {
+                        "leftDataContext": "party",
+                        "dataset": "inventory",
+                        "rightDataContext": "location",
+                        "then": {
+                            "verb": "setscene",
+                            "details": {
+                                "text": "You figured out what to take with you and what to leave here.",
+                                "clear": true
+                            }
+                        }
+                    },
+                    "leftHeader": "Take with you",
+                    "rightHeader": "Leave here"
+                }
+            ]
+        ]
+    }
+}
