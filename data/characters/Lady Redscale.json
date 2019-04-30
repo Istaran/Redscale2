@@ -19,9 +19,11 @@
     "tags": {
         "dragon": true,
         "female": true,
-        "sapient": true,
-        "living": true,
-        "fire": true
+        "person": true,
+        "living creature": true,
+        "fire creature": true,
+        "flyer": true,
+        "swimmer": true
     },
     "aggressCards": {
         "Instinctive Bite": 5,

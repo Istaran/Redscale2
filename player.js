@@ -1,9 +1,45 @@
 // Future note: GameEngine reference will be needed eventually. it needs to lazy load like location.js does, because of circular dependency.
 let cache = require('./cache');
 let loc = require('./location');
+let gameengine = null;
 
-let addControls = function (state, controls) {
-	// TODO
+let addControls = async function (state, controls) {
+    if (!gameengine) gameengine = require('./gameengine');
+    let spot = state.world.locations[state.location] &&
+        state.world.locations[state.location][state.z] &&
+        state.world.locations[state.location][state.z][state.y] &&
+        state.world.locations[state.location][state.z][state.y][state.x];
+    if (spot) {
+        let thirdColumn = [];
+        if (spot.building) {
+            let manageButton = 
+                await gameengine.getControl(state, {
+                    "type": "actButton",
+                    "display": "Manage " + spot.building.display,
+                    "verb": "flavor",
+                    "details": {
+                        "text": `You try to manage ${spot.building.display}, but you can't get the darn UI to come up. Damnit, Istaran.`
+                    },
+                    "help": "Leave some of your pawns or followers here to get stuff done, or bring some along with you on your adventure."
+                });
+            thirdColumn.push(manageButton);
+            let inventoryButton = await gameengine.getControl(state, {
+                    "type": "actButton",
+                    "display": "Manage inventory",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "",
+                        "type": "requantify",
+                        "name": "inventory",
+                        "sub": "start" 
+                    },
+                    "help": "Leave some of your possessions here, or pick some back up to carry with you."
+            });
+            thirdColumn.push(inventoryButton);
+        }
+        if (thirdColumn.length)
+            controls[2] = thirdColumn;
+    }
 }
 
 let getStatusDisplay = function (state) {
@@ -27,15 +63,42 @@ let getStatusDisplay = function (state) {
 	return statusDisplay;
 }
 
-let setDefaults = function (state) {
+let setDefaults = async function (state) {
     // Backfill default values not already in the save. Difference between this and migrations is migrations are to change existing data that has been transformed or rebalanced.
     if (!state.world) {
         state.world = {
             locations: {}
         }
     }
-    if (!state.parties[0].leader.maxpawnassist)
-        state.parties[0].leader.maxpawnassist = 4;
+    if (!state.world.locations['Dragonbone Cave']) {
+        state.world.locations['Dragonbone Cave'] = {};
+    }
+    if (!state.world.locations['Dragonbone Cave'][0]) {
+        state.world.locations['Dragonbone Cave'][0] = {};
+    }
+    if (!state.world.locations['Dragonbone Cave'][0][5]) {
+        state.world.locations['Dragonbone Cave'][0][5] = {};
+    }
+    if (!state.world.locations['Dragonbone Cave'][0][5][4]) {
+        state.world.locations['Dragonbone Cave'][0][5][4] = {
+            building: {
+                display: "your hoard",
+                type: "hoard",
+                subtype: null,
+                inventory: {},
+                crew: {},
+                lastUpdated: 0
+            }
+        };
+    }
+    if (state.parties[0]) {
+        if (!state.parties[0].leader.maxpawnassist)
+            state.parties[0].leader.maxpawnassist = 4;
+        if (!state.parties[0].leader.tags) {
+            let leaderDef = await cache.load(`data/characters/${state.parties[0].leader.name}.json`);
+            state.parties[0].leader.tags = Object.assign({}, leaderDef.tags);
+        }
+    }
 }
 
 let passiveRecoverAll = function (state) {
@@ -64,7 +127,7 @@ let reloadArchive = async function (state) {
     let oldState = await cache.load(oldPath);
     if (!oldState && state.archive)
         oldState = await cache.load('./data/newGame.json');
-    setDefaults(oldState);
+    await setDefaults(oldState);
     // TODO: run any pending migrations.
 
     let archive = state.archive;

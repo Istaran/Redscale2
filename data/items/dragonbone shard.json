@@ -1,7 +1,8 @@
 {
-	"display": "Dragonbone Shard",
-	"descriptionSingular": "A shard of dragonbone, harvested from your mother's skeletal remains. As morbid as that is, there's no reason not to use it. This shard is big enough to make a decent blade, or a small plate of a suit of armor.",
-	"descriptionPlural": "Some shards of dragonbone, harvested from your mother's skeletal remains. As morbid as that is, there's no reason not to use them. These shards are big enough to make decent blades, or small plates of a suit of armor.",
-	"hands": 0.1,
-	"weight": 0.1
+    "display": "Dragonbone Shard",
+    "cardtext": "Dragonbone Shard\n\nSmall piece of your\nmother's skeleton\nabout the size of a\ncoin.",
+    "descriptionSingular": "A shard of dragonbone, harvested from your mother's skeletal remains. As morbid as that is, there's no reason not to use it. This shard is big enough to make a decent blade, or a small plate of a suit of armor.",
+    "descriptionPlural": "Some shards of dragonbone, harvested from your mother's skeletal remains. As morbid as that is, there's no reason not to use them. These shards are big enough to make decent blades, or small plates of a suit of armor.",
+    "hands": 0.1,
+    "weight": 0.1
 }

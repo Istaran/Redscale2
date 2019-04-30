@@ -13,6 +13,7 @@ var combat = require('./combatengine');
 var scenes = require('./sceneengine');
 var loc = require('./location');
 var player = require('./player');
+var time = require('./time');
 
 let doVerb = async function (verbName, state, details) {
     if (verbs[verbName] === undefined) {
@@ -50,12 +51,67 @@ let conditionMet = async function (state, details) {
     return false; // Lack of js file is a fail.
 }
 
+let getContext = function (state, context) {
+    switch (context) {
+        case "party":
+            return state.parties[state.activeParty];
+        case "location":
+            // Make sure state.locations.<zone>.<z>.<y>.<x> exists, and return it as a context
+            let locations = state.world.locations;
+            if (!locations[state.location])
+                locations[state.location] = {};
+            let location = locations[state.location];
+            if (!location[state.z]) location[state.z] = {};
+            let locZ = location[state.z];
+            if (!locZ[state.y]) locZ[state.y] = {};
+            let locY = locZ[state.y];
+            if (!locY[state.x]) locY[state.x] = {};
+            return locY[state.x];
+        default:
+            console.log(`Invalid context: ${context}\nState:${JSON.stringify(state)}`);
+            throw "Invalid context";
+    }
+}
+
+let getRequantifierDisplay = async function (name, dataset) {
+    var data;
+    switch (dataset) {
+        // This helper needs to know where to find the source and what the display type is.
+        case "inventory":
+            let item = await cache.load(`data/items/${name}.json`);
+            data = { "type": "item", "text": item.cardtext };
+            break;
+    }
+
+    return data;
+}
+
 // Does situational processing for a permanently defined control.
 let getControl = async function (state, details) {
     if (!details) return null;
     if (!(await conditionMet(state, details.visible))) return null;
     let ctrl = JSON.parse(JSON.stringify(details)); // Deep copy
     ctrl.enabled = await conditionMet(state, details.enabled);
+
+    if (ctrl.type == "requantifier") {
+        // setup the numbers based on context/dataset
+        let leftContext = getContext(state, details.details.leftDataContext);
+        if (!leftContext[details.details.dataset]) leftContext[details.details.dataset] = {};
+        ctrl.leftCounts = leftContext[details.details.dataset];
+        let rightContext = getContext(state, details.details.rightDataContext);
+        if (!rightContext[details.details.dataset]) rightContext[details.details.dataset] = {};
+        ctrl.rightCounts = rightContext[details.details.dataset];
+        ctrl.displays = {};
+        var name;
+        for (name in ctrl.leftCounts) {            
+            ctrl.displays[name] = await getRequantifierDisplay(name, details.details.dataset);
+        }
+        for (name in ctrl.rightCounts) {
+            if (ctrl.displays[name] === undefined) 
+                ctrl.displays[name] = await getRequantifierDisplay(name, details.details.dataset);
+        }
+    }
+
     return ctrl;
 }
 
@@ -70,7 +126,7 @@ let controls = async function (state) {
         controls = await scenes.getControls(state, state.scene);
 	} else {
 		controls = await loc.getControls(state);
-		player.addControls(state, controls);
+		await player.addControls(state, controls);
 		// Get description from location, and combine controls from location and player modules.
     }	
     let id = Date.now() % 100000;
@@ -111,26 +167,26 @@ let list = async function (profile) {
 }
 
 let act = async function (profile, action, query) {
-	console.log(action);
-	let savePath = `./saves/${profile.id}/${action.slot}.json`; 
-	
-	// Load current existence.
-	let state = await cache.load(savePath);
-	if (state == null) {
-		state = await cache.load(newGamePath);
+    console.log(action);
+    let savePath = `./saves/${profile.id}/${action.slot}.json`;
+
+    // Load current existence.
+    let state = await cache.load(savePath);
+    if (state == null) {
+        state = await cache.load(newGamePath);
     }
     state.query = query;
-    player.setDefaults(state);
+    await player.setDefaults(state);
 
-	let migrations = await cache.load(saveMigrationPath);
-	
-	while (state["save version"] < migrations.length) {
-		let change = migrations[state["save version"]];
-		// TODO: apply change. There are no migrations yet, though, so we're okay.
-		state["save version"]++;
-	}
+    let migrations = await cache.load(saveMigrationPath);
 
-	// Apply action
+    while (state["save version"] < migrations.length) {
+        let change = migrations[state["save version"]];
+        // TODO: apply change. There are no migrations yet, though, so we're okay.
+        state["save version"]++;
+    }
+
+    // Apply action
     if (action.id && state.details[action.id]) {
         state.dirty = undefined;
         state.view = {};
@@ -143,17 +199,17 @@ let act = async function (profile, action, query) {
 
     await controls(state);
 
-	//Determine which character should be shown on left. By default, it's the player
+    //Determine which character should be shown on left. By default, it's the player
     state.view.leftStatus = player.getStatusDisplay(state);
-	
-	//Determine which character should be shown on right. By default, it's none.
+
+    //Determine which character should be shown on right. By default, it's none.
     if (state.enemy) {
         state.view.rightStatus = await require('./combatengine').getStatusDisplay(state);
     } else {
         state.view.rightStatus = null;
     }
 
-    
+    state.view.title = `${await loc.getTitle(state)} - ${time.getTimeString(state)}`;
 	
 	// Save current state;
 	cache.save(savePath, state);
@@ -184,6 +240,7 @@ let randomChoice = async function (state, choices) {
 module.exports = {
     act: act,
     conditionMet: conditionMet,
+    getContext: getContext,
     doVerb: doVerb,
     getControl: getControl,
     list: list,

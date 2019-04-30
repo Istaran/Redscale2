@@ -2,8 +2,9 @@
     "display": "cave newt",
     "tags": [
         "newt",
-        "living",
+        "living creature",
         "animal",
+        "swimmer",
         [ "male", "female" ]
     ],
     "attack announce": "A massive cave newt from the river rushes you! These amphibious creatures can be quite agressive at times, attacking you on land or underwater.",
