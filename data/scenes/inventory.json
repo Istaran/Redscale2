@@ -6,8 +6,10 @@
                     "type": "requantifier",
                     "details": {
                         "leftDataContext": "party",
-                        "dataset": "inventory",
+                        "leftPath": "inventory",
+                        "type": "item",
                         "rightDataContext": "location",
+                        "rightPath": "building/inventory",
                         "then": {
                             "verb": "setscene",
                             "details": {

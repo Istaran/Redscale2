@@ -8,7 +8,7 @@ let act = async function (state, details) {
         "leader":null,
         "followers": [],
         "pawns": [],
-        "inventory": []
+        "inventory": {}
     };
 
     newParty.leader = JSON.parse(JSON.stringify(await cache.load(`data/characters/${details.leader}.json`)));

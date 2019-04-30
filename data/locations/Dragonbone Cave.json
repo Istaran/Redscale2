@@ -564,7 +564,7 @@
         "display": "Harvest bone",
         "verb": "gather",
         "details": {
-            "item": "Dragonbone shard",
+            "item": "dragonbone shard",
             "dice": 1,
             "die": 4,
             "plus": 2,

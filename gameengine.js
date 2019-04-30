@@ -53,6 +53,9 @@ let conditionMet = async function (state, details) {
 
 let getContext = function (state, context) {
     switch (context) {
+        case null:
+        case undefined:
+            return state;
         case "party":
             return state.parties[state.activeParty];
         case "location":
@@ -73,11 +76,11 @@ let getContext = function (state, context) {
     }
 }
 
-let getRequantifierDisplay = async function (name, dataset) {
+let getRequantifierDisplay = async function (name, type) {
     var data;
-    switch (dataset) {
+    switch (type) {
         // This helper needs to know where to find the source and what the display type is.
-        case "inventory":
+        case "item":
             let item = await cache.load(`data/items/${name}.json`);
             data = { "type": "item", "text": item.cardtext };
             break;
@@ -95,20 +98,11 @@ let getControl = async function (state, details) {
 
     if (ctrl.type == "requantifier") {
         // setup the numbers based on context/dataset
-        let leftContext = getContext(state, details.details.leftDataContext);
-        if (!leftContext[details.details.dataset]) leftContext[details.details.dataset] = {};
-        ctrl.leftCounts = leftContext[details.details.dataset];
-        let rightContext = getContext(state, details.details.rightDataContext);
-        if (!rightContext[details.details.dataset]) rightContext[details.details.dataset] = {};
-        ctrl.rightCounts = rightContext[details.details.dataset];
-        ctrl.displays = {};
-        var name;
-        for (name in ctrl.leftCounts) {            
-            ctrl.displays[name] = await getRequantifierDisplay(name, details.details.dataset);
-        }
-        for (name in ctrl.rightCounts) {
-            if (ctrl.displays[name] === undefined) 
-                ctrl.displays[name] = await getRequantifierDisplay(name, details.details.dataset);
+        ctrl.leftCounts = readContextPath(state, details.details.leftDataContext, details.details.leftPath);
+        ctrl.rightCounts = readContextPath(state, details.details.rightDataContext, details.details.rightPath);
+        ctrl.displays = Object.assign({}, ctrl.leftCounts, ctrl.rightCounts); // initialize just to make sure we have all the props of left and right counts.
+        for (var name in ctrl.displays) {            
+            ctrl.displays[name] = await getRequantifierDisplay(name, details.details.type);
         }
     }
 
@@ -237,6 +231,30 @@ let randomChoice = async function (state, choices) {
     return choiceList[i];
 };
 
+let readContextPath = function(state, context, path) {
+    let contextRoot = getContext(state, context);
+    let splitPath = path.split('/');
+    let subState = contextRoot;
+    
+    for (var i = 0; i < splitPath.length - 1; i++) {
+        if (!subState[splitPath[i]]) return undefined;
+        subState = subState[splitPath[i]];
+    }
+    return subState[splitPath[i]]; // Final bit of mapping.
+};
+
+let writeContextPath = function (state, context, path, value) {
+    let contextRoot = getContext(state, context);
+    let splitPath = path.split('/');
+    let subState = contextRoot;
+
+    for (var i = 0; i < splitPath.length - 1; i++) {
+        if (!subState[splitPath[i]]) subState[splitPath[i]] = {};
+        subState = subState[splitPath[i]];
+    }
+    subState[splitPath[i]] = value;
+}
+
 module.exports = {
     act: act,
     conditionMet: conditionMet,
@@ -244,5 +262,7 @@ module.exports = {
     doVerb: doVerb,
     getControl: getControl,
     list: list,
-    randomChoice: randomChoice
+    randomChoice: randomChoice,
+    readContextPath: readContextPath,
+    writeContextPath: writeContextPath
 };
