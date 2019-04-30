@@ -98,6 +98,8 @@ let setDefaults = async function (state) {
             let leaderDef = await cache.load(`data/characters/${state.parties[0].leader.name}.json`);
             state.parties[0].leader.tags = Object.assign({}, leaderDef.tags);
         }
+        if (Array.isArray(state.parties[0].inventory))
+            state.parties[0].inventory = {};
     }
 }
 
