@@ -575,8 +575,13 @@
     "commune": {
         "type": "actButton",
         "display": "Commune",
-        "verb": "commune",
-        "details": { "spirit": "Mother" },
+        "verb": "setscene",
+        "details": {
+            "text": "You reach out with your heart, mind, and soul, hoping for contact with whatever little remains of your mother, beyond the physical bone arching through the cavern.\n\nAnd you find it! It has no physicality, though it's loosely connected to the massive skull towering over you. It does, however, have an amazingly potent presence, one filled with unconditional love for you.\n\nIt also has words for you.\n\n\"My little redscale, my tiny ruby, how you've grown!\"",
+            "name": "focus",
+            "sub": "start",
+            "type": "menu"
+        },
         "help": "Connect your soul to the lingering shade of your mother's spirit. Every mother loves it when their son calls, even those that have been dead since before their son hatched. She can advise you, and help you focus your powers."
     },
     "hunt": {

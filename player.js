@@ -16,11 +16,14 @@ let addControls = async function (state, controls) {
                 await gameengine.getControl(state, {
                     "type": "actButton",
                     "display": "Manage " + spot.building.display,
-                    "verb": "flavor",
+                    "verb": "setscene",
                     "details": {
-                        "text": `You try to manage ${spot.building.display}, but you can't get the darn UI to come up. Damnit, Istaran.`
+                        "text": "",
+                        "type": "reassign",
+                        "name": "building",
+                        "sub": "start"
                     },
-                    "help": "Leave some of your pawns or followers here to get stuff done, or bring some along with you on your adventure."
+                    "help": "Leave some of your pawns here to get stuff done, or bring some along with you on your adventure."
                 });
             thirdColumn.push(manageButton);
             let inventoryButton = await gameengine.getControl(state, {
