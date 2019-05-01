@@ -12,45 +12,80 @@ let months = [
     {
         name: "Time",
         dawn: 12,
-        dusk: 48
+        dusk: 48,
+        sunrate: 0.9
     }, {
         name: "Fire",
         dawn: 10,
-        dusk: 50
+        dusk: 50,
+        sunrate: 1
     }, {
         name: "Light",
         dawn: 10,
-        dusk: 50
+        dusk: 50,
+        sunrate: 1,
     }, {
         name: "Energy",
         dawn: 12,
-        dusk: 48
+        dusk: 48,
+        sunrate: 0.9
     }, {
         name: "Order",
         dawn: 15,
-        dusk: 45
+        dusk: 45,
+        sunrate: 0.75
     }, {
         name: "Space",
         dawn: 18,
-        dusk: 42
+        dusk: 42,
+        sunrate: 0.6
     }, {
         name: "Water",
         dawn: 20,
-        dusk: 40
+        dusk: 40,
+        sunrate: 0.5
     }, {
         name: "Darkness",
         dawn: 20,
-        dusk: 40
+        dusk: 40,
+        sunrate: 0.5
     }, {
         name: "Life",
         dawn: 18,
-        dusk: 42
+        dusk: 42,
+        sunrate: 0.6
     }, {
         name: "Chaos",
         dawn: 15,
-        dusk: 45
+        dusk: 45,
+        sunrate: 0.75
     }
 ]
+
+// Sun Factor is 10% at night, up to max of 50%-100% at noon based on time of year.
+// This is all multiplied by a location factor, i.e. 0 underground. 1 for sky or otherwise unshaded area.
+getSunFactor = function (state) {
+    let timeOfDay = state.gameTime % 60;
+    let monthOfYear = Math.floor(state.gameTime / 2100) % 10;
+    let baseSun = months[monthOfYear].sunrate;
+    if (timeOfDay == 0) {
+        return 0.1;
+    } else if (timeOfDay < months[monthOfYear].dawn) {
+        return 0.1;
+    } else if (timeOfDay == months[monthOfYear].dawn) {
+        return 0.2 * baseSun;
+    } else if (timeOfDay < 30) {
+        return ((timeOfDay - months[monthOfYear].dawn) / (30 - months[monthOfYear].dawn) * 0.8 + 0.2) * baseSun ;
+    } else if (timeOfDay == 30) {
+        return baseSun;
+    } else if (timeOfDay < months[monthOfYear].dusk) {
+        return ((months[monthOfYear].dusk - timeOfDay) / (months[monthOfYear].dusk - 30) * 0.8 + 0.2) * baseSun;
+    } else if (timeOfDay == months[monthOfYear].dusk) {
+        return 0.2 * baseSun;
+    } else {
+        return 0.1;
+    } 
+}
 
 let getTimeOfDay = function (state) {
     let timeOfDay = state.gameTime % 60;
