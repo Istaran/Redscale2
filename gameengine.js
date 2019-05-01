@@ -84,6 +84,28 @@ let getRequantifierDisplay = async function (name, type) {
             let item = await cache.load(`data/items/${name}.json`);
             data = { "type": "item", "text": item.cardtext };
             break;
+        default:
+            let cards = await cache.load(`data/combat/${type} cards.json`);
+            if (!cards) console.log(`getRequantifierDisplay doesn't know how to load card type ${type}`);
+            else data = {
+                "type": type, "text": cards[name].cardlines
+            };
+    }
+
+    return data;
+}
+
+let getReassignerDisplay = async function (thing, type) {
+    var data;
+    switch (type) {
+        case "pawn":
+            let pawnDef = await cache.load(`data/pawns/${thing.name}.json`);
+            data = {
+                leftCards: pawnDef.assistcards.slice(),
+                rightCards: [Object.assign({ subtype: "worker" }, pawnDef.workercard)],
+                tags: thing.tags,
+                display: thing.display
+            }
     }
 
     return data;
@@ -98,11 +120,26 @@ let getControl = async function (state, details) {
 
     if (ctrl.type == "requantifier") {
         // setup the numbers based on context/dataset
-        ctrl.leftCounts = readContextPath(state, details.details.leftDataContext, details.details.leftPath);
-        ctrl.rightCounts = readContextPath(state, details.details.rightDataContext, details.details.rightPath);
+        ctrl.leftCounts = readContextPath(state, details.details.leftDataContext, details.details.leftPath) || {};
+        ctrl.rightCounts = readContextPath(state, details.details.rightDataContext, details.details.rightPath) || {};
         ctrl.displays = Object.assign({}, ctrl.leftCounts, ctrl.rightCounts); // initialize just to make sure we have all the props of left and right counts.
         for (var name in ctrl.displays) {            
             ctrl.displays[name] = await getRequantifierDisplay(name, details.details.type);
+        }
+    }
+
+    if (ctrl.type == "reassigner") {
+        ctrl.leftSet = readContextPath(state, details.details.leftDataContext, details.details.leftPath) || [];
+        ctrl.rightSet = readContextPath(state, details.details.rightDataContext, details.details.rightPath) || [];
+        ctrl.displays = [];
+        var i;
+        for (i = 0; i < ctrl.leftSet.length; i++) {
+            ctrl.leftSet[i].displayIndex = ctrl.displays.length;
+            ctrl.displays.push(await getReassignerDisplay(ctrl.leftSet[i], details.details.type));
+        }
+        for (i = 0; i < ctrl.rightSet.length; i++) {
+            ctrl.rightSet[i].displayIndex = ctrl.displays.length;
+            ctrl.displays.push(await getReassignerDisplay(ctrl.rightSet[i], details.details.type));
         }
     }
 

@@ -461,7 +461,94 @@ class Requantifier extends React.Component {
         return <div className="screencover"><div className="requantifier"><div className="requantifierHeaderRow"><div className="requantifierColumnHeader">{this.props.leftHeader}</div><div className="requantifierHeaderSpacer"><input type='button' onClick={() => this.done()} value="Done" /></div><div className="requantifierColumnHeader">{this.props.rightHeader}</div></div>{rows}</div></div>;
     }
 }
-        
+
+class Reassigner extends React.Component {
+    constructor(props) {
+        super(props);
+
+        // track updated numbers as state.
+        var leftSet = props.leftSet.slice();
+        var rightSet = props.rightSet.slice();
+
+        this.state = {
+            leftSet: leftSet,
+            rightSet: rightSet
+        }
+    }
+
+    moveLeft(index) {
+        var leftSet = this.state.leftSet.slice();
+        var rightSet = this.state.rightSet.slice();
+        var mover = rightSet.splice(index, 1)[0];
+        leftSet.push(mover);
+        this.setState({
+            leftSet: leftSet,
+            rightSet: rightSet
+        });
+    }
+
+    moveRight(index) {
+        var leftSet = this.state.leftSet.slice();
+        var rightSet = this.state.rightSet.slice();
+        var mover = leftSet.splice(index, 1)[0];
+        rightSet.push(mover);
+        this.setState({
+            leftSet: leftSet,
+            rightSet: rightSet
+        });
+    }
+    
+    done() {
+        let self = this;
+        fetch('/act' + location.search, {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({ 'body': { 'verb': 'requantify', 'slot': saveSlot, 'id': self.props.id, 'data': { 'left': this.state.leftSet, 'right': this.state.rightSet } } })
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            gameDisplayer.setState({ gameState: data });
+        }).catch(function (err) {
+            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+        });
+    }
+
+    render() {
+        let self = this;
+        let leftRows = self.state.leftSet.map((assignee, index) => {
+            let row = self.props.displays[assignee.displayIndex].leftCards.map((card, subindex) => {
+                return <div className={"card " + card.subtype} key={"left " + index + "-" + subindex} onClick={() => self.moveRight(index)}>{card.cardlines}</div>;
+            });
+            return <div className="reassignerRow" key={"left " + index}>{self.props.displays[assignee.displayIndex].display}: {row}</div>
+        });
+        let rightRows = self.state.rightSet.map((assignee, index) => {
+            let row = self.props.displays[assignee.displayIndex].rightCards.map((card, subindex) => {
+                return <div className={"card " + card.subtype} key={"right " + index + "-" + subindex} onClick={() => self.moveLeft(index)}>{card.cardlines}</div>;
+            });
+            return <div className="reassignerRow" key={"right " + index}>{self.props.displays[assignee.displayIndex].display}: {row}</div>
+        });
+
+        return <div className="screencover">
+            <div className="reassigner">
+                <div className="reassignerColumn">
+                    <div className="reassignerColumnHeader">{self.props.leftHeader}</div>
+                    {leftRows}
+                </div>
+                <div className="reassignerSpacer">
+                    <div className="reassignerHeaderSpacer">
+                        <input type='button' onClick={() => self.done()} value="Done" />
+                    </div>
+                </div>
+                <div className="reassignerColumn">
+                    <div className="reassignerColumnHeader">{self.props.rightHeader}</div>
+                    {rightRows}
+                </div>
+            </div>
+        </div>;
+    }
+}
         
 class GameDisplayer extends React.Component {
 	constructor(props) {
@@ -511,6 +598,8 @@ class GameDisplayer extends React.Component {
                                 return <Reconnector />;
                             case 'requantifier':
                                 return <Requantifier key={colIndex * 10 + rowIndex}  leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} rightCounts={control.rightCounts} displays={control.displays} id={control.id}/>;
+                            case 'reassigner':
+                                return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
                             default:
                                 return '';
                         }

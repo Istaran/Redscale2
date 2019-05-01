@@ -158,6 +158,16 @@ div.apprehend {
     border-color: darkorange;
 }
 
+div.worker {
+    background-color:burlywood;
+    color:saddlebrown;
+    border-color: saddlebrown;
+}
+
+div.assist {
+
+}
+
 div.stack {
     width: 5px;
     height: 145px;
@@ -218,7 +228,7 @@ div.screencover {
 div.requantifier {
     position: center;
     width: 1000px;
-    height: calc(100vh - 445px);
+    height: calc(100vh - 250px);
     overflow-y: scroll;
     border: thick;
     border-color: black;
@@ -261,4 +271,40 @@ div.requantifierHeaderSpacer {
     width: 750px;
     justify-content:center;
     display:flex;
+}
+
+
+div.reassigner {
+    position: center;
+    width: 1000px;
+    height: calc(100vh - 250px);
+    overflow-y: scroll;
+    border: thick;
+    border-color: black;
+    background: white;
+    display: flex;
+    flex-direction: row;
+}
+
+div.reassignerColumn {
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+div.reassignerRow {
+    height: 160px;
+    display: flex;
+    flex-direction: row;
+}
+
+div.reassignerColumnHeader {
+    width: 425px;
+    text-align: left;
+}
+
+div.reassignerHeaderSpacer {
+    width: 100px;
+    justify-content: center;
+    display: flex;
 }

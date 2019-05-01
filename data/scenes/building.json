@@ -1,0 +1,27 @@
+{
+    "start": {
+        "controls": [
+            [
+                {
+                    "type": "reassigner",
+                    "details": {
+                        "leftDataContext": "party",
+                        "leftPath": "pawns",
+                        "type": "pawn",
+                        "rightDataContext": "location",
+                        "rightPath": "building/workers",
+                        "then": {
+                            "verb": "setscene",
+                            "details": {
+                                "text": "You figured out who to take with you and who to leave here.",
+                                "clear": true
+                            }
+                        }
+                    },
+                    "leftHeader": "Take with you",
+                    "rightHeader": "Leave here"
+                }
+            ]
+        ]
+    }
+}

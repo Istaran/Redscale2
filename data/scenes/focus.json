@@ -1,0 +1,81 @@
+{
+    "start": {
+        "controls": [
+            [
+                {
+                    "type": "actButton",
+                    "display": "Chat",
+                    "verb": "random",
+                    "details": [
+                        {
+                            "chance": 1,
+                            "verb": "flavor",
+                            "details": {
+                                "text": "\"My child, it is so good to see you again, or at least sense your presence and hear your mind. Don't be a stranger,\" your mother spirit tells you. \"I truly have nothing else to do but wait for your visits, and eventual grandchildren.\""
+                            }
+                        },
+                        {
+                            "chance": 1,
+                            "verb": "flavor",
+                            "details": {
+                                "text": "\"Do you have any minions yet? Kobolds used to serve us well, and quite eagerly. No, I don't mean like that... well... not exclusively, and much less as we got bigger. And anyways, kobolds don't count, everyone knows that.\" She grows awkwardly silent and you wonder for a moment if she's finally moved on."
+                            }
+                        }
+                    ],
+                    "help": "Have a conversation with your mother's lingering spirit.\nEvery mother wants to talk to her children from time to time, even the dead ones."
+                },
+                {
+                    "type": "actButton",
+                    "display": "Leave",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "You bid farewell to your mother's haunting spirit, and head out to the cave beyond.",
+                        "clear": true
+                    },
+                    "help": "You're done here."
+                }
+            ],
+            [
+                {
+                    "type": "actButton",
+                    "display": "Focus: Aggress",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "",
+                        "name": "focus",
+                        "sub": "focusAggress",
+                        "type": "requantifier"
+                    },
+                    "help": "You're done here."
+                }
+            ]
+        ]
+    },
+    "focusAggress": {
+        "controls": [
+            [
+                {
+                    "type": "requantifier",
+                    "details": {
+                        "leftDataContext": "party",
+                        "leftPath": "leader/aggressCards",
+                        "type": "aggress",
+                        "rightDataContext": "party",
+                        "rightPath": "leader/aggressSideboard",
+                        "then": {
+                            "verb": "setscene",
+                            "details": {
+                                "text": "You focused on how best to channel your aggression into the vulnerable flesh of your enemies.",
+                                "name": "focus",
+                                "sub": "start",
+                                "type": "menu"
+                            }
+                        }
+                    },
+                    "leftHeader": "Active Deck",
+                    "rightHeader": "Sideboard"
+                }
+            ]
+        ]
+    }
+}
