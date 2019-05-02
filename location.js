@@ -196,10 +196,35 @@ let checkRequirements = async function (state, details) {
     }
 };
 
+let getBuildOptions = async function (state) {
+    if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
+
+    let spot = await spotStyle(state, state.location, state.x, state.y, state.z);
+    state.buildoptions = {};
+    let any = false;
+    if (spot && spot.buildoptions) {
+        for (var option in spot.buildoptions) {
+            if (spot.buildoptions[option] === true) {
+                state.buildoptions[option] = true;
+                any = true;
+            }
+            else {
+                let condition = await gameengine.conditionMet(state, spot.buildoptions[option]);
+                if (condition) {
+                    state.buildoptions[option] = true;
+                    any = true;
+                }
+            }
+        }
+    }
+    if (!any) state.buildoptions = null;
+}
+
 module.exports = {
     checkRequirements: checkRequirements,
 	explore: explore,
     getControls: getControls,
     getDescription: getDescription,
-    getTitle: getTitle
+    getTitle: getTitle,
+    getBuildOptions: getBuildOptions
 };

@@ -10,56 +10,56 @@ let addControls = async function (state, controls) {
         state.world.locations[state.location][state.z] &&
         state.world.locations[state.location][state.z][state.y] &&
         state.world.locations[state.location][state.z][state.y][state.x];
-    if (spot) {
-        let thirdColumn = [];
-        if (spot.building) {
-            let manageButton =
-                await gameengine.getControl(state, {
-                    "type": "actButton",
-                    "display": "Manage " + spot.building.display,
-                    "verb": "setscene",
-                    "details": {
-                        "text": "",
-                        "type": "reassign",
-                        "name": "building",
-                        "sub": "start"
-                    },
-                    "help": "Leave some of your pawns here to get stuff done, or bring some along with you on your adventure."
-                });
-            thirdColumn.push(manageButton);
-            let inventoryButton = await gameengine.getControl(state, {
+
+    let thirdColumn = [];
+    if (spot && spot.building) {
+        let manageButton =
+            await gameengine.getControl(state, {
                 "type": "actButton",
-                "display": "Manage inventory",
+                "display": "Manage " + spot.building.display,
                 "verb": "setscene",
                 "details": {
                     "text": "",
-                    "type": "requantify",
-                    "name": "inventory",
+                    "type": "reassign",
+                    "name": "building",
                     "sub": "start"
                 },
-                "help": "Leave some of your possessions here, or pick some back up to carry with you."
+                "help": "Leave some of your pawns here to get stuff done, or bring some along with you on your adventure."
             });
-            thirdColumn.push(inventoryButton);
-        } else {
-            await loc.getBuildOptions(state);
-            if (state.buildoptions && party.pawns.length > 0) {
-                let buildButton = await gameengine.getControl(state, {
-                    "type": "actButton",
-                    "display": "Create encampment",
-                    "verb": "setscene",
-                    "details": {
-                        "text": "You consider what sort of encampment you should set up here.",
-                        "name": "building",
-                        "sub": "construction"
-                    },
-                    "help": "See the list of encampment types you can set up here. At the start of the game you know how to set up a basic cache with a few guards, which you can upgrade later to a more productive type."
-                });
-                thirdColumn.push(buildButton);
-            }
+        thirdColumn.push(manageButton);
+        let inventoryButton = await gameengine.getControl(state, {
+            "type": "actButton",
+            "display": "Manage inventory",
+            "verb": "setscene",
+            "details": {
+                "text": "",
+                "type": "requantify",
+                "name": "inventory",
+                "sub": "start"
+            },
+            "help": "Leave some of your possessions here, or pick some back up to carry with you."
+        });
+        thirdColumn.push(inventoryButton);
+    } else {
+        await loc.getBuildOptions(state);
+        if (state.buildoptions && party.pawns.length > 0) {
+            let buildButton = await gameengine.getControl(state, {
+                "type": "actButton",
+                "display": "Create encampment",
+                "verb": "setscene",
+                "details": {
+                    "text": "You consider what sort of encampment you should set up here.",
+                    "name": "building",
+                    "sub": "construction"
+                },
+                "help": "See the list of encampment types you can set up here. At the start of the game you know how to set up a basic cache with a few guards, which you can upgrade later to a more productive type."
+            });
+            thirdColumn.push(buildButton);
         }
-        if (thirdColumn.length)
-            controls[2] = thirdColumn;
     }
+    if (thirdColumn.length)
+        controls[2] = thirdColumn;
+
 }
 
 let getStatusDisplay = function (state) {
