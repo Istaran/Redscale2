@@ -5,6 +5,7 @@ let gameengine = null;
 
 let addControls = async function (state, controls) {
     if (!gameengine) gameengine = require('./gameengine');
+    let party = state.parties && state.parties[state.activeParty];
     let spot = state.world.locations[state.location] &&
         state.world.locations[state.location][state.z] &&
         state.world.locations[state.location][state.z][state.y] &&
@@ -12,7 +13,7 @@ let addControls = async function (state, controls) {
     if (spot) {
         let thirdColumn = [];
         if (spot.building) {
-            let manageButton = 
+            let manageButton =
                 await gameengine.getControl(state, {
                     "type": "actButton",
                     "display": "Manage " + spot.building.display,
@@ -27,18 +28,34 @@ let addControls = async function (state, controls) {
                 });
             thirdColumn.push(manageButton);
             let inventoryButton = await gameengine.getControl(state, {
-                    "type": "actButton",
-                    "display": "Manage inventory",
-                    "verb": "setscene",
-                    "details": {
-                        "text": "",
-                        "type": "requantify",
-                        "name": "inventory",
-                        "sub": "start" 
-                    },
-                    "help": "Leave some of your possessions here, or pick some back up to carry with you."
+                "type": "actButton",
+                "display": "Manage inventory",
+                "verb": "setscene",
+                "details": {
+                    "text": "",
+                    "type": "requantify",
+                    "name": "inventory",
+                    "sub": "start"
+                },
+                "help": "Leave some of your possessions here, or pick some back up to carry with you."
             });
             thirdColumn.push(inventoryButton);
+        } else {
+            await loc.getBuildOptions(state);
+            if (state.buildoptions && party.pawns.length > 0) {
+                let buildButton = await gameengine.getControl(state, {
+                    "type": "actButton",
+                    "display": "Create encampment",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "You consider what sort of encampment you should set up here.",
+                        "name": "building",
+                        "sub": "construction"
+                    },
+                    "help": "See the list of encampment types you can set up here. At the start of the game you know how to set up a basic cache with a few guards, which you can upgrade later to a more productive type."
+                });
+                thirdColumn.push(buildButton);
+            }
         }
         if (thirdColumn.length)
             controls[2] = thirdColumn;
@@ -89,7 +106,7 @@ let setDefaults = async function (state) {
                 type: "hoard",
                 subtype: null,
                 inventory: {},
-                crew: {},
+                workers: {},
                 lastUpdated: 0
             }
         };

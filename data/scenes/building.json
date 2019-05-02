@@ -1,27 +1,62 @@
 {
-    "start": {
-        "controls": [
-            [
-                {
-                    "type": "reassigner",
-                    "details": {
-                        "leftDataContext": "party",
-                        "leftPath": "pawns",
-                        "type": "pawn",
-                        "rightDataContext": "location",
-                        "rightPath": "building/workers",
-                        "then": {
-                            "verb": "setscene",
-                            "details": {
-                                "text": "You figured out who to take with you and who to leave here.",
-                                "clear": true
-                            }
-                        }
-                    },
-                    "leftHeader": "Take with you",
-                    "rightHeader": "Leave here"
-                }
-            ]
-        ]
-    }
+  "start": {
+    "controls": [
+      [
+        {
+          "type": "reassigner",
+          "details": {
+            "leftDataContext": "party",
+            "leftPath": "pawns",
+            "type": "pawn",
+            "rightDataContext": "location",
+            "rightPath": "building/workers",
+            "then": {
+              "verb": "setscene",
+              "details": {
+                "text": "You figured out who to take with you and who to leave here.",
+                "clear": true
+              }
+            }
+          },
+          "leftHeader": "Take with you",
+          "rightHeader": "Leave here"
+        }
+      ]
+    ]
+  },
+  "construction": {
+    "controls": [
+      [
+        {
+          "type": "actButton",
+          "display": "Nevermind",
+          "verb": "setscene",
+          "details": {
+            "clear": true,
+            "text": "You realize you don't know how to make anything that would really make sense right here, and decide to skip it for now."
+          },
+          "help": "Skip it for now."
+        },
+        {
+          "if": {
+            "condition": "stateis",
+            "fact": "buildoptions/cache",
+            "rule": "==",
+            "value": true
+          },
+          "type": "actButton",
+          "display": "Cache",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "construct",
+              "display": "your cache",
+              "type": "hoard",
+              "subtype": "cache"
+            }
+          ]
+        }
+      ]
+    ]
+  }
 }
