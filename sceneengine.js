@@ -26,7 +26,8 @@ let getControls = async function (state, scene) {
             "details": {
                 "text": "Whatever you were up to, you're not feeling it now.",
                 "clear": true
-            }
+            },
+            "enabled": true
         }]);
     }
     return controls;

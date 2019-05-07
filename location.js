@@ -66,6 +66,7 @@ let getControls = async function (state) {
 
         await Promise.all(["up", "north", "east", "west", "south", "down"].map((dir) => setupDirection(state, state.location, state.x, state.y, state.z, dir, controls[0][0], style)));
         await Promise.all(["nw", "ne", "sw", "se"].map((dir) => setupDirection(state, state.location, state.x, state.y, state.z, dir, controls[0][0], style)));
+        controls[0][0].sub.here = { light: style.light || "white", dark: style.dark || "black" };
 
         let actions = pStyle.actions ? (style.actions || []).concat(pStyle.actions) : style.actions;
         if (actions) {

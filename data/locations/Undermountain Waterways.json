@@ -62,8 +62,8 @@
                 }
             },
             "requireall": { "swimmer": true },
-            "light": "aqua",
-            "dark": "teal"
+            "light": "teal",
+            "dark": "#004040"
         },
         "Fork": {
             "title": "Undermountain Waterways - Dragonbone Cave river fork",
@@ -96,8 +96,8 @@
                 }
             },
             "requireall": { "swimmer": true },
-            "light": "aqua",
-            "dark": "teal"
+            "light": "teal",
+            "dark": "#004040"
         },
         "SouthBranch": {
             "title": "Undermountain Waterways - Dragonbone Cave river",
@@ -133,8 +133,8 @@
                 }
             },
             "requireall": { "swimmer": true },
-            "light": "aqua",
-            "dark": "teal"
+            "light": "teal",
+            "dark": "#004040"
         },
         "WestBranch": {
             "title": "Undermountain Waterways - Dragonbone Cave river",
@@ -167,8 +167,8 @@
                 }
             },
             "requireall": { "swimmer": true },
-            "light": "aqua",
-            "dark": "teal"
+            "light": "teal",
+            "dark": "#004040"
         }
 
     },

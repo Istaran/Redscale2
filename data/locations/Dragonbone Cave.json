@@ -227,7 +227,7 @@
             ],
             "actions": [ "hunt2" ],
             "requireall": { "flyer": true },
-            "light": "aqua",
+            "light": "#80FFFF",
             "dark": "teal"
         },
         "OverHome": {

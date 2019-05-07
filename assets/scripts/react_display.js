@@ -193,8 +193,8 @@ class Navigator extends React.Component {
         let compassLight = "white";
         let compassDark = "black";
         let compassDisabled = "silver";
-        let upColor = (this.props.details.up) ? this.props.details.up.light || "white" : "darkgray";
-        let upColor2 = (this.props.details.up) ? this.props.details.up.dark || "skyblue" : "slateblue";
+        let upColor = (this.props.details.up) ? this.props.details.up.light || "white" : compassLight;
+        let upColor2 = (this.props.details.up) ? this.props.details.up.dark || "skyblue" : compassDisabled;
         let northColor = (this.props.details.north) ? this.props.details.north.light || "red" : compassDisabled;
         let northColor2 = (this.props.details.north) ? this.props.details.north.dark || "darkred" : compassDisabled;
         let westColor = (this.props.details.west) ? this.props.details.west.light || compassLight : compassDisabled;
@@ -213,9 +213,12 @@ class Navigator extends React.Component {
         let swColor2 = (this.props.details.sw) ? this.props.details.sw.dark || compassDark : compassDisabled;
         let seColor = (this.props.details.se) ? this.props.details.se.light || compassLight : compassDisabled;
         let seColor2 = (this.props.details.se) ? this.props.details.se.dark || compassDark : compassDisabled;
-        let downColor = (this.props.details.down) ? this.props.details.down.light || "lime" : "green";
-        let downColor2 = (this.props.details.down) ? this.props.details.down.dark || "peru" : "saddlebrown";
-		
+        let downColor = (this.props.details.down) ? this.props.details.down.light || "lime" : compassDisabled;
+        let downColor2 = (this.props.details.down) ? this.props.details.down.dark || "peru" : compassDark;
+        let hereColor = (this.props.details.here) ? this.props.details.here.light || compassLight : compassDisabled;
+        let hereColor2 = (this.props.details.here) ? this.props.details.here.dark || compassDark : compassDisabled;
+
+
         let dirs = [{ header: 'Up', prop: 'up' },
             { header: 'NW', prop: 'nw' },
             { header: 'N', prop: 'north' },
@@ -258,14 +261,19 @@ class Navigator extends React.Component {
 				    <stop offset="5%" stopColor={upColor}/>
 				    <stop offset="50%" stopColor={upColor2}/>
 			    </linearGradient>
+                <linearGradient id="hereGradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="5%" stopColor={hereColor} />
+                    <stop offset="50%" stopColor={hereColor2} />
+                </linearGradient>
                 <linearGradient id="specialGradient" x1="0" x2="1" y1="0" y2="1">
                     <stop offset="15%" stopColor={specialColor} />
                     <stop offset="85%" stopColor={specialColor2} />
                 </linearGradient>
             </defs>
-            <polygon points="0,73 0,0 149,0 149,73" fill="url(#skyGradient)" onClick={(event) => this.navigate(event, 'up')} />
-            <polygon points="0,73 0,144 149,144, 149,73" fill="url(#groundGradient)" onClick={(event) => this.navigate(event, 'down')} />
-            <circle cx='75' cy='73' r='50' fill={backgroundColor} />
+            <polygon points="0,0 0,48 149,48 149,0" fill="url(#skyGradient)" onClick={(event) => this.navigate(event, 'up')} />
+            <polygon points="0,48 0,98 149,98, 149,48" fill="url(#hereGradient)" />
+            <polygon points="0,98 0,144 149,144, 149,98" fill="url(#groundGradient)" onClick={(event) => this.navigate(event, 'down')} />
+            <circle cx='75' cy='73' r='50' fill={backgroundColor} stroke="black" strokeWidth="3" />
             <line x1="36.3" y1="50.5" x2="32" y2="48" stroke="black" strokeWidth="1" />
             <line x1="36.3" y1="95.5" x2="32" y2="98" stroke="black" strokeWidth="1" />
             <line x1="113.7" y1="50.5" x2="118" y2="48" stroke="black" strokeWidth="1" />
