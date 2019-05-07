@@ -270,9 +270,9 @@ class Navigator extends React.Component {
                     <stop offset="85%" stopColor={specialColor2} />
                 </linearGradient>
             </defs>
-            <polygon points="0,0 0,48 149,48 149,0" fill="url(#skyGradient)" onClick={(event) => this.navigate(event, 'up')} />
+            <polygon points="43,0 0,43 149,43 106,0" fill="url(#skyGradient)" onClick={(event) => this.navigate(event, 'up')} />
             <polygon points="0,48 0,98 149,98, 149,48" fill="url(#hereGradient)" />
-            <polygon points="0,98 0,144 149,144, 149,98" fill="url(#groundGradient)" onClick={(event) => this.navigate(event, 'down')} />
+            <polygon points="0,103 43,146 106,146, 149,103" fill="url(#groundGradient)" onClick={(event) => this.navigate(event, 'down')} />
             <circle cx='75' cy='73' r='50' fill={backgroundColor} stroke="black" strokeWidth="3" />
             <line x1="36.3" y1="50.5" x2="32" y2="48" stroke="black" strokeWidth="1" />
             <line x1="36.3" y1="95.5" x2="32" y2="98" stroke="black" strokeWidth="1" />
