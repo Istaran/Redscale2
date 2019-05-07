@@ -11,9 +11,11 @@ let getControls = async function (state, scene) {
         for (var i = 0; i < subscene.controls.length; i++) {
             controls.push([]);
             for (var j = 0; j < subscene.controls[i].length; j++) {
-                let ctrl = await gameengine.getControl(state, subscene.controls[i][j]);
-                if (ctrl)
-                    controls[i].push(ctrl);
+                if (subscene.controls[i][j] && await gameengine.conditionMet(state, subscene.controls[i][j].if)) {
+                    let ctrl = await gameengine.getControl(state, subscene.controls[i][j]);
+                    if (ctrl)
+                        controls[i].push(ctrl);
+                }
             }
         }
     } else {

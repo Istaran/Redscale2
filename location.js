@@ -71,9 +71,11 @@ let getControls = async function (state) {
         if (actions) {
             for (var i = 0; i < actions.length; i++) {
                 let action = (private && private.actions && private.actions[actions[i]]) || zone.actions[actions[i]];
-                let ctrl = await gameengine.getControl(state, action);
-                if (ctrl)
-                    controls[1].push(ctrl);
+                if (await gameengine.conditionMet(state, action.if)) {
+                    let ctrl = await gameengine.getControl(state, action);
+                    if (ctrl)
+                        controls[1].push(ctrl);
+                }
             }
 		}
 	} else {

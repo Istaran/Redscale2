@@ -65,7 +65,12 @@
                 {
                     "chance": 1,
                     "event": "kobold spearman attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "encounter miner"
                 }
+
             ],
             "actions": [ "ambush" ],
             "light": "saddlebrown",
@@ -87,7 +92,12 @@
                 {
                     "chance": 1,
                     "event": "dart trap"
+                },
+                {
+                    "chance": 1,
+                    "event": "encounter miner"
                 }
+
             ],
             "light": "saddlebrown",
             "dark": "darkgray"
@@ -129,7 +139,12 @@
                 {
                     "chance": 1,
                     "event": "flame trap"
+                },
+                {
+                    "chance": 1,
+                    "event": "encounter miner"
                 }
+
             ],
             "light": "darkgray",
             "dark": "dimgray"
@@ -142,6 +157,10 @@
                 {
                     "chance": 1,
                     "event": "kobold spearman attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "encounter miner"
                 }
             ],
             "light": "darkgray",
@@ -291,8 +310,16 @@
       "details": { "text": "A dart flies out from the wall suddenly, then glitches out of existence because Istaran hasn't implemented traps yet. Whew. Next time you might not be so lucky." }
     },
     "flame trap": {
-      "verb": "flavor",
-      "details": { "text": "The torch suddenly flares with arcane energy and its flames suddenly expand, engulfing you in fire! Fortunately for you, you're a red dragon and this actually just feels really nice. You'd probably hate it if you weren't a red dragon." }
+        "verb": "flavor",
+        "details": { "text": "The torch suddenly flares with arcane energy and its flames suddenly expand, engulfing you in fire! Fortunately for you, you're a red dragon and this actually just feels really nice. You'd probably hate it if you weren't a red dragon." }
+    },
+    "encounter miner": {
+        "verb": "setscene",
+        "details": {
+            "text": "You come across a miner holding a copper spike attacked to the end of a wooden bar. They jump in surprise, shouldering the tool and looking at you warily, but make no move to initiate a fight. They're obviously waiting on you to make the first move.",
+            "name": "encounter miner",
+            "sub": "start"
+        }
     }
   },
   "actions": {
