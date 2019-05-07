@@ -4,114 +4,105 @@
         "kobold",
         "living creature",
         "person",
-        [ "male", "female" ]
+        [ "male", "female" ],
+        "miner"
     ],
-    "attack announce": "A scaled creature comes out of the darkness with a furious cry, wielding a metal-tipped stick. The creature is about your height before you lift your head high, but since it's bipedal and upright, that puts it as about an eighth of your mass.\n\nIf not for the tool in its hand it would be no threat at all, but between that and the crude clothing you realize it's an intelligent creature, and thus inherently dangerous. And potentially valuable.",
-    "hunt announce": "You wait patiently at the corner, listening until the quiet clawed footsteps of a kobold approaching tells you the right time to leap around the corner and spring your attack. The look on its face is hilarious, but you don't have time to savor it.",
-    "max health": 45,
-    "max stamina": 10,
+    "hunt announce": "You decide to take the initiative, and attack the kobold. They should belong to you, submitted like any other.",
+    "max health": 50,
+    "max stamina": 15,
     "max mana": 10,
-    "evasion": 10,
+    "evasion": 8,
     "reshuffle": 5,
-    "yield max health": 15,
-    "yield base chance": 0.5,
-    "yield scale chance": 0.05,
+    "yield max health": 10,
+    "yield base chance": 0.1,
+    "yield scale chance": 0.1,
     "cardsets": [
         {
-            "tell": "The kobold grips its spear hard.",
+            "tell": "The kobold pulls their pick up high.",
             "cards": [
                 {
-                    "aggress display": "The kobold tries to impale you!",
+                    "aggress display": "The kobold brings down a powerful, well aimed swing!",
+                    "accuracy": 15,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagepierce": 5,
+                    "damagetype": "piercing",
+                    "attacks": 1,
+                    "abjure display": "The kobold was wide open!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 2,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The kobold swings with all his might!",
                     "accuracy": 10,
                     "damagedice": 3,
                     "damagedie": 6,
                     "damageplus": 6,
+                    "damagepierce": 5,
                     "damagetype": "piercing",
                     "attacks": 1,
-                    "abjure display": "The kobold knocks your attack aside!",
+                    "abjure display": "The kobold rolls with the blows!",
                     "dodge": 0,
-                    "deflect": 1,
-                    "soak": 0,
-                    "staminacost": 1
-                },
-                {
-                    "aggress display": "The kobold gives a well-aimed thrust!",
-                    "accuracy": 15,
-                    "damagedice": 2,
-                    "damagedie": 6,
-                    "damageplus": 4,
-                    "damagetype": "piercing",
-                    "attacks": 1,
-                    "abjure display": "The kobold knocks your attack aside!",
-                    "dodge": 0,
-                    "deflect": 1,
-                    "soak": 0,
+                    "deflect": 0,
+                    "soak": 7,
                     "staminacost": 1
                 }
             ]
         },
         {
-            "tell": "The kobold shifts its grip.",
+            "tell": "The kobold lowers its stance.",
             "cards": [
                 {
-                    "aggress display": "The kobold swings its spear at you like a staff.",
+                    "aggress display": "The kobold spins and tries to hit you with its tail.",
                     "accuracy": 5,
-                    "damagedice": 3,
+                    "damagedice": 2,
                     "damagedie": 6,
-                    "damageplus": 6,
+                    "damageplus": 4,
                     "damagetype": "bludgeoning",
+                    "attacks": 1,
+                    "abjure display": "The kobold spins out of the way!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 2,
+                    "staminacost": 0
+                },
+                {
+                    "aggress display": "The kobold swings its pickaxe back and forth.",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagepierce": 5,
+                    "damagetype": "piercing",
                     "attacks": 2,
-                    "abjure display": "The kobold blocks with its spear!",
+                    "abjure display": "The kobold knocks your blow aside with its pickaxe!",
                     "dodge": 0,
-                    "deflect": 0,
-                    "soak": 5,
-                    "staminacost": 1
-                },
-                {
-                    "aggress display": "The kobold swings its spear at you repeatedly, like a club.",
-                    "accuracy": 5,
-                    "damagedice": 2,
-                    "damagedie": 6,
-                    "damageplus": 4,
-                    "damagetype": "bludgeoning",
-                    "attacks": 3,
-                    "abjure display": "The kobold blocks with its spear!",
-                    "dodge": 0,
-                    "deflect": 0,
-                    "soak": 5,
+                    "deflect": 1,
+                    "soak": 2,
                     "staminacost": 1
                 }
             ]
         },
         {
-            "tell": "The kobold gives a desperate yell.",
+            "tell": "The kobold crouches to leap.",
             "cards": [
                 {
-                    "aggress display": "The kobold stabs at you hastily.",
-                    "accuracy": 15,
-                    "damagedice": 1,
+                    "aggress display": "The kobold leaps at you, bringing his pickaxe down in a desperate strike!",
+                    "accuracy": 7,
+                    "damagedice": 2,
                     "damagedie": 6,
-                    "damageplus": 2,
-                    "damagetype": "piercing",
-                    "attacks": 3,
-                    "abjure display": "The kobold left itself unguarded!",
-                    "dodge": 0,
-                    "deflect": 0,
-                    "soak": 0,
-                    "staminacost": 2
-                },
-                {
-                    "aggress display": "The kobold stabs at you furiously.",
-                    "accuracy": 15,
-                    "damagedice": 3,
-                    "damagedie": 6,
-                    "damageplus": 6,
+                    "damageplus": 4,
+                    "damagepierce": 5,
                     "damagetype": "piercing",
                     "attacks": 1,
+                    "breakthrough": 1,
                     "abjure display": "The kobold left itself unguarded!",
                     "dodge": 0,
                     "deflect": 0,
-                    "soak": 0,
+                    "soak": 2,
                     "staminacost": 2
                 }
             ]
@@ -152,17 +143,17 @@
                 "rule": "!=",
                 "value": true
             },
-            "display": "Loot\n\nCopper coins",
+            "display": "Loot\n\nCopper ore",
             "verb": "chain",
             "details": [
                 {
                     "verb": "gather",
                     "details": {
-                        "item": "copper coin",
+                        "item": "copper ore",
                         "dice": 1,
                         "die": 4,
                         "plus": 1,
-                        "text": "You gather some coins from your fallen foe. Nice!"
+                        "text": "You gather some unprocessed copper ore from your fallen foe. Needs work."
                     }
                 },
                 {
@@ -173,7 +164,7 @@
                     }
                 }
             ],
-            "help": "Pick up whatever coins they had on them."
+            "help": "Pick up whatever they had on them."
         }        
     },
     "apprehendcards": {
@@ -181,9 +172,9 @@
             "display": "Recruit\n\nDemand the kobold's\nloyalty henceforth.",
             "verb": "recruit",
             "details": {
-                "name": "kobold spearman",
+                "name": "kobold miner",
                 "tags": "enemy",
-                "text": "You demand the kobold swear fealty to you in exchange for its life. Even as you do, you press your will into its mind. It's like the creature was made for this, and easily accepts your connection. But there's another presence there already, one you find yourself forcibly pushing out.\n\nIf you had to describe the presence, the color 'blue' comes to mind.\n\nReadying their spear, they salute you and grin, eager to serve."
+                "text": "You demand the kobold swear fealty to you in exchange for its life. Even as you do, you press your will into its mind. It's like the creature was made for this, and easily accepts your connection.\n\nAs your mind supersedes theirs, they shoulder their pickaxe and salute."
             }
         },
         "stuff": {
@@ -193,17 +184,17 @@
                 "rule": "!=",
                 "value": true
             },
-            "display": "Loot\n\nCopper coins",
+            "display": "Loot\n\nCopper ore",
             "verb": "chain",
             "details": [
                 {
                     "verb": "gather",
                     "details": {
-                        "item": "copper coin",
+                        "item": "copper ore",
                         "dice": 1,
                         "die": 4,
                         "plus": 1,
-                        "text": "You demand tribute from the kobold, and they hand over a few copper coins. Nice!"
+                        "text": "You demand tribute from the kobold, and they hand over a some copper ore. Needs work."
                     }
                 },
                 {
@@ -214,7 +205,7 @@
                     }
                 }
             ],
-            "help": "Demand whatever coins they have on them."
+            "help": "Demand whatever they have on them."
         }
     }
 }

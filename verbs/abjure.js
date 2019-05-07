@@ -17,7 +17,8 @@ let act = async function (state, details) {
     let assistdeflect = Math.floor((assist.allydeflect || 0) + Math.random());
     let deflect = assistdeflect + Math.floor(card.deflect + (leader.bonusdeflect || 0) + (card.scaledeflect ? card.scaledeflect * (leader.abjureHand[details.card] - 1) : 0) + Math.random());
     let dodge = card.dodge + (leader.bonusdodge || 0) + (card.scaledodge ? card.scaledodge * (leader.abjureHand[details.card] - 1): 0);
-    let soak = card.soak + (leader.bonussoak || 0) + (card.scalesoak ? card.scalesoak * (leader.abjureHand[details.card] - 1): 0);
+    let soak = card.soak + (leader.bonussoak || 0) + (card.scalesoak ? card.scalesoak * (leader.abjureHand[details.card] - 1) : 0);
+    if (enemyCard.damagepierce) soak = Math.max(0, soak - enemyCard.damagepierce);
     let staminacost = card.staminacost + (card.scalestaminacost ? card.scalestaminacost * (leader.abjureHand[details.card] - 1) : 0);
     leader.stamina -= staminacost;
 

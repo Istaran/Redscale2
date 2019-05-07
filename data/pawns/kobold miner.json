@@ -5,10 +5,14 @@
     "maxNutrition": 60,
     "assistcards": [
         {
-            "display": "Your kobold ally pulls back his pickaxe.",
+            "display": "Your kobold ally pulls back their pickaxe, ready to strike.",
             "cardlines": "Kobold\nPiercing Pickaxe\n\nAccuracy: \u25cf\nDamage: \u25cf\u25cb\nAttacks: \u25cf",
             "help": "Distracting Spear\n\nGrants your attacks this round +2 Accuracy, helping avoid misses and score critical hit multipliers.",
-            "bonusaccuracy": 2,
+            "allyattacks": 1,
+            "allyaccuracy": 5,
+            "allydamagedice": 1,
+            "allydamagedie": 6,
+            "allydamageplus": 2,
             "subtype": "aggress"
         },
         {

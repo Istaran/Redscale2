@@ -1,0 +1,8 @@
+{
+    "display": "copper ore",
+    "cardtext":  "Copper ore\n\nPieces of unprocessed metal\nYou will need to\nmelt it down\nand have it\nshaped later.",
+	"descriptionSingular": "A lump of unformed copper metal.",
+	"descriptionPlural": "Some lumps of unformed copepr metal.",
+	"hands": 0.01,
+	"weight": 0.01
+}
