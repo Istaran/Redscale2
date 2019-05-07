@@ -1,7 +1,7 @@
 {
     "Press the attack": {
         "display": "You take the initiative to try to take down your foe.",
-        "cardlines": "Press the attack\n\nAttack first\nAbjure Draw: \u2b24\nAggress Draw: \u2b24",
+        "cardlines": "Press the attack\n\nAttack first\nAbjure Draw: \u25cf\nAggress Draw: \u25cf",
         "help": "Attack first! Draw: 1 Abjure, 1 Aggress",
         "queue": [ "aggress", "abjure", "assess" ],
         "abjuredraw": 1,
@@ -9,7 +9,7 @@
     },
   "Fight defensively": {
     "display": "You take the time to consider your options.",
-    "cardlines": "Fight defensively\n\nAttack last\nAbjure Draw: \u2b24\u2b24\nAggress Draw: \u2b24\u2b24",
+    "cardlines": "Fight defensively\n\nAttack last\nAbjure Draw: \u25cf\u25cf\nAggress Draw: \u25cf\u25cf",
     "help": "Attack last! Draw: 1 Abjure, 1 Aggress",
     "queue": [ "abjure", "aggress", "assess" ],
     "abjuredraw": 2,
@@ -17,7 +17,7 @@
   },
   "Total defense": {
     "display": "You concentrate completely on defense.",
-    "cardlines": "Total defense\n\nStamina to Health: \u2b24\nAbjure Draw:\u2b24\u2b24\u2b24\nAggress Draw:",
+    "cardlines": "Total defense\n\nStamina to Health: \u25cf\nAbjure Draw:\u25cf\u25cf\u25cf\nAggress Draw:",
     "help": "Convert some stamina into health!\nDraw: 3 Abjure.\nNo aggress phase.",
     "queue": [ "abjure", "assess" ],
     "abjuredraw": 3,
@@ -26,7 +26,7 @@
   },
   "Flee!": {
     "display": "You try to escape!",
-    "cardlines": "Flee!\n\nEscape rolls: \u2b24\nAbjure Draw:\nAggress Draw:",
+    "cardlines": "Flee!\n\nEscape rolls: \u25cf\nAbjure Draw:\nAggress Draw:",
     "help": "Attempt to escape in a random direction.\nNo draw or aggress phase.",
     "queue": [ "abjure", "assess" ],
     "abjuredraw": 0,

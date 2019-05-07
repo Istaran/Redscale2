@@ -49,7 +49,9 @@
                     "z": -4,
                     "zone": "Dragonbone Cave"
                 }
-            }
+            },
+            "light": "saddlebrown",
+            "dark": "darkgray"
         },
         "Bend": {
             "title": "Kobold Warren - rough hewn tunnel",
@@ -65,7 +67,9 @@
                     "event": "kobold spearman attack"
                 }
             ],
-            "actions": [ "ambush" ]
+            "actions": [ "ambush" ],
+            "light": "saddlebrown",
+            "dark": "darkgray"
         },
         "HewnTunnel": {
             "title": "Kobold Warren - rough hewn tunnel",
@@ -84,7 +88,9 @@
                     "chance": 1,
                     "event": "dart trap"
                 }
-            ]
+            ],
+            "light": "saddlebrown",
+            "dark": "darkgray"
         },
         "Torchfork": {
             "title": "Kobold Warren - torchlit fork",
@@ -103,7 +109,9 @@
                     "chance": 1,
                     "event": "flame trap"
                 }
-            ]
+            ],
+            "light": "#ff4500",
+            "dark": "#ffc500"
         },
         "Darkfork": {
             "title": "Kobold Warren - darkened fork",
@@ -122,7 +130,9 @@
                     "chance": 1,
                     "event": "flame trap"
                 }
-            ]
+            ],
+            "light": "darkgray",
+            "dark": "dimgray"
         },
         "DeadEnd": {
             "title": "Kobold Warren - dead end",
@@ -133,7 +143,9 @@
                     "chance": 1,
                     "event": "kobold spearman attack"
                 }
-            ]
+            ],
+            "light": "darkgray",
+            "dark": "dimgray"
         },
         "BrokenDoor": {
             "title": "Kobold Jail - broken door",
@@ -144,7 +156,9 @@
                     "chance": 1,
                     "event": "kobold spearman attack"
                 }
-            ]
+            ],
+            "light": "saddlebrown",
+            "dark": "#5e2f0d"
         },
         "CellHall": {
             "title": "Kobold Jail - hallway",
@@ -169,7 +183,9 @@
                 "se": {
                     "disabled": true
                 }
-            }
+            },
+            "light": "lightgray",
+            "dark": "darkgray"
         },
         "EmptyCell": {
             "title": "Kobold Jail - empty cell",
@@ -200,7 +216,9 @@
                 "se": {
                     "disabled": true
                 }
-            }
+            },
+            "light": "lightgray",
+            "dark": "darkgray"
         },
         "EastCell": {
             "title": "Kobold Jail - empty cell",
@@ -225,7 +243,9 @@
                 "se": {
                     "disabled": true
                 }
-            }
+            },
+            "light": "lightgray",
+            "dark": "darkgray"
         },
         "JackCell": {
             "title": "Kobold Jail - Lycan's cell",
@@ -256,7 +276,9 @@
                 "se": {
                     "disabled": true
                 }
-            }
+            },
+            "light": "lightgray",
+            "dark": "saddlebrown"
         }
     },
   "events": {

@@ -34,7 +34,9 @@
                     "z": -2,
                     "zone": "Dragonbone Cave"
                 }
-            }
+            },
+            "light": "white",
+            "dark": "black"
         }
     },
     "events": {

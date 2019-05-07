@@ -1,0 +1,39 @@
+{
+    "display": "kobold",
+    "maxHealth": 15,
+    "safeHealth": 5,
+    "maxNutrition": 60,
+    "assistcards": [
+        {
+            "display": "Your kobold ally pulls back his pickaxe.",
+            "cardlines": "Kobold\nPiercing Pickaxe\n\nAccuracy: \u25cf\nDamage: \u25cf\u25cb\nAttacks: \u25cf",
+            "help": "Distracting Spear\n\nGrants your attacks this round +2 Accuracy, helping avoid misses and score critical hit multipliers.",
+            "bonusaccuracy": 2,
+            "subtype": "aggress"
+        },
+        {
+            "display": "Your kobold ally readies to interfere with their attack.",
+            "cardlines": "Kobold\nDistracting Pickaxe\n\nDodge: +2",
+            "help": "Distracting Pickaxe\n\n+2 dodge.",
+            "bonusdodge": 2,
+            "subtype": "abjure"
+        }
+    ],
+    "workercard": {
+        "cardlines": "Kobold\nWork Rating: 1\nSecurity Rating: 1\nDarkvision: +/- 1\nMining bonus +2\nUpkeep: 1 nutrition\n(Omnivore)",
+        "help": "Kobolds are small, numerous, and reliable workers, well suited to the underground.\nDarkvision: Get a bonus to work and security in dark times/places, and a penalty in bright times/places.\nOmnivore: kobolds can eat anything.",
+        "work": {
+            "base": 1,
+            "dark": 1,
+            "bright": -1,
+            "mining": 2
+        },
+        "security": {
+            "base": 1,
+            "dark": 1,
+            "bright": -1
+        },
+        "nutritioncost": 1,
+        "eats": [ "animal", "vegetable" ]
+    }
+}

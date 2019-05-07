@@ -67,7 +67,9 @@
                 "se": {
                     "disabled": false
                 }
-            }
+            },
+            "light": "darkgray",
+            "dark": "black"
         },
         "CaveinW": {
             "title": "Dragonbone Cave - west cavein",
@@ -79,7 +81,9 @@
                     "event": null
                 }
             ],
-            "actions": []
+            "actions": [],
+            "light": "darkgray",
+            "dark": "black"
         },
         "CaveinE": {
             "title": "Dragonbone Cave - east cavein",
@@ -99,7 +103,9 @@
                     "event": "eat small rat"
                 }
             ],
-            "actions": [ "hunt", "digEast" ]
+            "actions": [ "hunt", "digEast" ],
+            "light": "darkgray",
+            "dark": "black"
         },
         "ClearedE": {
             "title": "Dragonbone Cave - east passage",
@@ -119,7 +125,9 @@
                     "z": 4,
                     "zone": "Kobold Warren"
                 }
-            }
+            },
+            "light": "darkgray",
+            "dark": "black"
         },
         "Middle": {
             "title": "Dragonbone Cave",
@@ -147,10 +155,12 @@
                     "event": "find moss"
                 }
             ],
-          "actions": [ "hunt" ],
-          "buildoptions": {
-            "cache": true
-          }
+            "actions": [ "hunt" ],
+            "buildoptions": {
+                "cache": true
+            },
+            "light": "lightgray",
+            "dark": "dimgray"
         },
         "Air": {
             "title": "Dragonbone Cave - flying",
@@ -171,7 +181,9 @@
                 }
             ],
             "actions": [ "hunt2" ],
-            "requireall": { "flyer": true }
+            "requireall": { "flyer": true },
+            "light": "lightgray",
+            "dark": "dimgray"
         },
         "Dragonhome": {
             "title": "Dragonbone Cave - Dragonhome",
@@ -191,7 +203,9 @@
                     "event": "noonbeam"
                 }
             ],
-            "actions": [ "rest" ]
+            "actions": [ "rest" ],
+            "light": "red",
+            "dark": "darkred"
         },
         "OverRiver": {
             "title": "Dragonbone Cave - above the river",
@@ -212,7 +226,9 @@
                 }
             ],
             "actions": [ "hunt2" ],
-            "requireall": { "flyer": true }
+            "requireall": { "flyer": true },
+            "light": "aqua",
+            "dark": "teal"
         },
         "OverHome": {
             "title": "Dragonbone Cave - above Dragonhome",
@@ -225,7 +241,9 @@
                 }
             ],
             "actions": [ "hunt2" ],
-            "requireall": { "flyer": true }
+            "requireall": { "flyer": true },
+            "light": "red",
+            "dark": "darkred"
         },
         "River": {
             "title": "Dragonbone Cave - underground river",
@@ -253,7 +271,9 @@
                     "z": 10,
                     "zone": "Undermountain Waterways"
                 }
-            }
+            },
+            "light": "aqua",
+            "dark": "teal"
         },
         "RiverTB": {
             "title": "Dragonbone Cave - underground river",
@@ -284,7 +304,9 @@
                 "north": {
                     "disabled": true
                 }
-            }
+            },
+            "light": "aqua",
+            "dark": "teal"
         },
         "RiverStart": {
             "title": "Dragonbone Cave - underground river",
@@ -312,7 +334,9 @@
                     "z": 10,
                     "zone": "Undermountain Waterways"
                 }
-            }
+            },
+            "light": "aqua",
+            "dark": "teal"
         },
         "RiverEnd": {
             "title": "Dragonbone Cave - underground river",
@@ -340,7 +364,9 @@
                     "z": 10,
                     "zone": "Undermountain Waterways"
                 }
-            }
+            },
+            "light": "aqua",
+            "dark": "teal"
         },
         "Skull": {
             "title": "Dragonbone Cave - mother's skull",
@@ -360,7 +386,9 @@
                     "event": "eat small rat"
                 }
             ],
-            "actions": [ "commune" ]
+            "actions": [ "commune" ],
+            "light": "#e3dac9",
+            "dark": "#997f4f"
         },
         "UnderSpine": {
             "title": "Dragonbone Cave - under mother's spine",
@@ -385,7 +413,9 @@
                 "up": {
                     "disabled": true
                 }
-            }
+            },
+            "light": "#997f4f",
+            "dark": "#58492e"
         },
         "Spine": {
             "title": "Dragonbone Cave - mother's spine",
@@ -410,7 +440,9 @@
                 "down": {
                     "disabled": true
                 }
-            }
+            },
+            "light": "#e3dac9",
+            "dark": "#997f4f"
         },
         "Ribs": {
             "title": "Dragonbone Cave - mother's ribs",
@@ -430,7 +462,9 @@
                     "event": "spider attack"
                 }
             ],
-            "actions": [ "harvest", "hunt" ]
+            "actions": [ "harvest", "hunt" ],
+            "light": "#e3dac9",
+            "dark": "#997f4f"
         },
         "Tailbone": {
             "title": "Dragonbone Cave - mother's tail",
@@ -455,7 +489,9 @@
                 "south": {
                     "disabled": true
                 }
-            }
+            },
+            "light": "#e3dac9",
+            "dark": "#997f4f"
         },
         "HiddenSwitch": {
             "title": "Dragonbone Cave - hidden switch",
@@ -467,7 +503,9 @@
                     "chance": 1,
                     "event": "can switch it N"
                 }
-            ]
+            ],
+            "light": "darkgray",
+            "dark": "black"
         },
         "FlippedSwitch": {
             "title": "Dragonbone Cave - secret passage",
@@ -488,7 +526,9 @@
                     "event": null
                 }
             ]
-        }
+        },
+        "light": "white",
+        "dark": "black"
     },
     "events": {
         "rat attack": {
