@@ -24,7 +24,30 @@ let act = async function (state, details) {
 
     let deflect = Math.floor(enemyCard.deflect + Math.random());
 
-    //  TODO: add in assist bonus-attacks first.
+    if (assist.allyattacks) {
+        for (var i = 0; i < assist.allyattacks; i++) {
+            if (deflect) {
+                deflect--;
+                engineResult += `The ${enemyDef.display} deflected your ally's attack!\n`;
+            } else {
+                let hitMulti = combatengine.attackRoll(assist.allyaccuracy - enemyCard.dodge, enemyDef.evasion);
+                if (hitMulti == 0)
+                    engineResult += assist.allymisstext + "\n";
+                else {
+                    engineResult += assist.allyhittext + " ";
+                    if (hitMulti > 1)
+                        engineResult += `Critical hit! (Net damage x${hitMulti}) `;
+                    let damage = combatengine.damageRoll(assist.allydamagedice, assist.allydamagedie, assist.allydamageplus - Math.max(0, enemyCard.soak - (assist.allydamagepierce || 0))) * hitMulti;
+                    if (damage <= 0) {
+                        engineResult += card["aggress soak display"] || "They shrugged it off!\n";
+                    } else {
+                        state.enemy.health -= damage;
+                        engineResult += `They dealt ${damage} ${card.damagetype} damage!\n`;
+                    }
+                }
+            }
+        }
+    }
 
     for (var i = 0; i < attacks; i++) {
         if (deflect > i)

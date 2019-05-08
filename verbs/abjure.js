@@ -16,9 +16,12 @@ let act = async function (state, details) {
 
     let assistdeflect = Math.floor((assist.allydeflect || 0) + Math.random());
     let deflect = assistdeflect + Math.floor(card.deflect + (leader.bonusdeflect || 0) + (card.scaledeflect ? card.scaledeflect * (leader.abjureHand[details.card] - 1) : 0) + Math.random());
-    let dodge = card.dodge + (leader.bonusdodge || 0) + (card.scaledodge ? card.scaledodge * (leader.abjureHand[details.card] - 1): 0);
-    let soak = card.soak + (leader.bonussoak || 0) + (card.scalesoak ? card.scalesoak * (leader.abjureHand[details.card] - 1) : 0);
-    if (enemyCard.damagepierce) soak = Math.max(0, soak - enemyCard.damagepierce);
+    let brokethrough = (enemyCard.breakthrough && deflect) ? 0 : Math.min(deflect, enemyCard.breakthrough);
+    deflect -= brokethrough;
+    let dodge = card.dodge + (leader.bonusdodge || 0) + (assist.bonusdodge || 0) + (card.scaledodge ? card.scaledodge * (leader.abjureHand[details.card] - 1): 0);
+    let soak = card.soak + (leader.bonussoak || 0) + (assist.bonussoak || 0) + (card.scalesoak ? card.scalesoak * (leader.abjureHand[details.card] - 1) : 0);
+    let pierced = (soak > 0 && enemyCard.damagepierce > 0);
+    if (pierced) soak = Math.max(0, soak - enemyCard.damagepierce);
     let staminacost = card.staminacost + (card.scalestaminacost ? card.scalestaminacost * (leader.abjureHand[details.card] - 1) : 0);
     leader.stamina -= staminacost;
 
@@ -30,6 +33,9 @@ let act = async function (state, details) {
         } else if (deflect > i) {
             engineResult += enemyCard["aggress deflect display"] || "You deflected an attack!\n";
         } else {
+            if (deflect + brokethrough > i) {
+                engineResult += "Their attack broke through your deflection! ";
+            }
             let hitMulti = combatengine.attackRoll(enemyCard.accuracy - dodge, 10); // TEMP: hardcoded evasion at 10
             if (hitMulti == 0)
                 engineResult += enemyCard["aggress dodge display"] || "You avoided an attack!\n";
@@ -41,6 +47,7 @@ let act = async function (state, details) {
                 if (damage <= 0) {
                     engineResult += enemyCard["aggress soak display"] || "You shrugged it off!\n";
                 } else {
+                    if (pierced) engineResult += "They pierced through your defenses! ";
                     state.parties[state.activeParty].leader.health -= damage;
                     engineResult += `You received ${damage} ${enemyCard.damagetype} damage!\n`;
                 }
