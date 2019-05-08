@@ -34,7 +34,7 @@ let act = async function (state, details) {
             engineResult += enemyCard["aggress deflect display"] || "You deflected an attack!\n";
         } else {
             if (deflect + brokethrough > i) {
-                engineResult += "Their attack broke through your deflection! ";
+                engineResult += enemyCard["aggress breakthrough display"] || "Their attack broke through your deflection! ";
             }
             let hitMulti = combatengine.attackRoll(enemyCard.accuracy - dodge, 10); // TEMP: hardcoded evasion at 10
             if (hitMulti == 0)
@@ -47,7 +47,7 @@ let act = async function (state, details) {
                 if (damage <= 0) {
                     engineResult += enemyCard["aggress soak display"] || "You shrugged it off!\n";
                 } else {
-                    if (pierced) engineResult += "They pierced through your defenses! ";
+                    if (pierced) engineResult += enemyCard["aggress pierce display"] || "They pierced through your defenses! ";
                     state.parties[state.activeParty].leader.health -= damage;
                     engineResult += `You received ${damage} ${enemyCard.damagetype} damage!\n`;
                 }

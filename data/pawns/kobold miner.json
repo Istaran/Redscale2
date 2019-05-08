@@ -3,6 +3,7 @@
     "maxHealth": 15,
     "safeHealth": 5,
     "maxNutrition": 60,
+    "evasion": 10,
     "assistcards": [
         {
             "display": "Your kobold ally pulls back their pickaxe, ready to strike.",
