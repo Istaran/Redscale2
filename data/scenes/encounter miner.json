@@ -1,0 +1,100 @@
+{
+    "start": {
+        "controls": [
+            [
+                {
+                    "type": "actButton",
+                    "display": "Attack",
+                    "verb": "chain",
+                    "details": [
+                        {
+                            "verb": "hunt",
+                            "details": {
+                                "targets": [
+                                    {
+                                        "chance": 1,
+                                        "name": "kobold miner"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "verb": "setscene",
+                            "details": {
+                                "clear": true
+                            }
+                        }
+                    ],
+                    "help": "Force the kobold to submit or die!"
+                },
+                {
+                    "type": "actButton",
+                    "display": "Question",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "You approach the kobold as nonthreateningly as a scaly muscle-beast covered in pointy bits can, and attempt to ask it some questions.",
+                        "sub": "question",
+                        "name": "encounter miner"
+                    }
+                },
+                {
+                    "type": "actButton",
+                    "display": "Leave",
+                    "verb": "setscene",
+                    "details": {
+                        "clear": true
+                    },
+                    "help": "Take your leave."
+                }
+            ]
+        ]
+    },
+    "question": {
+        "controls": [
+            [
+                {
+                    "type": "actButton",
+                    "display": "Ask about their tools.",
+                    "verb": "flavor",
+                    "details": {
+                        "text": "\"These? I'm a miner... I dig copper out of the walls and bring it back to melt down and make stuff for the Prince and Princess. Coins, mostly, and more tools. Weapons. Sometimes armor, but our rulers consider that mostly a waste,\" they explained.\n\n\"Oh, um... you're red-scaled... the Prince and Princess are blue... I thought I heard something about blues not liking reds or something? Watch yourself.\""
+                    }
+                },
+                {
+                    "type": "actButton",
+                    "display": "Ask why they didn't attack you.",
+                    "verb": "flavor",
+                    "details": {
+                        "text": "\"I prefer not to fight, especially dragons. It's one thing if those dirty rats try to get in our territory, but I really don't want to get between you and the Prince and Princess.\""
+                    }
+                },
+                {
+                    "type": "actButton",
+                    "display": "Ask about collapsed tunnel.",
+                    "verb": "flavor",
+                    "details": {
+                        "text": "\"That was caved in before I hatched. There aren't many kobolds old enough to remember, even the Prince and Princess were hatchlings back then, and probably didn't know about it. I do know the elders say not to dig through that way. Not sure if they were protecting something or protecting us from something. Like being flanked by rats.\""
+                    }
+                },
+                {
+                    "type": "actButton",
+                    "display": "Ask about rulers.",
+                    "verb": "flavor",
+                    "details": {
+                        "text": "\"We're ruled over directly by Prince Azure and Princess Glitterscale. A couple blues about your size. Their daddy is the big blue who rules this region, King Desert Sky, and they were the last born to him before his mate died. Only ones small enough to fit down here with us kobolds still. The rest of them all keep to the upper reaches.\""
+                    }
+                },
+                {
+                    "type": "actButton",
+                    "display": "Leave",
+                    "verb": "setscene",
+                    "details": {
+                        "clear": true,
+                        "text": "You bid farewell to the miner, and take your leave."
+                    },
+                    "help": "Take your leave."
+                }
+            ]
+        ]
+    }
+}

@@ -17,7 +17,7 @@ let getSpotDetails = async function(state, zoneName, x, y, z) {
     let spot = await spotStyle(state, zoneName, x, y, z);
     let zone = await cache.load(`./data/locations/${zoneName}.json`);
     let style = zone.styles[spot];
-	return style.preview;
+    return { text: style.preview, light: style.light || "white", dark: style.dark || "black" };
 }
 
 let setupDirection = async function (state, zoneName, x, y, z, dir, control, hereStyle) {
@@ -66,20 +66,23 @@ let getControls = async function (state) {
 
         await Promise.all(["up", "north", "east", "west", "south", "down"].map((dir) => setupDirection(state, state.location, state.x, state.y, state.z, dir, controls[0][0], style)));
         await Promise.all(["nw", "ne", "sw", "se"].map((dir) => setupDirection(state, state.location, state.x, state.y, state.z, dir, controls[0][0], style)));
+        controls[0][0].sub.here = { light: style.light || "white", dark: style.dark || "black" };
 
         let actions = pStyle.actions ? (style.actions || []).concat(pStyle.actions) : style.actions;
         if (actions) {
             for (var i = 0; i < actions.length; i++) {
                 let action = (private && private.actions && private.actions[actions[i]]) || zone.actions[actions[i]];
-                let ctrl = await gameengine.getControl(state, action);
-                if (ctrl)
-                    controls[1].push(ctrl);
+                if (await gameengine.conditionMet(state, action.if)) {
+                    let ctrl = await gameengine.getControl(state, action);
+                    if (ctrl)
+                        controls[1].push(ctrl);
+                }
             }
 		}
 	} else {
 		// If someone ends up stuck in a wall, so to speak, add a location reset button.
         controls[0][0].details.special = { location: "Dragonbone Cave", x: 4, y: 5, z: 0, help: "Debug warp to home." };
-        controls[0][0].sub.special = "You see your home through the mysterious portal of Ooops, how'd you get somewhere that isn't adjacent to anywhere?!";
+        controls[0][0].sub.special = { text: "You see your home through the mysterious portal of Ooops, how'd you get somewhere that isn't adjacent to anywhere?!", light: "white", dark: "black" };
 	}
 	return controls;
 };
@@ -196,10 +199,40 @@ let checkRequirements = async function (state, details) {
     }
 };
 
+let getBuildOptions = async function (state) {
+    if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
+
+    let spot = await spotStyle(state, state.location, state.x, state.y, state.z);
+    state.buildoptions = {};
+    let any = false;
+    if (spot) {
+        let zone = await cache.load(`./data/locations/${state.location}.json`);
+        let style = zone.styles[spot];
+        if (style.buildoptions) {
+            console.log(`Buildoptions: ${JSON.stringify(spot.buildoptions)}`);
+            for (var option in spot.buildoptions) {
+                if (spot.buildoptions[option] === true) {
+                    state.buildoptions[option] = true;
+                    any = true;
+                }
+                else {
+                    let condition = await gameengine.conditionMet(state, spot.buildoptions[option]);
+                    if (condition) {
+                        state.buildoptions[option] = true;
+                        any = true;
+                    }
+                }
+            }
+        }
+    }
+    if (!any) state.buildoptions = null;
+}
+
 module.exports = {
     checkRequirements: checkRequirements,
 	explore: explore,
     getControls: getControls,
     getDescription: getDescription,
-    getTitle: getTitle
+    getTitle: getTitle,
+    getBuildOptions: getBuildOptions
 };

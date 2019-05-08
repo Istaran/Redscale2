@@ -1,0 +1,47 @@
+{
+    "map": [
+        [],
+        [],
+        [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [ null, null, null, "DragonPath" ]
+        ]
+    ],
+    "styles": {
+        "DragonPath": {
+            "title": "Nezumi Enclave - secret passage",
+            "description": "The tunnel here is floored in black and white alternating tunnels, and lined with smooth-carved walls. Whoever made this place took great care and time, and presumably must clean it regularly. The footsteps outside show it was used quite regularly, but there haven't been new ones since you opened it for yourself.",
+            "preview": "The tunnel there connects the Dragonbone Cave to the smooth, tiled tunnels beyond.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "directionOverrides": {
+                "sw": {
+                    "disabled": false,
+                    "x": 0,
+                    "y": -10,
+                    "z": -2,
+                    "zone": "Dragonbone Cave"
+                }
+            },
+            "light": "white",
+            "dark": "black"
+        }
+    },
+    "events": {
+
+    },
+    "actions": {
+    }
+}

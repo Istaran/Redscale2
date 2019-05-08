@@ -1,30 +1,29 @@
 {
-    "map": 
-    [
+    "map": [
         [
-            [ "Edge",   "Edge",         "Edge",         null,           null,           "Edge",     "Edge",     "Edge",     "RiverEnd", "Edge" ],
-            [ "Edge",   "Middle",       "Middle",       "Edge",         "Edge",         "Middle",   "Middle",   "River",    "River",    "Edge" ],
-            [ "Edge",   "Middle",       "Middle",       "Ribs",         "Ribs",         "Tailbone", "Tailbone", "River",    "Middle",   "Edge" ],
-            [ "Skull",  "UnderSpine",   "UnderSpine",   "UnderSpine",   "UnderSpine",   "RiverTB",  "RiverTB",  "River",    "Middle",   "Edge" ],
-            [ "CaveinW","Middle",       "Middle",       "Ribs",         "Ribs",         "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
-            [ "Edge",   "Middle",       "Middle",       "Middle",       "Dragonhome",   "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
-            [ "Edge",   "Middle",       "River",        "River",        "River",        "River",    "Middle",   "Middle",   "Middle",   "Edge" ],
-            [ "Edge",   "Middle",       "River",        "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Middle",   "CaveinE"],
-            [ "RiverStart", "River",    "River",        "Middle",       "River",        "Middle",   "Middle",   "Middle",   "Edge"],
-            [ "Edge",   "Middle",       "Middle",       "Middle",       "River",        "Middle",   "Edge",     "Edge" ],
-            [ null,     "Edge",         "Edge",         "Edge",         "RiverStart",   "Edge"]
+            [ "Edge", "Edge", "HiddenSwitch", null, null, "Edge", "Edge", "Edge", "RiverEnd", "Edge" ],
+            [ "Edge", "Middle", "Middle", "Edge", "Edge", "Middle", "Middle", "River", "River", "Edge" ],
+            [ "Edge", "Middle", "Middle", "Ribs", "Ribs", "Tailbone", "Tailbone", "River", "Middle", "Edge" ],
+            [ "Skull", "UnderSpine", "UnderSpine", "UnderSpine", "UnderSpine", "RiverTB", "RiverTB", "River", "Middle", "Edge" ],
+            [ "CaveinW", "Middle", "Middle", "Ribs", "Ribs", "River", "Middle", "Middle", "Middle", "Edge" ],
+            [ "Edge", "Middle", "Middle", "Middle", "Dragonhome", "River", "Middle", "Middle", "Middle", "Edge" ],
+            [ "Edge", "Middle", "River", "River", "River", "River", "Middle", "Middle", "Middle", "Edge" ],
+            [ "Edge", "Middle", "River", "Middle", "River", "Middle", "Middle", "Middle", "Middle", "CaveinE" ],
+            [ "RiverStart", "River", "River", "Middle", "River", "Middle", "Middle", "Middle", "Edge" ],
+            [ "Edge", "Middle", "Middle", "Middle", "River", "Middle", "Edge", "Edge" ],
+            [ null, "Edge", "Edge", "Edge", "RiverStart", "Edge" ]
         ],
         [
             [],
-            [ null,     "Air",          "Air",          null,           null,           "Air",      "Air",      "OverRiver","OverRiver" ],
-            [ null,     "Air",          "Air",          "Air",          "Air",          "Air",      "Air",      "OverRiver","Air" ],
-            [ null,     "Spine",        "Spine",        "Spine",        "Spine",        "OverRiver","OverRiver","OverRiver","Air" ],
-            [ null,     "Air",          "Air",          "Air",          "Air",          "OverRiver","Air",      "Air",      "Air" ],
-            [ null,     "Air",          "Air",          "Air",          "OverHome",     "OverRiver","Air",      "Air",      "Air" ],
-            [ null,     "Air",          "OverRiver",    "OverRiver",    "OverRiver",    "OverRiver","Air",      "Air",      "Air" ],
-            [ null,     "Air",          "OverRiver",    "Air",          "OverRiver",    "Air",      "Air",      "Air" ],
-            [ null,     "OverRiver",    "OverRiver",    "Air",          "OverRiver",    "Air" ],
-            [ null,     "Air",          "Air",          "Air",          "OverRiver" ]
+            [ null, "Air", "Air", null, null, "Air", "Air", "OverRiver", "OverRiver" ],
+            [ null, "Air", "Air", "Air", "Air", "Air", "Air", "OverRiver", "Air" ],
+            [ null, "Spine", "Spine", "Spine", "Spine", "OverRiver", "OverRiver", "OverRiver", "Air" ],
+            [ null, "Air", "Air", "Air", "Air", "OverRiver", "Air", "Air", "Air" ],
+            [ null, "Air", "Air", "Air", "OverHome", "OverRiver", "Air", "Air", "Air" ],
+            [ null, "Air", "OverRiver", "OverRiver", "OverRiver", "OverRiver", "Air", "Air", "Air" ],
+            [ null, "Air", "OverRiver", "Air", "OverRiver", "Air", "Air", "Air" ],
+            [ null, "OverRiver", "OverRiver", "Air", "OverRiver", "Air" ],
+            [ null, "Air", "Air", "Air", "OverRiver" ]
         ]
     ],
     "styles": {
@@ -68,7 +67,9 @@
                 "se": {
                     "disabled": false
                 }
-            }
+            },
+            "light": "darkgray",
+            "dark": "black"
         },
         "CaveinW": {
             "title": "Dragonbone Cave - west cavein",
@@ -80,7 +81,9 @@
                     "event": null
                 }
             ],
-            "actions": []
+            "actions": [],
+            "light": "darkgray",
+            "dark": "black"
         },
         "CaveinE": {
             "title": "Dragonbone Cave - east cavein",
@@ -100,7 +103,9 @@
                     "event": "eat small rat"
                 }
             ],
-            "actions": [ "hunt", "digEast" ]
+            "actions": [ "hunt", "digEast" ],
+            "light": "darkgray",
+            "dark": "black"
         },
         "ClearedE": {
             "title": "Dragonbone Cave - east passage",
@@ -120,7 +125,9 @@
                     "z": 4,
                     "zone": "Kobold Warren"
                 }
-            }
+            },
+            "light": "darkgray",
+            "dark": "black"
         },
         "Middle": {
             "title": "Dragonbone Cave",
@@ -148,7 +155,12 @@
                     "event": "find moss"
                 }
             ],
-            "actions": [ "hunt" ]
+            "actions": [ "hunt" ],
+            "buildoptions": {
+                "cache": true
+            },
+            "light": "lightgray",
+            "dark": "dimgray"
         },
         "Air": {
             "title": "Dragonbone Cave - flying",
@@ -169,7 +181,9 @@
                 }
             ],
             "actions": [ "hunt2" ],
-            "requireall": { "flyer": true }
+            "requireall": { "flyer": true },
+            "light": "lightgray",
+            "dark": "dimgray"
         },
         "Dragonhome": {
             "title": "Dragonbone Cave - Dragonhome",
@@ -189,7 +203,9 @@
                     "event": "noonbeam"
                 }
             ],
-            "actions": [ "rest" ]
+            "actions": [ "rest" ],
+            "light": "red",
+            "dark": "darkred"
         },
         "OverRiver": {
             "title": "Dragonbone Cave - above the river",
@@ -210,7 +226,9 @@
                 }
             ],
             "actions": [ "hunt2" ],
-            "requireall": {"flyer": true }
+            "requireall": { "flyer": true },
+            "light": "#80FFFF",
+            "dark": "teal"
         },
         "OverHome": {
             "title": "Dragonbone Cave - above Dragonhome",
@@ -223,7 +241,9 @@
                 }
             ],
             "actions": [ "hunt2" ],
-            "requireall": { "flyer": true }
+            "requireall": { "flyer": true },
+            "light": "red",
+            "dark": "darkred"
         },
         "River": {
             "title": "Dragonbone Cave - underground river",
@@ -251,7 +271,9 @@
                     "z": 10,
                     "zone": "Undermountain Waterways"
                 }
-            }
+            },
+            "light": "aqua",
+            "dark": "teal"
         },
         "RiverTB": {
             "title": "Dragonbone Cave - underground river",
@@ -282,7 +304,9 @@
                 "north": {
                     "disabled": true
                 }
-            }
+            },
+            "light": "aqua",
+            "dark": "teal"
         },
         "RiverStart": {
             "title": "Dragonbone Cave - underground river",
@@ -310,7 +334,9 @@
                     "z": 10,
                     "zone": "Undermountain Waterways"
                 }
-            }
+            },
+            "light": "aqua",
+            "dark": "teal"
         },
         "RiverEnd": {
             "title": "Dragonbone Cave - underground river",
@@ -338,7 +364,9 @@
                     "z": 10,
                     "zone": "Undermountain Waterways"
                 }
-            }
+            },
+            "light": "aqua",
+            "dark": "teal"
         },
         "Skull": {
             "title": "Dragonbone Cave - mother's skull",
@@ -358,7 +386,9 @@
                     "event": "eat small rat"
                 }
             ],
-            "actions": [ "commune" ]
+            "actions": [ "commune" ],
+            "light": "#e3dac9",
+            "dark": "#997f4f"
         },
         "UnderSpine": {
             "title": "Dragonbone Cave - under mother's spine",
@@ -383,7 +413,9 @@
                 "up": {
                     "disabled": true
                 }
-            }
+            },
+            "light": "#997f4f",
+            "dark": "#58492e"
         },
         "Spine": {
             "title": "Dragonbone Cave - mother's spine",
@@ -408,7 +440,9 @@
                 "down": {
                     "disabled": true
                 }
-            }
+            },
+            "light": "#e3dac9",
+            "dark": "#997f4f"
         },
         "Ribs": {
             "title": "Dragonbone Cave - mother's ribs",
@@ -428,7 +462,9 @@
                     "event": "spider attack"
                 }
             ],
-            "actions": [ "harvest", "hunt" ]
+            "actions": [ "harvest", "hunt" ],
+            "light": "#e3dac9",
+            "dark": "#997f4f"
         },
         "Tailbone": {
             "title": "Dragonbone Cave - mother's tail",
@@ -453,8 +489,46 @@
                 "south": {
                     "disabled": true
                 }
-            }
-        }
+            },
+            "light": "#e3dac9",
+            "dark": "#997f4f"
+        },
+        "HiddenSwitch": {
+            "title": "Dragonbone Cave - hidden switch",
+            "description": "Curiously, the rat footprints in the dust in this area have an unusual gait to them, as if the rats were prone to walking on only their hind feet and not their fore. More curious is that they appear to come and go directly through a bit of rock wall here.\n\nA bit of curious examination yields a possible clue: a switch hidden within a bit deep of a hole in the wall here. You wouldn't even see it if you couldn't brighten the hole with a bit of fireglow, despite your darkvision.\n\nYour neck is long enough you could get your head in and flick the switch if you dared risk it. But you hesitate, as the fireglow glinted off a few dozen bone-shard blades embedded within, coated in an ominous green residue.",
+            "preview": "It looks like the walls slope down to the ground over there. You probably can't go much farther that way, and the ceiling gets too low to really fly. A hint of motion caught your eye, but you lost sight of it before you could focus.",
+            "actions": [ "switchNorth" ],
+            "events": [
+                {
+                    "chance": 1,
+                    "event": "can switch it N"
+                }
+            ],
+            "light": "darkgray",
+            "dark": "black"
+        },
+        "FlippedSwitch": {
+            "title": "Dragonbone Cave - secret passage",
+            "description": "Now that you've flipped the hidden switch, there's a slid-open section of the wall leading into tiled cooridors beyond with a black and white alternating tile pattern of black onyx and offwhite bone. Danger lies beyond that door, you know, but also opportunity.",
+            "preview": "You've opened up a secret passageway in the wall there, leading into the tiled corridors beyond.",
+            "directionOverrides": {
+                "ne": {
+                    "disabled": false,
+                    "x": 0,
+                    "y": 10,
+                    "z": 2,
+                    "zone": "Nezumi Enclave"
+                }
+            },
+            "events": [
+                {
+                    "chance": 1,
+                    "event": null
+                }
+            ]
+        },
+        "light": "white",
+        "dark": "black"
     },
     "events": {
         "rat attack": {
@@ -544,6 +618,30 @@
                 }
             ]
         },
+        "can switch it N": {
+            "verb": "first",
+            "details": [
+                {
+                    "if": {
+                        "condition": "stateis",
+                        "context": "party",
+                        "fact": "leader/aggressCards/Basic Bite",
+                        "rule": ">=",
+                        "value": 3
+                    },
+                    "verb": "flavor",
+                    "details": {
+                        "text": "Reaching that switch without cutting yourself is going to take an act of great finesse, but you're confident that you're ready to do it now."
+                    }
+                },
+                {
+                    "verb": "flavor",
+                    "details": {
+                        "text": "Reaching that switch without cutting yourself is going to take an act of great finesse, one you're not sure you're up to yet. You need to become more skilled at precise movements of your head and neck first."
+                    }
+                }
+            ]
+        },
         "noonbeam": {
             "verb": "flavor",
             "details": {
@@ -551,108 +649,128 @@
             }
         }
     },
-"actions":{
-    "rest": {
-        "type": "actButton",
-        "display": "Rest",
-        "verb": "rest",
-        "details": {},
-        "help": "Fast forward time to recover from your trevails. In addition, you may have a resting event, and also save a checkpoint in case you die or want to rewind."
-    },
-    "harvest": {
-        "type": "actButton",
-        "display": "Harvest bone",
-        "verb": "gather",
-        "details": {
-            "item": "dragonbone shard",
-            "dice": 1,
-            "die": 4,
-            "plus": 2,
-            "text": "You chip away at the massive bones your mother left behind, earning yourself some small shards, vaguely round and quite sharp."
+    "actions": {
+        "rest": {
+            "type": "actButton",
+            "display": "Rest",
+            "verb": "rest",
+            "details": {},
+            "help": "Fast forward time to recover from your trevails. In addition, you may have a resting event, and also save a checkpoint in case you die or want to rewind."
         },
-        "help": "Spend some time gathering dragonbone from your mother's remains. It's quite sturdy and hard, as well as being elementally aligned with fire, giving it some nice properties as a material."
-    },
-    "commune": {
-        "type": "actButton",
-        "display": "Commune",
-        "verb": "setscene",
-        "details": {
-            "text": "You reach out with your heart, mind, and soul, hoping for contact with whatever little remains of your mother, beyond the physical bone arching through the cavern.\n\nAnd you find it! It has no physicality, though it's loosely connected to the massive skull towering over you. It does, however, have an amazingly potent presence, one filled with unconditional love for you.\n\nIt also has words for you.\n\n\"My little redscale, my tiny ruby, how you've grown!\"",
-            "name": "focus",
-            "sub": "start",
-            "type": "menu"
+        "harvest": {
+            "type": "actButton",
+            "display": "Harvest bone",
+            "verb": "gather",
+            "details": {
+                "item": "dragonbone shard",
+                "dice": 1,
+                "die": 4,
+                "plus": 2,
+                "text": "You chip away at the massive bones your mother left behind, earning yourself some small shards, vaguely round and quite sharp."
+            },
+            "help": "Spend some time gathering dragonbone from your mother's remains. It's quite sturdy and hard, as well as being elementally aligned with fire, giving it some nice properties as a material."
         },
-        "help": "Connect your soul to the lingering shade of your mother's spirit. Every mother loves it when their son calls, even those that have been dead since before their son hatched. She can advise you, and help you focus your powers."
-    },
-    "hunt": {
-        "type": "actButton",
-        "display": "Hunt",
-        "verb": "hunt",
-        "details": {
-            "targets": [
-                {
-                    "chance": 2,
-                    "name": "cave rat"
-                },
-                {
-                    "chance": 1,
-                    "name": "cave spider"
-                }
-            ]
+        "commune": {
+            "type": "actButton",
+            "display": "Commune",
+            "verb": "setscene",
+            "details": {
+                "text": "You reach out with your heart, mind, and soul, hoping for contact with whatever little remains of your mother, beyond the physical bone arching through the cavern.\n\nAnd you find it! It has no physicality, though it's loosely connected to the massive skull towering over you. It does, however, have an amazingly potent presence, one filled with unconditional love for you.\n\nIt also has words for you.\n\n\"My little redscale, my tiny ruby, how you've grown!\"",
+                "name": "focus",
+                "sub": "start",
+                "type": "menu"
+            },
+            "help": "Connect your soul to the lingering shade of your mother's spirit. Every mother loves it when their son calls, even those that have been dead since before their son hatched. She can advise you, and help you focus your powers."
         },
-        "help": "Search the area for prey to kill, or whatever, initiating a combat."
-    },
-    "hunt2": {
-        "type": "actButton",
-        "display": "Hunt",
-        "verb": "hunt",
-        "details": {
-            "targets": [
-                {
-                    "chance": 2,
-                    "name": "cave bat"
-                },
-                {
-                    "chance": 1,
-                    "name": "cave spider"
-                }
-            ]
+        "hunt": {
+            "type": "actButton",
+            "display": "Hunt",
+            "verb": "hunt",
+            "details": {
+                "targets": [
+                    {
+                        "chance": 2,
+                        "name": "cave rat"
+                    },
+                    {
+                        "chance": 1,
+                        "name": "cave spider"
+                    }
+                ]
+            },
+            "help": "Search the area for prey to kill, or whatever, initiating a combat."
         },
-        "help": "Search the area for prey to kill, or whatever, initiating a combat."
-    },
-    "hunt3": {
-        "type": "actButton",
-        "display": "Fish",
-        "verb": "hunt",
-        "details": {
-            "targets": [
-                {
-                    "chance": 1,
-                    "name": "cave fish"
-                },
-                {
-                    "chance": 1,
-                    "name": "cave newt"
-                }
-            ]
+        "hunt2": {
+            "type": "actButton",
+            "display": "Hunt",
+            "verb": "hunt",
+            "details": {
+                "targets": [
+                    {
+                        "chance": 2,
+                        "name": "cave bat"
+                    },
+                    {
+                        "chance": 1,
+                        "name": "cave spider"
+                    }
+                ]
+            },
+            "help": "Search the area for prey to kill, or whatever, initiating a combat."
         },
-        "help": "Dive into the water to find aquatic prey, initiating a combat."
-    },
-    "digEast": {
-        "type": "actButton",
-        "enabled": {
-            "condition": "stateis",
-            "context": "party",
-            "fact": "leader/aggressCards/Basic Claws",
-            "rule": ">=",
-            "value": 3
+        "hunt3": {
+            "type": "actButton",
+            "display": "Fish",
+            "verb": "hunt",
+            "details": {
+                "targets": [
+                    {
+                        "chance": 1,
+                        "name": "cave fish"
+                    },
+                    {
+                        "chance": 1,
+                        "name": "cave newt"
+                    }
+                ]
+            },
+            "help": "Dive into the water to find aquatic prey, initiating a combat."
         },
-        "display": "Dig",
-        "verb": "setstate",
-        "details": {
-            "value": "ClearedE",
-            "statename": "world/locations/Dragonbone Cave/0/7/9/style",
-            "text": "You dig your claws into the large rocks, haulting them away one by one. As the bigger ones fall away, smaller ones spill out on their own, making you scramble to keep your footing, but soon enough you've cleared a small opening. Beyond you see fire burning steadily on the wall in the distance, illuminating a corridor beyond.\n\nWith more digging, you manage to open the passage entirely, enough for you to come and go as you will. A whole new region has opened up to you."
+        "digEast": {
+            "type": "actButton",
+            "enabled": {
+                "condition": "stateis",
+                "context": "party",
+                "fact": "leader/aggressCards/Basic Claws",
+                "rule": ">=",
+                "value": 3
+            },
+            "display": "Dig",
+            "verb": "setstate",
+            "details": {
+                "value": "ClearedE",
+                "statename": "world/locations/Dragonbone Cave/0/7/9/style",
+                "text": "You dig your claws into the large rocks, haulting them away one by one. As the bigger ones fall away, smaller ones spill out on their own, making you scramble to keep your footing, but soon enough you've cleared a small opening. Beyond you see fire burning steadily on the wall in the distance, illuminating a corridor beyond.\n\nWith more digging, you manage to open the passage entirely, enough for you to come and go as you will. A whole new region has opened up to you."
+            },
+            "help": "Use your claws to dig a out the cave-in and get access to the area beyond.."
+        },
+        "switchNorth": {
+            "type": "actButton",
+            "enabled": {
+                "condition": "stateis",
+                "context": "party",
+                "fact": "leader/aggressCards/Basic Bite",
+                "rule": ">=",
+                "value": 3
+            },
+            "display": "Flip Switch",
+            "verb": "setstate",
+            "details": {
+                "value": "FlippedSwitch",
+                "statename": "world/locations/Dragonbone Cave/0/0/2/style",
+                "text": "You carefully stretch your neck into the small hole, cautiously winding your neck past the exposed blades. You can't actually see what you're doing as you reach in with your tongue and grip the switch you spotted, pulling it down with the long muscle.\n\nA rumble nearly makes you impale your eye on a poisoned blade before you carefully extract yourself. But now that you are free, you can see a secret passage has been opened in the rock beside you.\n\nThe tunnel beyond is lined with worn tiles, alternating shiny black onyx and offwhite bone, while the walls themselve are merely cleanly carved stone. A whole new region has opened up to you."
+            },
+            "help":  "Use your mouth to grab the hidden switch and pull it. Who knows what that will do?"
         }
     }
-}}
+}

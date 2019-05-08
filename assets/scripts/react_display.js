@@ -192,30 +192,33 @@ class Navigator extends React.Component {
         let backgroundColor = "silver";
         let compassLight = "white";
         let compassDark = "black";
-        let compassDisabled = "dimgray";
-		let upColor = (this.props.details.up) ? "skyblue" : "slateblue";
-		let upColor2 = (this.props.details.up) ? "white" : "darkgray";
-        let northColor = (this.props.details.north) ? "red" : "firebrick";
-        let northColor2 = (this.props.details.north) ? "darkred" : "firebrick";
-        let westColor = (this.props.details.west) ? compassLight : compassDisabled;
-        let westColor2 = (this.props.details.west) ? compassDark : compassDisabled;
-        let specialColor = (this.props.details.special) ? compassLight : backgroundColor;
-        let specialColor2 = (this.props.details.special) ? compassDark : backgroundColor;
-        let eastColor = (this.props.details.east) ? compassLight : compassDisabled;
-        let eastColor2 = (this.props.details.east) ? compassDark : compassDisabled;
-        let southColor = (this.props.details.south) ? compassLight : compassDisabled;
-        let southColor2 = (this.props.details.south) ? compassDark : compassDisabled;
-        let nwColor = ( this.props.details.nw ) ? compassLight : compassDisabled;
-        let nwColor2 = ( this.props.details.nw ) ? compassDark : compassDisabled;
-        let neColor = ( this.props.details.ne ) ? compassLight : compassDisabled;
-        let neColor2 = ( this.props.details.ne ) ? compassDark : compassDisabled;
-        let swColor = ( this.props.details.sw ) ? compassLight : compassDisabled;
-        let swColor2 = ( this.props.details.sw ) ? compassDark : compassDisabled;
-        let seColor = ( this.props.details.se ) ? compassLight : compassDisabled;
-        let seColor2 = ( this.props.details.se ) ? compassDark : compassDisabled;
-		let downColor = (this.props.details.down) ? "peru" : "saddlebrown";
-		let downColor2 = (this.props.details.down) ? "lime" : "green";
-		
+        let compassDisabled = "silver";
+        let upColor = (this.props.details.up) ? this.props.details.up.light || "white" : compassLight;
+        let upColor2 = (this.props.details.up) ? this.props.details.up.dark || "skyblue" : compassDisabled;
+        let northColor = (this.props.details.north) ? this.props.details.north.light || "red" : compassDisabled;
+        let northColor2 = (this.props.details.north) ? this.props.details.north.dark || "darkred" : compassDisabled;
+        let westColor = (this.props.details.west) ? this.props.details.west.light || compassLight : compassDisabled;
+        let westColor2 = (this.props.details.west) ? this.props.details.west.dark || compassDark : compassDisabled;
+        let specialColor = (this.props.details.special) ? this.props.details.special.light || compassLight : backgroundColor;
+        let specialColor2 = (this.props.details.special) ? this.props.details.special.dark || compassDark : backgroundColor;
+        let eastColor = (this.props.details.east) ? this.props.details.east.light || compassLight : compassDisabled;
+        let eastColor2 = (this.props.details.east) ? this.props.details.east.dark || compassDark : compassDisabled;
+        let southColor = (this.props.details.south) ? this.props.details.south.light || compassLight : compassDisabled;
+        let southColor2 = (this.props.details.south) ? this.props.details.south.dark || compassDark : compassDisabled;
+        let nwColor = (this.props.details.nw) ? this.props.details.nw.light || compassLight : compassDisabled;
+        let nwColor2 = (this.props.details.nw) ? this.props.details.nw.dark || compassDark : compassDisabled;
+        let neColor = (this.props.details.ne) ? this.props.details.ne.light || compassLight : compassDisabled;
+        let neColor2 = (this.props.details.ne) ? this.props.details.ne.dark || compassDark : compassDisabled;
+        let swColor = (this.props.details.sw) ? this.props.details.sw.light || compassLight : compassDisabled;
+        let swColor2 = (this.props.details.sw) ? this.props.details.sw.dark || compassDark : compassDisabled;
+        let seColor = (this.props.details.se) ? this.props.details.se.light || compassLight : compassDisabled;
+        let seColor2 = (this.props.details.se) ? this.props.details.se.dark || compassDark : compassDisabled;
+        let downColor = (this.props.details.down) ? this.props.details.down.light || "lime" : compassDisabled;
+        let downColor2 = (this.props.details.down) ? this.props.details.down.dark || "peru" : compassDark;
+        let hereColor = (this.props.details.here) ? this.props.details.here.light || compassLight : compassDisabled;
+        let hereColor2 = (this.props.details.here) ? this.props.details.here.dark || compassDark : compassDisabled;
+
+
         let dirs = [{ header: 'Up', prop: 'up' },
             { header: 'NW', prop: 'nw' },
             { header: 'N', prop: 'north' },
@@ -234,7 +237,7 @@ class Navigator extends React.Component {
             if (this.props.details[dir.prop]) {
                 for (var i = 0; i < dirs.length;) {
                     if (this.props.details[dirs[i].prop]) {
-                        if (this.props.details[dir.prop] == this.props.details[dirs[i].prop]) {
+                        if (this.props.details[dir.prop].text == this.props.details[dirs[i].prop].text) {
                             header += ", " + dirs[i].header;
                             dirs.splice(i, 1);
                         } else {
@@ -244,28 +247,33 @@ class Navigator extends React.Component {
                         dirs.splice(i, 1);
                     }
                 }
-                navHelp += `${header}:${this.props.details[dir.prop]}\n`;
+                navHelp += `${header}:${this.props.details[dir.prop].text}\n`;
             }
         }
 
         return <svg className='navigator' width='150' height='145' onMouseOver={(event) => helper.setState({ help: navHelp })} onMouseOut={(event) => helper.setState({ help: null })}>
 		    <defs>
 			    <linearGradient id="groundGradient" x1="0" x2="0" y1="0" y2="1">
-				    <stop offset="50%" stopColor={downColor2}/>
-				    <stop offset="95%" stopColor={downColor}/>
+				    <stop offset="50%" stopColor={downColor}/>
+				    <stop offset="95%" stopColor={downColor2}/>
 			    </linearGradient>
 			    <linearGradient id="skyGradient" x1="0" x2="0" y1="0" y2="1">
-				    <stop offset="5%" stopColor={upColor2}/>
-				    <stop offset="50%" stopColor={upColor}/>
+				    <stop offset="5%" stopColor={upColor}/>
+				    <stop offset="50%" stopColor={upColor2}/>
 			    </linearGradient>
+                <linearGradient id="hereGradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="5%" stopColor={hereColor} />
+                    <stop offset="50%" stopColor={hereColor2} />
+                </linearGradient>
                 <linearGradient id="specialGradient" x1="0" x2="1" y1="0" y2="1">
                     <stop offset="15%" stopColor={specialColor} />
                     <stop offset="85%" stopColor={specialColor2} />
                 </linearGradient>
             </defs>
-            <polygon points="0,73 0,0 149,0 149,73" fill="url(#skyGradient)" onClick={(event) => this.navigate(event, 'up')} />
-            <polygon points="0,73 0,144 149,144, 149,73" fill="url(#groundGradient)" onClick={(event) => this.navigate(event, 'down')} />
-            <circle cx='75' cy='73' r='50' fill={backgroundColor} />
+            <polygon points="43,0 0,43 149,43 106,0" fill="url(#skyGradient)" onClick={(event) => this.navigate(event, 'up')} />
+            <polygon points="0,48 0,98 149,98, 149,48" fill="url(#hereGradient)" />
+            <polygon points="0,103 43,146 106,146, 149,103" fill="url(#groundGradient)" onClick={(event) => this.navigate(event, 'down')} />
+            <circle cx='75' cy='73' r='50' fill={backgroundColor} stroke="black" strokeWidth="3" />
             <line x1="36.3" y1="50.5" x2="32" y2="48" stroke="black" strokeWidth="1" />
             <line x1="36.3" y1="95.5" x2="32" y2="98" stroke="black" strokeWidth="1" />
             <line x1="113.7" y1="50.5" x2="118" y2="48" stroke="black" strokeWidth="1" />
@@ -282,25 +290,25 @@ class Navigator extends React.Component {
             <line x1="63.4" y1="116.5" x2="62" y2="121" stroke="black" strokeWidth="1" />
             <line x1="86.6" y1="29.5" x2="88" y2="25" stroke="black" strokeWidth="1" />
             <line x1="86.6" y1="116.5" x2="88" y2="121" stroke="black" strokeWidth="1" />
-            <polygon points="40,38 65,63 75,53" fill={nwColor} onClick={(event) => this.navigate(event, 'nw')} />
-            <polygon points="40,38 55,73 65,63" fill={nwColor2} onClick={(event) => this.navigate(event, 'nw')} />
-            <polygon points="40,108 55,73 65,83" fill={swColor} onClick={(event) => this.navigate(event, 'sw')} />
-            <polygon points="40,108 65,83 75,93" fill={swColor2} onClick={(event) => this.navigate(event, 'sw')} />
-            <polygon points="110,38 85,63 75,53" fill={neColor} onClick={(event) => this.navigate(event, 'ne')} />
-            <polygon points="110,38 95,73 85,63" fill={neColor2} onClick={(event) => this.navigate(event, 'ne')} />
-            <polygon points="110,108 95,73 85,83" fill={seColor} onClick={(event) => this.navigate(event, 'se')} />
-            <polygon points="110,108 85,83 75,93" fill={seColor2} onClick={(event) => this.navigate(event, 'se')} />
+            <polygon points="40,38 65,63 75,53" fill={nwColor} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'nw')} />
+            <polygon points="40,38 55,73 65,63" fill={nwColor2} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'nw')} />
+            <polygon points="40,108 55,73 65,83" fill={swColor} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'sw')} />
+            <polygon points="40,108 65,83 75,93" fill={swColor2} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'sw')} />
+            <polygon points="110,38 85,63 75,53" fill={neColor} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'ne')} />
+            <polygon points="110,38 95,73 85,63" fill={neColor2} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'ne')} />
+            <polygon points="110,108 95,73 85,83" fill={seColor} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'se')} />
+            <polygon points="110,108 85,83 75,93" fill={seColor2} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'se')} />
 
 
-            <polygon points="75,22 65,63 75,58" fill={northColor} onClick={(event) => this.navigate(event, 'north')} />
-            <polygon points="75,22 75,58 85,63" fill={northColor2} onClick={(event) => this.navigate(event, 'north')} />
-		    <polygon points="25,73 65,63 60,73" fill={westColor} onClick={(event) => this.navigate(event, 'west')} />
-            <polygon points="25,73 60,73 65,83" fill={westColor2} onClick={(event) => this.navigate(event, 'west')}  />
+            <polygon points="75,22 65,63 75,58" stroke="black" strokeWidth="1" fill={northColor} onClick={(event) => this.navigate(event, 'north')} />
+            <polygon points="75,22 75,58 85,63" stroke="black" strokeWidth="1" fill={northColor2} onClick={(event) => this.navigate(event, 'north')} />
+            <polygon points="25,73 65,63 60,73" stroke="black" strokeWidth="1" fill={westColor} onClick={(event) => this.navigate(event, 'west')} />
+            <polygon points="25,73 60,73 65,83" stroke="black" strokeWidth="1" fill={westColor2} onClick={(event) => this.navigate(event, 'west')}  />
             <circle cx='75' cy='73' r='10' fill="url(#specialGradient)" onClick={(event) => this.navigate(event, 'special')} />
-		    <polygon points="124,73 85,63 89,73" fill={eastColor} onClick={(event) => this.navigate(event, 'east')} />
-            <polygon points="124,73 89,73 85,83" fill={eastColor2} onClick={(event) => this.navigate(event, 'east')} />
-		    <polygon points="75,122 65,83 75,87" fill={southColor} onClick={(event) => this.navigate(event, 'south')}  />
-            <polygon points="75,122 75,87 85,83" fill={southColor2} onClick={(event) => this.navigate(event, 'south')} />
+            <polygon points="124,73 85,63 89,73" stroke="black" strokeWidth="1" fill={eastColor} onClick={(event) => this.navigate(event, 'east')} />
+            <polygon points="124,73 89,73 85,83" stroke="black" strokeWidth="1" fill={eastColor2} onClick={(event) => this.navigate(event, 'east')} />
+            <polygon points="75,122 65,83 75,87" stroke="black" strokeWidth="1" fill={southColor} onClick={(event) => this.navigate(event, 'south')}  />
+            <polygon points="75,122 75,87 85,83" stroke="black" strokeWidth="1" fill={southColor2} onClick={(event) => this.navigate(event, 'south')} />
 
 
 		</svg>;
