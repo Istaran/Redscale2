@@ -185,9 +185,9 @@ let configureEnemy = async function (state, target, flavor) {
     state.enemy = enemy;
 
     let announce = targetDef[`${flavor} announce`];
-    let tell = targetDef.cardsets[enemy.cardqueue[0].set].tell;
+    state.enemy.tell = targetDef.cardsets[enemy.cardqueue[0].set].tell;
 
-    return `${announce}\n\n${tell}`;
+    return `${announce}\n\n${state.enemy.tell}`;
 };
 
 let drawCards = function (hand, pool, count) {
@@ -332,10 +332,12 @@ let progress = async function (state) {
             state.enemy.cardqueue.shift();
             if (state.enemy.cardqueue.length <= 0)
                 state.enemy.cardqueue = getQueueFromSets(enemyDef.cardsets, enemyDef.reshuffle);
+
+            state.enemy.tell = `${enemyDef.cardsets[state.enemy.cardqueue[0].set].tell}${leader.activeassist ? "\n\n" + leader.activeassist.display : ""}`;
             break;
     }
 
-    return `${enemyDef.cardsets[state.enemy.cardqueue[0].set].tell}${leader.activeassist ? "\n\n"+leader.activeassist.display : ""}\n\nIt's time to ${newPhase}! Pick a card...`;
+    return `${newPhase == "assess" ? state.enemy.tell + "\n\n" : ""}It's time to ${newPhase}! Pick a card...`;
 };
 
 

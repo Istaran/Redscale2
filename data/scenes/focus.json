@@ -16,9 +16,95 @@
                         },
                         {
                             "chance": 1,
+                            "verb": "first",
+                            "details": [
+                                {
+                                    "if": {
+                                        "condition": "stateis",
+                                        "context": "party",
+                                        "fact": "pawns/length",
+                                        "rule": "=",
+                                        "value": 0
+                                    },
+                                    "verb": "flavor",
+                                    "details": {
+                                        "text": "\"Do you have any minions yet? Kobolds used to serve us well, and quite eagerly. No, I don't mean like that... well... not exclusively, and much less as we got bigger. And anyways, kobolds don't count, everyone knows that.\" She grows awkwardly silent and you wonder for a moment if she's finally moved on."
+                                    }
+                                },
+                                {
+                                    "if": {
+                                        "condition": "stateis",
+                                        "context": "party",
+                                        "fact": "pawns/length",
+                                        "rule": "=",
+                                        "value": 1
+                                    },
+                                    "verb": "flavor",
+                                    "details": {
+                                        "text": "\"Oh, I see you have a little pet following you around! That's nice to see,\" your mother's spirit tells you. \"I was always fond of kobolds. So handy.\""
+                                    }
+                                },
+                                {
+                                    "if": {
+                                        "condition": "stateis",
+                                        "context": "party",
+                                        "fact": "pawns/length",
+                                        "rule": ">",
+                                        "value": 4
+                                    },
+                                    "verb": "flavor",
+                                    "details": {
+                                        "text": "\"You've got quite the little entourage going there now, don't you my little ruby?\" your mother's spirit compliments, teasingly. \"Don't forget to put some of them to work. You can build a much bigger hoard by having your minions labor for you than just following you like a pack of puppies.\""
+                                    }
+                                },
+                                {
+                                    "verb": "flavor",
+                                    "details": {
+                                        "text": "\"Good to see you've got a few servants around for protection. It can definitely help, especially while you're still growing,\" your mother's spirit comments."
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "chance": 1,
+                            "if": {
+                                "condition": "stateis",
+                                "context": "party",
+                                "fact": "leader/nutrition",
+                                "rule": "<",
+                                "value": 50
+                            },
                             "verb": "flavor",
                             "details": {
-                                "text": "\"Do you have any minions yet? Kobolds used to serve us well, and quite eagerly. No, I don't mean like that... well... not exclusively, and much less as we got bigger. And anyways, kobolds don't count, everyone knows that.\" She grows awkwardly silent and you wonder for a moment if she's finally moved on."
+                                "text": "\"Are you getting enough to eat?\" your mother's spirit nags. \"You seem underfed to me. I'd kill a rat for you myself, but I can't really move anymore. But you really should get something to eat.\""
+                            }
+                        },
+                        {
+                            "if": {
+                                "condition": "stateis",
+                                "context": "party",
+                                "fact": "leader/tags/male",
+                                "rule": "=",
+                                "value": true
+                            },
+                            "chance": 1,
+                            "verb": "flavor",
+                            "details": {
+                                "text": "\"Do you have a girlfriend yet?\" your mother's spirit inquires. \"I don't mind if you sleep around for a century or so, but then you should really hook up with a proper dragoness.. but not a blue. They all need to die, without exception. If you find their nests, make omelettes.\" She rants violently about the blues for a bit longer."
+                            }
+                        },
+                        {
+                            "if": {
+                                "condition": "stateis",
+                                "context": "party",
+                                "fact": "leader/tags/female",
+                                "rule": "=",
+                                "value": true
+                            },
+                            "chance": 1,
+                            "verb": "flavor",
+                            "details": {
+                                "text": "\"Have you started, you know, laying?\" she asks, conspiratorially. \"It's okay, you can talk to me about it. I know it's a very confusing time in a young dragon's life. Just remember to feel the eggs for presence... if they have none, you can cook and eat them! Even share them with friends if you like.\" The whole conversation is super emberassing, and you're glad no one else can hear it."
                             }
                         }
                     ],
@@ -46,7 +132,7 @@
                         "sub": "focusAggress",
                         "type": "requantifier"
                     },
-                    "help": "You're done here."
+                    "help": "Select how many copies of each aggress card to actively use in your combat deck.\nNOTE: if you leave out any copies of a card, you'll automatically leave out new copies you acquire."
                 }
             ]
         ]
@@ -72,8 +158,11 @@
                             }
                         }
                     },
-                    "leftHeader": "Active Deck",
-                    "rightHeader": "Sideboard"
+                    "leftHeader": "Active Deck (minimum 15)",
+                    "rightHeader": "Sideboard",
+                    "rules": {
+                        "left minimum count": 15
+                    }
                 }
             ]
         ]

@@ -39,7 +39,7 @@ let act = async function (state, details) {
     }
 
     let engineProgress = await combatengine.progress(state);
-    state.view.status = `${card.display}\n\n${engineResult}\n\n${engineProgress}`;
+    state.view.status = `${state.enemy.tell}\n\n${card.display}\n\n${engineResult}\n\n${engineProgress}`;
 }
 
 
