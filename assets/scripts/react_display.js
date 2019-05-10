@@ -421,6 +421,35 @@ class Requantifier extends React.Component {
         }
     }
 
+    sum(counts) {
+        var total = 0;
+        for (var label in counts) {
+            if (!isNaN(counts[label]))
+                total += counts[label];
+        }
+        return total;
+    }
+
+    checkrules() {
+        if (!this.props.rules) return true;
+
+        for (var rule in this.props.rules) {
+            let val = this.props.rules[rule];
+            switch (rule) {
+                case "left minimum count":
+                    if (this.sum(this.state.leftCounts) < val)
+                        return false;
+                    break;
+                case "right minimum count":
+                    if (this.sum(this.state.rightCounts) < val)
+                        return false;
+                    break;
+            }
+        }
+
+        return true; 
+    }
+
     change(thing, deltaRight) {
         if (deltaRight > this.state.leftCounts[thing])
             deltaRight = this.state.leftCounts[thing];
@@ -466,7 +495,7 @@ class Requantifier extends React.Component {
                 < div className="quantity" key={thing + " right"}>{this.state.rightCounts[thing]}</div></div>;
             rows.push(row);
         }
-        return <div className="screencover"><div className="requantifier"><div className="requantifierHeaderRow"><div className="requantifierColumnHeader">{this.props.leftHeader}</div><div className="requantifierHeaderSpacer"><input type='button' onClick={() => this.done()} value="Done" /></div><div className="requantifierColumnHeader">{this.props.rightHeader}</div></div>{rows}</div></div>;
+        return <div className="screencover"><div className="requantifier"><div className="requantifierHeaderRow"><div className="requantifierColumnHeader">{this.props.leftHeader}</div><div className="requantifierHeaderSpacer"><input type='button' disabled={!this.checkrules()} onClick={() => this.done()} value="Done" /></div><div className="requantifierColumnHeader">{this.props.rightHeader}</div></div>{rows}</div></div>;
     }
 }
 
@@ -605,7 +634,7 @@ class GameDisplayer extends React.Component {
                             case 'reconnector':
                                 return <Reconnector />;
                             case 'requantifier':
-                                return <Requantifier key={colIndex * 10 + rowIndex}  leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} rightCounts={control.rightCounts} displays={control.displays} id={control.id}/>;
+                                return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
                             case 'reassigner':
                                 return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
                             default:

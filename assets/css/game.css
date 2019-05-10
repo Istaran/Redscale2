@@ -250,7 +250,7 @@ input.requantify {
 }
 
 div.requantifierHeaderRow {
-    height: 30px;
+    height: 50px;
     display: flex;
     border-bottom-color: black;
     border-bottom-style: dashed;

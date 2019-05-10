@@ -1,0 +1,12 @@
+{
+    "hoard": {
+        "display": "your hoard",
+        "type": "hoard",
+        "subtype": null
+    },
+    "cache": {
+        "display": "the cache",
+        "type": "hoard",
+        "subtype":  "cache"
+    }
+}

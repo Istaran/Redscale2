@@ -49,10 +49,18 @@
           "verb": "chain",
           "details": [
             {
-              "verb": "construct",
-              "display": "your cache",
-              "type": "hoard",
-              "subtype": "cache"
+                "verb": "construct",
+                "details": {
+                    "display": "your cache",
+                    "type": "hoard",
+                    "subtype": "cache"
+                }
+            },
+            {
+                "verb": "setscene",
+                "details": {
+                    "clear": true
+                }
             }
           ]
         }

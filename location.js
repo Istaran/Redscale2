@@ -209,14 +209,13 @@ let getBuildOptions = async function (state) {
         let zone = await cache.load(`./data/locations/${state.location}.json`);
         let style = zone.styles[spot];
         if (style.buildoptions) {
-            console.log(`Buildoptions: ${JSON.stringify(spot.buildoptions)}`);
-            for (var option in spot.buildoptions) {
-                if (spot.buildoptions[option] === true) {
+            for (var option in style.buildoptions) {
+                if (style.buildoptions[option] === true) {
                     state.buildoptions[option] = true;
                     any = true;
                 }
                 else {
-                    let condition = await gameengine.conditionMet(state, spot.buildoptions[option]);
+                    let condition = await gameengine.conditionMet(state, style.buildoptions[option]);
                     if (condition) {
                         state.buildoptions[option] = true;
                         any = true;
