@@ -145,10 +145,7 @@ let passiveRecover = function (character) {
 
 
 let reloadArchive = async function (state) {
-    let oldPath = state.archive ? `saves/archive/${state.archive}.json` : './data/newGame.json';
-    let oldState = await cache.load(oldPath);
-    if (!oldState && state.archive)
-        oldState = await cache.load('./data/newGame.json');
+    let oldState = await gameengine.rewind(state);
     await setDefaults(oldState);
     // TODO: run any pending migrations.
 
@@ -156,7 +153,7 @@ let reloadArchive = async function (state) {
 
     for (var prop in state) { if (state.hasOwnProperty(prop)) { delete state[prop]; } }
     Object.assign(state, oldState);
-    state.archive = archive; // preserve linking. TODO: support jumping back multiple steps.
+    state.archive = archive; // preserve linking. TODO: support jumping back multiple steps. Rewind handles this but what about linking?
 }
 
 let getSavePreview = async function (state) {

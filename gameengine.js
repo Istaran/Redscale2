@@ -8,6 +8,7 @@ cache.load(saveMigrationPath);
 
 var conditions = {};
 var verbs = {};
+var calcs = {};
 
 var combat = require('./combatengine');
 var scenes = require('./sceneengine');
@@ -49,6 +50,22 @@ let conditionMet = async function (state, details) {
     }
     console.log(`Condition ${conditionName} failed because no JS file`);
     return false; // Lack of js file is a fail.
+}
+
+let calculate = async function (state, calc) {
+    if (calc.calc === undefined) return calc; // Shortcircuit to return literals and whatnot.
+    if (calcs[calc.calc] === undefined) {
+        try {
+            calcs[calc.calc] = require(`./calcs/${calc.calc}`);
+        } catch (e) {
+            console.log(`Couldn't load calculator ${calc.calc}`);
+            console.log(e);
+            calcs[calc.calc] = null;
+        }
+    }
+    if (calcs[calc.calc]) {
+        return await calcs[calc.calc].value(state, details);
+    }
 }
 
 let getContext = function (state, context) {
@@ -187,12 +204,14 @@ let list = async function (profile) {
     var previews = [];
     for (var i = 0; i < savePaths.length; i++) {
         let path = savePaths[i];
-        let data = await cache.load(`${saveDir}/${path}`);
-        let subPath = path.substring(0, path.length - 5);
-        previews.push({
-            slot: subPath,
-            text: await player.getSavePreview(data)
-        });
+        if (path.endsWith(".json")) {
+            let data = await cache.load(`${saveDir}/${path}`);
+            let subPath = path.substring(0, path.length - 5);
+            previews.push({
+                slot: subPath,
+                text: await player.getSavePreview(data)
+            });
+        }
     }
     return previews;
 }
@@ -206,6 +225,7 @@ let act = async function (profile, action, query) {
     if (state == null) {
         state = await cache.load(newGamePath);
     }
+    state.archivepath = `./saves/${profile.id}/${action.slot}/archive/`;
     state.query = query;
     await player.setDefaults(state);
 
@@ -292,11 +312,33 @@ let writeContextPath = function (state, context, path, value) {
     subState[splitPath[i]] = value;
 }
 
+let archive = async function (state) {
+    let status = state.view.status; // prob not using this but still.
+    state.view.status = "You restore the previous moment of time.";
+    let timestamp = Date.now();
+    await cache.save(`${state.archivepath}${timestamp}.json`, JSON.parse(JSON.stringify(state)));
+    state.archive = timestamp;
+    state.view.status = status;
+}
+
+let rewind = async function (state, recurse) {
+    recurse = (recurse || 0) + 1;
+    while (state.archive && recurse) {
+        state = await cache.load(`${state.archivepath}${state.archive}.json`);
+        recurse--;
+    }
+    return state;
+}
+
+
 module.exports = {
     act: act,
     conditionMet: conditionMet,
     getContext: getContext,
     doVerb: doVerb,
+    calculate: calculate,
+    archive: archive,
+    rewind: rewind,
     getControl: getControl,
     list: list,
     randomChoice: randomChoice,
