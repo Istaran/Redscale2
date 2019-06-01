@@ -156,7 +156,7 @@ class Card extends React.Component {
         let display = this.props.display;
         let stacks = [];
         for (var i = 1; i < this.props.count; i++) {
-            stacks.push(<div className={'stack ' + this.props.verb} />);
+            stacks.push(<div className={'stack ' + this.props.verb} key={'stack ' + i} />);
         }
         return <div className='cardBox'><div className={'card ' + this.props.verb} onClick={(event) => this.takeAction(event)} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} >{display}</div>{stacks}</div>;
     }

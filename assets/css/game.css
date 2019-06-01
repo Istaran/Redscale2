@@ -22,6 +22,7 @@ div.titlebar {
     border-color: black;
     border-style: solid;
     border-width: 1px;
+    overflow: hidden;
 }
 
 div.statusDisplay {
@@ -41,7 +42,7 @@ div.statusWrapper {
 
 div.leftStatus {
     width: 250px;
-    min-height: calc(100vh - 425px);
+    min-height: calc(100vh - 525px);
     border-color: black;
     border-style: groove;
     background-color: lightgray;
@@ -50,7 +51,7 @@ div.leftStatus {
 }
 div.rightStatus {
     width: 250px;
-    min-height: calc(100vh - 425px);
+    min-height: calc(100vh - 525px);
     border-color: black;
     border-style: groove;
     background-color: lightgray;

@@ -330,6 +330,49 @@ let rewind = async function (state, recurse) {
     return state;
 }
 
+let textify = function (tagmap, tags, fallback) {
+    for (var tag in tagmap) {
+        if (tags[tag]) {
+            console.log(`${tag} => ${tagmap[tag]}`);
+            return tagmap[tag];
+        }
+    }
+    return fallback;
+}
+
+let scrubText = async function (state, text, contextTags, contextScrubbers) {
+    let scrubbers = await cache.load("data/scrubbers.json");
+    if (contextScrubbers) {
+        for (var conscrub in contextScrubbers) {
+            var markup = `{${conscrub}}`;
+            var scrubbed = contextScrubbers[conscrub];
+            if (typeof scrubbed !== 'string') {
+                scrubbed = textify(scrubbed, contextTags, conscrub);
+            }
+            while (text.indexOf(markup) > -1)
+                text = text.replace(markup, scrubbed);
+            while (text.indexOf(markup.toLowerCase()) > -1)
+                text = text.replace(markup.toLowerCase(), scrubbed.toLowerCase());
+        }
+    }
+
+    for (var scrub in scrubbers) {
+        markup = `{${scrub}}`;
+        scrubbed = scrubbers[scrub];
+        if (typeof scrubbed !== 'string') {
+            scrubbed = textify(scrubbed, contextTags, scrub);
+        }
+        while (text.indexOf(markup) > -1)
+            text = text.replace(markup, scrubbed);
+        while (text.indexOf(markup.toLowerCase()) > -1)
+            text = text.replace(markup.toLowerCase(), scrubbed.toLowerCase());
+    }
+    while (text.indexOf('{') > -1)
+        text = text.replace('{', '');
+    while (text.indexOf('}') > -1)
+        text = text.replace('}', '');
+    return text;
+}
 
 module.exports = {
     act: act,
@@ -343,5 +386,6 @@ module.exports = {
     list: list,
     randomChoice: randomChoice,
     readContextPath: readContextPath,
-    writeContextPath: writeContextPath
+    writeContextPath: writeContextPath,
+    scrubText: scrubText
 };
