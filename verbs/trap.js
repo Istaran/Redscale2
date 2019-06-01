@@ -1,6 +1,7 @@
 
 let cache = require('../cache');
 let combatengine = require('../combatengine');
+let gameengine = require('../gameengine');
 
 let act = async function (state, details) {
     let party = state.parties[state.activeParty];
@@ -43,22 +44,34 @@ let act = async function (state, details) {
                 for (var t = 0; t < details.immunitytags.length; t++) {
                     if (target.tags[details.immunitytags[i]]) {
                         immune = true;
-                        resultText += details[`${targetType[i]}immunetext`][details.immunitytags[t]];
+                        resultText += await gameengine.scrubText(state,
+                            details[`${targetType[i]}immunetext`][details.immunitytags[t]],
+                            target.tags,
+                            defs ? defs.scrubbers : null);
                         break;
                     }
                 }
                 if (!immune) {
                     let attackRoll = await combatengine.attackRoll(details.accuracy, target.evasion || defs.evasion);
                     if (attackRoll == 0) {
-                        resultText += details[`${targetType[i]}misstext`];
+                        resultText += await gameengine.scrubText(state,
+                            details[`${targetType[i]}misstext`],
+                            target.tags,
+                            defs ? defs.scrubbers : null);
                     } else {
                         let damage = (await combatengine.damageRoll(details.damagedice, details.damagedie, details.damageplus)) * attackRoll;
                         if (!target.health) target.health = defs.maxHealth;
                         target.health -= damage;
                         if (target.health > 0) {
-                            resultText += details[`${targetType[i]}hittext`] + `${targetType[i] == "leader" ? "You" : "They"} received ${damage} ${details.damagetype} damage.\n`;
+                            resultText += await gameengine.scrubText(state,
+                                details[`${targetType[i]}hittext`] + `${targetType[i] == "leader" ? "You" : "{They}"} received ${damage} ${details.damagetype} damage.\n`,
+                                target.tags,
+                                defs ? defs.scrubbers : null);
                         } else {
-                            resultText += details[`${targetType[i]}killtext`];
+                            resultText += await gameengine.scrubText(state,
+                                details[`${targetType[i]}killtext`],
+                                target.tags,
+                                defs ? defs.scrubbers : null);
                         }
                     }
                 }
