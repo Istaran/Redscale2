@@ -1,4 +1,5 @@
 var combatengine = require('../combatengine');
+var gameengine = require('../gameengine');
 var cache = require('../cache');
 
 let act = async function (state, details) {
@@ -24,29 +25,31 @@ let act = async function (state, details) {
 
     let deflect = Math.floor(enemyCard.deflect + Math.random());
 
+    let allyResult = "";
     if (assist.allyattacks) {
         for (var i = 0; i < assist.allyattacks; i++) {
             if (deflect) {
                 deflect--;
-                engineResult += `The ${enemyDef.display} deflected your ally's attack!\n`;
+                allyResult += `The ${enemyDef.display} deflected your ally's attack!\n`;
             } else {
                 let hitMulti = combatengine.attackRoll(assist.allyaccuracy - enemyCard.dodge, enemyDef.evasion);
                 if (hitMulti == 0)
-                    engineResult += assist.allymisstext + "\n";
+                    allyResult += assist.allymisstext + "\n";
                 else {
                     engineResult += assist.allyhittext + " ";
                     if (hitMulti > 1)
-                        engineResult += `Critical hit! (Net damage x${hitMulti}) `;
+                        allyResult += `Critical hit! (Net damage x${hitMulti}) `;
                     let damage = combatengine.damageRoll(assist.allydamagedice, assist.allydamagedie, assist.allydamageplus - Math.max(0, enemyCard.soak - (assist.allydamagepierce || 0))) * hitMulti;
                     if (damage <= 0) {
-                        engineResult += card["aggress soak display"] || "They shrugged it off!\n";
+                        allyResult += card["aggress soak display"] || "{They} shrugged it off!\n";
                     } else {
                         state.enemy.health -= damage;
-                        engineResult += `They dealt ${damage} ${card.damagetype} damage!\n`;
+                        allyResult += `{They} dealt ${damage} ${card.damagetype} damage!\n`;
                     }
                 }
             }
         }
+        allyResult = await gameengine.scrubText(state, allyResult, assist.tags, assist.scrubbers);
     }
 
     for (var i = 0; i < attacks; i++) {
@@ -62,7 +65,7 @@ let act = async function (state, details) {
                     engineResult += `Critical hit! (Net damage x${hitMulti}) `;
                 let damage = combatengine.damageRoll(damagedice, damagedie, damageplus - enemyCard.soak) * hitMulti;
                 if (damage <= 0) {
-                    engineResult += card["aggress soak display"] || "They shrugged it off!\n";
+                    engineResult += card["aggress soak display"] || "{They} shrugged it off!\n";
                 } else {
                     state.enemy.health -= damage;
                     engineResult += `You dealt ${damage} ${card.damagetype} damage!\n`;
@@ -80,7 +83,10 @@ let act = async function (state, details) {
     }
 
     let engineProgress = await combatengine.progress(state);
-    state.view.status = `${card.display}\n${enemyCard["abjure display"]}\n\n${engineResult}\n${engineProgress}`;
+    state.view.status = await gameengine.scrubText(state,
+        `${card.display}\n${enemyCard["abjure display"]}\n\n${allyResult}${engineResult}\n${engineProgress}`,
+        state.enemy.tags,
+        state.enemy.scrubbers);
 }
 
 

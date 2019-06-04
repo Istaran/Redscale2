@@ -348,8 +348,12 @@
       "details": {
         "targets": [
           {
-            "chance": 1,
+            "chance": 3,
             "name": "kobold spearman"
+          },
+          {
+            "chance": 1,
+            "name": "kobold miner"
           }
         ]
       },

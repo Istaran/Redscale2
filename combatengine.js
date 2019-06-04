@@ -324,6 +324,8 @@ let progress = async function (state) {
                         pawnIndex: assist.set
                     }
                     Object.assign(leader.activeassist, assistcard);
+                    leader.activeassist.tags = Object.assign({}, helper.tags);
+                    leader.activeassist.scrubbers = Object.assign({}, helperDef.scrubbers);
                 }
             } else {
                 leader.activeassist = null;
