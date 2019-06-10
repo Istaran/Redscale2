@@ -5,20 +5,20 @@
     "maxNutrition": 60,
     "evasion": 10,
     "assistcards": [
-        {
-            "display": "Your kobold ally pulls back their pickaxe, ready to strike.",
-            "cardlines": "Kobold\nPiercing Pickaxe\n\nAccuracy: \u25cf\nDamage: \u25cf\u25cb\nAttacks: \u25cf",
-            "help": "Distracting Spear\n\nGrants your attacks this round +2 Accuracy, helping avoid misses and score critical hit multipliers.",
-            "allyhittext": "Your kobold ally swings their pickaxe, stabbing your foe with the sharp tip!",
-            "allymisstext": "Your kobold ally swings their pickaxe, but the enemy avoided it!",
-            "allyattacks": 1,
-            "allyaccuracy": 5,
-            "allydamagedice": 1,
-            "allydamagedie": 6,
-            "allydamageplus": 2,
-            "allydamagepierce": 4,
-            "subtype": "aggress"
-        },
+      {
+        "display": "Your kobold ally pulls back their pickaxe, ready to strike.",
+        "cardlines": "Kobold\nPiercing Pickaxe\n\nAccuracy: \u25cf\nDamage: \u25cf\u25cb\nAttacks: \u25cf",
+        "help": "Piercing Pickaxe\n\nThe kobold makes an attack before yours, potentially using up your enemy's deflection.",
+        "allyhittext": "Your kobold ally swings their pickaxe, stabbing your foe with the sharp tip!",
+        "allymisstext": "Your kobold ally swings their pickaxe, but the enemy avoided it!",
+        "allyattacks": 1,
+        "allyaccuracy": 5,
+        "allydamagedice": 1,
+        "allydamagedie": 6,
+        "allydamageplus": 2,
+        "allydamagepierce": 4,
+        "subtype": "aggress"
+      },
         {
             "display": "Your kobold ally readies to interfere with their attack.",
             "cardlines": "Kobold\nDistracting Pickaxe\n\nDodge: +2",

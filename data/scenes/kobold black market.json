@@ -1,0 +1,84 @@
+{
+  "start": {
+    "controls": [
+      [
+        {
+          "type": "actButton",
+          "display": "Attack",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "hunt",
+              "details": {
+                "targets": [
+                  {
+                    "chance": 1,
+                    "name": "kobold rogue"
+                  }
+                ]
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "clear": true
+              }
+            }
+          ],
+          "help": "Force the kobold to submit or die!"
+        },
+        {
+          "type": "actButton",
+          "display": "Buy",
+          "verb": "setscene",
+          "details": {
+            "text": "You inquire about the kobold's wares, and they open their coat to reveal a variety of goods affixed to the inside on each side.",
+            "sub": "buy",
+            "name": "kobold black market"
+          }
+        },
+        {
+          "type": "actButton",
+          "display": "Leave",
+          "verb": "setscene",
+          "details": {
+            "clear": true
+          },
+          "help": "Take your leave."
+        }
+      ]
+    ]
+  },
+  "Buy": {
+    "controls": [
+      [
+        {
+          "type": "actButton",
+          "display": "Buy dried meat",
+          "verb": "flavor",
+          "if": {
+            "condition": "stateis",
+            "context": "party",
+            "fact": "inventory/copper coin",
+            "rule": ">=",
+            "value": 1
+          },
+          "details": {
+            "text": "If only this were implemented, you could buy yourself some preserved food for later."
+          },
+          "help": "Buy dried meat.\nCost: 1 copper coin\nUse: Restore 5 nutrition. Usable by any carnivore or omnivore."
+        },
+        {
+          "type": "actButton",
+          "display": "Leave",
+          "verb": "setscene",
+          "details": {
+            "clear": true,
+            "text": "You bid farewell to the shady kobold, and take your leave."
+          },
+          "help": "Take your leave."
+        }
+      ]
+    ]
+  }
+}
