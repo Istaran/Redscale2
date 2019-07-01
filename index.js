@@ -181,7 +181,9 @@ app.get('/list', async function (req, res) {
         profile = { id: "localdev", givenName: "Developer" };
     } else {
         if (!req.user) {
-            res.sendStatus(403).send("No active session");
+            res.status(403);
+            res.send("No active session");
+            return;
         }
         profile = await cache.load(`saves/profiles/${req.user}.json`);
     }
