@@ -28,7 +28,7 @@
         }
     ],
   "workercard": {
-    "cardlines": "Kobold Rogue\nWork Rating: 1\nSecurity Rating: 2\nDarkvision: +/- 1\nMining bonus +1\nUpkeep: 1 nutrition\n(Omnivore)",
+    "cardlines": "Kobold Miner\nWork Rating: 1\nSecurity Rating: 2\nDarkvision: +/- 1\nMining bonus +2\nUpkeep: 1 nutrition\n(Omnivore)",
     "help": "Kobolds are small, numerous, and reliable workers, well suited to the underground.\nDarkvision: Get a bonus to work and security in dark times/places, and a penalty in bright times/places.\nOmnivore: kobolds can eat anything.",
     "work": {
       "base": 1,
