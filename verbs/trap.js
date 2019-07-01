@@ -67,6 +67,9 @@ let act = async function (state, details) {
                                 details[`${targetType[i]}hittext`] + `${targetType[i] == "leader" ? "You" : "{They}"} received ${damage} ${details.damagetype} damage.\n`,
                                 target.tags,
                                 defs ? defs.scrubbers : null);
+                            if (targetType[i] == 'pawn' && target.health < defs.safeHealth) {
+                                resultText += `\n${target.display} is too injured to fight.`;
+                            }
                         } else {
                             resultText += await gameengine.scrubText(state,
                                 details[`${targetType[i]}killtext`],
@@ -78,6 +81,18 @@ let act = async function (state, details) {
                 break;
         }
     }
+
+    // TODO: This probably needs a more central location
+    // purge dead pawns.
+    i = 0;
+    while (i < party.pawns.length) {
+        if (party.pawns[i].health <= 0) {
+            party.pawns.splice(i, 1);
+        } else {
+            i++;
+        }
+    }
+
 
     state.view.status = resultText;
 };
