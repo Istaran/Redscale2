@@ -223,7 +223,7 @@ let act = async function (profile, action, query) {
     // Load current existence.
     let state = await cache.load(savePath);
     if (state == null) {
-        state = await cache.load(newGamePath);
+        state = JSON.parse(JSON.stringify(await cache.load(newGamePath)));
     }
     state.archivepath = `./saves/${profile.id}/${action.slot}/archive/`;
     state.query = query;

@@ -106,10 +106,13 @@ let setDefaults = async function (state) {
                 type: "hoard",
                 subtype: null,
                 inventory: {},
-                workers: {},
+                workers: [],
                 lastUpdated: 0
             }
         };
+    }
+    if (state.world.locations['Dragonbone Cave'][0][5][4].building.workers == {}) {
+        state.world.locations['Dragonbone Cave'][0][5][4].building.workers = [];
     }
     if (state.parties[0]) {
         if (!state.parties[0].leader.maxpawnassist)
