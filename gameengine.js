@@ -30,6 +30,17 @@ let doVerb = async function (verbName, state, details) {
         if (details && details.dirty) state.dirty = true;
         await verbs[verbName].act(state, details);
     }
+    if (details) {
+        var tags = {};
+        var contextScrubbers = null;
+        switch (details.scrubcontext) {
+            case "enemy":
+                tags = state.enemy.tags;
+                contextScrubbers = state.enemy.scrubbers;
+                break;
+        }
+        state.view.status = await scrubText(state, state.view.status || "", tags, contextScrubbers)
+    }
 }
 
 let conditionMet = async function (state, details) {
