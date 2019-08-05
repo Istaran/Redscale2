@@ -267,7 +267,8 @@ let damageRoll = function (damageDice, damageDie, damagePlus) {
 };
 
 let clearCombat = async function (state) {
-    state.view.status = await scrubText(state, state.view.status || "", state.enemy.tags, state.enemy.scrubbers);
+    if (!gameengine) gameengine = require('./gameengine');
+    state.view.status = await gameengine.scrubText(state, state.view.status || "", state.enemy.tags, state.enemy.scrubbers);
     state.enemy = undefined;
 };
 
