@@ -1,52 +1,55 @@
 {
-    "name": "Lord Redscale",
-    "display": "Redscale",
-    "health": 100,
-    "maxHealth": 100,
-    "stamina": 120,
-    "maxStamina": 120,
-    "nutrition": 50,
-    "maxNutrition": 100,
-    "mana": 100,
-    "maxMana": 100,
-    "healthRecover": 6,
-    "staminaRecover": 10,
-    "manaRecover": 1,
-    "evasion": 10,
-    "bonusdodge": 2,
-    "bonusaccuracy": 2,
-    "maxpawnassist": 4,
-    "tags": {
-        "dragon": true,
-        "male": true,
-        "person": true,
-        "living creature": true,
-        "fire creature": true,
-        "flyer": true,
-        "swimmer": true
-    },
-    "aggressCards": {
-        "Instinctive Bite": 5,
-        "Instinctive Claws": 5,
-        "Instinctive Tail Slap": 5
-    },
-    "abjureCards": {
-        "Instinctive Dodge": 5,
-        "Instinctive Deflect": 5,
-        "Instinctive Brace": 5
-    },
-    "assessCards": [
-        { "card": "Press the attack" },
-        { "card": "Fight defensively" }
-    ],
-    "aggressDefaultHand": {
-        "Instinctive Bite": 1,
-        "Instinctive Claws": 1,
-        "Instinctive Tail Slap": 1
-    },
-    "abjureDefaultHand": {
-        "Instinctive Dodge": 1,
-        "Instinctive Deflect": 1,
-        "Instinctive Brace": 1
-    }
+  "name": "Lord Redscale",
+  "display": "Redscale",
+  "health": 100,
+  "maxHealth": 100,
+  "stamina": 120,
+  "maxStamina": 120,
+  "nutrition": 50,
+  "maxNutrition": 100,
+  "mana": 100,
+  "maxMana": 100,
+  "healthRecover": 6,
+  "staminaRecover": 10,
+  "manaRecover": 1,
+  "evasion": 10,
+  "bonusdodge": 2,
+  "bonusaccuracy": 2,
+  "maxpawnassist": 4,
+  "damageMultiplier": {
+    "fire": 0
+  },
+  "tags": {
+    "dragon": true,
+    "male": true,
+    "person": true,
+    "living creature": true,
+    "fire creature": true,
+    "flyer": true,
+    "swimmer": true
+  },
+  "aggressCards": {
+    "Instinctive Bite": 5,
+    "Instinctive Claws": 5,
+    "Instinctive Tail Slap": 5
+  },
+  "abjureCards": {
+    "Instinctive Dodge": 5,
+    "Instinctive Deflect": 5,
+    "Instinctive Brace": 5
+  },
+  "assessCards": [
+    { "card": "Press the attack" },
+    { "card": "Fight defensively" }
+  ],
+  "aggressDefaultHand": {
+    "Instinctive Bite": 1,
+    "Instinctive Claws": 1,
+    "Instinctive Tail Slap": 1
+  },
+  "abjureDefaultHand": {
+    "Instinctive Dodge": 1,
+    "Instinctive Deflect": 1,
+    "Instinctive Brace": 1
+  }
 }

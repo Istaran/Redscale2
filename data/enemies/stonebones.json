@@ -1,0 +1,158 @@
+{
+    "display": "stone skeleton",
+    "tags": [
+        "rat",
+        "construct",
+        "stone",
+        "neuter"
+    ],
+    "attack announce": "With a scraping of stone on stone, one of the carved rat skeletons pulls free of the wall and rushes toward you! Dust is still falling loose, marring the previously spotless tiles, as it clatters across them unnaturally.\n\nThicker stone portions around the arms and legs show sign of numerous ineffectual blows, but you catch sight of a half dozen rubies buries in the inside of the spine that look like they are important. A well aimed blow might rip them loose.",
+    "hunt announce": "",
+    "max health": 75,
+    "max stamina": 99,
+    "max mana": 1,
+    "evasion": 7,
+  "reshuffle": 5,
+  "damageMultipliers": {
+    "fire": 0.1
+  },
+  "cardsets": [
+    {
+      "tell": "The statue shambles toward you, slowly but inevitably.",
+      "cards": [
+        {
+          "aggress display": "The statue slashes at you with a carefully aimed claw!",
+          "accuracy": 15,
+          "damagedice": 1,
+          "damagedie": 10,
+          "damageplus": 4,
+          "damagetype": "slashing",
+          "attacks": 1,
+          "abjure display": "The statue knocks you away with a claw!",
+          "dodge": 0,
+          "deflect": 1,
+          "soak": 2,
+          "staminacost": 0,
+          "noncritsoak": 5
+        },
+        {
+          "aggress display": "The statue slashes at you with a carefully aimed claw!",
+          "accuracy": 15,
+          "damagedice": 1,
+          "damagedie": 10,
+          "damageplus": 4,
+          "damagetype": "slashing",
+          "attacks": 1,
+          "abjure display": "The statue knocks you away with a claw!",
+          "dodge": 0,
+          "deflect": 1,
+          "soak": 2,
+          "staminacost": 0,
+          "noncritsoak": 5
+        },
+        {
+          "aggress display": "The statue slashes at you with a carefully aimed claw!",
+          "accuracy": 15,
+          "damagedice": 1,
+          "damagedie": 10,
+          "damageplus": 4,
+          "damagetype": "slashing",
+          "attacks": 1,
+          "abjure display": "The statue knocks you away with a claw!",
+          "dodge": 0,
+          "deflect": 1,
+          "soak": 2,
+          "staminacost": 0,
+          "noncritsoak": 5
+        }
+      ]
+    },
+    {
+      "tell": "The statue bounds past you, circling you energetically.",
+      "cards": [
+        {
+          "aggress display": "The statue dives past you before lashing at you with its tail!",
+          "accuracy": 10,
+          "damagedice": 2,
+          "damagedie": 10,
+          "damageplus": 5,
+          "damagetype": "bludgeoning",
+          "attacks": 1,
+          "abjure display": "The statue dodges about!",
+          "dodge": 5,
+          "deflect": 0,
+          "soak": 0,
+          "staminacost": 0,
+          "noncritsoak": 5
+        },
+        {
+          "aggress display": "The statue dives past you before lashing at you with its tail!",
+          "accuracy": 10,
+          "damagedice": 2,
+          "damagedie": 10,
+          "damageplus": 5,
+          "damagetype": "bludgeoning",
+          "attacks": 1,
+          "abjure display": "The statue dodges about!",
+          "dodge": 5,
+          "deflect": 0,
+          "soak": 0,
+          "staminacost": 0,
+          "noncritsoak": 5
+        }
+      ]
+    },
+    {
+      "tell": "The statue's crystals flair with energy, glowing a bright and alluring red.",
+      "cards": [
+        {
+          "aggress display": "The statue opens its maw and lets out a wave of flames! So warm and comforting!",
+          "accuracy": 10,
+          "damagedice": 2,
+          "damagedie": 10,
+          "damageplus": 5,
+          "damagetype": "fire",
+          "attacks": 1,
+          "attacksupportpawn": "The flames wash into {pawn} as well!\n",
+          "abjure display": "The statue pulls its limbs in close and endures your attacks!",
+          "dodge": 0,
+          "deflect": 0,
+          "soak": 7,
+          "staminacost": 0,
+          "noncritsoak": 5
+        }
+      ]
+    }
+  ],
+  "acquirecards": {
+    "card": {
+      "if": {
+        "condition": "stateis",
+        "fact": "enemy/acquired/soul",
+        "rule": "!=",
+        "value": true
+      },
+      "display": "Card\n\nChance to gain:\nBasic Fire Breath",
+      "verb": "chain",
+      "details": [
+        {
+          "verb": "card",
+          "details": {
+            "text": "You draw out the lingering energy of the statue's enchantment, particularly the part about creating flames. As a red dragon, it is your birthright, and now you have made progress to reclaiming it.",
+            "fail": "You try to absorb the statue's enchantment, but it doesn't give you any new insights.",
+            "type": "aggress",
+            "card": "Basic Fire Breath"
+          }
+        },
+        {
+          "verb": "setstate",
+          "details": {
+            "value": true,
+            "statename": "enemy/acquired/soul"
+          }
+        }
+      ],
+      "help": "Absorb the enemy's enchantment to learn from it.\nChance to gain Basic Fire Breath based on how many copies you have.\nDraw upon your inner fire to scorch your foes!"
+    }
+  }
+}

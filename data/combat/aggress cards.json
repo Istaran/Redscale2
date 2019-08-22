@@ -142,7 +142,7 @@
     "damagetype": "fire",
     "attacks": 1,
     "scaleaccuracy": 5,
-    "aggress deflect display": "They shoved your head aside at the last moment, causing your flames to splash useless to the side!",
+    "aggress deflect display": "{They} shoved your head aside at the last moment, causing your flames to splash useless to the side!",
     "staminacost": 1,
     "scalestaminacost": 1
   },

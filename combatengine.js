@@ -254,7 +254,7 @@ let attackRoll = function (accuracy, evasion) {
 };
 
 // Given (net) dice count/faces and modifier, roll the dice and return damage.
-let damageRoll = function (damageDice, damageDie, damagePlus) {
+let damageRoll = function (damageDice, damageDie, damagePlus, multiplier) {
     let damage = 0;
     console.log(`Rolling ${damageDice}d${damageDie}+${damagePlus}`);
     for (var i = 0; i < damageDice; i++) {
@@ -262,6 +262,7 @@ let damageRoll = function (damageDice, damageDie, damagePlus) {
         console.log(damage);
     }
     damage += damagePlus;
+    damage *= multiplier;
     console.log(damage);
     return damage > 0 ? damage : 0;
 };

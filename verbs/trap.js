@@ -27,6 +27,19 @@ let act = async function (state, details) {
                 targets.push(party.leader);
             }
             break;
+        case "all":
+            targetType.push("leader");
+            targets.push(party.leader);
+            var i;
+            for (i = 0; i < party.followers.length; i++) {
+                targetType.push("follower");
+                targets.push(party.followers[i]);
+            }
+            for (i = 0; i < party.pawns.length; i++) {
+                targetType.push("pawn");
+                targets.push(party.pawns[i]);
+            }
+            break;
     }
     var resultText = "";
     for (var i = 0; i < targets.length; i++) {
@@ -59,7 +72,8 @@ let act = async function (state, details) {
                             target.tags,
                             defs ? defs.scrubbers : null);
                     } else {
-                        let damage = (await combatengine.damageRoll(details.damagedice, details.damagedie, details.damageplus)) * attackRoll;
+                        let typeMulti = target.damageMultipliers && target.damageMultipliers[details.damagetype] ? target.damageMultipliers[details.damagetype] : 1;
+                        let damage = (await combatengine.damageRoll(details.damagedice, details.damagedie, details.damageplus), typeMulti * attackRoll);
                         if (!target.health) target.health = defs.maxHealth;
                         target.health -= damage;
                         if (target.health > 0) {

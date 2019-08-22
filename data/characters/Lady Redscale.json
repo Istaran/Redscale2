@@ -16,6 +16,9 @@
     "bonussoak": 2,
     "bonusdamage": 2,
     "maxpawnassist": 4,
+    "damageMultiplier": {
+      "fire": 0
+    },
     "tags": {
         "dragon": true,
         "female": true,

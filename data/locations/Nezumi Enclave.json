@@ -9,39 +9,85 @@
             [],
             [],
             [],
-            [],
-            [],
-            [],
+            [ null, null, null, "TiledPath" ],
+            [ null, null, null, "TiledPath" ],
+            [ null, null, null, "TiledPath" ],
             [ null, null, null, "DragonPath" ]
         ]
     ],
     "styles": {
-        "DragonPath": {
-            "title": "Nezumi Enclave - secret passage",
-           "description": "The tunnel here is floored in black and white alternating tiles, and lined with smooth-carved walls. Whoever made this place took great care and time, and presumably must clean it regularly. The footsteps outside show it was used quite regularly, but there haven't been new ones since you opened it for yourself.",
-            "preview": "The tunnel there connects the Dragonbone Cave to the smooth, tiled tunnels beyond.",
-            "events": [
-                {
-                    "chance": 10,
-                    "event": null
-                }
-            ],
-            "directionOverrides": {
-                "sw": {
-                    "disabled": false,
-                    "x": 0,
-                    "y": -10,
-                    "z": -2,
-                    "zone": "Dragonbone Cave"
-                }
-            },
-            "light": "white",
-            "dark": "black"
+      "DragonPath": {
+        "title": "Nezumi Enclave - secret passage",
+        "description": "The tunnel here is floored in black and white alternating tiles, and lined with smooth-carved walls. Whoever made this place took great care and time, and presumably must clean it regularly. The footsteps outside show it was used quite regularly, but there haven't been new ones since you opened it for yourself.",
+        "preview": "The tunnel there connects the Dragonbone Cave to the smooth, tiled tunnels beyond.",
+        "events": [
+          {
+            "chance": 10,
+            "event": null
+          }
+        ],
+        "directionOverrides": {
+          "sw": {
+            "disabled": false,
+            "x": 0,
+            "y": -10,
+            "z": -2,
+            "zone": "Dragonbone Cave"
+          }
+        },
+        "light": "white",
+        "dark": "black"
+      },
+      "TiledPath": {
+        "title": "Nezumi Enclave - tiled path",
+        "description": "Regular and conspiculously clean tiles, alternating black and white, line the path here. The walls are rougher, a mix of nature, old carved walls, and the occasional artistic flair. Skeletal rats, assorted flowers, and geometric shapes line are carved into the wall without rhyme or reason.",
+        "preview": "The black and white tiles continue smoothly between artistically carved walls.",
+        "events": [
+          {
+            "chance": 1,
+            "event": null
+          },
+          {
+            "chance": 1,
+            "event": "flowerthorn"
+          },
+          {
+            "chance": 1,
+            "event": "stonebones"
+          }
+        ],
+        "light": "white",
+        "dark": "black"
+      }
+    },
+  "events": {
+    "flowerthorn": {
+      "verb": "trap",
+      "details": {
+        "target": "random one",
+        "effect": "damage",
+        "accuracy": "10",
+        "immunitytags": [ "nezumi" ],
+        "damagedie": 4,
+        "damagedice": 1,
+        "damageplus": 0,
+        "damagetype": "piercing",
+        "leaderhittext": "A stone thorn launches from one of the carved flowers, piercing your wing membranes painfully!\n",
+        "leadermisstext": "A stone thorn launches from one of the carved flowers, bouncing off your scales!\n",
+        "leaderkilltext": "A stone thorn launches from one of the carved flowers, piercing your neck!\nIt's stuck in your artery! You can't get it out. You get woozy, the lack of blood flow to your brain impossible to deal with. You can't even! You reject this outcome, ripping back time until you find yourself waking again in your lair.\n",
+        "pawnhittext": "A stone thorn launches from one of the carved flowers,  striking one of your {pawn} slaves, injuring {them}! ",
+        "pawnkilltext": "A stone thorn launches from one of the carved flowers,  striking one of your {pawn} slaves in the neck! {They} flop to the ground, lifeless!\n",
+        "pawnmisstext": "A stone thorn launches from one of the carved flowers,  narrowly missing one of your {pawn} slaves!\n",
+        "pawnimmunetext": {
+          "nezumi": "One of your {pawn} slaves holds up a hand, stopping you and your entourage. \"Stick to the black tiles for this bit,\" {they} point out, carefully stepping only on the black for several steps."
         }
+      }
     },
-    "events": {
-
-    },
+    "stonebones": {
+      "verb": "attack",
+      "details": { "enemy": "stonebones" }
+    }
+  },
     "actions": {
     }
 }

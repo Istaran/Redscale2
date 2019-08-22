@@ -43,7 +43,8 @@ let act = async function (state, details) {
                 engineResult += `${state.enemy.name} hit you. `;
                 if (hitMulti > 1)
                     engineResult += `Critical hit! (Net damage x${hitMulti}) `;
-                let damage = combatengine.damageRoll(enemyCard.damagedice, enemyCard.damagedie, enemyCard.damageplus - soak) * hitMulti;
+                let typeMulti = (leader.damageMultipiers && leader.damageMultipiers[enemyCard.damagetype]) ? leader.damageMultipiers[enemyCard.damagetype] : 1;
+                let damage = combatengine.damageRoll(enemyCard.damagedice, enemyCard.damagedie, enemyCard.damageplus - soak, typeMulti * hitMulti);
                 if (damage <= 0) {
                     engineResult += enemyCard["aggress soak display"] || "You shrugged it off!\n";
                 } else {
@@ -51,6 +52,9 @@ let act = async function (state, details) {
                     state.parties[state.activeParty].leader.health -= damage;
                     engineResult += `You received ${damage} ${enemyCard.damagetype} damage!\n`;
                 }
+            }
+            if (enemyCard.attacksupportpawn && assist.name) {
+                engineResult += enemyCard.attacksupportpawn + " (but not really because I haven't implemented that yet.)\n";
             }
         }
     }

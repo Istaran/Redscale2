@@ -7,14 +7,14 @@
   "assistcards": [
     {
       "display": "Your kobold ally distracts your foe with a knife, making it easier for you to aim.",
-      "cardlines": "Kobold\nDistracting Knife\n\nAccuracy: +3",
+      "cardlines": "Kobold Rogue\nDistracting Knife\n\nAccuracy: +3",
       "help": "Distracting Spear\n\nGrants your attacks this round +3 Accuracy, helping avoid misses and score critical hit multipliers.",
       "bonusaccuracy": 3,
       "subtype": "aggress"
     },
     {
       "display": "Your kobold ally grips {their} knife tightly, ready to strike.",
-      "cardlines": "Kobold\nFlanking Stab\n\nAccuracy: \u25cf\u25cf\nDamage: \u25cf\nAttacks: \u25cf",
+      "cardlines": "Kobold Rogue\nFlanking Stab\n\nAccuracy: \u25cf\u25cf\nDamage: \u25cf\nAttacks: \u25cf",
       "help": "Flanking Stab\n\nThe kobold rogue makes an attack before yours, potentially using up your enemy's deflection.",
       "allyhittext": "Your kobold ally stabs your target with a knife, gesturing for you to follow up on {their} attack!",
       "allymisstext": "Your kobold ally takes a stab at your enemy, but can't land the blow!",

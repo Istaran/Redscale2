@@ -328,8 +328,31 @@
       }
     },
     "flame trap": {
-      "verb": "flavor",
-      "details": { "text": "The torch suddenly flares with arcane energy and its flames suddenly expand, engulfing you in fire! Fortunately for you, you're a red dragon and this actually just feels really nice. You'd probably hate it if you weren't a red dragon." }
+      "verb": "trap",
+      "details": {
+        "target": "all",
+        "effect": "damage",
+        "accuracy": "5",
+        "immunitytags": [ "kobold", "fire creature" ],
+        "damagedie": 4,
+        "damagedice": 1,
+        "damageplus": 0,
+        "damagetype": "fire",
+        "leaderimmunetext": {
+          "fire": "The torch suddenly flares with arcane energy and its flames suddenly expand, engulfing you in fire! Fortunately for you, you're a red dragon and this actually just feels really nice. You'd probably hate it if you weren't a red dragon.",
+          "kobold": "You hear the click and reflexively drop the ground, letting the flames wash out over you harmlessly. Ah, standard intersection flame trap. A classic."
+        },
+        "leaderhittext": "The torch suddenly flares with arcane energy and its flames suddenly expand, engulfing you in fire! You thrash in pain until the fire dies down.\n",
+        "leadermisstext": "The torch suddenly flares with arcane energy and its flames suddenly expand, engulfing you in fire! You roll quickly, smothering the flames before they can harm you too much\n",
+        "leaderkilltext": "The torch suddenly flares with arcane energy and its flames suddenly expand, engulfing you in fire! You fall to the ground, the life fading from your body as your thoughts consist entirely of pain.\n",
+        "pawnhittext": "You {pawn} is caught in the flames, injuring {them}! ",
+        "pawnkilltext": "Your {pawn} is caught in the flames! {They} flop to the ground, screaming as {they} fall dead!\n",
+        "pawnmisstext": "Your {pawn} manages to drop down, narrowly avoiding the flames!\n",
+        "pawnimmunetext": {
+          "kobold": "Your {pawn} drops to the ground on cue, keeping low as the flames wash overhead.",
+          "fire creature": "Your {pawn} lets the flames wash over {them} harmlessly."
+        }
+      }
     },
     "black market": {
       "verb": "setscene",

@@ -61,9 +61,14 @@ let act = async function (state, details) {
                 engineResult += card["aggress dodge display"] || (`The ${enemyDef.display} avoided your attack!\n`);
             else {
                 engineResult += `You hit ${state.enemy.name}. `;
-                if (hitMulti > 1)
+                if (hitMulti > 1) {
                     engineResult += `Critical hit! (Net damage x${hitMulti}) `;
-                let damage = combatengine.damageRoll(damagedice, damagedie, damageplus - enemyCard.soak) * hitMulti;
+                    if (enemyCard.noncritsoak > 0) {
+                        engineResult += "You bypassed {their} armor!";
+                    }
+                }
+                let typeMulti = (enemyDef.damageMultipiers && enemyDef.damageMultipiers[card.damagetype]) ? enemyDef.damageMultipiers[card.damagetype] : 1;
+                let damage = combatengine.damageRoll(damagedice, damagedie, damageplus - enemyCard.soak - (hitMulti <= 1 && enemyCard.noncritsoak ? enemyCard.noncritsoak : 0), typeMulti * hitMulti);
                 if (damage <= 0) {
                     engineResult += card["aggress soak display"] || "{They} shrugged it off!\n";
                 } else {
