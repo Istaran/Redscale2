@@ -1,0 +1,34 @@
+{
+  "introm": {
+    "controls": [
+      [
+        {
+          "type": "actButton",
+          "display": "Leave",
+          "verb": "setscene",
+          "details": {
+            "text": "You bid farewell to the illusory rat.",
+            "clear": true
+          },
+          "help": "You're done here."
+        }
+      ]
+    ]
+  },
+  "introf": {
+    "controls": [
+      [
+        {
+          "type": "actButton",
+          "display": "Leave",
+          "verb": "setscene",
+          "details": {
+            "text": "You bid farewell to the illusory rat.",
+            "clear": true
+          },
+          "help": "You're done here."
+        }
+      ]
+    ]
+  }
+}
