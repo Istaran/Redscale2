@@ -7,6 +7,7 @@ let act = async function (state, details) {
     let party = state.parties[state.activeParty];
     let targets = [];
     let targetType = [];
+    console.log("Triggered a trap!");
     switch (details.target) {
         case "random one":
             // Arrange 25% chance of follower hit (scaled down if less than 3 followers), 50% chance of pawn hit (scaled down if less than 8 pawns), rest is leader hit.
@@ -44,6 +45,7 @@ let act = async function (state, details) {
     var resultText = "";
     for (var i = 0; i < targets.length; i++) {
         let target = targets[i];
+        console.log(`Targetting ${target.display}`);
         let defs = null;
         switch (targetType[i]) {
             case "pawn":
@@ -55,19 +57,20 @@ let act = async function (state, details) {
             case "damage":
                 let immune = false;
                 for (var t = 0; t < details.immunitytags.length; t++) {
-                    if (target.tags[details.immunitytags[i]]) {
+                    if (target.tags[details.immunitytags[t]]) {
                         immune = true;
-                        resultText += await gameengine.scrubText(state,
+                        resultText += "\n" + await gameengine.scrubText(state,
                             details[`${targetType[i]}immunetext`][details.immunitytags[t]],
                             target.tags,
                             defs ? defs.scrubbers : null);
                         break;
                     }
+                    console.log(`${target.display} is not ${details.immunitytags[t]}`);
                 }
                 if (!immune) {
                     let attackRoll = await combatengine.attackRoll(details.accuracy, target.evasion || defs.evasion);
                     if (attackRoll == 0) {
-                        resultText += await gameengine.scrubText(state,
+                        resultText += "\n" + await gameengine.scrubText(state,
                             details[`${targetType[i]}misstext`],
                             target.tags,
                             defs ? defs.scrubbers : null);
@@ -77,16 +80,16 @@ let act = async function (state, details) {
                         if (!target.health) target.health = defs.maxHealth;
                         target.health -= damage;
                         if (target.health > 0) {
-                            resultText += await gameengine.scrubText(state,
-                                details[`${targetType[i]}hittext`] + `${targetType[i] == "leader" ? "You" : "{They}"} received ${damage} ${details.damagetype} damage.\n`,
+                            resultText += "\n" + await gameengine.scrubText(state,
+                                details[`${targetType[i]}hittext`] + `${targetType[i] == "leader" ? "You" : "{They}"} received ${damage} ${details.damagetype} damage.`,
                                 target.tags,
                                 defs ? defs.scrubbers : null);
                             if (targetType[i] == 'pawn' && target.health < defs.safeHealth) {
                                 resultText += `\n${target.display} is too injured to fight.`;
                             }
                         } else {
-                            resultText += await gameengine.scrubText(state,
-                                details[`${targetType[i]}killtext`],
+                            resultText += "\n" + await gameengine.scrubText(state,
+                                details[`\n${targetType[i]}killtext`],
                                 target.tags,
                                 defs ? defs.scrubbers : null);
                         }

@@ -49,23 +49,35 @@
       ]
     ]
   },
-  "Buy": {
+  "buy": {
     "controls": [
       [
         {
           "type": "actButton",
           "display": "Buy dried meat",
-          "verb": "flavor",
+          "verb": "chain",
           "if": {
-            "condition": "stateis",
-            "context": "party",
-            "fact": "inventory/copper coin",
-            "rule": ">=",
-            "value": 1
+            "condition": "inventoryhas",
+            "item": "copper coin",
+            "count": 1
           },
-          "details": {
-            "text": "If only this were implemented, you could buy yourself some preserved food for later."
-          },
+          "details": [
+            {
+              "verb": "pay",
+              "details": {
+                "item": "copper coin",
+                "count": 1,
+                "text": "You exchange a copper coin for a bit of meat. It's merely a snack for you, but maybe if you buy enough for a meal it'll sate you when you need it?"
+              }
+            },
+            {
+              "verb": "gather",
+              "details": {
+                "item": "dried meat",
+                "plus": 1
+              }
+            }
+          ],
           "help": "Buy dried meat.\nCost: 1 copper coin\nUse: Restore 5 nutrition. Usable by any carnivore or omnivore."
         },
         {

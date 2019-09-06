@@ -1,0 +1,9 @@
+{
+  "display": "dried meat",
+  "cardtext": "Dried meat\n\nHard but edible.\n+5Nutrition",
+  "descriptionSingular": "Some sliced meat, hard from being dried out, but still delicious.",
+  "descriptionPlural": "Some sliced meat, hard from being dried out, but still delicious.",
+  "hands": 0.01,
+  "weight": 0.02,
+  "nutrition": 5
+}
