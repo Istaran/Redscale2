@@ -4,7 +4,7 @@
             [ "Edge", "Edge", "HiddenSwitch", null, null, "Edge", "Edge", "Edge", "RiverEnd", "Edge" ],
             [ "Edge", "Middle", "Middle", "Edge", "Edge", "Middle", "Middle", "River", "River", "Edge" ],
             [ "Edge", "Middle", "Middle", "Ribs", "RibsNoSE", "Tailbone", "Tailbone", "RiverNoSW", "Middle", "Edge" ],
-            [ "Skull", "UnderSpine", "UnderSpine", "UnderSpineNoNE", "UnderSpine", "RiverTB", "RiverTB", "RiverNoNW", "Middle", "Edge" ],
+            [ "Skull", "UnderSpine", "UnderSpine", "UnderSpine", "UnderSpineNoNE", "RiverTB", "RiverTB", "RiverNoNW", "Middle", "Edge" ],
             [ "CaveinW", "Middle", "Middle", "Ribs", "Ribs", "River", "Middle", "Middle", "Middle", "Edge" ],
             [ "Edge", "Middle", "Middle", "Middle", "Dragonhome", "River", "Middle", "Middle", "Middle", "Edge" ],
             [ "Edge", "Middle", "River", "River", "River", "River", "Middle", "Middle", "Middle", "Edge" ],
@@ -21,9 +21,9 @@
             [ null, "Air", "Air", "Air", "Air", "OverRiver", "Air", "Air", "Air" ],
             [ null, "Air", "Air", "Air", "OverHome", "OverRiver", "Air", "Air", "Air" ],
             [ null, "Air", "OverRiver", "OverRiver", "OverRiver", "OverRiver", "Air", "Air", "Air" ],
-            [ null, "Air", "OverRiver", "Air", "OverRiver", "Air", "Air", "Air" ],
-            [ null, "OverRiver", "OverRiver", "Air", "OverRiver", "Air" ],
-            [ null, "Air", "Air", "Air", "OverRiver" ]
+          [ null, "Air", "OverRiver", "Air", "OverRiver", "Air", "Air", "Air", "Air" ],
+          [ null, "OverRiver", "OverRiver", "Air", "OverRiver", "Air", "Air", "Air" ],
+            [ null, "Air", "Air", "Air", "OverRiver", "Air" ]
         ]
     ],
   "styles": {
