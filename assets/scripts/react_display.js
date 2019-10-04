@@ -586,6 +586,69 @@ class Reassigner extends React.Component {
         </div>;
     }
 }
+
+class Recombiner extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            leftSet: Object.assign({}, props.leftSet),
+            rightSet: props.rightSet.slice(),
+            leftSelect: 0,
+            rightSelect: 0,
+            displays: props.displays,
+        }
+    }
+
+    done() {
+        let self = this;
+        fetch('/act' + location.search, {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({ 'body': { 'verb': 'setscene', 'slot': saveSlot, 'id': self.props.id } })
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            gameDisplayer.setState({ gameState: data });
+        }).catch(function (err) {
+            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+        });
+    }
+
+    render() {
+        let self = this;
+        let leftRows = [];
+        for (var leftRow in self.state.leftSet) {
+            let leftItem = self.state.leftSet[leftRow];
+            let card = self.props.displays[leftItem.displayIndex];
+            leftRows.push(<div className="recombinerRow" key={"left " + leftRows.length}>{leftItem.count + ' x'}<div className={"card " + card.type}>{card.text}</div></div>);
+        }
+        let rightRows = self.state.rightSet.map((assignee, index) => {
+            let card = self.props.displays[assignee.displayIndex];
+            return <div className="recombinerRow" key={"right " + index}><div className={"card " + card.type}>{card.text}</div></div>;
+        });
+
+        return <div className="screencover">
+            <div className="recombiner">
+                <div className="recombinerColumn">
+                    <div className="recombinerColumnHeader">{self.props.leftHeader}</div>
+                    {leftRows}
+                </div>
+                <div className="recombinerSpacer">
+                    <div className="recombinerHeaderSpacer">
+                        <input type='button' onClick={() => self.done()} value="Done" />
+                    </div>
+                </div>
+                <div className="recombinerColumn">
+                    <div className="recombinerColumnHeader">{self.props.rightHeader}</div>
+                    {rightRows}
+                </div>
+            </div>
+        </div>;
+    }
+}
         
 class GameDisplayer extends React.Component {
 	constructor(props) {
@@ -637,6 +700,8 @@ class GameDisplayer extends React.Component {
                                 return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
                             case 'reassigner':
                                 return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
+                            case 'recombiner':
+                                return <Recombiner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
                             default:
                                 return '';
                         }

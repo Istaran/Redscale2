@@ -12,6 +12,7 @@ let addControls = async function (state, controls) {
         state.world.locations[state.location][state.z][state.y][state.x];
 
     let thirdColumn = [];
+    let fourthColumn = [];
     if (spot && spot.building) {
         let manageButton =
             await gameengine.getControl(state, {
@@ -57,9 +58,28 @@ let addControls = async function (state, controls) {
             thirdColumn.push(buildButton);
         }
     }
+
+
+    if (true) {
+        let useButton = await gameengine.getControl(state, {
+            "type": "actButton",
+            "display": "Use items",
+            "verb": "setscene",
+            "details": {
+                "text": "",
+                "type": "recombine",
+                "name": "inventory",
+                "sub": "use"
+            },
+            "help": "Use some of your items."
+        });
+        fourthColumn.push(useButton);
+    }
+
     if (thirdColumn.length)
         controls[2] = thirdColumn;
-
+    if (fourthColumn.length)
+        controls[3] = fourthColumn;
 }
 
 let getStatusDisplay = function (state) {

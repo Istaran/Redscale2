@@ -1,6 +1,7 @@
 {
   "name": "Lord Redscale",
   "display": "Redscale",
+  "description": "\u2642 Red Dragon",
   "health": 100,
   "maxHealth": 100,
   "stamina": 120,

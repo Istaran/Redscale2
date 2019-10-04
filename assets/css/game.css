@@ -129,6 +129,10 @@ div.card {
     white-space: pre;
 }
 
+div.selectedCard {
+    border-style: double;
+}
+
 div.abjure {
     background-color: #AAAAFF;
     color: darkblue;
@@ -305,6 +309,42 @@ div.reassignerColumnHeader {
 }
 
 div.reassignerHeaderSpacer {
+    width: 100px;
+    justify-content: center;
+    display: flex;
+}
+
+
+div.recombiner {
+    position: center;
+    width: 1000px;
+    height: calc(100vh - 250px);
+    overflow-y: scroll;
+    border: thick;
+    border-color: black;
+    background: white;
+    display: flex;
+    flex-direction: row;
+}
+
+div.recombinerColumn {
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+div.recombinerRow {
+    height: 160px;
+    display: flex;
+    flex-direction: row;
+}
+
+div.recombinerColumnHeader {
+    width: 425px;
+    text-align: left;
+}
+
+div.recombinerHeaderSpacer {
     width: 100px;
     justify-content: center;
     display: flex;

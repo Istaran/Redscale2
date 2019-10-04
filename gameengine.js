@@ -139,6 +139,36 @@ let getReassignerDisplay = async function (thing, type) {
     return data;
 }
 
+getRecombinerDisplay = async function (thing, type) {
+    console.log(`Getting representation for ${type}: ${JSON.stringify(thing)}`);
+    var data;
+    switch (type) {
+        // This helper needs to know where to find the source and what the display type is.
+        case "item":
+            let item = await cache.load(`data/items/${thing}.json`);
+            data = { "type": "item", "text": item.cardtext };
+            break;
+        case "pawn":
+            let pawnDef = await cache.load(`data/pawns/${thing.name}.json`);
+            data = {
+                "type": "pawn",
+                "text": `${pawnDef.display}\nHealth: ${thing.health} / ${pawnDef.maxHealth}`
+            };
+            break;
+        case "leader":
+            let leaderDef = await cache.load(`data/characters/${thing.name}.json`);
+            data = {
+                "type": "player",
+                "text": `${thing.display}\n${leaderDef.description}\n\nHealth: ${thing.health} / ${thing.maxHealth}\nStamina: ${thing.stamina} / ${thing.maxStamina}\nMana: ${thing.mana} / ${thing.maxMana}`
+            }
+            break;
+        default:
+            console.log(`getRecombinerDisplay doesn't know how to show type ${type}`);
+    }
+
+    return data;
+}
+
 // Does situational processing for a permanently defined control.
 let getControl = async function (state, details) {
     if (!details) return null;
@@ -170,6 +200,28 @@ let getControl = async function (state, details) {
             ctrl.displays.push(await getReassignerDisplay(ctrl.rightSet[i], details.details.type));
         }
     }
+
+    if (ctrl.type == "recombiner") {
+        console.log("Attempting to make recombiner");
+        ctrl.leftSet = JSON.parse(JSON.stringify(readContextPath(state, "party", "inventory") || {}));
+        ctrl.rightSet = [readContextPath(state, "party", "leader")];
+        ctrl.rightSet.concat(readContextPath(state, "party", "pawns") || []);
+        ctrl.displays = [];
+        console.log(`Recombinging\n${JSON.stringify(ctrl.leftSet)}\nwith\n${JSON.stringify(ctrl.rightSet)}`);
+        for (var name in ctrl.leftSet) {
+            var count = ctrl.leftSet[name];
+            ctrl.leftSet[name] = {
+                displayIndex: ctrl.displays.length,
+                count: count,
+            };
+            ctrl.displays.push(await getRecombinerDisplay(name, "item"));
+        }
+        for (var i = 0; i < ctrl.rightSet.length; i++) {
+            ctrl.rightSet[i].displayIndex = ctrl.displays.length;
+            ctrl.displays.push(await getRecombinerDisplay(ctrl.rightSet[i], i == 0 ? "leader" : "pawn"));
+        }
+    }
+
 
     return ctrl;
 }
