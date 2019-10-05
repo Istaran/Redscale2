@@ -600,6 +600,29 @@ class Recombiner extends React.Component {
         }
     }
 
+    use() {
+        let self = this;
+        fetch('/act' + location.search, {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({
+                'body': {
+                    'verb': 'use', 'slot': saveSlot, 'id': self.props.id, 'data': {
+                        'item': 'dried meat', 'user': { 'type': 'leader' } 
+                    }
+                }
+            })
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            gameDisplayer.setState({ gameState: data });
+        }).catch(function (err) {
+            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+        });
+    }
+
     done() {
         let self = this;
         fetch('/act' + location.search, {
@@ -620,14 +643,16 @@ class Recombiner extends React.Component {
     render() {
         let self = this;
         let leftRows = [];
+        var leftIndex = 0;
         for (var leftRow in self.state.leftSet) {
             let leftItem = self.state.leftSet[leftRow];
             let card = self.props.displays[leftItem.displayIndex];
-            leftRows.push(<div className="recombinerRow" key={"left " + leftRows.length}>{leftItem.count + ' x'}<div className={"card " + card.type}>{card.text}</div></div>);
+            leftRows.push(<div className="recombinerRow" key={"left " + leftIndex}>{leftItem.count + ' x'}<div className={"card " + card.type + (leftIndex == self.state.leftSelect ? " selectedCard": "")}>{card.text}</div></div>);
+            leftIndex++;
         }
         let rightRows = self.state.rightSet.map((assignee, index) => {
             let card = self.props.displays[assignee.displayIndex];
-            return <div className="recombinerRow" key={"right " + index}><div className={"card " + card.type}>{card.text}</div></div>;
+            return <div className="recombinerRow" key={"right " + index}><div className={"card " + card.type + (index == self.state.rightSelect ? " selectedCard" : "")}>{card.text}</div></div>;
         });
 
         return <div className="screencover">
@@ -639,6 +664,9 @@ class Recombiner extends React.Component {
                 <div className="recombinerSpacer">
                     <div className="recombinerHeaderSpacer">
                         <input type='button' onClick={() => self.done()} value="Done" />
+                    </div>
+                    <div className="recombinerColumnSpacer">
+                        <input type='button' onClick={() => self.use()} value="Use" disabled={leftIndex == 0} />
                     </div>
                 </div>
                 <div className="recombinerColumn">

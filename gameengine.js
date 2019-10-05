@@ -141,13 +141,15 @@ let getReassignerDisplay = async function (thing, type) {
 
 getRecombinerDisplay = async function (thing, type) {
     console.log(`Getting representation for ${type}: ${JSON.stringify(thing)}`);
-    var data;
+    var data = null;
     switch (type) {
         // This helper needs to know where to find the source and what the display type is.
         case "item":
             let item = await cache.load(`data/items/${thing}.json`);
-            data = { "type": "item", "text": item.cardtext };
-            break;
+            if (item.use) {
+                data = { "type": "item", "text": item.cardtext };
+            }
+                break;
         case "pawn":
             let pawnDef = await cache.load(`data/pawns/${thing.name}.json`);
             data = {
@@ -203,18 +205,23 @@ let getControl = async function (state, details) {
 
     if (ctrl.type == "recombiner") {
         console.log("Attempting to make recombiner");
-        ctrl.leftSet = JSON.parse(JSON.stringify(readContextPath(state, "party", "inventory") || {}));
+        ctrl.leftSet = {};
+        let leftSet = JSON.parse(JSON.stringify(readContextPath(state, "party", "inventory") || {}));
         ctrl.rightSet = [readContextPath(state, "party", "leader")];
-        ctrl.rightSet.concat(readContextPath(state, "party", "pawns") || []);
+        ctrl.rightSet = ctrl.rightSet.concat(readContextPath(state, "party", "pawns") || []);
         ctrl.displays = [];
-        console.log(`Recombinging\n${JSON.stringify(ctrl.leftSet)}\nwith\n${JSON.stringify(ctrl.rightSet)}`);
-        for (var name in ctrl.leftSet) {
-            var count = ctrl.leftSet[name];
-            ctrl.leftSet[name] = {
-                displayIndex: ctrl.displays.length,
-                count: count,
-            };
-            ctrl.displays.push(await getRecombinerDisplay(name, "item"));
+        console.log(`Recombining\n${JSON.stringify(ctrl.leftSet)}\nwith\n${JSON.stringify(ctrl.rightSet)}`);
+        for (var name in leftSet) {
+            let display = await getRecombinerDisplay(name, "item");
+            var count = leftSet[name];
+
+            if (display) {
+                ctrl.leftSet[name] = {
+                    displayIndex: ctrl.displays.length,
+                    count: count,
+                };
+                ctrl.displays.push(display);
+            }
         }
         for (var i = 0; i < ctrl.rightSet.length; i++) {
             ctrl.rightSet[i].displayIndex = ctrl.displays.length;

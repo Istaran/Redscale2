@@ -5,5 +5,7 @@
   "descriptionPlural": "Some sliced meat, hard from being dried out, but still delicious.",
   "hands": 0.01,
   "weight": 0.02,
-  "nutrition": 5
+  "use": {
+    "nutrition": 5
+  }
 }
