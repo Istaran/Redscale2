@@ -767,7 +767,7 @@ class GameDisplayer extends React.Component {
                     if (chatlog && chatlog.length) {
                         var config = chatlog[0];
 
-                        pusher = new Pusher(config.channel, {
+                        pusher = new Pusher(config.key, {
                             cluster: config.cluster,
                             forceTLS: true
                         });
