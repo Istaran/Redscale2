@@ -11,7 +11,7 @@ let act = async function (state, details) {
 
     let itemDef = await cache.load(`data/items/${state.data.item}.json`);
     if (itemDef.use.nutrition) {
-        user.nutrition = Math.min(itemDef.use.nutrition + user.nutrition, userDef.maxNutrition);
+        user.nutrition = Math.min(itemDef.use.nutrition + (user.nutrition || 0), userDef.maxNutrition);
     }
     if (itemDef.use.healing) {
         user.health = Math.min(itemDef.use.healing + user.health, userDef.maxHealth);

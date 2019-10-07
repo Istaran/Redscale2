@@ -43,7 +43,8 @@ let act = async function (state, details) {
                 engineResult += `${state.enemy.name} hit you. `;
                 if (hitMulti > 1)
                     engineResult += `Critical hit! (Net damage x${hitMulti}) `;
-                let typeMulti = (leader.damageMultipiers && leader.damageMultipiers[enemyCard.damagetype]) ? leader.damageMultipiers[enemyCard.damagetype] : 1;
+                let typeMulti = (leader.damageMultiplier && leader.damageMultiplier[enemyCard.damagetype]) ? leader.damageMultiplier[enemyCard.damagetype] : 1;
+                console.log(`Multiplier ${typeMulti} against type ${enemyCard.damagetype}`);
                 let damage = combatengine.damageRoll(enemyCard.damagedice, enemyCard.damagedie, enemyCard.damageplus - soak, typeMulti * hitMulti);
                 if (damage <= 0) {
                     engineResult += enemyCard["aggress soak display"] || "You shrugged it off!\n";

@@ -75,7 +75,7 @@ let act = async function (state, details) {
                             target.tags,
                             defs ? defs.scrubbers : null);
                     } else {
-                        let typeMulti = target.damageMultipliers && target.damageMultipliers[details.damagetype] ? target.damageMultipliers[details.damagetype] : 1;
+                        let typeMulti = target.damageMultiplier && target.damageMultiplier[details.damagetype] ? target.damageMultiplier[details.damagetype] : 1;
                         let damage = (await combatengine.damageRoll(details.damagedice, details.damagedie, details.damageplus), typeMulti * attackRoll);
                         if (!target.health) target.health = defs.maxHealth;
                         target.health -= damage;

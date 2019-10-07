@@ -597,6 +597,7 @@ class Recombiner extends React.Component {
             leftSelect: 0,
             rightSelect: 0,
             displays: props.displays,
+            id: props.id
         }
     }
 
@@ -609,15 +610,20 @@ class Recombiner extends React.Component {
             },
             body: JSON.stringify({
                 'body': {
-                    'verb': 'use', 'slot': saveSlot, 'id': self.props.id, 'data': {
-                        'item': 'dried meat', 'user': { 'type': 'leader' } 
+                    'verb': 'use', 'slot': saveSlot, 'id': self.state.id, 'data': {
+                        'item': self.item, 'user': { 'type': (self.state.rightSelect ? "pawn" : "leader"), 'index': (self.state.rightSelect - 1) } 
                     }
                 }
             })
         }).then(function (response) {
             return response.json();
-        }).then(function (data) {
-            gameDisplayer.setState({ gameState: data });
+            }).then(function (data) {
+                self.setState({
+                    leftSet: Object.assign({},data.controls[0][0].leftSet),
+                    rightSet: data.controls[0][0].rightSet.slice(),
+                    displays: data.controls[0][0].displays.slice(),
+                    id: data.controls[0][0].id,
+                });
         }).catch(function (err) {
             gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
         });
@@ -630,7 +636,7 @@ class Recombiner extends React.Component {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify({ 'body': { 'verb': 'setscene', 'slot': saveSlot, 'id': self.props.id } })
+            body: JSON.stringify({ 'body': { 'verb': 'setscene', 'slot': saveSlot, 'id': self.state.id } })
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
@@ -640,19 +646,31 @@ class Recombiner extends React.Component {
         });
     }
 
+    setLeftIndex(e) {
+        let idx = parseInt(e.target.attributes["myindex"].value);
+        this.setState({ leftSelect: idx });
+    }
+
+    setRightIndex(e) {
+        let idx = parseInt(e.target.attributes["myindex"].value);
+        this.setState({ rightSelect: idx });
+    }
+
     render() {
         let self = this;
         let leftRows = [];
         var leftIndex = 0;
         for (var leftRow in self.state.leftSet) {
             let leftItem = self.state.leftSet[leftRow];
-            let card = self.props.displays[leftItem.displayIndex];
-            leftRows.push(<div className="recombinerRow" key={"left " + leftIndex}>{leftItem.count + ' x'}<div className={"card " + card.type + (leftIndex == self.state.leftSelect ? " selectedCard": "")}>{card.text}</div></div>);
+            let card = self.state.displays[leftItem.displayIndex];
+            if (leftIndex == self.state.leftSelect)
+                self.item = leftRow;
+            leftRows.push(<div className="recombinerRow" key={"left " + leftIndex}>{leftItem.count + ' x '}<div className={"card " + card.type + (leftIndex == self.state.leftSelect ? " selectedCard" : "")} onClick={(e) => self.setLeftIndex(e)} myindex={leftIndex}>{card.text}</div></div>);
             leftIndex++;
         }
         let rightRows = self.state.rightSet.map((assignee, index) => {
-            let card = self.props.displays[assignee.displayIndex];
-            return <div className="recombinerRow" key={"right " + index}><div className={"card " + card.type + (index == self.state.rightSelect ? " selectedCard" : "")}>{card.text}</div></div>;
+            let card = self.state.displays[assignee.displayIndex];
+            return <div className="recombinerRow" key={"right " + index}><div className={"card " + card.type + (index == self.state.rightSelect ? " selectedCard" : "")} onClick={(e) => self.setRightIndex(e)} myindex={index}>{card.text}</div></div>;
         });
 
         return <div className="screencover">

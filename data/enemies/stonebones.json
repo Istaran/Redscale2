@@ -13,7 +13,7 @@
     "max mana": 1,
     "evasion": 7,
   "reshuffle": 5,
-  "damageMultipliers": {
+  "damageMultiplier": {
     "fire": 0.1
   },
   "cardsets": [

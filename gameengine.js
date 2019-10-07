@@ -154,14 +154,14 @@ getRecombinerDisplay = async function (thing, type) {
             let pawnDef = await cache.load(`data/pawns/${thing.name}.json`);
             data = {
                 "type": "pawn",
-                "text": `${pawnDef.display}\nHealth: ${thing.health} / ${pawnDef.maxHealth}`
+                "text": `${pawnDef.display}\n\nHealth: ${thing.health} / ${pawnDef.maxHealth}\nNutrition: ${thing.nutrition || 0} / ${pawnDef.maxNutrition}`
             };
             break;
         case "leader":
             let leaderDef = await cache.load(`data/characters/${thing.name}.json`);
             data = {
                 "type": "player",
-                "text": `${thing.display}\n${leaderDef.description}\n\nHealth: ${thing.health} / ${thing.maxHealth}\nStamina: ${thing.stamina} / ${thing.maxStamina}\nMana: ${thing.mana} / ${thing.maxMana}`
+                "text": `${thing.display}\n${leaderDef.description}\n\nHealth: ${thing.health} / ${thing.maxHealth}\nStamina: ${thing.stamina} / ${thing.maxStamina}\nMana: ${thing.mana} / ${thing.maxMana}\nNutrition: ${thing.nutrition} / ${thing.maxNutrition}`
             }
             break;
         default:
