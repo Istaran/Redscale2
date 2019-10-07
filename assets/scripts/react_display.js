@@ -1,7 +1,4 @@
-var pusher = new Pusher('91450cc1727e582f15c1', {
-  cluster: 'us2',
-  forceTLS: true
-});
+var pusher;
 
 var helper;
 var gameDisplayer;
@@ -761,8 +758,6 @@ class GameDisplayer extends React.Component {
             // initialize chat
             if (!this.chatInit) {
                 this.chatInit = true;
-                var channel = pusher.subscribe('Redscale_main_chat');
-                channel.bind('chat message', self.pushTextToChatLog.bind(self));
 
                 fetch('/chat', {
                     method: 'get'
@@ -770,8 +765,16 @@ class GameDisplayer extends React.Component {
                     return response.json();
                 }).then(function (chatlog) {
                     if (chatlog && chatlog.length) {
+                        var config = chatlog[0];
 
-                        var newLog = self.state.chatLog.slice();
+                        pusher = new Pusher(config.channel, {
+                            cluster: config.cluster,
+                            forceTLS: true
+                        });
+                        var channel = pusher.subscribe('Redscale_main_chat');
+                        channel.bind('chat message', self.pushTextToChatLog.bind(self));
+
+                        var newLog = self.state.chatLog.slice(1);
                         chatlog.forEach(function (data) {
                             if (data) {
                                 newLog.shift();
@@ -779,6 +782,8 @@ class GameDisplayer extends React.Component {
                             }
                         });
                         self.setState({ chatLog: newLog });
+                    } else {
+                        self.setState({ chatLog: ["Local server is not configured for live chat."]})
                     }
                 });
             }
