@@ -365,7 +365,7 @@
     "encounter miner": {
       "verb": "setscene",
       "details": {
-        "text": "You come across a miner holding a copper spike attacked to the end of a wooden bar. They jump in surprise, shouldering the tool and looking at you warily, but make no move to initiate a fight. They're obviously waiting on you to make the first move.",
+        "text": "You come across a miner holding a copper spike attached to the end of a wooden bar. They jump in surprise, shouldering the tool and looking at you warily, but make no move to initiate a fight. They're obviously waiting on you to make the first move.",
         "name": "encounter miner",
         "sub": "start"
       }

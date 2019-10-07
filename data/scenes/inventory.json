@@ -1,27 +1,42 @@
 {
-    "start": {
-        "controls": [
-            [
-                {
-                    "type": "requantifier",
-                    "details": {
-                        "leftDataContext": "party",
-                        "leftPath": "inventory",
-                        "type": "item",
-                        "rightDataContext": "location",
-                        "rightPath": "building/inventory",
-                        "then": {
-                            "verb": "setscene",
-                            "details": {
-                                "text": "You figured out what to take with you and what to leave here.",
-                                "clear": true
-                            }
-                        }
-                    },
-                    "leftHeader": "Take with you",
-                    "rightHeader": "Leave here"
-                }
-            ]
-        ]
-    }
+  "start": {
+    "controls": [
+      [
+        {
+          "type": "requantifier",
+          "details": {
+            "leftDataContext": "party",
+            "leftPath": "inventory",
+            "type": "item",
+            "rightDataContext": "location",
+            "rightPath": "building/inventory",
+            "then": {
+              "verb": "setscene",
+              "details": {
+                "text": "You figured out what to take with you and what to leave here.",
+                "clear": true
+              }
+            }
+          },
+          "leftHeader": "Take with you",
+          "rightHeader": "Leave here"
+        }
+      ]
+    ]
+  },
+  "use": {
+    "controls": [
+      [
+        {
+          "type": "recombiner",
+          "details": {
+            "text": "You're done using up your inventory, back to the adventure.",
+            "clear": true
+          },
+          "leftHeader": "Item",
+          "rightHeader": "Target"
+        }
+      ]
+    ]
+  }
 }

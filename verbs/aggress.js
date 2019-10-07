@@ -64,10 +64,11 @@ let act = async function (state, details) {
                 if (hitMulti > 1) {
                     engineResult += `Critical hit! (Net damage x${hitMulti}) `;
                     if (enemyCard.noncritsoak > 0) {
-                        engineResult += "You bypassed {their} armor!";
+                        engineResult += "You bypassed {their} armor! ";
                     }
                 }
-                let typeMulti = (enemyDef.damageMultipiers && enemyDef.damageMultipiers[card.damagetype]) ? enemyDef.damageMultipiers[card.damagetype] : 1;
+                let typeMulti = (enemyDef.damageMultiplier && enemyDef.damageMultiplier[card.damagetype]) ? enemyDef.damageMultiplier[card.damagetype] : 1;
+                console.log(`Multiplier ${typeMulti} against type ${card.damagetype}`);
                 let damage = combatengine.damageRoll(damagedice, damagedie, damageplus - enemyCard.soak - (hitMulti <= 1 && enemyCard.noncritsoak ? enemyCard.noncritsoak : 0), typeMulti * hitMulti);
                 if (damage <= 0) {
                     engineResult += card["aggress soak display"] || "{They} shrugged it off!\n";

@@ -1,9 +1,11 @@
 {
-    "display": "fire moss",
-    "cardtext": "Fire moss\n\nWarm, red, glowing\nedible moss.",
-    "descriptionSingular": "Some reddish moss, warm to the touch and slightly glowing. It helps fill the cave with its dim ambient light.",
-    "descriptionPlural": "Some reddish moss, warm to the touch and slightly glowing. It helps fill the cave with its dim ambient light.",
-    "hands": 0.01,
-    "weight": 0.01,
+  "display": "fire moss",
+  "cardtext": "Fire moss\n\nWarm, red, glowing\nedible moss.",
+  "descriptionSingular": "Some reddish moss, warm to the touch and slightly glowing. It helps fill the cave with its dim ambient light.",
+  "descriptionPlural": "Some reddish moss, warm to the touch and slightly glowing. It helps fill the cave with its dim ambient light.",
+  "hands": 0.01,
+  "weight": 0.01,
+  "use": {
     "nutrition": 1
+  }
 }

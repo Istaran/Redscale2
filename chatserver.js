@@ -3,19 +3,27 @@ var Pusher = require('pusher');
 var fs = require('fs');
 var cache = require('./cache');
 
-var pusher = new Pusher({
-  appId: '612236',
-  key: '91450cc1727e582f15c1',
-  secret: 'f35b87227451a8912ede',
-  cluster: 'us2',
-  encrypted: true
-});
+var pusherConfig = null;
+var pusher = null;
 
-pusher.trigger('Redscale_main_chat', 'chat message', {
-    "message": "Server was restarted",
-    "timestamp": Date.now()
-});
+if (fs.existsSync('private/config/pusher-config.json')) {
+    var pusherConfigString = fs.readFileSync('private/config/pusher-config.json', 'utf8');
+    console.log(`Configuring Pusher: ${pusherConfigString}`);
+    pusherConfig = JSON.parse(pusherConfigString);
 
+    pusher = new Pusher({
+        appId: pusherConfig.appId,
+        key: pusherConfig.key,
+        secret: pusherConfig.secret,
+        cluster: pusherConfig.cluster,
+        encrypted: true
+    });
+
+    pusher.trigger('Redscale_main_chat', 'chat message', {
+        "message": "Server was restarted",
+        "timestamp": Date.now()
+    });
+}
 
 var chatFD = fs.openSync('./data/chat_main.log', 'a+');
 
@@ -28,8 +36,9 @@ var chatStream = fs.createWriteStream('', { fd: chatFD });
 
 let sendChat = function (user, message, debug) {
     let data = { username: user.displayName, message: message, timestamp: Date.now() };
-	  console.log(JSON.stringify(data));
-    pusher.trigger('Redscale_main_chat', 'chat message', data);
+    console.log(JSON.stringify(data));
+    if (pusher) 
+        pusher.trigger('Redscale_main_chat', 'chat message', data);
     chatArchive.push(JSON.stringify(data));
 		  while (chatArchive.length > 10000)
 			  chatArchive.shift();
@@ -38,7 +47,14 @@ let sendChat = function (user, message, debug) {
 };
 
 let getChats = function () {
-	return chatArchive.map((line) => line ? JSON.parse(line) : undefined);
+    if (pusherConfig) {
+        return [{
+            key: pusherConfig.key,
+            cluster: pusherConfig.cluster,
+        }].concat(chatArchive.map((line) => line ? JSON.parse(line) : undefined));
+    } else {
+        return null;
+    }
 };
 
 module.exports = {

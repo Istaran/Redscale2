@@ -1,7 +1,4 @@
-var pusher = new Pusher('91450cc1727e582f15c1', {
-  cluster: 'us2',
-  forceTLS: true
-});
+var pusher;
 
 var helper;
 var gameDisplayer;
@@ -586,6 +583,115 @@ class Reassigner extends React.Component {
         </div>;
     }
 }
+
+class Recombiner extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            leftSet: Object.assign({}, props.leftSet),
+            rightSet: props.rightSet.slice(),
+            leftSelect: 0,
+            rightSelect: 0,
+            displays: props.displays,
+            id: props.id
+        }
+    }
+
+    use() {
+        let self = this;
+        fetch('/act' + location.search, {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({
+                'body': {
+                    'verb': 'use', 'slot': saveSlot, 'id': self.state.id, 'data': {
+                        'item': self.item, 'user': { 'type': (self.state.rightSelect ? "pawn" : "leader"), 'index': (self.state.rightSelect - 1) } 
+                    }
+                }
+            })
+        }).then(function (response) {
+            return response.json();
+            }).then(function (data) {
+                self.setState({
+                    leftSet: Object.assign({},data.controls[0][0].leftSet),
+                    rightSet: data.controls[0][0].rightSet.slice(),
+                    displays: data.controls[0][0].displays.slice(),
+                    id: data.controls[0][0].id,
+                });
+        }).catch(function (err) {
+            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+        });
+    }
+
+    done() {
+        let self = this;
+        fetch('/act' + location.search, {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({ 'body': { 'verb': 'setscene', 'slot': saveSlot, 'id': self.state.id } })
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            gameDisplayer.setState({ gameState: data });
+        }).catch(function (err) {
+            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+        });
+    }
+
+    setLeftIndex(e) {
+        let idx = parseInt(e.target.attributes["myindex"].value);
+        this.setState({ leftSelect: idx });
+    }
+
+    setRightIndex(e) {
+        let idx = parseInt(e.target.attributes["myindex"].value);
+        this.setState({ rightSelect: idx });
+    }
+
+    render() {
+        let self = this;
+        let leftRows = [];
+        var leftIndex = 0;
+        for (var leftRow in self.state.leftSet) {
+            let leftItem = self.state.leftSet[leftRow];
+            let card = self.state.displays[leftItem.displayIndex];
+            if (leftIndex == self.state.leftSelect)
+                self.item = leftRow;
+            leftRows.push(<div className="recombinerRow" key={"left " + leftIndex}>{leftItem.count + ' x '}<div className={"card " + card.type + (leftIndex == self.state.leftSelect ? " selectedCard" : "")} onClick={(e) => self.setLeftIndex(e)} myindex={leftIndex}>{card.text}</div></div>);
+            leftIndex++;
+        }
+        let rightRows = self.state.rightSet.map((assignee, index) => {
+            let card = self.state.displays[assignee.displayIndex];
+            return <div className="recombinerRow" key={"right " + index}><div className={"card " + card.type + (index == self.state.rightSelect ? " selectedCard" : "")} onClick={(e) => self.setRightIndex(e)} myindex={index}>{card.text}</div></div>;
+        });
+
+        return <div className="screencover">
+            <div className="recombiner">
+                <div className="recombinerColumn">
+                    <div className="recombinerColumnHeader">{self.props.leftHeader}</div>
+                    {leftRows}
+                </div>
+                <div className="recombinerSpacer">
+                    <div className="recombinerHeaderSpacer">
+                        <input type='button' onClick={() => self.done()} value="Done" />
+                    </div>
+                    <div className="recombinerColumnSpacer">
+                        <input type='button' onClick={() => self.use()} value="Use" disabled={leftIndex == 0} />
+                    </div>
+                </div>
+                <div className="recombinerColumn">
+                    <div className="recombinerColumnHeader">{self.props.rightHeader}</div>
+                    {rightRows}
+                </div>
+            </div>
+        </div>;
+    }
+}
         
 class GameDisplayer extends React.Component {
 	constructor(props) {
@@ -637,6 +743,8 @@ class GameDisplayer extends React.Component {
                                 return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
                             case 'reassigner':
                                 return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
+                            case 'recombiner':
+                                return <Recombiner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
                             default:
                                 return '';
                         }
@@ -650,8 +758,6 @@ class GameDisplayer extends React.Component {
             // initialize chat
             if (!this.chatInit) {
                 this.chatInit = true;
-                var channel = pusher.subscribe('Redscale_main_chat');
-                channel.bind('chat message', self.pushTextToChatLog.bind(self));
 
                 fetch('/chat', {
                     method: 'get'
@@ -659,8 +765,16 @@ class GameDisplayer extends React.Component {
                     return response.json();
                 }).then(function (chatlog) {
                     if (chatlog && chatlog.length) {
+                        var config = chatlog[0];
 
-                        var newLog = self.state.chatLog.slice();
+                        pusher = new Pusher(config.channel, {
+                            cluster: config.cluster,
+                            forceTLS: true
+                        });
+                        var channel = pusher.subscribe('Redscale_main_chat');
+                        channel.bind('chat message', self.pushTextToChatLog.bind(self));
+
+                        var newLog = self.state.chatLog.slice(1);
                         chatlog.forEach(function (data) {
                             if (data) {
                                 newLog.shift();
@@ -668,6 +782,8 @@ class GameDisplayer extends React.Component {
                             }
                         });
                         self.setState({ chatLog: newLog });
+                    } else {
+                        self.setState({ chatLog: ["Local server is not configured for live chat."]})
                     }
                 });
             }
