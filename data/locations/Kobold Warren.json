@@ -129,7 +129,7 @@
             "preview": "The tunnel continues straight for some time, supported by periodic wooden support beams.",
             "events": [
                 {
-                    "chance": 7,
+                    "chance": 2,
                     "event": null
                 },
                 {
@@ -137,7 +137,7 @@
                     "event": "kobold spearman attack"
                 },
                 {
-                    "chance": 1,
+                    "chance": 8,
                     "event": "black market"
                 },
                 {

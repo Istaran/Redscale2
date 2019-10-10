@@ -13,7 +13,7 @@ let act = async function (state, details) {
     } else {
         console.log(`Paid ${quantity} x ${itemDef.display} and have ${state.parties[state.activeParty].inventory[details.item]} left.`);
     }
-    state.view.status = `${details.text ? details.text + "\n" || ""}Removed ${quantity} x ${itemDef.display} from your inventory.`;
+    state.view.status = `${details.text ? details.text + "\n" : ""}Removed ${quantity} x ${itemDef.display} from your inventory.`;
 };
 
 

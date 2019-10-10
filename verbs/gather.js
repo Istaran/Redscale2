@@ -6,6 +6,7 @@ let act = async function (state, details) {
 	for (var d = 0; d < details.dice; d++) quantity += Math.floor(Math.random() * details.die) + 1;
 	state.parties[state.activeParty].inventory[details.item] = (state.parties[state.activeParty].inventory[details.item] || 0) + quantity;
     state.view.status = `${details.text ? details.text + "\n" : ""}Added ${quantity} x ${itemDef.display} to your inventory.`;	
+    console.log(`Got ${quantity} x ${itemDef.display}`)
 };
 
 

@@ -53,10 +53,52 @@
     "controls": [
       [
         {
+          "type": "itemCount",
+          "details": {
+            "item": "copper coin",
+            "display": "Copper coin: [count]",
+            "dataContext": "party",
+            "path": "inventory"
+          }
+        },
+        {
+          "type": "itemCount",
+          "details": {
+            "item": "dried meat",
+            "display": "Dried meat: [count]",
+            "dataContext": "party",
+            "path": "inventory"
+          }
+        },
+        {
+          "type": "itemCount",
+          "details": {
+            "item": "kobold blood potion",
+            "display": "Kobold blood potion: [count]",
+            "dataContext": "party",
+            "path": "inventory"
+          }
+        },
+        {
           "type": "actButton",
-          "display": "Buy dried meat",
+          "display": "Leave",
+          "verb": "setscene",
+          "details": {
+            "clear": true,
+            "text": "You bid farewell to the shady kobold, and take your leave."
+          },
+          "help": "Take your leave."
+        }
+      ],
+      [
+        {
+          "type": "spacer"
+        },
+        {
+          "type": "actButton",
+          "display": "Buy 1",
           "verb": "chain",
-          "if": {
+          "enabled": {
             "condition": "inventoryhas",
             "item": "copper coin",
             "count": 1
@@ -82,13 +124,92 @@
         },
         {
           "type": "actButton",
-          "display": "Leave",
-          "verb": "setscene",
-          "details": {
-            "clear": true,
-            "text": "You bid farewell to the shady kobold, and take your leave."
+          "display": "Buy 1",
+          "verb": "chain",
+          "enabled": {
+            "condition": "inventoryhas",
+            "item": "copper coin",
+            "count": 10
           },
-          "help": "Take your leave."
+          "details": [
+            {
+              "verb": "pay",
+              "details": {
+                "item": "copper coin",
+                "count": 10,
+                "text": "You exchange some copper coins for a sealed vial of red liquid. You're not certain if it's actually just blood from a kobold, but it supposedly has healing properties."
+              }
+            },
+            {
+              "verb": "gather",
+              "details": {
+                "item": "kobold blood potion",
+                "plus": 1
+              }
+            }
+          ],
+          "help": "Buy kobold blood potion.\nCost: 10 copper coin\nUse: Restore 5 health."
+        }
+      ],
+      [
+        {
+          "type": "spacer"
+        },
+        {
+          "type": "actButton",
+          "display": "Buy 10",
+          "verb": "chain",
+          "enabled": {
+            "condition": "inventoryhas",
+            "item": "copper coin",
+            "count": 10
+          },
+          "details": [
+            {
+              "verb": "pay",
+              "details": {
+                "item": "copper coin",
+                "count": 10,
+                "text": "You exchange some copper coins for some meat. This much actually qualifies as a proper meal."
+              }
+            },
+            {
+              "verb": "gather",
+              "details": {
+                "item": "dried meat",
+                "plus": 10
+              }
+            }
+          ],
+          "help": "Buy 10x dried meat.\nCost: 1 copper coin each\nUse: Restore 5 nutrition. Usable by any carnivore or omnivore."
+        },
+        {
+          "type": "actButton",
+          "display": "Buy 10",
+          "verb": "chain",
+          "enabled": {
+            "condition": "inventoryhas",
+            "item": "copper coin",
+            "count": 100
+          },
+          "details": [
+            {
+              "verb": "pay",
+              "details": {
+                "item": "copper coin",
+                "count": 100,
+                "text": "You exchange a pile of copper coins for some sealed vials of red liquid. You're not certain if it's actually just blood from a kobold, but it supposedly has healing properties."
+              }
+            },
+            {
+              "verb": "gather",
+              "details": {
+                "item": "kobold blood potion",
+                "plus": 10
+              }
+            }
+          ],
+          "help": "Buy 10x kobold blood potion.\nCost: 10 copper coin each\nUse: Restore 5 health."
         }
       ]
     ]
