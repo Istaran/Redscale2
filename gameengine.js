@@ -17,6 +17,7 @@ var player = require('./player');
 var time = require('./time');
 
 let doVerb = async function (verbName, state, details) {
+    console.log(`Do: ${verbName} (${details ? JSON.stringify(details) : ""})`)
     if (verbs[verbName] === undefined) {
         try {
             verbs[verbName] = require(`./verbs/${verbName}`);
@@ -177,6 +178,11 @@ let getControl = async function (state, details) {
     if (!(await conditionMet(state, details.visible))) return null;
     let ctrl = JSON.parse(JSON.stringify(details)); // Deep copy
     ctrl.enabled = await conditionMet(state, details.enabled);
+
+    if (ctrl.type == "itemCount") {
+        let counts = readContextPath(state, details.details.dataContext, details.details.path) || {};
+        ctrl.display = details.details.display.replace('[count]', counts[details.details.item] || 0);
+    }
 
     if (ctrl.type == "requantifier") {
         // setup the numbers based on context/dataset

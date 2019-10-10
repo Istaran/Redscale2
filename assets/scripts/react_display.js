@@ -745,6 +745,10 @@ class GameDisplayer extends React.Component {
                                 return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
                             case 'recombiner':
                                 return <Recombiner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
+                            case 'itemCount':
+                                return <div key={colIndex * 10 + rowIndex} className="ctrlLabel">{control.display}</div>;
+                            case 'spacer':
+                                return <div key={colIndex * 10 + rowIndex} className="ctrlLabel"></div>; 
                             default:
                                 return '';
                         }

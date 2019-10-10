@@ -1,0 +1,11 @@
+{
+  "display": "kobold blood potion",
+  "cardtext": "Kobold blood potion\n\nRed liquid in a vial.\n+5 Health",
+  "descriptionSingular": "A sealed vial full of red liquid. It looks like blood, smells like blood, and has healing properties.",
+  "descriptionPlural": "Some sealed vials full of red liquid. It looks like blood, smells like blood, and has healing properties.",
+  "hands": 0.01,
+  "weight": 0.01,
+  "use": {
+    "healing": 5
+  }
+}

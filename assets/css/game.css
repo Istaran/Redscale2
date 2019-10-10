@@ -81,6 +81,12 @@ div.controlColumn {
 	flex-direction:column;
 }
 
+div.ctrlLabel {
+    min-height: 20px;
+    margin-bottom: 5px;
+    min-width: 150px;
+}
+
 div.saveList {
     position: absolute;
     top: 25px;
@@ -89,8 +95,8 @@ div.saveList {
     max-height: calc(100vh - 50px);
     background-color: dimgray;
     overflow-y: auto;
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
 }
 
 div.save {
