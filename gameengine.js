@@ -39,6 +39,16 @@ let doVerb = async function (verbName, state, details) {
                 tags = state.enemy.tags;
                 contextScrubbers = state.enemy.scrubbers;
                 break;
+            case "character":
+                console.log("Scrubbing text based on character: " + details.scrubcharacter);
+                if (details.scrubcharacter) {
+                    if (state.world && state.world.characters && state.world.characters[details.scrubcharacter]) {
+                        tags = state.world.characters[details.scrubcharacter].tags || {};
+                        contextScrubbers = state.world.characters[details.scrubcharacter].scrubbers || {};
+                        console.log(`Scrubbers: ${JSON.stringify(contextScrubbers)}\nTags:${JSON.stringify(tags)}`);
+                    }
+                }
+                break;
         }
         state.view.status = await scrubText(state, state.view.status || "", tags, contextScrubbers)
     }
@@ -235,6 +245,27 @@ let getControl = async function (state, details) {
         }
     }
 
+    if (ctrl.display && ctrl.scrubcontext) {
+        var tags = {};
+        var contextScrubbers = null;
+        switch (details.scrubcontext) {
+            case "enemy":
+                tags = state.enemy.tags;
+                contextScrubbers = state.enemy.scrubbers;
+                break;
+            case "character":
+                console.log("Scrubbing ctrl based on character: " + details.scrubcharacter);
+                if (details.scrubcharacter) {
+                    if (state.world && state.world.characters && state.world.characters[details.scrubcharacter]) {
+                        tags = state.world.characters[details.scrubcharacter].tags || {};
+                        contextScrubbers = state.world.characters[details.scrubcharacter].scrubbers || {};
+                        console.log(`Scrubbers: ${JSON.stringify(contextScrubbers)}\nTags:${JSON.stringify(tags)}`);
+                    }
+                }
+                break;
+        }
+        ctrl.display = await scrubText(state, ctrl.display, tags, contextScrubbers);
+    }
 
     return ctrl;
 }

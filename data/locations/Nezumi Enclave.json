@@ -8,7 +8,7 @@
             [],
             [],
             [ null, null, null, "TiledPath" ],
-            [ null, null, null, "CherryBlossom1" ],
+            [ null, null, null, "Haruka" ],
             [ null, null, null, "TiledPath" ],
             [ null, null, null, "TiledPath" ],
             [ null, null, null, "TiledPath" ],
@@ -59,14 +59,14 @@
         "light": "white",
         "dark": "black"
       },
-      "CherryBlossom1": {
+      "Haruka": {
         "title": "Nezumi Enclave - intersection",
         "description": "As you come to an intersection, you are stopped by a red robed figure. She has the head and tail of a rat, though she stands up right in a way your inherited memories tell you indicates she's likely a person. The robe is tight, tied behind her by a massive pink bow.\n\nShe's scentless. Beyond that, her tail idly shifting behind her doesn't so much as stir up a breeze, and even seems to pass a bit into the floor. She's not really here, clearly, yet she looks into your eyes as you approach and smiles.",
         "preview": "There is an intersection there, with black and white tiles going north to south.",
         "events": [
           {
             "chance": 1,
-            "event": "CherryBlossomIntro"
+            "event": "HarukaIntro"
           }
         ]
       },
@@ -109,7 +109,7 @@
       "verb": "attack",
       "details": { "enemy": "stonebones" }
     },
-    "CherryBlossomIntro": {
+    "HarukaIntro": {
       "verb": "first",
       "details": [
         {
@@ -123,7 +123,7 @@
           "verb": "setscene",
           "details": {
             "text": "\"I finally get to meet you, heir of the Redscale dynasty. Well, more or less. My very first prophecy when I was a mere pinky, was that I would live to meet you,\" she smiles sadly. \"The Rat King didn't want to hear the rest of my prophecies. They have me locked away, deep within the Enclaves we Nezumi have built. But you'll come find me, won't you?\"",
-            "name": "cherryblossom",
+            "name": "haruka",
             "sub": "introm",
             "type": "menu"
           }
@@ -132,7 +132,7 @@
           "verb": "setscene",
           "details": {
             "text": "\"I finally get to meet you, heir of the Redscale dyn-\" she cuts herself off, blinking in surprise. \"You're.. a female? You wouldn't happen to have a brother, would you?\" Her smile is gone, replaced by an expression mixing disappointment and panic.",
-            "name": "cherryblossom",
+            "name": "haruka",
             "sub": "introf",
             "type": "menu"
           }

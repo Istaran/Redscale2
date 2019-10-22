@@ -1,0 +1,255 @@
+{
+  "intro": {
+    "controls": [
+      [
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Wolf.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "sourcecontext": "party",
+                "statepath": "leader/display",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"The name's 'Jack', or \"Mr Wheatfur\" if you're being formal. Or if you're in a place with too many Jacks.\"",
+                "name": "jack",
+                "sub": "wolf"
+              }
+            }
+          ],
+          "help": "Let's just call 'em like we see 'em."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Who are you?\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "sourcecontext": "party",
+                "statepath": "leader/display",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": true,
+                "statename": "world/characters/jack/polite"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"The name's 'Jack', or \"Mr Wheatfur\" if you're being formal. Or if you're in a place with too many Jacks.\"",
+                "name": "jack",
+                "sub": "wolf"
+              }
+            }
+          ],
+          "help": "Ask politely."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Jack.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Jack",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "By trade and by name, though I'm surprised you guessed it after this much atrophy. If you need any trees chopped, you'll need to let me free first, though.",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "He looks like a 'Jack'. Sort of."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Jacinth.\"",
+          "verb": "setscene",
+          "details": {
+            "text": "\"How did you come to know that name?\"",
+            "name": "jack",
+            "sub": "jacinth"
+          },
+          "help": "You seem to vaguely recall something that never happened."
+        }
+      ]
+    ]
+  },
+  "wolf": {
+    "controls": [
+      [
+        {
+          "scrubcontext": "character",
+          "scrubcharacter": "jack",
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Jack it is. And I'm '{dragon}'\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Jack",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "scrubcontext": "character",
+                "scrubcharacter": "jack",
+                "text": "\"{dragon} it is then.\"",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "First name basis seems nice to you."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Mr Wheatfur, then.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Mr Wheatfur",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "sourcecontext": "party",
+                "statepath": "leader/name",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"Certainly, {dragon}\n",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "Formalities are definitely your style."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"I'm going to call you 'Goldenfur' instead. Makes it sound like you're worth something.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Goldenfur",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "boss",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"You're the boss. Or at least, you will be if you set me free.\"",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "You'll call him whatever you want, and he'll like it!"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Wolf.\"",
+          "verb": "chain",
+          "if": {
+            "condition": "stateis",
+            "fact": "world/characters/jack/polite",
+            "rule": "!=",
+            "value": true
+          },
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Wolf",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "dragon",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"Alright, 'Dragon'.\"",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "Names are for winners."
+        }
+      ]
+    ]
+  },
+  "hunger": {
+    "controls": [
+      [
+        {
+
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "Leave",
+          "verb": "setscene",
+          "details": {
+            "scrubcontext": "character",
+            "scrubcharacter": "jack",
+            "text": "You bid farewell to {wolf}.",
+            "clear": true
+          },
+          "help": "You're done here."
+        }
+      ]
+    ]
+  }
+}
