@@ -75,7 +75,7 @@
             {
               "verb": "setscene",
               "details": {
-                "text": "By trade and by name, though I'm surprised you guessed it after this much atrophy. If you need any trees chopped, you'll need to let me free first, though.",
+                "text": "\"By trade and by name, though I'm surprised you guessed it after this much atrophy. If you need any trees chopped, you'll need to let me free first, though.\"\n\nHis stomach rumbles noisily and his smile falters. \"And I'll also be needing something to eat first.\"",
                 "name": "jack",
                 "sub": "hunger"
               }
@@ -121,7 +121,7 @@
               "details": {
                 "scrubcontext": "character",
                 "scrubcharacter": "jack",
-                "text": "\"{dragon} it is then.\"",
+                "text": "\"{dragon} it is then.\"\n\nHis stomach rumbles and he gives a hopeful grin. \"And now that we're on a first-name basis... would you care to share a meal with your good friend Jack?\"",
                 "name": "jack",
                 "sub": "hunger"
               }
@@ -153,7 +153,7 @@
             {
               "verb": "setscene",
               "details": {
-                "text": "\"Certainly, {dragon}\n",
+                "text": "\"Certainly, {dragon}\n\nHis stomach rumbles noisily. \"Oh my, how rude of me. I do say, would you happen to have any food you could spare?\"",
                 "name": "jack",
                 "sub": "hunger"
               }
@@ -184,7 +184,7 @@
             {
               "verb": "setscene",
               "details": {
-                "text": "\"You're the boss. Or at least, you will be if you set me free.\"",
+                "text": "\"You're the boss. Or at least, you will be if you set me free.\"\n\nHis stomach rumbles notably, and he looks embarassed. \"Hey, Boss... would you happen to have any food to spare?\"",
                 "name": "jack",
                 "sub": "hunger"
               }
@@ -221,7 +221,7 @@
             {
               "verb": "setscene",
               "details": {
-                "text": "\"Alright, 'Dragon'.\"",
+                "text": "\"Alright, 'Dragon'.\"\n\nHis stomach rumbles and he sighs, drooping his head. He's obviously hungry, but seems afraid to get his hopes up enough to ask for food. Will you offer him something anyways?",
                 "name": "jack",
                 "sub": "hunger"
               }
@@ -233,6 +233,146 @@
     ]
   },
   "hunger": {
+    "controls": [
+      [
+        {
+          "scrubcontext": "character",
+          "scrubcharacter": "jack",
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "Nothing, sorry.",
+          "verb": "setscene",
+          "details": {
+            "scrubcontext": "character",
+            "scrubcharacter": "jack",
+            "text": "You shake your head, and offer {wolf} nothing.\n\n\"I see,\" he says, disappointed. \"Still, you're a guest in my most humble of abodes... anything I can do for you?\"",
+            "name": "jack",
+            "sub": "normal"
+          },
+          "help": "You have nothing you care to offer {wolf}."
+        },
+        {
+          "type": "itemCount",
+          "details": {
+            "item": "dried meat",
+            "display": "Dried meat: [count]",
+            "dataContext": "party",
+            "path": "inventory"
+          }
+        },
+        {
+          "scrubcontext": "character",
+          "scrubcharacter": "jack",
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Only my own flesh and blood.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "text": "You offer {wolf} your arm, and he takes a deep bite. He licks gently, blood flowing into his mouth as he moans lightly from the pleasure of it. You caress his head, drawing yourself up close, snuggling along his side as he dines.\n\nIt's intimate, in a way that goes beyond sensuality, and you feel your warmth spreading from your heart, to your arm, down his throat, and through his body.",
+                "statename": "world/characters/jack/bloodfavor",
+                "value": true
+              }
+            },
+            {
+              "verb": "trap",
+              "details": {
+                "scrubcontext": "character",
+                "scrubcharacter": "jack",
+                "target": "leader",
+                "effect": "damage",
+                "accuracy": "auto",
+                "damagedie": 4,
+                "damagedice": 1,
+                "damageplus": 2,
+                "damagetype": "piercing",
+                "leaderhittext": "You feel the depths of his soul. A keen mind, tactical and deceptive. You can sense the potential he has as a servant, even an adviser.\n\nAnd yet... here he is: stuck. A prisoner. A failure. Without you, without a dragon to serve, he wasn't enough.\n\nThe moment fades, the connection fading as well, to a dim warmth. {wolf} gives you one last lick and then smiles at you. \"Anything else you'd like to do while you're here?",
+                "leaderkilltext": "You... okay, maybe this was a terrible idea. You've lost too much blood, and now you're losing consciousness. You fade away, nestled against the wolf. For a moment, you think maybe this would be a good way to die... and then you realize that's stupid, and you don't want to die. Time rips apart, peeling back events until you return to your safe place.\n\nMaybe... maybe if you can get back to that place without being on the virge of death it'd be worth it?"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "statename": "world/characters/jack/favor",
+                "calc": {
+                  "calc": "math",
+                  "op": "+",
+                  "operands": [
+                    3,
+                    {
+                      "calc": "stateval",
+                      "fact": "world/characters/jack/favor",
+                      "default": 0
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "name": "jack",
+                "sub": "normal"
+              }
+            }
+          ],
+          "help": "Offer {wolf} a bite of your own flesh. (Take 3-6 damage)"
+        }
+      ],
+      [
+        {
+          "type": "spacer"
+        },
+        {
+          "scrubcontext": "character",
+          "scrubcharacter": "jack",
+          "type": "actButton",
+          "extendRight": 2,
+          "display": "Dried Meat",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "pay",
+              "details": {
+                "item": "dried meat",
+                "count": 1,
+                "text": "You offer {wolf} some dried meat, and he hungrily tears into it, seeming oblivious to the world for a few moments while he wolfs it down. \"Ah.. I'm quite grateful, {dragon}, and I'll happily repay you if I can while I'm here.\""
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "statename": "world/characters/jack/favor",
+                "calc": {
+                  "calc": "math",
+                  "op": "+",
+                  "operands": [
+                    1,
+                    {
+                      "calc": "stateval",
+                      "fact": "world/characters/jack/favor",
+                      "default": 0
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "name": "jack",
+                "sub": "normal"
+              }
+            }
+          ],
+          "help": "Offer {wolf} some dried meat."
+        }
+      ]
+    ]
+  },
+  "normal": {
     "controls": [
       [
         {
