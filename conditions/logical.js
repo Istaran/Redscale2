@@ -1,8 +1,10 @@
 let gameengine = require('../gameengine');
 
-let satisfied = function (state, details) {
+let satisfied = async function (state, details) {
     let maxPass = 0;
+    let pass = 0;
     let maxFail = 0;
+    let fail = 0;
     let total = details.conditions.length;
     switch (details.rule) {
         case "not":
@@ -27,15 +29,22 @@ let satisfied = function (state, details) {
             return false;
     }
     for (var i = 0; i < total; i++) {
-        let subSatisfied = gameengine.conditionMet(state, details.conditions[i]);
+        let subSatisfied = await gameengine.conditionMet(state, details.conditions[i]);
         if (subSatisfied) {
-            maxPass--;
-            if (maxPass < 0) return false; // Too many things passed for the condition.
+            pass++;
+            if (maxPass < pass) {
+                console.log(`${details.rule} passed too many subconditions. Result: false`);
+                return false; // Too many things passed for the condition.
+            }
         } else {
-            maxFail--;
-            if (maxFail < 0) return false; // Too many things failed for the condition.
+            fail++;
+            if (maxFail < fail) {
+                console.log(`${details.rule} failed too many subconditions. Result: false`);
+                return false; // Too many things failed for the condition.
+            }
         }
     }
+    console.log(`${details.rule} passed ${pass} <= ${maxPass} and failed ${fail} <= ${maxFail}. Result: true`);
     return true; // We are in the logical range.
 };
 

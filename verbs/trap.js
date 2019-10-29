@@ -55,6 +55,9 @@ let act = async function (state, details) {
             case "pawn":
                 defs = await cache.load(`data/pawns/${target.name}.json`);
                 break;
+            default:
+                defs = await cache.load(`data/characters/${target.name}.json`);
+                break;
         }
 
         switch (details.effect) {

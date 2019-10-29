@@ -379,7 +379,7 @@
 
           "type": "actButton",
           "extendRight": 3,
-          "display": "Leave",
+          "display": "\"Can't help you now.\" (Leave)",
           "verb": "setscene",
           "details": {
             "scrubcontext": "character",
@@ -388,6 +388,359 @@
             "clear": true
           },
           "help": "You're done here."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Can we just ambush the warden?\"",
+          "verb": "first",
+          "details": [
+            {
+              "if": {
+                "condition": "logical",
+                "rule": "or",
+                "conditions": [
+                  {
+                    "condition": "timeis",
+                    "time": "Midnight"
+                  },
+                  {
+                    "condition": "timeis",
+                    "time": "Dawn"
+                  },
+                  {
+                    "condition": "timeis",
+                    "time": "Noon"
+                  },
+                  {
+                    "condition": "timeis",
+                    "time": "Dusk"
+                  }
+                ]
+              },
+              "verb": "flavor",
+              "details": {
+                "text": "You totally would fight Warden Jaith, except he isn't implemented yet. Doh!"
+              }
+            },
+            {
+              "verb": "wait",
+              "details": {
+                "text": "You wait around for a while for the warden to arrive, but there's no sign of him. \"Not that I mind the company, {dragon}, but are you sure you want to just hang around?\""
+              }
+            }
+          ]
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"I just wanted to talk to someone who isn't trying to kill me.\"",
+          "verb": "switch",
+          "details": {
+            "statepath": "world/characters/jack/scrubbers/wolf",
+            "fork": {
+              "default": {
+                "verb": "random",
+                "details": [
+                  {
+                    "chance": 4,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You need more friends.. but I don't mind being one. Life was a lot better around here when your parents ruled.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You've got a lithe body. Much like mine, these days, heh. Use that to your advantage. When in doubt, dodge.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You've got quite the... solid, build. I actually used to before the warden put me on a diet. My point is, don't be afraid to brace yourself and absorb a blow. Then put your muscles to good use and end your foes. And bring me back the leftovers.\""
+                    }
+                  },
+                  {
+                    "chance": 2,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"Things are pretty bad outside the mountain these days. I don't think the old bitches really appreciated what they had under the redscales. But the blues.. they've torn us apart, and ground us into the dirt.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"I'm not really into males.. you know, sexually. But a funny thing about being locked in a prison cell? It makes you a bit more open to trying new things, you know?\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"I'm usually more for fur than scales but.. you have an amazingly feminine body, do you know that? I'm not just saying that because I'm sexually deprived. You really are cute.\""
+                    }
+                  }
+                ]
+              },
+              "Mr Wheatfur": {
+                "verb": "random",
+                "details": [
+                  {
+                    "chance": 4,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"As you wish {dragon}. I hear tell the tunnels have been invaded lately by ratfolk, to say nothing of very large rats. I have, of course been doing my duty, but alas down here all I get are very small rats.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "-Placeholder-"
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "-Placeholder-"
+                    }
+                  },
+                  {
+                    "chance": 2,
+                    "verb": "wait",
+                    "details": {
+                      "text": "-Placeholder-"
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "-Placeholder-"
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "-Placeholder-"
+                    }
+                  }
+                ]
+              },
+              "Goldenfur": {
+                "verb": "random",
+                "details": [
+                  {
+                    "chance": 4,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You need more friends.. but I don't mind being one. Life was a lot better around here when your parents ruled.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You've got a lithe body. Much like mine, these days, heh. Use that to your advantage. When in doubt, dodge.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You've got quite the... solid, build. I actually used to before the warden put me on a diet. My point is, don't be afraid to brace yourself and absorb a blow. Then put your muscles to good use and end your foes. And bring me back the leftovers.\""
+                    }
+                  },
+                  {
+                    "chance": 2,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"Things are pretty bad outside the mountain these days. I don't think the old bitches really appreciated what they had under the redscales. But the blues.. they've torn us apart, and ground us into the dirt.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"I'm not really into males.. you know, sexually. But a funny thing about being locked in a prison cell? It makes you a bit more open to trying new things, you know?\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"I'm usually more for fur than scales but.. you have an amazingly feminine body, do you know that? I'm not just saying that because I'm sexually deprived. You really are cute.\""
+                    }
+                  }
+                ]
+              },
+              "Wolf": {
+                "verb": "random",
+                "details": [
+                  {
+                    "chance": 4,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You need more friends.. but I don't mind being one. Life was a lot better around here when your parents ruled.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You've got a lithe body. Much like mine, these days, heh. Use that to your advantage. When in doubt, dodge.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You've got quite the... solid, build. I actually used to before the warden put me on a diet. My point is, don't be afraid to brace yourself and absorb a blow. Then put your muscles to good use and end your foes. And bring me back the leftovers.\""
+                    }
+                  },
+                  {
+                    "chance": 2,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"Things are pretty bad outside the mountain these days. I don't think the old bitches really appreciated what they had under the redscales. But the blues.. they've torn us apart, and ground us into the dirt.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"I'm not really into males.. you know, sexually. But a funny thing about being locked in a prison cell? It makes you a bit more open to trying new things, you know?\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"I'm usually more for fur than scales but.. you have an amazingly feminine body, do you know that? I'm not just saying that because I'm sexually deprived. You really are cute.\""
+                    }
+                  }
+                ]
+              }
+            }
+          }
         }
       ]
     ]
