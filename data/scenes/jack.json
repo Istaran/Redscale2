@@ -535,7 +535,7 @@
                     "chance": 3,
                     "verb": "wait",
                     "details": {
-                      "text": "-Placeholder-"
+                      "text": "\"Once you get me out, I'll be your right-hand man. I'll need to get some dark glasses, perhaps a nice suit. Definitely a hat,\" Mr Wheatfur suggests. \"People will look at you, all covered in claws and teeth, and me just quietly looking down at them over your shoulder, and won't know which they're supposed to be terrified about. It'll be fun.\""
                     }
                   },
                   {
@@ -549,14 +549,14 @@
                     "chance": 3,
                     "verb": "wait",
                     "details": {
-                      "text": "-Placeholder-"
+                      "text": "\"Were you hoping I'd be more of a tactical assistant, perveyor of violence, or more like a butler?\" Mr Wheatfur inquires. \"I'm quite flexible.\""
                     }
                   },
                   {
                     "chance": 2,
                     "verb": "wait",
                     "details": {
-                      "text": "-Placeholder-"
+                      "text": "\"The warden usually makes his rounds several times a day. If you mean to ambush him, though, you may need to quietly hide in a corner,\" Mr Wheatfur suggests. \"Or else you could go looking for him.\""
                     }
                   },
                   {
@@ -570,7 +570,7 @@
                     "chance": 1,
                     "verb": "wait",
                     "details": {
-                      "text": "-Placeholder-"
+                      "text": "\"You haven't seen another Lycan around here, have you? Similar fur, rounder chest, big muscles? Murderous outlook toward bluescales?\" Mr Wheatfur inquires. \"Come to think of it, if you do encounter my sister, I'm not sure how she'll react to a red scaled dragon.\""
                     }
                   },
                   {
@@ -584,7 +584,7 @@
                     "chance": 1,
                     "verb": "wait",
                     "details": {
-                      "text": "-Placeholder-"
+                      "text": "Mr Wheatfur catches himself admiring your hindquarters. \"I'm sorry, my Lady, that was most unprofessional of me.\""
                     }
                   }
                 ]
