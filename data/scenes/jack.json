@@ -232,6 +232,114 @@
       ]
     ]
   },
+  "jacinth": {
+    "controls": [
+      [
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Lucky guess.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Jacinth",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Lucky",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"Okay, 'Lucky',\" he says. He seems suspicious, but lets it go for now.\n\n\"Am I lucky enough for you to have some food to spare?\"",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "Surely that particular sequence of sounds occurred to you by sheer chance."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Your sister, Jillian, told me.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Jacinth",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "sourcecontext": "party",
+                "statepath": "leader/display",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "imprisoned",
+                "statename": "world/characters/jack/state"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"You've met Jillian then?\" he asks, perking up as much as his situation allows. \"You've come to free me then?\"",
+                "name": "jack",
+                "sub": "normal"
+              }
+            }
+          ],
+          "help": "Somehow you also know his sister's name."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"...in another timeline before I rewound events back to this point...\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Jacinth",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "sourcecontext": "party",
+                "statepath": "leader/name",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"That's hard to believe, but I can't really see why you'd make up something so absurd as a lie. I've heard that every dragon is blessed by two gods, I suppose the god of Time must be your second patron then.\"\n\nHis stomach growls, and he looks up sheepishly at you. \"Now that you've come back, did you bring along a bite to eat?\"",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "Just admit to the time shenanegans."
+        }
+      ]
+    ]
+  },
   "hunger": {
     "controls": [
       [
@@ -241,14 +349,26 @@
           "type": "actButton",
           "extendRight": 3,
           "display": "Nothing, sorry.",
-          "verb": "setscene",
-          "details": {
-            "scrubcontext": "character",
-            "scrubcharacter": "jack",
-            "text": "You shake your head, and offer {wolf} nothing.\n\n\"I see,\" he says, disappointed. \"Still, you're a guest in my most humble of abodes... anything I can do for you?\"",
-            "name": "jack",
-            "sub": "normal"
-          },
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "imprisoned",
+                "statename": "world/characters/jack/state"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "scrubcontext": "character",
+                "scrubcharacter": "jack",
+                "text": "You shake your head, and offer {wolf} nothing.\n\n\"I see,\" he says, disappointed. \"Still, you're a guest in my most humble of abodes... anything I can do for you?\"",
+                "name": "jack",
+                "sub": "normal"
+              }
+            }
+          ],
           "help": "You have nothing you care to offer {wolf}."
         },
         {
@@ -268,6 +388,13 @@
           "display": "\"Only my own flesh and blood.\"",
           "verb": "chain",
           "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "imprisoned",
+                "statename": "world/characters/jack/state"
+              }
+            },
             {
               "verb": "setstate",
               "details": {
@@ -333,6 +460,13 @@
           "display": "Dried Meat",
           "verb": "chain",
           "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "imprisoned",
+                "statename": "world/characters/jack/state"
+              }
+            },
             {
               "verb": "pay",
               "details": {
@@ -596,7 +730,7 @@
                     "chance": 4,
                     "verb": "wait",
                     "details": {
-                      "text": "\"You need more friends.. but I don't mind being one. Life was a lot better around here when your parents ruled.\""
+                      "text": "\"You're the boss. If you just want to hang around talking, who am I to argue?\""
                     }
                   },
                   {
@@ -610,7 +744,7 @@
                     "chance": 3,
                     "verb": "wait",
                     "details": {
-                      "text": "\"You've got a lithe body. Much like mine, these days, heh. Use that to your advantage. When in doubt, dodge.\""
+                      "text": "\"I will say, boss, that the warden probably won't show if he hears us talking, though. A quiet ambush at the right time will probably work better.\""
                     }
                   },
                   {
@@ -624,14 +758,14 @@
                     "chance": 3,
                     "verb": "wait",
                     "details": {
-                      "text": "\"You've got quite the... solid, build. I actually used to before the warden put me on a diet. My point is, don't be afraid to brace yourself and absorb a blow. Then put your muscles to good use and end your foes. And bring me back the leftovers.\""
+                      "text": "\"As much as I love hearing your pretty, feminine voice, boss, I suspect the warden can hear it too and may well be avoiding you.\""
                     }
                   },
                   {
                     "chance": 2,
                     "verb": "wait",
                     "details": {
-                      "text": "\"Things are pretty bad outside the mountain these days. I don't think the old bitches really appreciated what they had under the redscales. But the blues.. they've torn us apart, and ground us into the dirt.\""
+                      "text": "\"If you're thinking of getting me out of here, boss, watch the time. The warden usually feeds me three scraps a day, and I sometimes catch him checking on me in my sleep.\""
                     }
                   },
                   {
@@ -645,7 +779,7 @@
                     "chance": 1,
                     "verb": "wait",
                     "details": {
-                      "text": "\"I'm not really into males.. you know, sexually. But a funny thing about being locked in a prison cell? It makes you a bit more open to trying new things, you know?\""
+                      "text": "\"You know, boss, I can be a lot more help to you out of these chains. Anything you need. Loyal leutenant, diplomat, strategist, woodchopper. You name it.\""
                     }
                   },
                   {
@@ -659,85 +793,16 @@
                     "chance": 1,
                     "verb": "wait",
                     "details": {
-                      "text": "\"I'm usually more for fur than scales but.. you have an amazingly feminine body, do you know that? I'm not just saying that because I'm sexually deprived. You really are cute.\""
+                      "text": "\"You know boss, even chained here I can serve you. Need a man-whore? Or even a masseuse? Just some ideas.\""
                     }
                   }
                 ]
               },
               "Wolf": {
-                "verb": "random",
-                "details": [
-                  {
-                    "chance": 4,
-                    "verb": "wait",
-                    "details": {
-                      "text": "\"You need more friends.. but I don't mind being one. Life was a lot better around here when your parents ruled.\""
-                    }
-                  },
-                  {
-                    "if": {
-                      "condition": "stateis",
-                      "fact": "leader/tags/male",
-                      "context": "party",
-                      "rule": "==",
-                      "value": true
-                    },
-                    "chance": 3,
-                    "verb": "wait",
-                    "details": {
-                      "text": "\"You've got a lithe body. Much like mine, these days, heh. Use that to your advantage. When in doubt, dodge.\""
-                    }
-                  },
-                  {
-                    "if": {
-                      "condition": "stateis",
-                      "fact": "leader/tags/female",
-                      "context": "party",
-                      "rule": "==",
-                      "value": true
-                    },
-                    "chance": 3,
-                    "verb": "wait",
-                    "details": {
-                      "text": "\"You've got quite the... solid, build. I actually used to before the warden put me on a diet. My point is, don't be afraid to brace yourself and absorb a blow. Then put your muscles to good use and end your foes. And bring me back the leftovers.\""
-                    }
-                  },
-                  {
-                    "chance": 2,
-                    "verb": "wait",
-                    "details": {
-                      "text": "\"Things are pretty bad outside the mountain these days. I don't think the old bitches really appreciated what they had under the redscales. But the blues.. they've torn us apart, and ground us into the dirt.\""
-                    }
-                  },
-                  {
-                    "if": {
-                      "condition": "stateis",
-                      "fact": "leader/tags/male",
-                      "context": "party",
-                      "rule": "==",
-                      "value": true
-                    },
-                    "chance": 1,
-                    "verb": "wait",
-                    "details": {
-                      "text": "\"I'm not really into males.. you know, sexually. But a funny thing about being locked in a prison cell? It makes you a bit more open to trying new things, you know?\""
-                    }
-                  },
-                  {
-                    "if": {
-                      "condition": "stateis",
-                      "fact": "leader/tags/female",
-                      "context": "party",
-                      "rule": "==",
-                      "value": true
-                    },
-                    "chance": 1,
-                    "verb": "wait",
-                    "details": {
-                      "text": "\"I'm usually more for fur than scales but.. you have an amazingly feminine body, do you know that? I'm not just saying that because I'm sexually deprived. You really are cute.\""
-                    }
-                  }
-                ]
+                "verb": "wait",
+                "details": {
+                  "text": "\"...\" He doesn't seem all that talkative. You're not sure if he's holding a grudge over your choice of name for him."
+                }
               }
             }
           }

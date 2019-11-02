@@ -271,10 +271,26 @@
             "description": "The cell here looks like the others, except that there is a wolf man seated against one wall, chained by a thick metal collar locked around his neck.",
             "preview": "The cell there is occupied by a wolf man, chained to the wall by a thick metal collar locked around his neck. He acknowledges your presence only by pointing an ear your way.",
             "events": [
-                {
-                    "chance": 1,
-                    "event": "JackIntro"
-                }
+              {
+                "if": {
+                  "condition": "stateis",
+                  "fact": "world/characters/jack/state",
+                  "rule": "!=",
+                  "value": "imprisoned"
+                },
+                "chance": 1,
+                "event": "JackIntro"
+              },
+              {
+                "if": {
+                  "condition": "stateis",
+                  "fact": "world/characters/jack/state",
+                  "rule": "==",
+                  "value": "imprisoned"
+                },
+                "chance": 1,
+                "event": "JackNormal"
+              }
             ],
             "directionOverrides": {
                 "east": {
@@ -377,6 +393,16 @@
         "name": "jack",
         "sub": "intro",
         "type": "menu"
+      }
+    },
+    "JackNormal": {
+      "verb": "setscene",
+      "details": {
+        "scrubcontext": "character",
+        "scrubcharacter": "jack",
+        "text": "\"{dragon}.\" the now familiar Lycan greets as you enter his cell.\n\n\"{wolf}\" you reply.",
+        "name": "jack",
+        "sub": "normal"
       }
     }
   },
