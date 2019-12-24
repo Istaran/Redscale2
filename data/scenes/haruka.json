@@ -74,7 +74,7 @@
             ]
           },
           "details": {
-            "text": "\"You can't! Well... actually, Chroneth favors you, perhaps even more than me, so maybe you <i>can</i> break destiny, but please don't! It can have a lot of side effects too.\"",
+            "text": "\"You can't! Well... actually, Chroneth favors you, perhaps even more than me, so maybe you can break destiny, but please don't! It can have a lot of side effects too.\"",
             "statename": "world/characters/haruka/questiondestiny",
             "value": true
           },
@@ -131,7 +131,7 @@
         {
           "type": "actButton",
           "extendRight": 3,
-          "display": "\"You don't really care for them do you?\"",
+          "display": "\"Blues?\"",
           "verb": "setstate",
           "if": {
             "condition": "logical",
@@ -206,11 +206,47 @@
               "verb": "setstate",
               "details": {
                 "value": "FirstIntersection",
-                "statename": "world/locations/Nezumi Enclave/2/5/4/style"
+                "statename": "world/locations/Nezumi Enclave/2/5/3/style"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "clear": true
               }
             }
           ],
           "help": "Promise her rescue!"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Nope!\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "text": "\"But... what?! The prophecy! You have to come!\" Her eyes water as she looks at you with a growing panic. \"No....\" She slowly fades from view, even as she drops to her knees.",
+                "statename": "world/characters/haruka/promise",
+                "value": false
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "FirstIntersection",
+                "statename": "world/locations/Nezumi Enclave/2/5/3/style"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "clear": true
+              }
+            }
+          ],
+          "help": "Not your problem!"
         }
       ]
     ]
@@ -221,13 +257,122 @@
         {
           "type": "actButton",
           "extendRight": 3,
-          "display": "Leave",
-          "verb": "setscene",
-          "details": {
-            "text": "You bid farewell to the illusory rat.",
-            "clear": true
+          "display": "\"Who are you?\"",
+          "verb": "setstate",
+          "if": {
+            "condition": "stateis",
+            "fact": "world/characters/haruka/named",
+            "rule": "!=",
+            "value": true
           },
-          "help": "You're done here."
+          "details": {
+            "text": "\"My name is Haruka,\" she introduces herself. \"Youngest prophetess of the Nezumi people. By our people's traditions, prophetesses can't be executed, but that doesn't mean they can't lock me away try their best to prevent my destiny. Though... I guess that's a moot point.\"",
+            "statename": "world/characters/haruka/named",
+            "value": true
+          },
+          "help": "Seriously, who is this?"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Destiny?\"",
+          "verb": "setstate",
+          "if": {
+            "condition": "logical",
+            "rule": "and",
+            "conditions": [
+              {
+                "condition": "stateis",
+                "fact": "world/characters/haruka/named",
+                "rule": "==",
+                "value": true
+              },
+              {
+                "condition": "stateis",
+                "fact": "world/characters/haruka/destined",
+                "rule": "!=",
+                "value": true
+              }
+            ]
+          },
+          "details": {
+            "text": "\"The time god Chroneth foretold that you and I would bear the new ruler of the Nezumi, but... it's impossible, we're both female. So... what then, I'm a false prophet?\" She hangs her head. \"I'm worthless... but then, that also means you're worthless to me.\"",
+            "statename": "world/characters/haruka/destined",
+            "value": true
+          },
+          "help": "What's this about her destiny?"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Don't give up so easily! We'll make it work!\"",
+          "if": {
+            "condition": "stateis",
+            "fact": "world/characters/haruka/destined",
+            "rule": "==",
+            "value": true
+          },
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "text": "She laughs at you, a bit unhinged. \"Sure... right. We're blessed by Time, not Life. Destiny was broken the moment you grew a womb. What's the point of trying? Goodbye, princess... Leave my people alone, or I'll have to guide them against you.\" She fades away, with a haunted, sad look on her face.",
+                "statename": "world/characters/haruka/promise",
+                "value": true
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "FirstIntersection",
+                "statename": "world/locations/Nezumi Enclave/2/5/3/style"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "clear": true
+              }
+            }
+          ],
+          "help": "Promise her rescue!"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Fuck you!\"",
+          "if": {
+            "condition": "stateis",
+            "fact": "world/characters/haruka/destined",
+            "rule": "==",
+            "value": true
+          },
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "text": "You see a fresh fire of defiance in her eyes. \"The old prophecy may be broken, but I'm not powerless. Leave the Enclaves and never return, or I'll do my best to see you ended, destiny-breaker.\" She fades from view, her gaze boring into you for a moment even after she's gone.",
+                "statename": "world/characters/haruka/promise",
+                "value": false
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "FirstIntersection",
+                "statename": "world/locations/Nezumi Enclave/2/5/3/style"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "clear": true
+              }
+            }
+          ],
+          "help": "Who's she to call you worthless!"
         }
       ]
     ]
