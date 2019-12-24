@@ -1,0 +1,813 @@
+{
+  "intro": {
+    "controls": [
+      [
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Wolf.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "sourcecontext": "party",
+                "statepath": "leader/display",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"The name's 'Jack', or \"Mr Wheatfur\" if you're being formal. Or if you're in a place with too many Jacks.\"",
+                "name": "jack",
+                "sub": "wolf"
+              }
+            }
+          ],
+          "help": "Let's just call 'em like we see 'em."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Who are you?\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "sourcecontext": "party",
+                "statepath": "leader/display",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": true,
+                "statename": "world/characters/jack/polite"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"The name's 'Jack', or \"Mr Wheatfur\" if you're being formal. Or if you're in a place with too many Jacks.\"",
+                "name": "jack",
+                "sub": "wolf"
+              }
+            }
+          ],
+          "help": "Ask politely."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Jack.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Jack",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"By trade and by name, though I'm surprised you guessed it after this much atrophy. If you need any trees chopped, you'll need to let me free first, though.\"\n\nHis stomach rumbles noisily and his smile falters. \"And I'll also be needing something to eat first.\"",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "He looks like a 'Jack'. Sort of."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Jacinth.\"",
+          "verb": "setscene",
+          "details": {
+            "text": "\"How did you come to know that name?\"",
+            "name": "jack",
+            "sub": "jacinth"
+          },
+          "help": "You seem to vaguely recall something that never happened."
+        }
+      ]
+    ]
+  },
+  "wolf": {
+    "controls": [
+      [
+        {
+          "scrubcontext": "character",
+          "scrubcharacter": "jack",
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Jack it is. And I'm '{dragon}'\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Jack",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "scrubcontext": "character",
+                "scrubcharacter": "jack",
+                "text": "\"{dragon} it is then.\"\n\nHis stomach rumbles and he gives a hopeful grin. \"And now that we're on a first-name basis... would you care to share a meal with your good friend Jack?\"",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "First name basis seems nice to you."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Mr Wheatfur, then.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Mr Wheatfur",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "sourcecontext": "party",
+                "statepath": "leader/name",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"Certainly, {dragon}\n\nHis stomach rumbles noisily. \"Oh my, how rude of me. I do say, would you happen to have any food you could spare?\"",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "Formalities are definitely your style."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"I'm going to call you 'Goldenfur' instead. Makes it sound like you're worth something.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Goldenfur",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "boss",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"You're the boss. Or at least, you will be if you set me free.\"\n\nHis stomach rumbles notably, and he looks embarassed. \"Hey, Boss... would you happen to have any food to spare?\"",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "You'll call him whatever you want, and he'll like it!"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Wolf.\"",
+          "verb": "chain",
+          "if": {
+            "condition": "stateis",
+            "fact": "world/characters/jack/polite",
+            "rule": "!=",
+            "value": true
+          },
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Wolf",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "dragon",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"Alright, 'Dragon'.\"\n\nHis stomach rumbles and he sighs, drooping his head. He's obviously hungry, but seems afraid to get his hopes up enough to ask for food. Will you offer him something anyways?",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "Names are for winners."
+        }
+      ]
+    ]
+  },
+  "jacinth": {
+    "controls": [
+      [
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Lucky guess.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Jacinth",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Lucky",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"Okay, 'Lucky',\" he says. He seems suspicious, but lets it go for now.\n\n\"Am I lucky enough for you to have some food to spare?\"",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "Surely that particular sequence of sounds occurred to you by sheer chance."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Your sister, Jillian, told me.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Jacinth",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "sourcecontext": "party",
+                "statepath": "leader/display",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "imprisoned",
+                "statename": "world/characters/jack/state"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"You've met Jillian then?\" he asks, perking up as much as his situation allows. \"You've come to free me then?\"",
+                "name": "jack",
+                "sub": "normal"
+              }
+            }
+          ],
+          "help": "Somehow you also know his sister's name."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"...in another timeline before I rewound events back to this point...\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "Jacinth",
+                "statename": "world/characters/jack/scrubbers/wolf"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "sourcecontext": "party",
+                "statepath": "leader/name",
+                "statename": "world/characters/jack/scrubbers/dragon"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "text": "\"That's hard to believe, but I can't really see why you'd make up something so absurd as a lie. I've heard that every dragon is blessed by two gods, I suppose the god of Time must be your second patron then.\"\n\nHis stomach growls, and he looks up sheepishly at you. \"Now that you've come back, did you bring along a bite to eat?\"",
+                "name": "jack",
+                "sub": "hunger"
+              }
+            }
+          ],
+          "help": "Just admit to the time shenanegans."
+        }
+      ]
+    ]
+  },
+  "hunger": {
+    "controls": [
+      [
+        {
+          "scrubcontext": "character",
+          "scrubcharacter": "jack",
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "Nothing, sorry.",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "imprisoned",
+                "statename": "world/characters/jack/state"
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "scrubcontext": "character",
+                "scrubcharacter": "jack",
+                "text": "You shake your head, and offer {wolf} nothing.\n\n\"I see,\" he says, disappointed. \"Still, you're a guest in my most humble of abodes... anything I can do for you?\"",
+                "name": "jack",
+                "sub": "normal"
+              }
+            }
+          ],
+          "help": "You have nothing you care to offer {wolf}."
+        },
+        {
+          "type": "itemCount",
+          "details": {
+            "item": "dried meat",
+            "display": "Dried meat: [count]",
+            "dataContext": "party",
+            "path": "inventory"
+          }
+        },
+        {
+          "scrubcontext": "character",
+          "scrubcharacter": "jack",
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Only my own flesh and blood.\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "imprisoned",
+                "statename": "world/characters/jack/state"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "text": "You offer {wolf} your arm, and he takes a deep bite. He licks gently, blood flowing into his mouth as he moans lightly from the pleasure of it. You caress his head, drawing yourself up close, snuggling along his side as he dines.\n\nIt's intimate, in a way that goes beyond sensuality, and you feel your warmth spreading from your heart, to your arm, down his throat, and through his body.",
+                "statename": "world/characters/jack/bloodfavor",
+                "value": true
+              }
+            },
+            {
+              "verb": "trap",
+              "details": {
+                "scrubcontext": "character",
+                "scrubcharacter": "jack",
+                "target": "leader",
+                "effect": "damage",
+                "accuracy": "auto",
+                "damagedie": 4,
+                "damagedice": 1,
+                "damageplus": 2,
+                "damagetype": "piercing",
+                "leaderhittext": "You feel the depths of his soul. A keen mind, tactical and deceptive. You can sense the potential he has as a servant, even an adviser.\n\nAnd yet... here he is: stuck. A prisoner. A failure. Without you, without a dragon to serve, he wasn't enough.\n\nThe moment fades, the connection fading as well, to a dim warmth. {wolf} gives you one last lick and then smiles at you. \"Anything else you'd like to do while you're here?",
+                "leaderkilltext": "You... okay, maybe this was a terrible idea. You've lost too much blood, and now you're losing consciousness. You fade away, nestled against the wolf. For a moment, you think maybe this would be a good way to die... and then you realize that's stupid, and you don't want to die. Time rips apart, peeling back events until you return to your safe place.\n\nMaybe... maybe if you can get back to that place without being on the virge of death it'd be worth it?"
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "statename": "world/characters/jack/favor",
+                "calc": {
+                  "calc": "math",
+                  "op": "+",
+                  "operands": [
+                    3,
+                    {
+                      "calc": "stateval",
+                      "fact": "world/characters/jack/favor",
+                      "default": 0
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "name": "jack",
+                "sub": "normal"
+              }
+            }
+          ],
+          "help": "Offer {wolf} a bite of your own flesh. (Take 3-6 damage)"
+        }
+      ],
+      [
+        {
+          "type": "spacer"
+        },
+        {
+          "scrubcontext": "character",
+          "scrubcharacter": "jack",
+          "type": "actButton",
+          "extendRight": 2,
+          "display": "Dried Meat",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "imprisoned",
+                "statename": "world/characters/jack/state"
+              }
+            },
+            {
+              "verb": "pay",
+              "details": {
+                "item": "dried meat",
+                "count": 1,
+                "text": "You offer {wolf} some dried meat, and he hungrily tears into it, seeming oblivious to the world for a few moments while he wolfs it down. \"Ah.. I'm quite grateful, {dragon}, and I'll happily repay you if I can while I'm here.\""
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "statename": "world/characters/jack/favor",
+                "calc": {
+                  "calc": "math",
+                  "op": "+",
+                  "operands": [
+                    1,
+                    {
+                      "calc": "stateval",
+                      "fact": "world/characters/jack/favor",
+                      "default": 0
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "verb": "setscene",
+              "details": {
+                "name": "jack",
+                "sub": "normal"
+              }
+            }
+          ],
+          "help": "Offer {wolf} some dried meat."
+        }
+      ]
+    ]
+  },
+  "normal": {
+    "controls": [
+      [
+        {
+
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Can't help you now.\" (Leave)",
+          "verb": "setscene",
+          "details": {
+            "scrubcontext": "character",
+            "scrubcharacter": "jack",
+            "text": "You bid farewell to {wolf}.",
+            "clear": true
+          },
+          "help": "You're done here."
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Can we just ambush the warden?\"",
+          "verb": "first",
+          "details": [
+            {
+              "if": {
+                "condition": "logical",
+                "rule": "or",
+                "conditions": [
+                  {
+                    "condition": "timeis",
+                    "time": "Midnight"
+                  },
+                  {
+                    "condition": "timeis",
+                    "time": "Dawn"
+                  },
+                  {
+                    "condition": "timeis",
+                    "time": "Noon"
+                  },
+                  {
+                    "condition": "timeis",
+                    "time": "Dusk"
+                  }
+                ]
+              },
+              "verb": "flavor",
+              "details": {
+                "text": "You totally would fight Warden Jaith, except he isn't implemented yet. Doh!"
+              }
+            },
+            {
+              "verb": "wait",
+              "details": {
+                "text": "You wait around for a while for the warden to arrive, but there's no sign of him. \"Not that I mind the company, {dragon}, but are you sure you want to just hang around?\""
+              }
+            }
+          ]
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"I just wanted to talk to someone who isn't trying to kill me.\"",
+          "verb": "switch",
+          "details": {
+            "statepath": "world/characters/jack/scrubbers/wolf",
+            "fork": {
+              "default": {
+                "verb": "random",
+                "details": [
+                  {
+                    "chance": 4,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You need more friends.. but I don't mind being one. Life was a lot better around here when your parents ruled.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You've got a lithe body. Much like mine, these days, heh. Use that to your advantage. When in doubt, dodge.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You've got quite the... solid, build. I actually used to before the warden put me on a diet. My point is, don't be afraid to brace yourself and absorb a blow. Then put your muscles to good use and end your foes. And bring me back the leftovers.\""
+                    }
+                  },
+                  {
+                    "chance": 2,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"Things are pretty bad outside the mountain these days. I don't think the old bitches really appreciated what they had under the redscales. But the blues.. they've torn us apart, and ground us into the dirt.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"I'm not really into males.. you know, sexually. But a funny thing about being locked in a prison cell? It makes you a bit more open to trying new things, you know?\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"I'm usually more for fur than scales but.. you have an amazingly feminine body, do you know that? I'm not just saying that because I'm sexually deprived. You really are cute.\""
+                    }
+                  }
+                ]
+              },
+              "Mr Wheatfur": {
+                "verb": "random",
+                "details": [
+                  {
+                    "chance": 4,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"As you wish {dragon}. I hear tell the tunnels have been invaded lately by ratfolk, to say nothing of very large rats. I have, of course been doing my duty, but alas down here all I get are very small rats.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"Once you get me out, I'll be your right-hand man. I'll need to get some dark glasses, perhaps a nice suit. Definitely a hat,\" Mr Wheatfur suggests. \"People will look at you, all covered in claws and teeth, and me just quietly looking down at them over your shoulder, and won't know which they're supposed to be terrified about. It'll be fun.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"Were you hoping I'd be more of a tactical assistant, perveyor of violence, or more like a butler?\" Mr Wheatfur inquires. \"I'm quite flexible.\""
+                    }
+                  },
+                  {
+                    "chance": 2,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"The warden usually makes his rounds several times a day. If you mean to ambush him, though, you may need to quietly hide in a corner,\" Mr Wheatfur suggests. \"Or else you could go looking for him.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You haven't seen another Lycan around here, have you? Similar fur, rounder chest, big muscles? Murderous outlook toward bluescales?\" Mr Wheatfur inquires. \"Come to think of it, if you do encounter my sister, I'm not sure how she'll react to a red scaled dragon.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "Mr Wheatfur catches himself admiring your hindquarters. \"I'm sorry, my Lady, that was most unprofessional of me.\""
+                    }
+                  }
+                ]
+              },
+              "Goldenfur": {
+                "verb": "random",
+                "details": [
+                  {
+                    "chance": 4,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You're the boss. If you just want to hang around talking, who am I to argue?\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"I will say, boss, that the warden probably won't show if he hears us talking, though. A quiet ambush at the right time will probably work better.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 3,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"As much as I love hearing your pretty, feminine voice, boss, I suspect the warden can hear it too and may well be avoiding you.\""
+                    }
+                  },
+                  {
+                    "chance": 2,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"If you're thinking of getting me out of here, boss, watch the time. The warden usually feeds me three scraps a day, and I sometimes catch him checking on me in my sleep.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/male",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You know, boss, I can be a lot more help to you out of these chains. Anything you need. Loyal leutenant, diplomat, strategist, woodchopper. You name it.\""
+                    }
+                  },
+                  {
+                    "if": {
+                      "condition": "stateis",
+                      "fact": "leader/tags/female",
+                      "context": "party",
+                      "rule": "==",
+                      "value": true
+                    },
+                    "chance": 1,
+                    "verb": "wait",
+                    "details": {
+                      "text": "\"You know boss, even chained here I can serve you. Need a man-whore? Or even a masseuse? Just some ideas.\""
+                    }
+                  }
+                ]
+              },
+              "Wolf": {
+                "verb": "wait",
+                "details": {
+                  "text": "\"...\" He doesn't seem all that talkative. You're not sure if he's holding a grudge over your choice of name for him."
+                }
+              }
+            }
+          }
+        }
+      ]
+    ]
+  }
+}

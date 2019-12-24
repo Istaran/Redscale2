@@ -9,6 +9,10 @@ let act = async function (state, details) {
     let targetType = [];
     console.log("Triggered a trap!");
     switch (details.target) {
+        case "leader":
+            targetType.push("leader");
+            targets.push(party.leader);
+            break;
         case "random one":
             // Arrange 25% chance of follower hit (scaled down if less than 3 followers), 50% chance of pawn hit (scaled down if less than 8 pawns), rest is leader hit.
             let plus = Math.max(0, (3 - Math.min(3, party.followers.length)) / 12);
@@ -51,31 +55,38 @@ let act = async function (state, details) {
             case "pawn":
                 defs = await cache.load(`data/pawns/${target.name}.json`);
                 break;
+            default:
+                defs = await cache.load(`data/characters/${target.name}.json`);
+                break;
         }
 
         switch (details.effect) {
             case "damage":
                 let immune = false;
-                for (var t = 0; t < details.immunitytags.length; t++) {
-                    if (target.tags[details.immunitytags[t]]) {
-                        immune = true;
-                        resultText += "\n" + await gameengine.scrubText(state,
-                            details[`${targetType[i]}immunetext`][details.immunitytags[t]],
-                            target.tags,
-                            defs ? defs.scrubbers : null);
-                        break;
+                if (details.immunitytags) {
+                    for (var t = 0; t < details.immunitytags.length; t++) {
+                        if (target.tags[details.immunitytags[t]]) {
+                            immune = true;
+                            resultText += "\n" + await gameengine.scrubText(state,
+                                details[`${targetType[i]}immunetext`][details.immunitytags[t]],
+                                target.tags,
+                                defs ? defs.scrubbers : null);
+                            break;
+                        }
+                        console.log(`${target.display} is not ${details.immunitytags[t]}`);
                     }
-                    console.log(`${target.display} is not ${details.immunitytags[t]}`);
                 }
                 if (!immune) {
-                    let attackRoll = await combatengine.attackRoll(details.accuracy, target.evasion || defs.evasion);
+                    let attackRoll =
+                        details.accuracy == "auto" ? 1 :
+                        await combatengine.attackRoll(details.accuracy, target.evasion || defs.evasion);
                     if (attackRoll == 0) {
                         resultText += "\n" + await gameengine.scrubText(state,
                             details[`${targetType[i]}misstext`],
                             target.tags,
                             defs ? defs.scrubbers : null);
                     } else {
-                        let typeMulti = target.damageMultiplier && target.damageMultiplier[details.damagetype] ? target.damageMultiplier[details.damagetype] : 1;
+                        let typeMulti = target.damageMultiplier && target.damageMultiplier[details.damagetype] ? Math.floor(target.damageMultiplier[details.damagetype]) : 1;
                         let damage = (await combatengine.damageRoll(details.damagedice, details.damagedie, details.damageplus), typeMulti * attackRoll);
                         if (!target.health) target.health = defs.maxHealth;
                         target.health -= damage;

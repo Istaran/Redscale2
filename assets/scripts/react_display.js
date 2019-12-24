@@ -100,28 +100,29 @@ class ChatDisplayer extends React.Component {
 }
 
 class ActButton extends React.Component {
-	constructor(props) {
-		super(props);
-	};
-	
-	takeAction = function() {
+    constructor(props) {
+        super(props);
+    };
+
+    takeAction = function () {
         let self = this;
         helper.setState({ help: null });
-		fetch('/act' + location.search, {
-				method: 'post',
-				headers: {
-				   "Content-Type": "application/json; charset=utf-8",
-				},
-            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'slot': saveSlot, 'id': self.props.id, 'data': formData }})
-			  }).then(function(response) {
-				return response.json();
-			  }).then(function(data) {
-                  gameDisplayer.setState({gameState: data});
-			  });
-	}
-	
-	render() {
-        return <input type='button' className='actButton' onClick={(event) => this.takeAction(event)} value={this.props.display} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} />;
+        fetch('/act' + location.search, {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'slot': saveSlot, 'id': self.props.id, 'data': formData } })
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            gameDisplayer.setState({ gameState: data });
+        });
+    }
+
+    render() {
+        var width = 150 + 155 * (this.props.extendRight || 0);
+        return <input type='button' className='actButton' style={{ width: width }} onClick={(event) => this.takeAction(event)} value={this.props.display} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} />;
 	}
 }
 
@@ -728,7 +729,7 @@ class GameDisplayer extends React.Component {
                     controlColumn = column.map((control, rowIndex) => {
                         switch (control.type) {
                             case 'actButton':
-                                return <ActButton key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
+                                return <ActButton key={colIndex * 10 + rowIndex} extendRight={control.extendRight} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
                             case 'card':
                                 return <Card key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
                             case 'navigator':

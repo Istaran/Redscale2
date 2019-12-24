@@ -67,7 +67,7 @@ let act = async function (state, details) {
                         engineResult += "You bypassed {their} armor! ";
                     }
                 }
-                let typeMulti = (enemyDef.damageMultiplier && enemyDef.damageMultiplier[card.damagetype]) ? enemyDef.damageMultiplier[card.damagetype] : 1;
+                let typeMulti = (enemyDef.damageMultiplier && enemyDef.damageMultiplier[card.damagetype]) ? Math.floor(enemyDef.damageMultiplier[card.damagetype]) : 1;
                 console.log(`Multiplier ${typeMulti} against type ${card.damagetype}`);
                 let damage = combatengine.damageRoll(damagedice, damagedie, damageplus - enemyCard.soak - (hitMulti <= 1 && enemyCard.noncritsoak ? enemyCard.noncritsoak : 0), typeMulti * hitMulti);
                 if (damage <= 0) {

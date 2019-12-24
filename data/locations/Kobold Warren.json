@@ -268,13 +268,29 @@
         },
         "JackCell": {
             "title": "Kobold Jail - Lycan's cell",
-            "description": "The wolf looks up as you enter. His keen, intelligent eyes lock with yours, though you see only the faintest glimmer of hope behind them.\n\n\"Dragon,\" he greets, with as much dignity as he can manage while half-starved and stuck sitting in his own filth.",
+            "description": "The cell here looks like the others, except that there is a wolf man seated against one wall, chained by a thick metal collar locked around his neck.",
             "preview": "The cell there is occupied by a wolf man, chained to the wall by a thick metal collar locked around his neck. He acknowledges your presence only by pointing an ear your way.",
             "events": [
-                {
-                    "chance": 1,
-                    "event": null
-                }
+              {
+                "if": {
+                  "condition": "stateis",
+                  "fact": "world/characters/jack/state",
+                  "rule": "!=",
+                  "value": "imprisoned"
+                },
+                "chance": 1,
+                "event": "JackIntro"
+              },
+              {
+                "if": {
+                  "condition": "stateis",
+                  "fact": "world/characters/jack/state",
+                  "rule": "==",
+                  "value": "imprisoned"
+                },
+                "chance": 1,
+                "event": "JackNormal"
+              }
             ],
             "directionOverrides": {
                 "east": {
@@ -358,8 +374,8 @@
       "verb": "setscene",
       "details": {
         "text": "A kobold is standing around in the darkened intersection, looking decidedly shady in the dark. The heavy grey coat they have on, and hat which hides their features makes it even more so, but the distant torchlight reflects off their eyes, giving them a distinct glow that gives their presence away.\n\nThey size you up as you approach. \"Looking to buy something? I've got the goods if you've got the coin.\"",
-        "name": "kobold black market",        
-        "sub":  "start"
+        "name": "kobold black market",
+        "sub": "start"
       }
     },
     "encounter miner": {
@@ -368,6 +384,25 @@
         "text": "You come across a miner holding a copper spike attached to the end of a wooden bar. They jump in surprise, shouldering the tool and looking at you warily, but make no move to initiate a fight. They're obviously waiting on you to make the first move.",
         "name": "encounter miner",
         "sub": "start"
+      }
+    },
+    "JackIntro": {
+      "verb": "setscene",
+      "details": {
+        "text": "The wolf looks up as you enter. His keen, intelligent eyes lock with yours, though you see only the faintest glimmer of hope behind them.\n\n\"Dragon,\" he greets, with as much dignity as he can manage while half-starved and stuck sitting in his own filth.",
+        "name": "jack",
+        "sub": "intro",
+        "type": "menu"
+      }
+    },
+    "JackNormal": {
+      "verb": "setscene",
+      "details": {
+        "scrubcontext": "character",
+        "scrubcharacter": "jack",
+        "text": "\"{dragon}.\" the now familiar Lycan greets as you enter his cell.\n\n\"{wolf}\" you reply.",
+        "name": "jack",
+        "sub": "normal"
       }
     }
   },

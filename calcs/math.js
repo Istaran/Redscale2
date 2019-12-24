@@ -1,6 +1,6 @@
 let gameengine = require('../gameengine');
 
-let value = function (state, details) {
+let value = async function (state, details) {
     if (details.op == "?:") {
         if (await gameengine.conditionMet(state, details.operands[0]))
             return await gameengine.calculate(state, details.operands[1]);

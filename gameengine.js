@@ -39,6 +39,16 @@ let doVerb = async function (verbName, state, details) {
                 tags = state.enemy.tags;
                 contextScrubbers = state.enemy.scrubbers;
                 break;
+            case "character":
+                console.log("Scrubbing text based on character: " + details.scrubcharacter);
+                if (details.scrubcharacter) {
+                    if (state.world && state.world.characters && state.world.characters[details.scrubcharacter]) {
+                        tags = state.world.characters[details.scrubcharacter].tags || {};
+                        contextScrubbers = state.world.characters[details.scrubcharacter].scrubbers || {};
+                        console.log(`Scrubbers: ${JSON.stringify(contextScrubbers)}\nTags:${JSON.stringify(tags)}`);
+                    }
+                }
+                break;
         }
         state.view.status = await scrubText(state, state.view.status || "", tags, contextScrubbers)
     }
@@ -65,6 +75,8 @@ let conditionMet = async function (state, details) {
 }
 
 let calculate = async function (state, calc) {
+    console.log(`Calculate: ${JSON.stringify(calc)}`);
+
     if (calc.calc === undefined) return calc; // Shortcircuit to return literals and whatnot.
     if (calcs[calc.calc] === undefined) {
         try {
@@ -76,29 +88,40 @@ let calculate = async function (state, calc) {
         }
     }
     if (calcs[calc.calc]) {
-        return await calcs[calc.calc].value(state, details);
+        let val = await calcs[calc.calc].value(state, calc);
+        console.log(`Calculated: ${val}`);
+        return val;
     }
+    console.log("Cannot calculate");
 }
 
 let getContext = function (state, context) {
-    switch (context) {
+    if (!context) return state; 
+    var contextPath = context.split("/");
+    switch (contextPath[0]) {
         case null:
         case undefined:
             return state;
         case "party":
+            if (contextPath[1])
+                return state.parties[contextPath[1]]; // Maybe? I will probably need more logic here.
             return state.parties[state.activeParty];
         case "location":
+            let L = (contextPath[1] || state.location);
+            let Z = (contextPath[2] || state.z);
+            let Y = (contextPath[3] || state.y);
+            let X = (contextPath[4] || state.x);
             // Make sure state.locations.<zone>.<z>.<y>.<x> exists, and return it as a context
             let locations = state.world.locations;
-            if (!locations[state.location])
-                locations[state.location] = {};
-            let location = locations[state.location];
-            if (!location[state.z]) location[state.z] = {};
-            let locZ = location[state.z];
-            if (!locZ[state.y]) locZ[state.y] = {};
-            let locY = locZ[state.y];
-            if (!locY[state.x]) locY[state.x] = {};
-            return locY[state.x];
+            if (!locations[L])
+                locations[L] = {};
+            let location = locations[L];
+            if (!location[Z]) location[Z] = {};
+            let locZ = location[Z];
+            if (!locZ[Y]) locZ[Y] = {};
+            let locY = locZ[Y];
+            if (!locY[X]) locY[X] = {};
+            return locY[X];
         default:
             console.log(`Invalid context: ${context}\nState:${JSON.stringify(state)}`);
             throw "Invalid context";
@@ -235,6 +258,28 @@ let getControl = async function (state, details) {
         }
     }
 
+    if (ctrl.display && ctrl.scrubcontext) {
+        var tags = {};
+        var contextScrubbers = null;
+        switch (details.scrubcontext) {
+            case "enemy":
+                tags = state.enemy.tags;
+                contextScrubbers = state.enemy.scrubbers;
+                break;
+            case "character":
+                console.log("Scrubbing ctrl based on character: " + details.scrubcharacter);
+                if (details.scrubcharacter) {
+                    if (state.world && state.world.characters && state.world.characters[details.scrubcharacter]) {
+                        tags = state.world.characters[details.scrubcharacter].tags || {};
+                        contextScrubbers = state.world.characters[details.scrubcharacter].scrubbers || {};
+                        console.log(`Scrubbers: ${JSON.stringify(contextScrubbers)}\nTags:${JSON.stringify(tags)}`);
+                    }
+                }
+                break;
+        }
+        ctrl.display = await scrubText(state, ctrl.display, tags, contextScrubbers);
+        if (ctrl.help) ctrl.help = await scrubText(state, ctrl.help, tags, contextScrubbers);
+    }
 
     return ctrl;
 }
