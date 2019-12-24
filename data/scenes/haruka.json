@@ -4,13 +4,213 @@
       [
         {
           "type": "actButton",
-          "display": "Leave",
-          "verb": "setscene",
-          "details": {
-            "text": "You bid farewell to the illusory rat.",
-            "clear": true
+          "extendRight": 3,
+          "display": "\"Who are you?\"",
+          "verb": "setstate",
+          "if": {
+            "condition": "stateis",
+            "fact": "world/characters/haruka/named",
+            "rule": "!=",
+            "value": true
           },
-          "help": "You're done here."
+          "details": {
+            "text": "\"My name is Haruka,\" she introduces herself. \"Youngest prophetess of the Nezumi people. By our people's traditions, prophetesses can't be executed, but that doesn't mean they can't lock me away try their best to prevent my destiny.\"",
+            "statename": "world/characters/haruka/named",
+            "value": true
+          },
+          "help": "Seriously, who is this?"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"Destiny?\"",
+          "verb": "setstate",
+          "if": {
+            "condition": "logical",
+            "rule": "and",
+            "conditions": [
+              {
+                "condition": "stateis",
+                "fact": "world/characters/haruka/named",
+                "rule": "==",
+                "value": true
+              },
+              {
+                "condition": "stateis",
+                "fact": "world/characters/haruka/destined",
+                "rule": "!=",
+                "value": true
+              }
+            ]
+          },
+          "details": {
+            "text": "\"I'm destined to be the mother of your children... well, at least one of them. The Red King of Rats.\" She licks her lips, looking you over. \"Others might be afraid of such a big guy, but I'm looking forward to it.\"",
+            "statename": "world/characters/haruka/destined",
+            "value": true
+          },
+          "help": "What's this about her destiny?"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"What if I refuse?\"",
+          "verb": "setstate",
+          "if": {
+            "condition": "logical",
+            "rule": "and",
+            "conditions": [
+              {
+                "condition": "stateis",
+                "fact": "world/characters/haruka/destined",
+                "rule": "==",
+                "value": true
+              },
+              {
+                "condition": "stateis",
+                "fact": "world/characters/haruka/questiondestiny",
+                "rule": "!=",
+                "value": true
+              }
+            ]
+          },
+          "details": {
+            "text": "\"You can't! Well... actually, Chroneth favors you, perhaps even more than me, so maybe you <i>can</i> break destiny, but please don't! It can have a lot of side effects too.\"",
+            "statename": "world/characters/haruka/questiondestiny",
+            "value": true
+          },
+          "help": "Who's she to boss you around?"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"How would I find you?\"",
+          "verb": "setstate",
+          "if": {
+            "condition": "stateis",
+            "fact": "world/characters/haruka/directions",
+            "rule": "!=",
+            "value": true
+          },
+          "details": {
+            "text": "\"Make your way east, then north until you find the throne of the Bone King. He's the lowest ranking of the rulers known as the Rat King. Defeat him, and you can make your way to the next enclave.\"",
+            "statename": "world/characters/haruka/directions",
+            "value": true
+          },
+          "help": "Ask for directions"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"What about all the Nezumi between here and there?\"",
+          "verb": "setstate",
+          "if": {
+            "condition": "logical",
+            "rule": "and",
+            "conditions": [
+              {
+                "condition": "stateis",
+                "fact": "world/characters/haruka/directions",
+                "rule": "==",
+                "value": true
+              },
+              {
+                "condition": "stateis",
+                "fact": "world/characters/haruka/othernezumi",
+                "rule": "!=",
+                "value": true
+              }
+            ]
+          },
+          "details": {
+            "text": "\"Kill them or conquer them. Our son will rule those who remain when the time comes. The kings must die, but try to keep some of the others alive to build our new dynasty.\"",
+            "statename": "world/characters/haruka/othernezumi",
+            "value": true
+          },
+          "help": "Does she even care?"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"You don't really care for them do you?\"",
+          "verb": "setstate",
+          "if": {
+            "condition": "logical",
+            "rule": "and",
+            "conditions": [
+              {
+                "condition": "stateis",
+                "fact": "world/characters/haruka/othernezumi",
+                "rule": "==",
+                "value": true
+              },
+              {
+                "condition": "stateis",
+                "fact": "world/characters/haruka/dragonfire",
+                "rule": "!=",
+                "value": true
+              }
+            ]
+          },
+          "details": {
+            "text": "\"They had their chance to join me in celebrating your inevitable rise, but instead they locked me away. We could have been cuddling for years while they helped you prepare to overthrow those usurping Blues, but no! Instead they locked me away. Fools! Their rot needs to be burned away. By dragonfire.\"",
+            "statename": "world/characters/haruka/dragonfire",
+            "value": true
+          },
+          "help": "Bloodthirsty much?"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"You don't really care for them do you?\"",
+          "verb": "setstate",
+          "if": {
+            "condition": "logical",
+            "rule": "and",
+            "conditions": [
+              {
+                "condition": "stateis",
+                "fact": "world/characters/haruka/dragonfire",
+                "rule": "==",
+                "value": true
+              },
+              {
+                "condition": "stateis",
+                "fact": "world/characters/haruka/blues",
+                "rule": "!=",
+                "value": true
+              }
+            ]
+          },
+          "details": {
+            "text": "\"The bluescale dragons. You don't know yet? Their patriarch slew your parents, though your father slew his mate in the war as well. Their children slaughtered your siblings and cousins, all but the one egg they overlooked. You, the destined avenger! Now those children rule over the kobolds that once served your family, drive them to war against us.\"",
+            "statename": "world/characters/haruka/blues",
+            "value": true
+          },
+          "help": "Bloodthirsty much?"
+        },
+        {
+          "type": "actButton",
+          "extendRight": 3,
+          "display": "\"I'll come for you!\"",
+          "verb": "chain",
+          "details": [
+            {
+              "verb": "setstate",
+              "details": {
+                "text": "\"Yes! I knew you would... Chroneth guide you, I'll be here eagerly waiting!\" She slowly fades from view as she blows you a kiss.",
+                "statename": "world/characters/haruka/promise",
+                "value": true
+              }
+            },
+            {
+              "verb": "setstate",
+              "details": {
+                "value": "FirstIntersection",
+                "statename": "world/locations/Nezumi Enclave/2/5/4/style"
+              }
+            }
+          ],
+          "help": "Promise her rescue!"
         }
       ]
     ]
@@ -20,6 +220,7 @@
       [
         {
           "type": "actButton",
+          "extendRight": 3,
           "display": "Leave",
           "verb": "setscene",
           "details": {
