@@ -1,87 +1,665 @@
 {
-    "map": [
-        [],
-        [],
-        [
-            [],
-            [],
-            [],
-            [],
-            [ null, null, null, "TiledPath" ],
-            [ null, null, null, "Haruka" ],
-            [ null, null, null, "TiledPath" ],
-            [ null, null, null, "TiledPath" ],
-            [ null, null, null, "TiledPath" ],
-            [ null, null, null, "DragonPath" ]
-        ]
+  "map": [
+    [],
+    [
+      [],
+      [],
+      [],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, "InnPantry", "InnKitchen", "InnPantry" ],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, "InnLaundry", "InnLowerPath", "WellAccess" ],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, "InnQuarters", "InnBreakRoom", "InnQuarters" ]
     ],
-    "styles": {
-      "DragonPath": {
-        "title": "Nezumi Enclave - secret passage",
-        "description": "The tunnel here is floored in black and white alternating tiles, and lined with smooth-carved walls. Whoever made this place took great care and time, and presumably must clean it regularly. The footsteps outside show it was used quite regularly, but there haven't been new ones since you opened it for yourself.",
-        "preview": "The tunnel there connects the Dragonbone Cave to the smooth, tiled tunnels beyond.",
-        "events": [
-          {
-            "chance": 10,
-            "event": null
-          }
-        ],
-        "directionOverrides": {
-          "sw": {
-            "disabled": false,
-            "x": 0,
-            "y": -10,
-            "z": -2,
-            "zone": "Dragonbone Cave"
-          }
-        },
-        "light": "white",
-        "dark": "black"
-      },
-      "TiledPath": {
-        "title": "Nezumi Enclave - tiled path",
-        "description": "Regular and conspiculously clean tiles, alternating black and white, line the path here. The walls are rougher, a mix of nature, old carved walls, and the occasional artistic flair. Skeletal rats, assorted flowers, and geometric shapes line are carved into the wall without rhyme or reason.",
-        "preview": "The black and white tiles continue smoothly between artistically carved walls.",
-        "events": [
-          {
-            "chance": 1,
-            "event": null
-          },
-          {
-            "chance": 1,
-            "event": "flowerthorn"
-          },
-          {
-            "chance": 1,
-            "event": "stonebones"
-          }
-        ],
-        "light": "white",
-        "dark": "black"
-      },
-      "Haruka": {
-        "title": "Nezumi Enclave - intersection",
-        "description": "As you come to an intersection, you are stopped by a red robed figure. She has the head and tail of a rat, though she stands up right in a way your inherited memories tell you indicates she's likely a person. The robe is tight, tied behind her by a massive pink bow.\n\nShe's scentless. Beyond that, her tail idly shifting behind her doesn't so much as stir up a breeze, and even seems to pass a bit into the floor. She's not really here, clearly, yet she looks into your eyes as you approach and smiles.",
-        "preview": "There is an intersection there, with black and white tiles going north to south.",
-        "events": [
-          {
-            "chance": 1,
-            "event": "HarukaIntro"
-          }
-        ]
-      },
-        "FirstIntersection": {
-          "title": "Nezumi Enclave - intersection",
-          "description": "The path here splits in an intersection. The tiles continue on like you've seen north and south, while the east and west are more rough hewn. A barrier of white powder borders the edge of the tiles. The west smells of rats while the east smells of something less familiar.",
-          "preview": "There is an intersection there, with black and white tiles going north to south.",
-          "events": [
-            {
-              "chance": 1,
-              "event": null
-            }
-          ]
+    [
+      [ null, null, null, null, null, null, null, null, null, null, null, null, null, "PrincesSuite", "RoyalCourt", "RoyalBarracks" ],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, "PalaceSteps", null, "RatNest" ],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, "RatNest", "RatNest", "NorthRoad", "Alleyway", "Alleyway" ],
+      [ null, null, null, "Barracks", null, null, null, null, null, null, "RatNest", "Alleyway", "Alleyway", "Alleyway", "NorthRoad", null, "Alleyway", "RatNest" ],
+      [ null, "BoneStoreroom", null, "TiledPath", null, "Barracks", null, "Barracks", null, null, null, "Alleyway", "BoneCrafters", "InnCommon", "BrokenWell", "Constabulary", "Alleyway" ],
+      [ "BoneStoreroom", "Intersection", "TiledPath", "Haruka", "TiledPath", "Intersection", "TiledPath", "Intersection", "TiledPath", "TiledPath", "WestGuard", "WestRoad", "WestRoad", "WestRoad", "CrossRoad", "EastRoad", "EastRoad", "EastGuard" ],
+      [ null, "BoneStoreroom", null, "TiledPath", null, "BoneStoreroom", null, "ChowHall", null, null, null, "Alleyway", "Clothiers", null, "SouthRoad", "Grocer", "Alleyway" ],
+      [ null, null, null, "TiledPath", null, null, null, null, null, null, null, "SpiderFarm", "Alleyway", "Alleyway", "SouthRoad", "Alleyway", "Alleyway", "RatNest" ],
+      [ null, null, null, "TiledPath", null, null, null, null, null, null, null, null, null, null, "SouthRoadEnd", "CidsNest" ],
+      [ null, null, null, "DragonPath" ]
+    ],
+    [
+      [],
+      [],
+      [],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, "Innkeeper", "InnRoomN", "InnBath" ],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, "InnRoomW", "InnUpperPath", "InnRoomE" ],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, "InnTBD", "InnRoomS", "InnTBD" ]
+    ]
+  ],
+  "styles": {
+    "DragonPath": {
+      "title": "Nezumi Enclave - secret passage",
+      "description": "The tunnel here is floored in black and white alternating tiles, and lined with smooth-carved walls. Whoever made this place took great care and time, and presumably must clean it regularly. The footsteps outside show it was used quite regularly, but there haven't been new ones since you opened it for yourself.",
+      "preview": "The tunnel there connects the Dragonbone Cave to the smooth, tiled tunnels beyond.",
+      "events": [
+        {
+          "chance": 10,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "sw": {
+          "disabled": false,
+          "x": 0,
+          "y": -10,
+          "z": -2,
+          "zone": "Dragonbone Cave"
         }
       },
+      "light": "white",
+      "dark": "black"
+    },
+    "TiledPath": {
+      "title": "Nezumi Enclave - tiled path",
+      "description": "Regular and conspiculously clean tiles, alternating black and white, line the path here. The walls are rougher, a mix of nature, old carved walls, and the occasional artistic flair. Skeletal rats, assorted flowers, and geometric shapes line are carved into the wall without rhyme or reason.",
+      "preview": "The black and white tiles continue smoothly between artistically carved walls.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        },
+        {
+          "chance": 1,
+          "event": "flowerthorn"
+        },
+        {
+          "chance": 1,
+          "event": "stonebones"
+        }
+      ],
+      "light": "white",
+      "dark": "black"
+    },
+    "Haruka": {
+      "title": "Nezumi Enclave - intersection",
+      "description": "As you come to an intersection, you are stopped by a red robed figure. She has the head and tail of a rat, though she stands up right in a way your inherited memories tell you indicates she's likely a person. The robe is tight, tied behind her by a massive pink bow.\n\nShe's scentless. Beyond that, her tail idly shifting behind her doesn't so much as stir up a breeze, and even seems to pass a bit into the floor. She's not really here, clearly, yet she looks into your eyes as you approach and smiles.",
+      "preview": "There is an intersection there, with black and white tiles going north to south.",
+      "events": [
+        {
+          "chance": 1,
+          "event": "HarukaIntro"
+        }
+      ]
+    },
+    "FirstIntersection": {
+      "title": "Nezumi Enclave - intersection",
+      "description": "The path here splits in an intersection. The tiles continue on like you've seen north and south, while the east and west are more rough hewn. A barrier of white powder borders the edge of the tiles. The west smells of rats while the east smells of something less familiar.",
+      "preview": "There is an intersection there, with black and white tiles going north to south.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ]
+    },
+    "Barracks": {
+      "title": "Nezumi Enclave - Barracks",
+      "description": "This room contains two dozens beds, in two rows of four stacks, three beds tall. The frames are built from shards of bone as thick as your arm and some as long as you are, yet on the whole each bed is far too small to hold you comfortable. It's a shame too, as the bedding seems soft and well crafted, made from finely spun silk.",
+      "preview": "An archway leads to a room filled with beds, lined up in stacks three tall.",
+      "events": [
+        {
+          "chance": 1,
+          "event": "EmptyBarracks"
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "BoneStoreroom": {
+      "title": "Nezumi Enclave - Storeroom",
+      "description": "This room is five times your length in each direction, and yet rather cramped because of the number of stacks of large dragonbone fragments stacked up around the place, organized by size from arm-length to dragon-length. You'd long noticed the missing fragments from your mother's bones, especially near the bottoms of her ribs, but now you finally have an idea where they went.",
+      "preview": "An archway leads to a large room lined with dozens of orderly stacks of bone shards.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "Intersection": {
+      "title": "Nezumi Enclave - Intersection",
+      "description": "The black and white tiles continue here, extending east and west. To the north and south, though, lie doorways leading into side rooms.",
+      "preview": "The hallway splits up ahead, with rooms opening from the north and south.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "ChowHall": {
+      "title": "Nezumi Enclave - Chow Hall",
+      "description": "This room is crowded with small round tables covered in silk cloths and surrounded by silk-seated bone chairs. Coming in side, a mix of smells draws your attention to the right.\n\nThere you see a stone counter bearing a half dozen pots over small flames. A rotund, brown furred Nezumi woman in an ill fitting green silk robe greets you from behind the counter.\n\n\"Are you hungry, dragon? I'll sell you some bonemeal same as anyone else.\" There's a distinct nervousness to her voice, hidden incompletely under a layer of forced professionalism.",
+      "preview": "The room beyond the archway is filled with small tables surrounded by small chairs.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      },
+      "actions": [ "CountBoneShards", "BuyBoneBroth", "BuyBoneMeal", "BuyRatStew", "ChatServer" ]
+    },
+    "WestGuard": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "east": {
+          "disabled": true
+        }
+      }
+    },
+    "EastGuard": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "WestRoad": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "EastRoad": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "SouthRoad": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "NorthRoad": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "CrossRoad": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "Alleyway": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "BrokenWell": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "RatNest": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "CidsNest": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnCommon": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "Constabulary": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "Grocer": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "BoneCrafters": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "Clothiers": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "SpiderFarm": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "PalaceSteps": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "RoyalCourt": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "PrincesSuite": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "RoyalBarracks": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnLowerPath": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnLaundry": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnKitchen": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnPantry": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnBreakRoom": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnQuarters": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "WellAccess": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnUpperPath": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "Innkeeper": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnBath": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnTBD": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnRoomN": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnRoomW": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnRoomE": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    },
+    "InnRoomS": {
+      "title": "Nezumi Enclave - TBD",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+
+      }
+    }
+  },
   "events": {
     "flowerthorn": {
       "verb": "trap",
@@ -138,8 +716,142 @@
           }
         }
       ]
+    },
+    "EmptyBarracks": {
+      "verb": "flavor",
+      "details": {
+        "text": "The room has a heavy, lingering ratty smell to it, but there's no one here, neither a Nezumi nor a rat to be found. You don't spot anything of interest here, and get bored."
+      }
     }
   },
-    "actions": {
+  "actions": {
+    "CountBoneShards": {
+      "type": "itemCount",
+      "details": {
+        "item": "dragonbone shard",
+        "display": "Dragonbone Shards: [count]",
+        "dataContext": "party",
+        "path": "inventory"
+      }
+    },
+    "BuyBoneBroth": {
+      "type": "actButton",
+      "display": "Buy Bone Broth",
+      "verb": "chain",
+      "enabled": {
+        "condition": "inventoryhas",
+        "item": "dragonbone shard",
+        "count": 1
+      },
+      "details": [
+        {
+          "verb": "pay",
+          "details": {
+            "item": "dragonbone shard",
+            "count": 1,
+            "text": "You exchange a shard of bone for a small canteen of broth. It smells intriguingely delicious, though it's more a drink than a food per se."
+          }
+        },
+        {
+          "verb": "gather",
+          "details": {
+            "item": "bone broth",
+            "plus": 1
+          }
+        }
+      ],
+      "help": "Buy bone broth.\nCost: 1 dragonbone shard\nUse: Restore 5 stamina. Usable by anyone."
+    },
+    "BuyBoneMeal": {
+      "type": "actButton",
+      "display": "Buy Bone Meal",
+      "verb": "chain",
+      "enabled": {
+        "condition": "inventoryhas",
+        "item": "dragonbone shard",
+        "count": 3
+      },
+      "details": [
+        {
+          "verb": "pay",
+          "details": {
+            "item": "dragonbone shard",
+            "count": 3,
+            "text": "You exchange a few shards of bone for a small bowl of thick meal. It's rather bland, but quite filling."
+          }
+        },
+        {
+          "verb": "gather",
+          "details": {
+            "item": "bone meal",
+            "plus": 1
+          }
+        }
+      ],
+      "help": "Buy bone meal.\nCost: 3 dragonbone shard\nUse: Restore 15 nutrition. Usable by carnivore or omnivore."
+    },
+    "BuyRatStew": {
+      "type": "actButton",
+      "display": "Eat Stew",
+      "verb": "chain",
+      "enabled": {
+        "condition": "inventoryhas",
+        "item": "dragonbone shard",
+        "count": 5
+      },
+      "details": [
+        {
+          "verb": "pay",
+          "details": {
+            "item": "dragonbone shard",
+            "count": 5,
+            "text": "You exchange a few shards of bone for a bowl of hot stew. This obviously won't keep, so you pour it into your mouth, savoring the spiced broth as it rolls down your tongue. The chunks of rat meat you tear with your teeth to unlock their flavor, briefly wondering whether the ratfolk hunt the massive rats you see in your cave, or simply murder each other to make stew. Either way, it's delicious."
+          }
+        },
+        {
+          "verb": "eat",
+          "details": {
+            "nutrition": 15,
+            "stamina": 15
+          }
+        }
+      ],
+      "help": "Buy stew.\nCost: 5 dragonbone shard\nImmediately restore 15 nutrition and 15 stamina."
+    },
+    "ChatServer": {
+      "type": "actButton",
+      "display": "Chat",
+      "verb": "random",
+      "details": [
+        {
+          "chance": 1,
+          "verb": "flavor",
+          "details": {
+            "text": "\"Where is everyone?\" you enquire of the serving lady, gesturing at the empty room. \"Shouldn't there be a lot more mouths to feed?\"\n\nShe nods to you. \"They learned you were coming, and cleared out, back to the enclave, proper,\" she says. \"They're all too afraid of you to risk sticking around.\"\n\n\"And you're not?\" you ask, though you can smell her fear from here.\n\n\"I gambled that you'd fill up enough on my wares that you wouldn't eat me.\"\n\n\"Shouldn't you feed me for free then?\" you enquire.\n\n\"I'd take that over being eaten, but if a hungry dragon's in the habit of eating my wares without pay, and scaring off my paying customers, how'm I going to afford ingredients?\" She makes a good point, and you nod understandingly."
+          }
+        },
+        {
+          "chance": 1,
+          "verb": "flavor",
+          "details": {
+            "text": "\"What is this place, anyways? I mean.. this whole area? I found the switch from the main cave...\" you ask.\n\n\"This is the collectors' hall,\" she explains, \"Normally a lot of rats stay out here, and venture out to gather pieces of bone from the big skeleton out there. It's our Enclave's main export to the other Nezumi, which is why we're known as the Enclave of Bone,\" she explains.\n\n\"It's really weird that you collect my mother's remains like that. Then again, I grew up eating her flesh,\" you muse. You're a bit too pragmatic to really get upset over it.\n\n\"And we eat her bones,\" she points out, gesturing to the pots of broth and bone meal.\"We also make stuff out of it; furnature, weapons, armor. It's good stuff.\""
+          }
+        },
+        {
+          "chance": 1,
+          "verb": "flavor",
+          "details": {
+            "text": "\"What's in the broth,\" you ask the serving lady.\n\n\"Nutrients leached from bones we've collected, and some secret seasonings,\" she says.\n\n\"And the meal?\"\n\n\"Ground up bone and some secret binding agents,\" is the reply.\n\n\"And the stew?\"\n\n\"Broth, fire moss, and secretly sourced meat,\" she explains.\n\n\"You won't tell me?\"\n\n\"I refuse to ask.\""
+          }
+        },
+        {
+          "chance": 1,
+          "verb": "flavor",
+          "details": {
+            "text": "\"You don't accept copper coins here?\" you wonder.\n\n\"That's Kobold currency,\" she replies. \"We don't really use that for anything except trophies.\"\n\n\"And I imagine they don't use dragonbone for much,\" you muse.\n\n\"I guess not,\" she shrugs. \"Do they eat copper?\""
+          }
+        }
+      ]
     }
+  }
 }

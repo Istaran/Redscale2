@@ -1,0 +1,11 @@
+{
+  "display": "bone broth",
+  "cardtext": "Bone Broth\n\nA small pouch of\ndelicious liquid.\n+5 Stamina",
+  "descriptionSingular": "A small canteen of nutritious, flavorfully spiced liquid.",
+  "descriptionPlural": "Some small canteens of nutritious, flavorfully spiced liquid.",
+  "hands": 0.01,
+  "weight": 0.02,
+  "use": {
+    "stamina": 5
+  }
+}
