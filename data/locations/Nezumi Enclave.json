@@ -11,14 +11,14 @@
     ],
     [
       [ null, null, null, null, null, null, null, null, null, null, null, null, null, "PrincesSuite", "RoyalCourt", "RoyalBarracks" ],
-      [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, "PalaceSteps", null, "RatNest" ],
-      [ null, null, null, null, null, null, null, null, null, null, null, null, "RatNest", "RatNest", "NorthRoad", "Alleyway", "Alleyway" ],
-      [ null, null, null, "Barracks", null, null, null, null, null, null, "RatNest", "Alleyway", "Alleyway", "Alleyway", "NorthRoad", null, "Alleyway", "RatNest" ],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, "PalaceSteps", null, "RatNestNS" ],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, "RatNestNS", "RatNestNS", "NorthRoad", "Alleyway", "Alleyway" ],
+      [ null, null, null, "Barracks", null, null, null, null, null, null, "RatNestEW", "Alleyway", "Alleyway", "Alleyway", "NorthRoad", null, "Alleyway", "RatNestEW" ],
       [ null, "BoneStoreroom", null, "TiledPath", null, "Barracks", null, "Barracks", null, null, null, "Alleyway", "BoneCrafters", "InnCommon", "BrokenWell", "Constabulary", "Alleyway" ],
       [ "BoneStoreroom", "Intersection", "TiledPath", "Haruka", "TiledPath", "Intersection", "TiledPath", "Intersection", "TiledPath", "TiledPath", "WestGuard", "WestRoad", "WestRoad", "WestRoad", "CrossRoad", "EastRoad", "EastRoad", "EastGuard" ],
       [ null, "BoneStoreroom", null, "TiledPath", null, "BoneStoreroom", null, "ChowHall", null, null, null, "Alleyway", "Clothiers", null, "SouthRoad", "Grocer", "Alleyway" ],
-      [ null, null, null, "TiledPath", null, null, null, null, null, null, null, "SpiderFarm", "Alleyway", "Alleyway", "SouthRoad", "Alleyway", "Alleyway", "RatNest" ],
-      [ null, null, null, "TiledPath", null, null, null, null, null, null, null, null, null, null, "SouthRoadEnd", "CidsNest" ],
+      [ null, null, null, "TiledPath", null, null, null, null, null, null, null, "SpiderFarm", "Alleyway", "Alleyway", "SouthRoad", "Alleyway", "Alleyway", "RatNestEW" ],
+      [ null, null, null, "TiledPath", null, null, null, null, null, null, null, null, null, null, "SouthRoadEnd", "CidsNest", "RatNestNS" ],
       [ null, null, null, "DragonPath" ]
     ],
     [
@@ -154,7 +154,7 @@
       "actions": [ "CountBoneShards", "BuyBoneBroth", "BuyBoneMeal", "BuyRatStew", "ChatServer" ]
     },
     "WestGuard": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Guard Post",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -165,12 +165,12 @@
       ],
       "directionOverrides": {
         "east": {
-          "disabled": true
+          "disabled": false
         }
       }
     },
     "EastGuard": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Guard Post",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -184,7 +184,7 @@
       }
     },
     "WestRoad": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Main Road",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -194,11 +194,28 @@
         }
       ],
       "directionOverrides": {
-
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
       }
     },
     "EastRoad": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Main Road",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -208,11 +225,28 @@
         }
       ],
       "directionOverrides": {
-
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
       }
     },
     "SouthRoad": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Main Road",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -222,11 +256,28 @@
         }
       ],
       "directionOverrides": {
-
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
       }
     },
     "NorthRoad": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Main Road",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -236,11 +287,28 @@
         }
       ],
       "directionOverrides": {
-
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
       }
     },
     "CrossRoad": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Crossroads",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -250,11 +318,28 @@
         }
       ],
       "directionOverrides": {
-
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
       }
     },
     "Alleyway": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Back Alley",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -264,11 +349,30 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      },
+      "light": "palegoldenrod",
+      "dark": "darkolivegreen"
     },
     "BrokenWell": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Broken Well",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -278,11 +382,55 @@
         }
       ],
       "directionOverrides": {
-
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      },
+      "light": "paleturquoise",
+      "dark": "black"
+    },
+    "RatNestNS": {
+      "title": "Nezumi Enclave - Random home",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "west": {
+          "disabled": true
+        },
+        "east": {
+          "disabled": true
+        }
       }
     },
-    "RatNest": {
-      "title": "Nezumi Enclave - TBD",
+    "RatNestEW": {
+      "title": "Nezumi Enclave - Random home",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -292,11 +440,22 @@
         }
       ],
       "directionOverrides": {
-
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "north": {
+          "disabled": true
+        },
+        "south": {
+          "disabled": true
+        }
       }
     },
     "CidsNest": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Cid's Home",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -306,11 +465,25 @@
         }
       ],
       "directionOverrides": {
-
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "north": {
+          "disabled": true
+        },
+        "south": {
+          "disabled": true
+        },
+        "east": {
+          "disabled": true
+        }
       }
     },
     "InnCommon": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Inn, Common Room",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -320,11 +493,21 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "north": {
+          "disabled": true
+        },
+        "west": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      },
+      "light": "darkorange",
+      "dark": "sienna"
     },
     "Constabulary": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Constabulary",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -334,11 +517,19 @@
         }
       ],
       "directionOverrides": {
-
+        "east": {
+          "disabled": true
+        },
+        "north": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        }
       }
     },
     "Grocer": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Grocer",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -348,11 +539,21 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "east": {
+          "disabled": true
+        },
+        "south": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        }
+      },
+      "light": "lime",
+      "dark": "green"
     },
     "BoneCrafters": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Bone Crafters Shop",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -362,11 +563,27 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "north": {
+          "disabled": true
+        },
+        "west": {
+          "disabled": true
+        },
+        "east": {
+          "disabled": true
+        }
+      },
+      "light": "lemonchiffon",
+      "dark": "khaki"
     },
     "Clothiers": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Clothiers",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -376,11 +593,21 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "south": {
+          "disabled": true
+        },
+        "west": {
+          "disabled": true
+        },
+        "east": {
+          "disabled": true
+        }
+      },
+      "light": "magenta",
+      "dark": "rebeccapurple"
     },
     "SpiderFarm": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - SpiderFarm",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -394,7 +621,7 @@
       }
     },
     "PalaceSteps": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Palace Steps",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -408,7 +635,7 @@
       }
     },
     "RoyalCourt": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Royal Court",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -422,7 +649,7 @@
       }
     },
     "PrincesSuite": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Prince's Suite",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -436,7 +663,7 @@
       }
     },
     "RoyalBarracks": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Royal Barracks",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -450,7 +677,7 @@
       }
     },
     "InnLowerPath": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Inn, Lower Halls",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -460,11 +687,24 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      },
+      "light": "saddlebrown",
+      "dark": "sienna"
     },
     "InnLaundry": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Inn, Laundry",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -474,11 +714,21 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "up": {
+          "disabled": true
+        },
+        "north": {
+          "disabled": true
+        },
+        "south": {
+          "disabled": true
+        }
+      },
+      "light": "darkturquoise",
+      "dark": "sienna"
     },
     "InnKitchen": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Inn, Kitchen",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -488,11 +738,21 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "up": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        }
+      },
+      "light": "orangered",
+      "dark": "sienna"
     },
     "InnPantry": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Inn, Pantry",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -502,11 +762,18 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "up": {
+          "disabled": true
+        },
+        "south": {
+          "disabled": true
+        }
+      },
+      "light": "saddlebrown",
+      "dark": "sienna"
     },
     "InnBreakRoom": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Inn, Break Room",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -516,11 +783,21 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "up": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        }
+      },
+      "light": "beige",
+      "dark": "sienna"
     },
     "InnQuarters": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Inn, Staff Quarters",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -530,11 +807,18 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "up": {
+          "disabled": true
+        },
+        "north": {
+          "disabled": true
+        }
+      },
+      "light": "oldlace",
+      "dark": "sienna"
     },
     "WellAccess": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Well Maintenance Access",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -544,11 +828,21 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "up": {
+          "disabled": true
+        },
+        "north": {
+          "disabled": true
+        },
+        "south": {
+          "disabled": true
+        }
+      },
+      "light": "paleturquoise",
+      "dark": "darkgray"
     },
     "InnUpperPath": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Inn, Upper Halls",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -559,10 +853,12 @@
       ],
       "directionOverrides": {
 
-      }
+      },
+      "light": "saddlebrown",
+      "dark": "sienna"
     },
     "Innkeeper": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Innkeeper's Room",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -572,11 +868,24 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "down": {
+          "disabled": true
+        },
+        "east": {
+          "disabled": true
+        },
+        "south": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": false
+        }
+      },
+      "light": "hotpink",
+      "dark": "sienna"
     },
     "InnBath": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Inn, Bathroom",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -586,8 +895,21 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "down": {
+          "disabled": true
+        },
+        "west": {
+          "disabled": true
+        },
+        "south": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": false
+        }
+      },
+      "light": "darkturquoise",
+      "dark": "sienna"
     },
     "InnTBD": {
       "title": "Nezumi Enclave - TBD",
@@ -600,11 +922,33 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "down": {
+          "disabled": true
+        },
+        "west": {
+          "disabled": true
+        },
+        "east": {
+          "disabled": true
+        },
+        "north": {
+          "disabled": true
+        },
+        "south": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": false
+        },
+        "ne": {
+          "disabled": false
+        }
+      },
+      "light": "saddlebrown",
+      "dark": "sienna"
     },
     "InnRoomN": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Guest Room",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -614,11 +958,21 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "down": {
+          "disabled": true
+        },
+        "west": {
+          "disabled": true
+        },
+        "east": {
+          "disabled": true
+        }
+      },
+      "light": "darkorchid",
+      "dark": "sienna"
     },
     "InnRoomW": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Guest Room",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -628,11 +982,21 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "down": {
+          "disabled": true
+        },
+        "north": {
+          "disabled": true
+        },
+        "south": {
+          "disabled": true
+        }
+      },
+      "light": "darkorchid",
+      "dark": "sienna"
     },
     "InnRoomE": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Guest Room",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -642,11 +1006,21 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "down": {
+          "disabled": true
+        },
+        "north": {
+          "disabled": true
+        },
+        "south": {
+          "disabled": true
+        }
+      },
+      "light": "darkorchid",
+      "dark": "sienna"
     },
     "InnRoomS": {
-      "title": "Nezumi Enclave - TBD",
+      "title": "Nezumi Enclave - Guest Room",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
       "events": [
@@ -656,8 +1030,18 @@
         }
       ],
       "directionOverrides": {
-
-      }
+        "down": {
+          "disabled": true
+        },
+        "west": {
+          "disabled": true
+        },
+        "east": {
+          "disabled": true
+        }
+      },
+      "light": "darkorchid",
+      "dark": "sienna"
     }
   },
   "events": {
