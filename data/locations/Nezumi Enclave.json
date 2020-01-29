@@ -10,16 +10,16 @@
       [ null, null, null, null, null, null, null, null, null, null, null, null, "InnQuarters", "InnBreakRoom", "InnQuarters" ]
     ],
     [
-      [ null, null, null, null, null, null, null, null, null, null, null, null, null, "PrincesSuite", "RoyalCourt", "RoyalBarracks" ],
-      [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, "PalaceSteps", null, "RatNestNS" ],
-      [ null, null, null, null, null, null, null, null, null, null, null, null, "RatNestNS", "RatNestNS", "NorthRoad", "Alleyway", "Alleyway" ],
-      [ null, null, null, "Barracks", null, null, null, null, null, null, "RatNestEW", "Alleyway", "Alleyway", "Alleyway", "NorthRoad", null, "Alleyway", "RatNestEW" ],
-      [ null, "BoneStoreroom", null, "TiledPath", null, "Barracks", null, "Barracks", null, null, null, "Alleyway", "BoneCrafters", "InnCommon", "BrokenWell", "Constabulary", "Alleyway" ],
-      [ "BoneStoreroom", "Intersection", "TiledPath", "Haruka", "TiledPath", "Intersection", "TiledPath", "Intersection", "TiledPath", "TiledPath", "WestGuard", "WestRoad", "WestRoad", "WestRoad", "CrossRoad", "EastRoad", "EastRoad", "EastGuard" ],
-      [ null, "BoneStoreroom", null, "TiledPath", null, "BoneStoreroom", null, "ChowHall", null, null, null, "Alleyway", "Clothiers", null, "SouthRoad", "Grocer", "Alleyway" ],
-      [ null, null, null, "TiledPath", null, null, null, null, null, null, null, "SpiderFarm", "Alleyway", "Alleyway", "SouthRoad", "Alleyway", "Alleyway", "RatNestEW" ],
-      [ null, null, null, "TiledPath", null, null, null, null, null, null, null, null, null, null, "SouthRoadEnd", "CidsNest", "RatNestNS" ],
-      [ null, null, null, "DragonPath" ]
+      [                 null,            null,            null,            null,            null,            null,            null,            null,            null,            null,            null,            null,            null,  "PrincesSuite",   "RoyalCourt", "RoyalBarracks" ],
+      [                 null,            null,            null,            null,            null,            null,            null,            null,            null,            null,            null,            null,            null,            null,  "PalaceSteps",            null, "RatNestNS" ],
+      [                 null,            null,            null,            null,            null,            null,            null,            null,            null,            null,            null,            null,     "RatNestNS",     "RatNestNS",   "NorthRoad2",      "Alleyway",  "Alleyway" ],
+      [                 null,            null,            null,      "Barracks",            null,            null,            null,            null,            null,            null,     "RatNestEW",      "Alleyway",   "AlleywayNOS",   "AlleywayNOS",   "NorthRoad1",            null,  "Alleyway", "RatNestEW" ],
+      [                 null, "BoneStoreroom",            null,     "TiledPath",            null,      "Barracks",            null,      "Barracks",            null,            null,            null,      "Alleyway",  "BoneCrafters",     "InnCommon",   "BrokenWell",  "Constabulary",  "Alleyway" ],
+      [      "BoneStoreroom",  "Intersection",     "TiledPath",        "Haruka",     "TiledPath",  "Intersection",     "TiledPath",  "Intersection",     "TiledPath",     "TiledPath",     "WestGuard",     "WestRoad1",     "WestRoad2",     "WestRoad3",    "CrossRoad",     "EastRoad1", "EastRoad2", "EastGuard" ],
+      [                 null, "BoneStoreroom",            null,     "TiledPath",            null, "BoneStoreroom",            null,      "ChowHall",            null,            null,            null,    "AlleywayNS",     "Clothiers",            null,   "SouthRoad1",        "Grocer","AlleywayNS" ],
+      [                 null,            null,            null,     "TiledPath",            null,            null,            null,            null,            null,            null,            null,    "SpiderFarm",    "AlleywayEW",      "Alleyway",   "SouthRoad2",    "AlleywayEW",  "Alleyway", "RatNestEW" ],
+      [                 null,            null,            null,     "TiledPath",            null,            null,            null,            null,            null,            null,            null,            null,            null,            null, "SouthRoadEnd",      "CidsNest", "RatNestNS" ],
+      [                 null,            null,            null,    "DragonPath" ]
     ],
     [
       [],
@@ -155,8 +155,8 @@
     },
     "WestGuard": {
       "title": "Nezumi Enclave - Guard Post",
-      "description": "Placeholder text - This location still needs to be described.",
-      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "description": "The tunnel here is blocked by a grid of metal bars. There's no hinge, and a bit of looking shows it's meant to pull up into the ceiling. Nezumi guards, armored with layers of bone and holding swords made of the same, watch your approach nervously. As you get close, one shouts at you \"Halt! What business do you have in the Enclave of Bone?\"",
+      "preview": "A portculus bars the way ahead, with a pair of armored ratfolk standing guard before it. They're watching you warily, even from the distance, hands on the hilts of their weapons.",
       "events": [
         {
           "chance": 1,
@@ -171,8 +171,8 @@
     },
     "EastGuard": {
       "title": "Nezumi Enclave - Guard Post",
-      "description": "Placeholder text - This location still needs to be described.",
-      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "description": "The road ends in a closed portculus, with a pair of guards watching bored. They straighten up as you approach, hands on hilts but not drawing their weapons. \"Road's closed, dragon,\" one of them states.",
+      "preview": "A portculus bars the way ahead, with a pair of armored ratfolk standing guard before it. They're not paying much attention, mostly just chatting with each other.",
       "events": [
         {
           "chance": 1,
@@ -183,7 +183,255 @@
 
       }
     },
-    "WestRoad": {
+    "WestRoad1": {
+      "title": "Nezumi Enclave - Main Road",
+      "description": "A broad major road extends from the guardpost on the west end, in toward an active towncenter to the east. Smaller pathways extend north and south, the buildings there unmarked and unremarkable.\n\nNezumi come and go in every direction, most giving you a wide berth and fearful looks. But at least none of them are outright attacking you. A few look at you almost hungrily, perhaps understandable seeing how emaciated most of them are.",
+      "preview": "A major road runs east and west here, lined by buildings carved into the stone and decorated in colored silk and painted names.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      }
+    },
+    "WestRoad2": {
+      "title": "Nezumi Enclave - Main Road",
+      "description": "A broad major road extends east and west. To the north is a shop whose sign depicts a skeletal ribcage. The wares in their window suggest they sell arms and armor made from your mother's bones. The shop to the south displays coloful silk outfits. Much less practical, but more aesthetically pleasing.\n\nNezumi come and go in every direction, some wearing the bonecrafters' wares and eyeing you warily. Others are dressed in silk and seem content to consider you someone else's problem. Most of the silks are worn down, suggesting most of the rats can't afford to replace them as often as they need.",
+      "preview": "A major road runs east and west here, lined by buildings carved into the stone and decorated in colored silk and painted names.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      }
+    },
+    "WestRoad3": {
+      "title": "Nezumi Enclave - Main Road",
+      "description": "A broad major road extends east and west, intersecting with another major road just east of here. To the north, broad doors stand open, releasing the smell of fresh cooked food and alcoholic drinks. The Nezumi within seem wealthier and happier than most you see around you, at a glance. To the south, a pillar of stone extends from the ground to the ceiling above, helping forestall any risk of cavein.",
+      "preview": "A major road runs east and west here, lined by buildings carved into the stone and decorated in colored silk and painted names.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      }
+    },
+    "EastRoad1": {
+      "title": "Nezumi Enclave - Main Road",
+      "description": "A broad major road extends east and west, intersecting with another major road just west of here. To the north there's a building filled with armed guards, some coming and going, others waiting about or writing at desks. The sign is an emblem of a shield made of bone. To the south, lies a store lined with mostly empty shelves. You spot a bit of overripe fruit, some fire moss, and sacks of grains for sale though.",
+      "preview": "A major road runs east and west here, lined by buildings carved into the stone and decorated in colored silk and painted names.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      }
+    },
+    "EastRoad2": {
+      "title": "Nezumi Enclave - Main Road",
+      "description": "A broad major road extends from the guardpost on the east end, in toward an active towncenter to the west. Smaller pathways extend north and south, the buildings there unmarked and unremarkable. It's much like a mirror image of the west entryway.\n\nNezumi come and go in every direction, most giving you a wide berth and fearful looks. Injuries seem a lot more common here, wounds both fresh and old, especial puncture wounds through arm and leg.",
+      "preview": "A major road runs east and west here, lined by buildings carved into the stone and decorated in colored silk and painted names.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      }
+    },
+    "SouthRoad1": {
+      "title": "Nezumi Enclave - Main Road",
+      "description": "A broad major road extends north and south, intersecting with another major road just north of here. To the west there's a massive pillar extending from floor to ceiling, helping to forestall the possibility of a cave-in. To the east, lies a store lined with mostly empty shelves. You spot a bit of overripe fruit, some fire moss, and sacks of grains for sale though.\n\nThe ratfolk on this side of town seem even more impoverished than elsewhere, at least at a glance.",
+      "preview": "A major road runs north and south here, lined by buildings carved into the stone and decorated in colored silk and painted names.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      }
+    },
+    "SouthRoad2": {
+      "title": "Nezumi Enclave - Main Road",
+      "description": "A broad major road extends north and south. Smaller alleyways extend east and west, and there seems to be more people loitering in them than bothering with this stretch of road.",
+      "preview": "A major road runs north and south here, lined by buildings carved into the stone and decorated in colored silk and painted names.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      }
+    },
+    "SouthRoadEnd": {
+      "title": "Nezumi Enclave - Main Road",
+      "description": "The south road comes to an end here, the carving seeming simply abandoned at some point in the past. The west is mere cave wall, while a single abode on the east shows signs of occupation. Foul smelling smoke wafts from the tops of the windows, the chimney above emitting nothing by contrast. Strange rhythmic sounds come from within, illiciting curiousity and caution.",
+      "preview": "The south road comes to an end over there, the tunneling apparently abandoned at some point.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      }
+    },
+    "NorthRoad1": {
       "title": "Nezumi Enclave - Main Road",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
@@ -214,7 +462,7 @@
         }
       }
     },
-    "EastRoad": {
+    "NorthRoad2": {
       "title": "Nezumi Enclave - Main Road",
       "description": "Placeholder text - This location still needs to be described.",
       "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
@@ -231,66 +479,7 @@
         "down": {
           "disabled": true
         },
-        "nw": {
-          "disabled": true
-        },
-        "ne": {
-          "disabled": true
-        },
-        "sw": {
-          "disabled": true
-        },
-        "se": {
-          "disabled": true
-        }
-      }
-    },
-    "SouthRoad": {
-      "title": "Nezumi Enclave - Main Road",
-      "description": "Placeholder text - This location still needs to be described.",
-      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
-      "events": [
-        {
-          "chance": 1,
-          "event": null
-        }
-      ],
-      "directionOverrides": {
-        "up": {
-          "disabled": true
-        },
-        "down": {
-          "disabled": true
-        },
-        "nw": {
-          "disabled": true
-        },
-        "ne": {
-          "disabled": true
-        },
-        "sw": {
-          "disabled": true
-        },
-        "se": {
-          "disabled": true
-        }
-      }
-    },
-    "NorthRoad": {
-      "title": "Nezumi Enclave - Main Road",
-      "description": "Placeholder text - This location still needs to be described.",
-      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
-      "events": [
-        {
-          "chance": 1,
-          "event": null
-        }
-      ],
-      "directionOverrides": {
-        "up": {
-          "disabled": true
-        },
-        "down": {
+        "west": {
           "disabled": true
         },
         "nw": {
@@ -353,6 +542,120 @@
           "disabled": true
         },
         "down": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      },
+      "light": "palegoldenrod",
+      "dark": "darkolivegreen"
+    },
+    "AlleywayNOS": {
+      "title": "Nezumi Enclave - Back Alley",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "south": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      },
+      "light": "palegoldenrod",
+      "dark": "darkolivegreen"
+    },
+    "AlleywayNS": {
+      "title": "Nezumi Enclave - Back Alley",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "east": {
+          "disabled": true
+        },
+        "west": {
+          "disabled": true
+        },
+        "nw": {
+          "disabled": true
+        },
+        "ne": {
+          "disabled": true
+        },
+        "sw": {
+          "disabled": true
+        },
+        "se": {
+          "disabled": true
+        }
+      },
+      "light": "palegoldenrod",
+      "dark": "darkolivegreen"
+    },
+    "AlleywayEW": {
+      "title": "Nezumi Enclave - Back Alley",
+      "description": "Placeholder text - This location still needs to be described.",
+      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "events": [
+        {
+          "chance": 1,
+          "event": null
+        }
+      ],
+      "directionOverrides": {
+        "up": {
+          "disabled": true
+        },
+        "down": {
+          "disabled": true
+        },
+        "north": {
+          "disabled": true
+        },
+        "south": {
           "disabled": true
         },
         "nw": {
@@ -607,9 +910,9 @@
       "dark": "rebeccapurple"
     },
     "SpiderFarm": {
-      "title": "Nezumi Enclave - SpiderFarm",
-      "description": "Placeholder text - This location still needs to be described.",
-      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "title": "Nezumi Enclave - Spider Farm",
+      "description": "You wander into the pathways between a dozen large fenced areas. Peering into one, you see a massive spider, big even by the standards you're accustomed to fighting. It sits on a web, acknowledging your presence with nothing more than a blink. It's calm... serene... boring.\n\nExamining a few more of the cages, you see more of the same. These aren't the lean and hungry predators you are used to clashing with. They're fat. Content. Tame.",
+      "preview": "The area ahead is a maze of bone fences. Between the slats you see a thick layer of webbing everywhere.",
       "events": [
         {
           "chance": 1,
