@@ -6,6 +6,9 @@ var cache = require('./cache');
 var pusherConfig = null;
 var pusher = null;
 
+var motdFD = fs.openSync('./data/motd.txt');
+var motd = fs.readFileSync(motdFD, {encoding: 'utf8'});
+
 if (fs.existsSync('private/config/pusher-config.json')) {
     var pusherConfigString = fs.readFileSync('private/config/pusher-config.json', 'utf8');
     console.log(`Configuring Pusher: ${pusherConfigString}`);
@@ -22,6 +25,9 @@ if (fs.existsSync('private/config/pusher-config.json')) {
     pusher.trigger('Redscale_main_chat', 'chat message', {
         "message": "Server was restarted",
         "timestamp": Date.now()
+    });
+    pusher.trigger('Redscale_main_chat', 'chat message', {
+        "message": motd
     });
 }
 
@@ -51,7 +57,8 @@ let getChats = function () {
         return [{
             key: pusherConfig.key,
             cluster: pusherConfig.cluster,
-        }].concat(chatArchive.map((line) => line ? JSON.parse(line) : undefined));
+        }].concat(chatArchive.map((line) => line ? JSON.parse(line) : undefined))
+        .concat({'message': motd});
     } else {
         return null;
     }
