@@ -83,7 +83,7 @@ class ChatDisplayer extends React.Component {
 	
 	render() {
 		let chatDisplay = this.props.chatLog.map((text, index) => { 
-            var color = this.props.mLog[index].color || '#00FF00';
+            var color = this.props.markupLog[index].color || '#00FF00';
              return (<tr key={index}><td color={color}>{text}</td></tr>); 
             });
 		
@@ -728,13 +728,12 @@ class GameDisplayer extends React.Component {
 
   	pushTextToChatLog = function(data) {
 	  var newLog = this.state.chatLog.slice();
-            newLog.shift();
-            newLog.push(this.stringFromMessageData(data));
-      this.setState({chatLog: newLog});
+        newLog.shift();
+        newLog.push(this.stringFromMessageData(data));
       var newMLog = this.state.mLog.slice();
       newMLog.shift();
       newMLog.push(this.markupFromMessageData(data));
-      this.setState({mLog: newMLog});
+      this.setState({chatLog: newLog, markupLog: newMLog});
 	};
 	
 	render() {
@@ -776,7 +775,7 @@ class GameDisplayer extends React.Component {
                 return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
             });
 
-            return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
+            return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/></div>);
         } else if (this.state.saveList) {
             // initialize chat
             if (!this.chatInit) {
@@ -798,15 +797,18 @@ class GameDisplayer extends React.Component {
                         channel.bind('chat message', self.pushTextToChatLog.bind(self));
 
                         var newLog = self.state.chatLog.slice(1);
+                        var newMLog = self.state.markupLog.slice(1);
                         chatlog.forEach(function (data) {
                             if (data) {
                                 newLog.shift();
                                 newLog.push(self.stringFromMessageData(data));
+                                newMLog.shift();
+                                newMLog.push(self.markupFromMessageData(data));
                             }
                         });
-                        self.setState({ chatLog: newLog });
+                        self.setState({ chatLog: newLog, markupLog: newMLog });
                     } else {
-                        self.setState({ chatLog: ["Local server is not configured for live chat."]})
+                        self.setState({ chatLog: ["Local server is not configured for live chat."], markupLog: [{}]})
                     }
                 });
             }
