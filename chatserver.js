@@ -6,7 +6,7 @@ var cache = require('./cache');
 var pusherConfig = null;
 var pusher = null;
 
-var motdFD = fs.openSync('./data/motd.txt');
+var motdFD = fs.openSync('./data/motd.txt', 'r');
 var motd = fs.readFileSync(motdFD, {encoding: 'utf8'});
 
 if (fs.existsSync('private/config/pusher-config.json')) {
