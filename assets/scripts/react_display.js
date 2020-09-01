@@ -703,7 +703,7 @@ class GameDisplayer extends React.Component {
         gameDisplayer = this;
         var log = [];
         var mLog = [];
-        for (var i = 0; i < 100; i++) { log.push(''); }; // Default chat log to empty
+        for (var i = 0; i < 100; i++) { log.push(''); mLog.push({})}; // Default chat log to empty
 		this.state = {
           chatLog: log,
           markupLog: mLog,
