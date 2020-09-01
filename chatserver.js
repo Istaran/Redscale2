@@ -24,10 +24,12 @@ if (fs.existsSync('private/config/pusher-config.json')) {
 
     pusher.trigger('Redscale_main_chat', 'chat message', {
         "message": "Server was restarted",
-        "timestamp": Date.now()
+        "timestamp": Date.now(),
+        "type":"system"
     });
     pusher.trigger('Redscale_main_chat', 'chat message', {
-        "message": motd
+        "message": motd,
+        "type":"system"
     });
 }
 
@@ -58,7 +60,8 @@ let getChats = function () {
             key: pusherConfig.key,
             cluster: pusherConfig.cluster,
         }].concat(chatArchive.map((line) => line ? JSON.parse(line) : undefined))
-        .concat({'message': motd});
+        .concat({'message': motd,
+        "type":"system"});
     } else {
         return null;
     }

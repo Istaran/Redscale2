@@ -82,7 +82,10 @@ class ChatDisplayer extends React.Component {
 	};
 	
 	render() {
-		let chatDisplay = this.props.chatLog.map((text, index) => { return (<tr key={index}><td>{text}</td></tr>); });
+		let chatDisplay = this.props.chatLog.map((text, index) => { 
+            var color = this.props.mLog[index].color || '#00FF00';
+             return (<tr key={index}><td color={color}>{text}</td></tr>); 
+            });
 		
 		return (
 				<div id='chatDiv' className='div-bottom'>
@@ -698,25 +701,40 @@ class GameDisplayer extends React.Component {
 	constructor(props) {
         super(props);
         gameDisplayer = this;
-		var log = [];
+        var log = [];
+        var mLog = [];
         for (var i = 0; i < 100; i++) { log.push(''); }; // Default chat log to empty
 		this.state = {
-		  chatLog: log,
+          chatLog: log,
+          markupLog: mLog,
 		  gameState: null,
 		};
 	}
 
     stringFromMessageData(data) {
-        var datestring = data.timestamp ? new Date(data.timestamp).toLocaleString() + ": " : "Unknown time & date: ";
+        var datestring = data.timestamp ? new Date(data.timestamp).toLocaleString() + ": " : "";
         var message = datestring + (data.username ? (data.username + '> ' + data.message) : data.message);
         return message;
+    }
+
+    markupFromMessageData(data) {
+        var markup = {};
+        //color
+        if (data.type == 'system') {
+            markup.color = '#0000FF';
+        }
+        return markup;
     }
 
   	pushTextToChatLog = function(data) {
 	  var newLog = this.state.chatLog.slice();
             newLog.shift();
             newLog.push(this.stringFromMessageData(data));
-	  this.setState({chatLog: newLog});
+      this.setState({chatLog: newLog});
+      var newMLog = this.state.mLog.slice();
+      newMLog.shift();
+      newMLog.push(this.markupFromMessageData(data));
+      this.setState({mLog: newMLog});
 	};
 	
 	render() {
