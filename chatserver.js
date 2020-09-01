@@ -7,7 +7,7 @@ var pusherConfig = null;
 var pusher = null;
 
 var motdFD = fs.openSync('./data/motd.txt');
-var motd = fs.readFileSync(motdFD, {encoding: 'utf8'}, 'r');
+var motd = fs.readFileSync(motdFD, {encoding: 'utf8'});
 
 if (fs.existsSync('private/config/pusher-config.json')) {
     var pusherConfigString = fs.readFileSync('private/config/pusher-config.json', 'utf8');
