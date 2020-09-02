@@ -130,7 +130,12 @@ app.post('/chat', async function (req, res) {
 });
 
 app.get('/chat', function (req, res) {
-  const messages = chat.getChats();
+    if (!google_oauth_config) {
+        profile = { id: "localdev", displayName: "Developer" };
+    } else if (req.user) {
+        profile = await cache.load(`saves/profiles/${req.user}.json`);
+    }
+  const messages = chat.getChats(profile);
   
   res.set('Content-Type', 'Application/JSON');
   res.send(JSON.stringify(messages));

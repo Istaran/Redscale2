@@ -4,6 +4,7 @@ var helper;
 var gameDisplayer;
 var formData = {};
 var saveSlot = 0;
+var userid;
 
 function getStatus() {
     fetch('/act' + location.search, {
@@ -721,7 +722,9 @@ class GameDisplayer extends React.Component {
         //color
         if (data.type == 'system') {
             markup.color = '#0088FF';
-        }
+        } else if (data.type == 'self' || (userid && data.userid == userid)) {
+            markup.color = '#FF0000';
+        })
         return markup;
     }
 
@@ -739,6 +742,7 @@ class GameDisplayer extends React.Component {
 		let self = this;
         formData = {}; // Caution: if this causes unexpected rerenderers I might have issues with setting this here.
         if (this.state.gameState) {
+            if (!userid && this.state.gameState.id) userid = this.state.gameState.id;
             let controlTable = this.state.gameState.controls.map((column, colIndex) => {
                 let controlColumn = [];
                 if (column) {

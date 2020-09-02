@@ -382,6 +382,7 @@ let act = async function (profile, action, query) {
     }
 
     state.view.title = `${await loc.getTitle(state)} - ${time.getTimeString(state)}`;
+    state.view.id = profile.id;
 	
 	// Save current state;
 	cache.save(savePath, state);

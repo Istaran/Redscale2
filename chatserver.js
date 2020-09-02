@@ -43,7 +43,7 @@ var chatStream = fs.createWriteStream('', { fd: chatFD });
 // TODO: separate by channel, private messages
 
 let sendChat = function (user, message, debug) {
-    let data = { username: user.displayName, message: message, timestamp: Date.now() };
+    let data = { username: user.displayName, message: message, timestamp: Date.now(), userid: user.id };
     console.log(JSON.stringify(data));
     if (pusher) 
         pusher.trigger('Redscale_main_chat', 'chat message', data);
@@ -54,12 +54,17 @@ let sendChat = function (user, message, debug) {
 
 };
 
-let getChats = function () {
+let getChats = function (user) {
     if (pusherConfig) {
         return [{
             key: pusherConfig.key,
             cluster: pusherConfig.cluster,
-        }].concat(chatArchive.map((line) => line ? JSON.parse(line) : undefined))
+        }].concat(chatArchive.map((line) => {
+            var chatLine = line ? JSON.parse(line) : undefined;
+            if(chatLine && chatLine.userid && chatLine.userid == user.id)
+                chatLine.type = "self";
+            return chatLine;
+        }))
         .concat({'message': motd,
         "type":"system"});
     } else {
