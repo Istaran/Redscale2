@@ -1,1 +1,2 @@
 Welcome to Redscale's Adventure! You can use this chat box to communicate with the creator (Istaran Majin) and other players. 
+Latest change: WIP - adding color coding for messages that are from you. This won't work on older messages from before the change.
