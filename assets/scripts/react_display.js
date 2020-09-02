@@ -729,7 +729,7 @@ class GameDisplayer extends React.Component {
 	  var newLog = this.state.chatLog.slice();
         newLog.shift();
         newLog.push(this.stringFromMessageData(data));
-      var newMLog = this.state.mLog.slice();
+      var newMLog = this.state.markupLog.slice();
       newMLog.shift();
       newMLog.push(this.markupFromMessageData(data));
       this.setState({chatLog: newLog, markupLog: newMLog});
