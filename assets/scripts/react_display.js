@@ -724,7 +724,7 @@ class GameDisplayer extends React.Component {
             markup.color = '#0088FF';
         } else if (data.type == 'self' || (userid && data.userid == userid)) {
             markup.color = '#FF0000';
-        })
+        }
         return markup;
     }
 
