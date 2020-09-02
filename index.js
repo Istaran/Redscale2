@@ -129,7 +129,7 @@ app.post('/chat', async function (req, res) {
     res.send(`chat received: ${body}`);
 });
 
-app.get('/chat', function (req, res) {
+app.get('/chat', async function (req, res) {
     if (!google_oauth_config) {
         profile = { id: "localdev", displayName: "Developer" };
     } else if (req.user) {
