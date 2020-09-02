@@ -83,8 +83,7 @@ class ChatDisplayer extends React.Component {
 	
 	render() {
 		let chatDisplay = this.props.chatLog.map((text, index) => { 
-            var color = this.props.markupLog[index].color || '#00FF00';
-             return (<tr key={index}><td color={color}>{text}</td></tr>); 
+             return (<tr key={index}><td style={this.props.markupLog[index]}>{text}</td></tr>); 
             });
 		
 		return (
