@@ -720,7 +720,7 @@ class GameDisplayer extends React.Component {
         var markup = {};
         //color
         if (data.type == 'system') {
-            markup.color = '#0000FF';
+            markup.color = '#0088FF';
         }
         return markup;
     }
