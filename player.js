@@ -93,10 +93,14 @@ let getStatusDisplay = function (state) {
 	let statusDisplay = {
         lines: [
             { "text": leader.display },
-            { "text": healthText, "help": "Health.\nWhen your health drops to zero, you will be force to rewind to your last rest point. Over time, nutrition converts to stamina and then to health." },
-            { "text": staminaText, "help":"Stamina.\nWhen your stamina drops to zero, you will need to digest food to recover. Some actions spend stamina, and also it converts to health over time."},
-            { "text": nutritionText, "help": "Nutrition.\nEat food to fill up so you can recover and heal." },
-            { "text": manaText, "help": "Mana.\nThe mystical energy that wells up within you over time." }
+            { "text": healthText, "help": "Health.\nWhen your health drops to zero, you will be force to rewind to your last rest point. Over time, nutrition converts to stamina and then to health.",
+        isPercent: true, leftVal: leader.health, rightVal: leader.maxHealth - leader.health, leftColor: "#FF0000", rightColor: "#884444" },
+            { "text": staminaText, "help":"Stamina.\nWhen your stamina drops to zero, you will need to digest food to recover. Some actions spend stamina, and also it converts to health over time.",
+            isPercent: true, leftVal: leader.stamina, rightVal: leader.maxStamina - leader.stamina, leftColor: "#FFFF00", rightColor: "#888844"},
+            { "text": nutritionText, "help": "Nutrition.\nEat food to fill up so you can recover and heal.",
+            isPercent: true, leftVal: leader.nutrition, rightVal: leader.maxNutrition - leader.nutrition, leftColor: "#00FF00", rightColor: "#448844" },
+            { "text": manaText, "help": "Mana.\nThe mystical energy that wells up within you over time." ,
+            isPercent: true, leftVal: leader.mana, rightVal: leader.maxMana - leader.mana, leftColor: "#FF00FF", rightColor: "#884488"}
         ]
 	};
 	
