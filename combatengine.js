@@ -361,9 +361,12 @@ let getStatusDisplay = async function (state) {
     let statusDisplay = {
         lines: [
             { "text": enemyDef.display },
-            { "text": healthText, "help": "Health.\nWhen their health drops to zero, they will die and you can harvest your reward from their corpse." },
-            { "text": staminaText, "help": "Stamina.\nWhen their stamina drops to zero, they will be forced to submit and you can choose between mercy and murder." },
-            { "text": manaText, "help": "Mana.\nNot all creatures know how to use mana, but all of them possess at least some." }
+            { "text": healthText, "help": "Health.\nWhen their health drops to zero, they will die and you can harvest your reward from their corpse." ,
+            isPercent: true, leftVal: health, rightVal: 10-health, leftColor: "#FF0000", rightColor: "#884444" },
+            { "text": staminaText, "help": "Stamina.\nWhen their stamina drops to zero, they will be forced to submit and you can choose between mercy and murder.",
+            isPercent: true, leftVal: stamina, rightVal: 10-stamina, leftColor: "#FFFF00", rightColor: "#888844"  },
+            { "text": manaText, "help": "Mana.\nNot all creatures know how to use mana, but all of them possess at least some.",
+            isPercent: true, leftVal: mana, rightVal: 10-mana, leftColor: "#FF00FF", rightColor: "#884488" }
         ]
     };
 

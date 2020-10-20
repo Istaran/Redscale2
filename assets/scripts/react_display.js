@@ -343,6 +343,9 @@ class LeftStatus extends React.Component {
     render() {
         if (!this.props.source || !this.props.source.lines) return <div display='none'></div>;
 		var statuslines = this.props.source.lines.map((line, lineIdx) => {
+            if (line.isPercent) {
+                return <PercentBar  key={lineIdx} leftVal={line.leftVal} rightVal={line.rightVal} leftColor={line.leftColor} rightColor={line.rightColor} totalWidth='200' height='18px' text={line.text}></PercentBar>
+            }
 			return <div key={lineIdx} className='statusRow' onMouseOver={(event)=>helper.setState({help:line.help})} onMouseOut={(event)=>helper.setState({help:null})}>{line.text}</div>
 		});
 		return <div className='leftStatus'>{statuslines}</div>;
@@ -358,6 +361,9 @@ class RightStatus extends React.Component {
     render() {
         if (!this.props.source || !this.props.source.lines) return <div display='none'></div>;
         var statuslines = this.props.source.lines.map((line, lineIdx) => {
+            if (line.isPercent) {
+                return <PercentBar  key={lineIdx} leftVal={line.leftVal} rightVal={line.rightVal} leftColor={line.leftColor} rightColor={line.rightColor} totalWidth='200' height='18px' text={line.text}></PercentBar>
+            }
             return <div key={lineIdx} className='statusRow' onMouseOver={(event) => helper.setState({ help: line.help })} onMouseOut={(event) => helper.setState({ help: null })}>{line.text}</div>
         });
         return <div className='rightStatus'>{statuslines}</div>;
@@ -694,6 +700,27 @@ class Recombiner extends React.Component {
                 </div>
             </div>
         </div>;
+    }
+}
+
+class PercentBar extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {        
+        let self = this;
+        let multi = self.props.totalWidth / (self.props.leftVal + self.props.rightVal); 
+        let leftWidth = multi * self.props.leftVal;
+        let rightWidth = multi * self.props.rightVal;
+
+        return (<div className="percentControl">
+            <div className="percentLeft" style={{width: leftWidth,  height: self.props.height, backgroundColor: self.props.leftColor}}>
+            </div>
+            <div className="percentRight" style={{width: rightWidth,  height: self.props.height, backgroundColor: self.props.rightColor}}>
+            </div>
+            <div className="percentText" style={{width: self.props.totalWidth + 'px', height: self.props.height, top: 0, left: 0}}>{self.props.text}</div>
+        </div>);
     }
 }
         
