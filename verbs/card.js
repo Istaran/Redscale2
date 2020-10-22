@@ -16,7 +16,7 @@ let act = async function (state, details) {
         let cards = await cache.load(`data/combat/${details.type} cards.json`);
         let autoreplace = cards[details.card].autoreplace;
         let replaced = "";
-        if (autoreplace && leader[`${details.type}DefaultHand`][autoreplace]) {
+        if (autoreplace && leader[`${details.type}DefaultHand`][autoreplace] && !leader[`${details.type}DefaultHand`][details.card]) {
             leader[`${details.type}DefaultHand`][autoreplace] = undefined;
             leader[`${details.type}DefaultHand`][details.card] = 1;
             replaced = `\nYou replaced ${autoreplace} with it in your starting hand.`;
