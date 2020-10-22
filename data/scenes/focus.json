@@ -145,6 +145,8 @@
                     "details": {
                         "leftDataContext": "party",
                         "leftPath": "leader/aggressCards",
+                        "leftCheckContext": "party",
+                        "leftCheckPath": "leader/aggressDefaultHand",
                         "type": "aggress",
                         "rightDataContext": "party",
                         "rightPath": "leader/aggressSideboard",
@@ -161,7 +163,8 @@
                     "leftHeader": "Active Deck (minimum 15)",
                     "rightHeader": "Sideboard",
                     "rules": {
-                        "left minimum count": 15
+                        "left minimum count": 15,
+                        "left check count": 3
                     }
                 }
             ]
