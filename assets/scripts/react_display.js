@@ -409,7 +409,7 @@ class Requantifier extends React.Component {
         // track updated numbers as state.
         var leftCounts = Object.assign({}, props.leftCounts);
         var rightCounts = Object.assign({}, props.rightCounts);
-        var leftChecks = Object.assign({}, props.leftChecks)
+        var leftChecks = props.leftChecks ? Object.assign({}, props.leftChecks) : undefined;
         var thing;
         for (thing in props.displays) {
             leftCounts[thing] = leftCounts[thing] || 0;
@@ -464,11 +464,11 @@ class Requantifier extends React.Component {
         var newState = {
             leftCounts: Object.assign({}, this.state.leftCounts),
             rightCounts: Object.assign({}, this.state.rightCounts),
-            leftChecks: Object.assign({}, this.state.leftChecks)
+            leftChecks: this.state.leftChecks ? Object.assign({}, this.state.leftChecks) : undefined
         };
         newState.leftCounts[thing] = this.state.leftCounts[thing] - deltaRight;
         newState.rightCounts[thing] = this.state.rightCounts[thing] + deltaRight;
-        if(newState.leftChecks[thing] && !newState.leftCounts[thing]) {
+        if(newState.leftChecks && newState.leftChecks[thing] && !newState.leftCounts[thing]) {
             newState.leftChecks[thing] = undefined;
         }
 
@@ -482,7 +482,7 @@ class Requantifier extends React.Component {
                 rightCounts: Object.assign({}, this.state.rightCounts),
                 leftChecks: Object.assign({}, this.state.leftChecks)
             };
-            newState.leftChecks[thing] = (newState.leftChecks[thing] ? undefined : 1);
+            newState.leftChecks[thing] = (newState.leftChecks[thing] || !newState.leftCounts[thing] ?undefined : 1);
             this.setState(newState);
         }
     }
@@ -507,8 +507,12 @@ class Requantifier extends React.Component {
     render() {
         var rows = [];
         for (var thing in this.props.displays) {
+            let checkbox = null;
+            if (this.state.leftChecks) {
+                checkbox = <input className="requantify" type="checkbox" checked={this.state.leftChecks[thing]} onClick={(event) => this.setCheck(event.target.getAttribute("thing"))} key={thing + " lc"} thing={thing} />;
+            }
             var row = <div className="requantifierRow" key={thing + " row"}><div className="quantity" key={thing + " left"}>{this.state.leftCounts[thing]}</div>
-                <input className="requantify" type="checkbox" checked={this.state.leftChecks[thing]} onClick={(event) => this.setCheck(event.target.getAttribute("thing"))} key={thing + " lc"} thing={thing} />
+                {checkbox}
                 <input className="requantify" type="button" value={this.state.rightCounts[thing] > 100 ? "<<100" : "<< all"} onClick={(event) => this.change(event.target.getAttribute("thing"), -100)} key={thing + " -100"} thing={thing} />
                 <input className="requantify" type="button" value="<< 10" onClick={(event) => this.change(event.target.getAttribute("thing"), -10)} key={thing + " -10"} thing={thing} />
                 <input className="requantify" type="button" value="<< 1" onClick={(event) => this.change(event.target.getAttribute("thing"), -1)} key={thing + " -1"} thing={thing} />
