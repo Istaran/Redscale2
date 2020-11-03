@@ -60,7 +60,9 @@ div.rightStatus {
 }
 
 div.statusRow {
-	width: 100%;
+    width: 100%;
+    margin-left: 3px;
+    margin-right: 3px;
 }
 
 div.controlTable {
@@ -366,4 +368,18 @@ div.recombinerHeaderSpacer {
     width: 100px;
     justify-content: center;
     display: flex;
+}
+
+div.percentControl {
+    display: flex;
+    flex-direction: row;
+    margin-left: 3px;
+    margin-right: 3px;
+    position: relative
+}
+
+div.percentText {
+    position: absolute;
+    justify-content: center;
+    color: black;
 }

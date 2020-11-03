@@ -4,6 +4,7 @@ var helper;
 var gameDisplayer;
 var formData = {};
 var saveSlot = 0;
+var userid;
 
 function getStatus() {
     fetch('/act' + location.search, {
@@ -342,6 +343,9 @@ class LeftStatus extends React.Component {
     render() {
         if (!this.props.source || !this.props.source.lines) return <div display='none'></div>;
 		var statuslines = this.props.source.lines.map((line, lineIdx) => {
+            if (line.isPercent) {
+                return <PercentBar  key={lineIdx} leftVal={line.leftVal} rightVal={line.rightVal} leftColor={line.leftColor} rightColor={line.rightColor} totalWidth='200' height='18px' text={line.text}></PercentBar>
+            }
 			return <div key={lineIdx} className='statusRow' onMouseOver={(event)=>helper.setState({help:line.help})} onMouseOut={(event)=>helper.setState({help:null})}>{line.text}</div>
 		});
 		return <div className='leftStatus'>{statuslines}</div>;
@@ -357,6 +361,9 @@ class RightStatus extends React.Component {
     render() {
         if (!this.props.source || !this.props.source.lines) return <div display='none'></div>;
         var statuslines = this.props.source.lines.map((line, lineIdx) => {
+            if (line.isPercent) {
+                return <PercentBar  key={lineIdx} leftVal={line.leftVal} rightVal={line.rightVal} leftColor={line.leftColor} rightColor={line.rightColor} totalWidth='200' height='18px' text={line.text}></PercentBar>
+            }
             return <div key={lineIdx} className='statusRow' onMouseOver={(event) => helper.setState({ help: line.help })} onMouseOut={(event) => helper.setState({ help: null })}>{line.text}</div>
         });
         return <div className='rightStatus'>{statuslines}</div>;
@@ -723,6 +730,27 @@ class Recombiner extends React.Component {
         </div>;
     }
 }
+
+class PercentBar extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {        
+        let self = this;
+        let multi = self.props.totalWidth / (self.props.leftVal + self.props.rightVal); 
+        let leftWidth = multi * self.props.leftVal;
+        let rightWidth = multi * self.props.rightVal;
+
+        return (<div className="percentControl">
+            <div className="percentLeft" style={{width: leftWidth,  height: self.props.height, backgroundColor: self.props.leftColor}}>
+            </div>
+            <div className="percentRight" style={{width: rightWidth,  height: self.props.height, backgroundColor: self.props.rightColor}}>
+            </div>
+            <div className="percentText" style={{width: self.props.totalWidth + 'px', height: self.props.height, top: 0, left: 0}}>{self.props.text}</div>
+        </div>);
+    }
+}
         
 class GameDisplayer extends React.Component {
 	constructor(props) {
@@ -749,6 +777,8 @@ class GameDisplayer extends React.Component {
         //color
         if (data.type == 'system') {
             markup.color = '#0088FF';
+        } else if (data.type == 'self' || (userid && data.userid == userid)) {
+            markup.color = '#FF4400';
         }
         return markup;
     }
@@ -767,6 +797,7 @@ class GameDisplayer extends React.Component {
 		let self = this;
         formData = {}; // Caution: if this causes unexpected rerenderers I might have issues with setting this here.
         if (this.state.gameState) {
+            if (!userid && this.state.gameState.id) userid = this.state.gameState.id;
             let controlTable = this.state.gameState.controls.map((column, colIndex) => {
                 let controlColumn = [];
                 if (column) {
