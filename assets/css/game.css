@@ -315,9 +315,14 @@ div.reassignerRow {
     flex-direction: row;
 }
 
-div.reassignerColumnHeader {
+div.reassignerLeftColumnHeader {
     width: 425px;
     text-align: left;
+}
+
+div.reassignerRightColumnHeader {
+    width: 425px;
+    text-align: right;
 }
 
 div.reassignerHeaderSpacer {

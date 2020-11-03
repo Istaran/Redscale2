@@ -598,7 +598,7 @@ class Reassigner extends React.Component {
         return <div className="screencover">
             <div className="reassigner">
                 <div className="reassignerColumn">
-                    <div className="reassignerColumnHeader">{self.props.leftHeader}</div>
+                    <div className="reassignerLeftColumnHeader">{self.props.leftHeader}</div>
                     {leftRows}
                 </div>
                 <div className="reassignerSpacer">
@@ -607,7 +607,7 @@ class Reassigner extends React.Component {
                     </div>
                 </div>
                 <div className="reassignerColumn">
-                    <div className="reassignerColumnHeader">{self.props.rightHeader}</div>
+                    <div className="reassignerRightColumnHeader">{self.props.rightHeader}</div>
                     {rightRows}
                 </div>
             </div>
