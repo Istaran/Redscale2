@@ -262,7 +262,7 @@ input.requantify {
 }
 
 div.requantifierHeaderRow {
-    height: 50px;
+    height: 25px;
     display: flex;
     border-bottom-color: black;
     border-bottom-style: dashed;
@@ -274,17 +274,22 @@ div.quantity {
     width:125px;
     text-align:right;
 }
-div.requantifierColumnHeader {
-    width: 125px;
+
+div.requantifierLeftColumnHeader {
+    width: 500px;
+    text-align: left;
+}
+
+div.requantifierRightColumnHeader {
+    width: 500px;
     text-align: right;
 }
 
 div.requantifierHeaderSpacer {
-    width: 750px;
+    width: 250px;
     justify-content:center;
     display:flex;
 }
-
 
 div.reassigner {
     position: center;

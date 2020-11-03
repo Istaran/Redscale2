@@ -523,7 +523,7 @@ class Requantifier extends React.Component {
                 < div className="quantity" key={thing + " right"}>{this.state.rightCounts[thing]}</div></div>;
             rows.push(row);
         }
-        return <div className="screencover"><div className="requantifier"><div className="requantifierHeaderRow"><div className="requantifierColumnHeader">{this.props.leftHeader}</div><div className="requantifierHeaderSpacer"><input type='button' disabled={!this.checkrules()} onClick={() => this.done()} value="Done" /></div><div className="requantifierColumnHeader">{this.props.rightHeader}</div></div>{rows}</div></div>;
+        return <div className="screencover"><div className="requantifier"><div className="requantifierHeaderRow"><div className="requantifierLeftColumnHeader">{this.props.leftHeader}</div><div className="requantifierHeaderSpacer"><input type='button' disabled={!this.checkrules()} onClick={() => this.done()} value="Done" /></div><div className="requantifierRightColumnHeader">{this.props.rightHeader}</div></div>{rows}</div></div>;
     }
 }
 

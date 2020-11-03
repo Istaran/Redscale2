@@ -160,7 +160,7 @@
                             }
                         }
                     },
-                    "leftHeader": "Active Deck (minimum 15)",
+                    "leftHeader": "Active Deck (minimum 15, check 3 for starting hand)",
                     "rightHeader": "Sideboard",
                     "rules": {
                         "left minimum count": 15,
