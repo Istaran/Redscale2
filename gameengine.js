@@ -211,6 +211,8 @@ let getControl = async function (state, details) {
         // setup the numbers based on context/dataset
         ctrl.leftCounts = readContextPath(state, details.details.leftDataContext, details.details.leftPath) || {};
         ctrl.rightCounts = readContextPath(state, details.details.rightDataContext, details.details.rightPath) || {};
+        if(details.details.leftCheckContext && details.details.leftCheckPath)
+            ctrl.leftChecks = readContextPath(state, details.details.leftCheckContext, details.details.leftCheckPath) || {};
         ctrl.displays = Object.assign({}, ctrl.leftCounts, ctrl.rightCounts); // initialize just to make sure we have all the props of left and right counts.
         for (var name in ctrl.displays) {            
             ctrl.displays[name] = await getRequantifierDisplay(name, details.details.type);

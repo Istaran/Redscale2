@@ -416,6 +416,7 @@ class Requantifier extends React.Component {
         // track updated numbers as state.
         var leftCounts = Object.assign({}, props.leftCounts);
         var rightCounts = Object.assign({}, props.rightCounts);
+        var leftChecks = props.leftChecks ? Object.assign({}, props.leftChecks) : undefined;
         var thing;
         for (thing in props.displays) {
             leftCounts[thing] = leftCounts[thing] || 0;
@@ -424,7 +425,8 @@ class Requantifier extends React.Component {
 
         this.state = {
             leftCounts: leftCounts,
-            rightCounts: rightCounts
+            rightCounts: rightCounts,
+            leftChecks: leftChecks
         }
     }
 
@@ -451,6 +453,10 @@ class Requantifier extends React.Component {
                     if (this.sum(this.state.rightCounts) < val)
                         return false;
                     break;
+                case "left check count":
+                    if (this.sum(this.state.leftChecks) != val)
+                    return false;
+                    break;
             }
         }
 
@@ -464,11 +470,28 @@ class Requantifier extends React.Component {
             deltaRight = -this.state.rightCounts[thing];
         var newState = {
             leftCounts: Object.assign({}, this.state.leftCounts),
-            rightCounts: Object.assign({}, this.state.rightCounts)
+            rightCounts: Object.assign({}, this.state.rightCounts),
+            leftChecks: this.state.leftChecks ? Object.assign({}, this.state.leftChecks) : undefined
         };
         newState.leftCounts[thing] = this.state.leftCounts[thing] - deltaRight;
         newState.rightCounts[thing] = this.state.rightCounts[thing] + deltaRight;
+        if(newState.leftChecks && newState.leftChecks[thing] && !newState.leftCounts[thing]) {
+            newState.leftChecks[thing] = undefined;
+        }
+
         this.setState(newState);
+    }
+
+    setCheck(thing) {
+        if (this.state.leftCounts[thing]) {
+            var newState = {
+                leftCounts: Object.assign({}, this.state.leftCounts),
+                rightCounts: Object.assign({}, this.state.rightCounts),
+                leftChecks: Object.assign({}, this.state.leftChecks)
+            };
+            newState.leftChecks[thing] = (newState.leftChecks[thing] || !newState.leftCounts[thing] ?undefined : 1);
+            this.setState(newState);
+        }
     }
 
     done() {
@@ -478,7 +501,7 @@ class Requantifier extends React.Component {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify({ 'body': { 'verb': 'requantify', 'slot': saveSlot, 'id': self.props.id, 'data': { 'left': this.state.leftCounts, 'right': this.state.rightCounts }} })
+            body: JSON.stringify({ 'body': { 'verb': 'requantify', 'slot': saveSlot, 'id': self.props.id, 'data': { 'left': this.state.leftCounts, 'right': this.state.rightCounts, 'leftChecks': this.state.leftChecks }} })
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
@@ -491,7 +514,12 @@ class Requantifier extends React.Component {
     render() {
         var rows = [];
         for (var thing in this.props.displays) {
+            let checkbox = null;
+            if (this.state.leftChecks) {
+                checkbox = <input className="requantify" type="checkbox" checked={this.state.leftChecks[thing]} onClick={(event) => this.setCheck(event.target.getAttribute("thing"))} key={thing + " lc"} thing={thing} />;
+            }
             var row = <div className="requantifierRow" key={thing + " row"}><div className="quantity" key={thing + " left"}>{this.state.leftCounts[thing]}</div>
+                {checkbox}
                 <input className="requantify" type="button" value={this.state.rightCounts[thing] > 100 ? "<<100" : "<< all"} onClick={(event) => this.change(event.target.getAttribute("thing"), -100)} key={thing + " -100"} thing={thing} />
                 <input className="requantify" type="button" value="<< 10" onClick={(event) => this.change(event.target.getAttribute("thing"), -10)} key={thing + " -10"} thing={thing} />
                 <input className="requantify" type="button" value="<< 1" onClick={(event) => this.change(event.target.getAttribute("thing"), -1)} key={thing + " -1"} thing={thing} />
@@ -502,7 +530,7 @@ class Requantifier extends React.Component {
                 < div className="quantity" key={thing + " right"}>{this.state.rightCounts[thing]}</div></div>;
             rows.push(row);
         }
-        return <div className="screencover"><div className="requantifier"><div className="requantifierHeaderRow"><div className="requantifierColumnHeader">{this.props.leftHeader}</div><div className="requantifierHeaderSpacer"><input type='button' disabled={!this.checkrules()} onClick={() => this.done()} value="Done" /></div><div className="requantifierColumnHeader">{this.props.rightHeader}</div></div>{rows}</div></div>;
+        return <div className="screencover"><div className="requantifier"><div className="requantifierHeaderRow"><div className="requantifierLeftColumnHeader">{this.props.leftHeader}</div><div className="requantifierHeaderSpacer"><input type='button' disabled={!this.checkrules()} onClick={() => this.done()} value="Done" /></div><div className="requantifierRightColumnHeader">{this.props.rightHeader}</div></div>{rows}</div></div>;
     }
 }
 
@@ -577,7 +605,7 @@ class Reassigner extends React.Component {
         return <div className="screencover">
             <div className="reassigner">
                 <div className="reassignerColumn">
-                    <div className="reassignerColumnHeader">{self.props.leftHeader}</div>
+                    <div className="reassignerLeftColumnHeader">{self.props.leftHeader}</div>
                     {leftRows}
                 </div>
                 <div className="reassignerSpacer">
@@ -586,7 +614,7 @@ class Reassigner extends React.Component {
                     </div>
                 </div>
                 <div className="reassignerColumn">
-                    <div className="reassignerColumnHeader">{self.props.rightHeader}</div>
+                    <div className="reassignerRightColumnHeader">{self.props.rightHeader}</div>
                     {rightRows}
                 </div>
             </div>
@@ -788,7 +816,7 @@ class GameDisplayer extends React.Component {
                             case 'reconnector':
                                 return <Reconnector />;
                             case 'requantifier':
-                                return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
+                                return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} leftChecks={control.leftChecks} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
                             case 'reassigner':
                                 return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
                             case 'recombiner':
