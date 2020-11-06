@@ -8,7 +8,13 @@
         [],
         [],
         [],
-        [],
+        [
+            [],
+            [],
+            [],
+            [],
+            [null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderWell"]
+        ],
         [
             [],
             [],
@@ -16,21 +22,21 @@
             [],
             [],
             [],
-            [],
-            [],
-            [],
-            [],
-            [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver", "UnderRiver" ],
-            [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver", "UnderRiver", "UnderRiver" ],
-            [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver", "UnderRiver", "WestBranch", "Fork" ],
-            [ null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver", null, "SouthBranch" ],
-            [ null, null, null, null, null, null, null, null, null, null, "UnderRiver", "UnderRiver", "UnderRiver", null, "UnderRiver" ],
-            [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver" ],
-            [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, "UnderRiver" ]
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "EelTunnel" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "EelTunnel" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "EelTunnel" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "BlockedPassage" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderRiver" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderRiver",     "UnderRiver" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderRiver" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderRiver",     "UnderRiver",     "UnderRiver" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderRiver" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderRiver" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderRiver",     "UnderRiver",     "WestBranch",     "Fork" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderRiver",     null,             "SouthBranch" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderRiver",     "UnderRiver",     "UnderRiver",     null,             "UnderRiver" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderRiver" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderRiver" ]
         ]
     ],
     "styles": {
@@ -169,8 +175,66 @@
             "requireall": { "swimmer": true },
             "light": "teal",
             "dark": "#004040"
+        },
+        "BlockedPassage": {
+            "title": "Undermountain Waterways - Blocked passage",
+            "description": "The water here has flowed down into a stony tunnel, passing out from your home cavern. A dozen large rocks are stuck here, blocking the passage way, though enough space remains around them for the water to freely exit. Testing the rocks, they are fairly solidly wedged together. But perhaps one very solid hit with your tail would be enough to knock them free? If you're strong enough, that is.",
+            "preview": "The passage is blocked up ahead by large rocks, spaced enough for water to flow through but not you.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [ "smash" ],
+            "directionOverrides": {
+                "north": {
+                    "disabled": true
+                }
+            },
+            "requireall": { "swimmer": true },
+            "light": "#008080",
+            "dark": "#004040"
+        },
+        "BrokenDam": {
+            "title": "Undermountain Waterways - Unblocked passage",
+            "description": "The water here has flowed down into a stony tunnel, passing out from your home cavern. A trio of rocks are embedded in the river bed here, a reminder of the blockage that once barred your path. Now you're free to swim on ahead, and see where this path leads you.",
+            "preview": "The passage is cleared for you now, allowing you to swim freely.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [ ],
+            "directionOverrides": {},
+            "requireall": { "swimmer": true },
+            "light": "#008080",
+            "dark": "#004040"
+        },        
+        "EelTunnel": {
+            "title": "Undermountain Waterways - Eel tunnel",
+            "description": "The, up until recently, lesser flow of water through this tunnel has kept the walls from being worn as smooth as they have been upstream. Indeed the rock walls here are full of cracks and crevices of varying sizes, many with eyes peering out at you as you pass by. Jaws snap out on occassion when one of the smaller fish venture to close, snake-like creatures darting forward to sieze a small meal. The smaller eels aren't much to worry about, but the occasional larger eye keeps your notice.",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "eel attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "fish attack"
+                }
+            ],
+            "actions": [ "hunt2" ],
+            "directionOverrides": {},
+            "requireall": { "swimmer": true },
+            "light": "#008080",
+            "dark": "#004040"
         }
-
     },
     "events": {
         "newt attack": {
@@ -200,5 +264,41 @@
             ]
         },
         "help": "Seek out aquatic prey, initiating a combat."
+    },
+    "hunt2": {
+        "type": "actButton",
+        "display": "Hunt",
+        "verb": "hunt",
+        "details": {
+            "targets": [
+                {
+                    "chance": 3,
+                    "name": "cave fish"
+                },
+                {
+                    "chance": 1,
+                    "name": "cave eel"
+                }
+            ]
+        },
+        "help": "Seek out aquatic prey, initiating a combat."
+    },
+    "smash": {
+        "type": "actButton",
+        "enabled": {
+            "condition": "stateis",
+            "context": "party",
+            "fact": "leader/aggressCards/Basic Tail Slap",
+            "rule": ">=",
+            "value": 3
+        },
+        "display": "Tail smash",
+        "verb": "setstate",
+        "details": {
+            "value": "BrokenDam",
+            "statename": "world/locations/Undermountain Waterways/9/9/18/style",
+            "text": "You focus your resolve on the rocks before you, picking one near the center that seems like the best target. You spin your body about in a tight circle, bringing your tail to bare on it with a vicious smash! Ouch! The rock didn't give way, though it did look like it got pushed a bit further between the others.\n\nOkay, a bit more force is called for. You swim back upstream a few dragon-lengths before darting forward, letting the current aid you. With a quick spin at the last moment, you bring all your strength into a vicious smash! That hurt much less, as the stone cracked in two, half of it flying off down the river! The second half follows it quickly, and without a proper wedge the others break off and go tumbling downstream and out of sight as well! A trio of rocks remain, themselves dug tightly into the riverbed, but your passage is quite clear now.\n\nBut where will this dark tunnel lead you?"
+        },
+        "help":  "Use your tail to smash the rocks apart. Are you strong enough to clear the way?"
     }
 }}
