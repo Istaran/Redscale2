@@ -7,21 +7,45 @@
         [],
         [],
         [],
-        [],
         [
             [],
             [],
             [],
             [],
-            [null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderWell"]
+            [],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderLake",      "UnderLake",      "UnderLake"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderLake",      "UnderLake",      "UnderLake"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderLake",      "UnderLake",      "UnderLake",      "UnderLake"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderLake",      "UnderLake",      "UnderLake",      "UnderLake"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderLake",      "UnderLake",      "UnderLake",      "UnderLake",      "UnderLake"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderLake",      "UnderLake",      "UnderLake",      "UnderLake",      "UnderLake"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderLake",      "UnderLake",      "UnderLake",      "UnderLake",      "UnderLake"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderLake",      "UnderLake",      "UnderLake",      "UnderLake"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "UnderLake",      "UnderLake"]
+        ],
+        [
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "RatRiver"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "RatRiver",       "RatRiver"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "RatRiver",       null],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "RatRiver",       null],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "RidgeBottom",    "FallShore",      "NorthShore",     "NorthShore",     "NorthShore",     null,             null,             "UnderWell"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "Fallbottom",     "LakeSurface",    "LakeSurface",    "LakeSurface",    "RatRiver",       "RatRiver",       "RatRiver"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "LakeSurface",    "LakeSurface",    "LakeSurface"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "LakeSurface",    "LakeSurface",    "LakeSurface",    "LakeSurface"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "WestShore",      "LakeSurface",    "LakeSurface",    "LakeSurface",    "LakeSurface"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "WestShore",      "LakeSurface",    "LakeSurface",    "LakeSurface",    "LakeSurface",    "LakeSurface"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "NagaPathW",      "NagaPathE",      "WestShore",      "LakeSurface",    "LakeSurface",    "LakeSurface",    "LakeSurface",    "LakeSurface"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "WestShore",      "LakeSurface",    "LakeSurface",    "LakeSurface",    "LakeSurface",    "LakeSurface"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "WestShore",      "LakeSurface",    "LakeSurface",    "LakeSurface",    "LakeSurface"],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "LakeSurface",    "LakeSurface"]
         ],
         [
             [],
             [],
             [],
             [],
-            [],
-            [],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "RidgeTop" ],
+            [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "WaterfallLedge", "SmallWaterfall" ],
             [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "EelTunnel" ],
             [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "EelTunnel" ],
             [ null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             null,             "EelTunnel" ],
@@ -234,6 +258,230 @@
             "requireall": { "swimmer": true },
             "light": "#008080",
             "dark": "#004040"
+        },
+        "SmallWaterfall": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "WaterfallLedge": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "RidgeTop": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "RidgeBottom": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "FallShore": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "FallBottom": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "LakeSurface": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "UnderLake": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "RatRiver": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "UnderWell": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "NorthShore": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "WestShore": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "NagaTunnelE": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "NagaTunnelW": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
+        },
+        "TBD": {
+            "title": "Undermountain Waterways - undescribed",
+            "description": "WIP: This location still needs to be described",
+            "events": [
+                {
+                    "chance": 10,
+                    "event": null
+                }
+            ],
+            "actions": [],
+            "directionOverrides": {},
+            "requireall": {"swimmer":true},
+            "light": "#008080",
+            "dark": "#004040"            
         }
     },
     "events": {
