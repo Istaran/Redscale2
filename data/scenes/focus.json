@@ -124,15 +124,15 @@
             [
                 {
                     "type": "actButton",
-                    "display": "Focus: abjure",
+                    "display": "Focus: Aggress",
                     "verb": "setscene",
                     "details": {
                         "text": "",
                         "name": "focus",
-                        "sub": "focusabjure",
+                        "sub": "focusAggress",
                         "type": "requantifier"
                     },
-                    "help": "Select how many copies of each abjure card to actively use in your combat deck.\nNOTE: if you leave out any copies of a card, you'll automatically leave out new copies you acquire."
+                    "help": "Select how many copies of each aggress card to actively use in your combat deck.\nNOTE: if you leave out any copies of a card, you'll automatically leave out new copies you acquire."
                 },
                 {
                     "type": "actButton",
@@ -149,23 +149,23 @@
             ]
         ]
     },
-    "focusabjure": {
+    "focusAggress": {
         "controls": [
             [
                 {
                     "type": "requantifier",
                     "details": {
                         "leftDataContext": "party",
-                        "leftPath": "leader/abjureCards",
+                        "leftPath": "leader/aggressCards",
                         "leftCheckContext": "party",
-                        "leftCheckPath": "leader/abjureDefaultHand",
-                        "type": "abjure",
+                        "leftCheckPath": "leader/aggressDefaultHand",
+                        "type": "aggress",
                         "rightDataContext": "party",
-                        "rightPath": "leader/abjureSideboard",
+                        "rightPath": "leader/aggressSideboard",
                         "then": {
                             "verb": "setscene",
                             "details": {
-                                "text": "You focused on how best to channel your abjureion into the vulnerable flesh of your enemies.",
+                                "text": "You focused on how best to channel your aggression into the vulnerable flesh of your enemies.",
                                 "name": "focus",
                                 "sub": "start",
                                 "type": "menu"
