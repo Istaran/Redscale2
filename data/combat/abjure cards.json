@@ -40,5 +40,41 @@
     "soak": 0,
     "deflect": 0,
     "staminacost": 0
+  },
+  "Basic Dodge": {
+    "display": "You dodge about, making yourself harder to hit.",
+    "cardlines": "Basic Dodge\n\nAccuracy: -\u25cf\u25d6\nDamage:\nAttacks:",
+    "help": "Attempt to dodge.\nReduces enemy accuracy by 7.\nStacking bonus: Reduce accuracy by another 3, +1 stamina cost.",
+    "dodge": 7,
+    "soak": 0,
+    "deflect": 0,
+    "scaledodge": 3,
+    "staminacost": 0,
+    "scalestaminacost": 1,
+    "autoreplace": "Instinctive Dodge"
+  },
+  "Basic Deflect": {
+    "display": "You ready yourself and deflect the first attack, maybe two.",
+    "cardlines": "Basic Deflect\n\nAccuracy:\nDamage:\nAttacks: -\u25cf\u25d6",
+    "help": "Attempt to deflect.\nPrevents 1 attack, with a 50% chance to prevent a second.\nStacking bonus: +50% chance to deflect another hit, +1 stamina cost.",
+    "dodge": 0,
+    "soak": 0,
+    "deflect": 1.5,
+    "scaledeflect": 0.5,
+    "staminacost": 0,
+    "scalestaminacost": 1,
+    "autoreplace": "Instinctive Deflect"
+  },
+  "Basic Brace": {
+    "display": "You brace yourself, blocking the incoming blows.",
+    "cardlines": "Basic Brace\n\nAccuracy:\nDamage: -\u25cf\u25d6\nAttacks:",
+    "help": "Attempt to brace against the damage.\nReduces enemy damage per hit by 7.\nStacking bonus: Reduce damage by another 3 per hit, +1 stamina cost.",
+    "dodge": 0,
+    "soak": 7,
+    "deflect": 0,
+    "scalesoak": 3,
+    "staminacost": 0,
+    "scalestaminacost": 1,
+    "autoreplace": "Instinctive Brace"
   }
 }

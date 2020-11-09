@@ -1,0 +1,217 @@
+{
+    "display": "cave lizard",
+    "tags": [
+        "lizard",
+        "living creature",
+        "animal",
+        [ "male", "female" ]
+    ],
+    "attack announce": "A long tongue spikes out at you from what you'd mistaken for a simple rock, and drags you several yards closer before you manage to break free, digging your claws into the ridgeside. Undeterred, the grey-scaled predator moves to attack again!",
+    "hunt announce": "TBD",
+    "max health": 50,
+    "max stamina": 15,
+    "max mana": 10,
+    "evasion": 7,
+    "reshuffle": 6,
+    "cardsets": [
+        {
+            "tell": "The lizard parts its jaw slightly.",
+            "cards": [
+                {
+                    "aggress display": "The lizard lunges forward to bite you!",
+                    "accuracy": 5,
+                    "damagedice": 3,
+                    "damagedie": 10,
+                    "damageplus": 0,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The lizard endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The lizard lunges forward to bite you!",
+                    "accuracy": 5,
+                    "damagedice": 3,
+                    "damagedie": 10,
+                    "damageplus": 0,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The lizard tries to dodge!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 2,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The lizard flits out it's tongue to smack you!",
+                    "accuracy": 15,
+                    "damagedice": 3,
+                    "damagedie": 10,
+                    "damageplus": 0,
+                    "damagetype": "bludgeoning",
+                    "attacks": 1,
+                    "abjure display": "The lizard endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                }
+            ]
+        },
+        {
+            "tell": "The lizard digs into the dirt, tensing its legs.",
+            "cards": [
+                {
+                    "aggress display": "The lizard slashes at you with its claws!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "slashing",
+                    "attacks": 4,
+                    "abjure display": "The lizard endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The lizard slashes at you with its claws!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "slashing",
+                    "attacks": 4,
+                    "abjure display": "The lizard tries to dodge!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 2,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The lizard spins about, lashing at you with its tail!",
+                    "accuracy": 10,
+                    "damagedice": 4,
+                    "damagedie": 10,
+                    "damageplus": 0,
+                    "damagetype": "bludgeoning",
+                    "attacks": 1,
+                    "abjure display": "The lizard tries to dodge!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 2,
+                    "staminacost": 1
+                }
+            ]
+        },
+        {
+            "tell": "The lizard shakes its horned head a moment.",
+            "cards": [
+                {
+                    "aggress display": "The lizard tries to impale you with its horns!",
+                    "accuracy": 5,
+                    "damagedice": 4,
+                    "damagedie": 4,
+                    "damageplus": 12,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The lizard endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The lizard tries to impale you with its horns!",
+                    "accuracy": 5,
+                    "damagedice": 4,
+                    "damagedie": 4,
+                    "damageplus": 12,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The lizard tries to dodge!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 2,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The lizard tries to impale you with its horns!",
+                    "accuracy": 5,
+                    "damagedice": 4,
+                    "damagedie": 4,
+                    "damageplus": 12,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The lizard deflects your attack with its horns!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 2,
+                    "staminacost": 1
+                }
+            ]
+        }
+    ],
+    "acquirecards": {
+        "devour": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/body",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Devour\n\n+45 nutrition",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "eat",
+                    "details": {
+                        "text": "You devour the lizard's body, limb by limb. It's quite crunchy and tastes a bit too much like rock for your taste.",
+                        "nutrition": 45
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/body"
+                    }
+                }
+            ],
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +45 nutrition."
+        },
+        "card": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/soul",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Card\n\nChance to gain:\nBasic Horn Gore",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "card",
+                    "details": {
+                        "text": "Absorbing the lingering memories of the fallen lizard's spirit, you learn something about how to fight with your horns. It's not the easiest kind of attack to land, but it's got some nice damage potential.",
+                        "fail": "You try to absorb the lizards's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+                        "type": "aggress",
+                        "card": "Basic Horn Gore"
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/soul"
+                    }
+                }
+            ],
+            "help": "Consume your enemy's spirit to learn from it.\nChance to gain Basic Horn Gore based on how many copies you have.\nA deadly but innacurate pair of attacks, great against braced opponents, but easy to dodge."
+        }
+    }
+}
