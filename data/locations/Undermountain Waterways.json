@@ -370,7 +370,7 @@
                 }
             ],
             "actions": [],
-            "directionOverrides": { "east": {"disabled":true}},
+            "directionOverrides": { },
             "light": "#804040",
             "dark": "#004040"            
         },
