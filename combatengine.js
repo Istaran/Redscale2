@@ -300,8 +300,12 @@ let progress = async function (state) {
         return `${enemyDef.captureText || enemyDef.display + " collapsed from exhaustion, unable to fight back any longer!"}\n\nIt's time to apprehend! Pick a card...`; 
     }
 
-    if (state.enemy.health <= enemyDef["yield max health"]) {
-        let yieldChance = enemyDef["yield base chance"] + enemyDef["yield scale chance"] * (enemyDef["yield max health"] - state.enemy.health);
+    // surrender bonus adds some effective damage for one check
+    let surrenderbonus = state.enemy.surrenderbonus * (state.enemy.surrenderbonusmulti ? state.enemy.surrenderbonusmulti : 1);
+    state.enemy.surrenderbonus = 0;
+
+    if (state.enemy.health <= enemyDef["yield max health"] + surrenderbonus) {
+        let yieldChance = enemyDef["yield base chance"] + enemyDef["yield scale chance"] * (enemyDef["yield max health"] - state.enemy.health + surrenderbonus);
         if (Math.random() < yieldChance) {
             state.enemy.phasequeue = ["apprehend"];
             return `${enemyDef.surrenderText || enemyDef.display + " lost the will to fight, and surrendered unconditionally!"}\n\nIt's time to apprehend! Pick a card...`; 

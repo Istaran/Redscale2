@@ -75,6 +75,14 @@ let act = async function (state, details) {
                 } else {
                     state.enemy.health -= damage;
                     engineResult += `You dealt ${damage} ${card.damagetype} damage!\n`;
+                    if (card.surrenderbonus)
+                        state.enemy.surrenderbonus = card.surrenderbonus;
+
+                    if (card.staminadamagedie) {
+                        let staminadamage = combatengine.damageRoll(card.staminadamagedice, card.staminadamagedie, card.staminadamageplus, 1);
+                        state.enemy.stamina -= staminadamage;
+                        engineResult += `You wear down your enemy, depleting ${staminadamage} stamina!\n`;
+                    }
                 }
             }
         }

@@ -365,11 +365,15 @@
                     "event": null
                 },
                 {
-                    "chance": 2,
+                    "chance": 3,
                     "event": "lizard attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "snake attack"
                 }
             ],
-            "actions": [],
+            "actions": [ "hunt3" ],
             "directionOverrides": { },
             "light": "#804040",
             "dark": "#004040"            
@@ -603,6 +607,10 @@
         "lizard attack": {
             "verb": "attack",
             "details": { "enemy": "cave lizard" }
+        },
+        "snake attack": {
+            "verb": "attack",
+            "details": { "enemy": "cave snake" }
         }
     },
 "actions":{
@@ -641,6 +649,23 @@
             ]
         },
         "help": "Seek out aquatic prey, initiating a combat."
+    },
+    "hunt3": {
+        "type": "actButton",
+        "display": "Hunt",
+        "verb": "hunt",
+        "details": {
+            "targets": [
+                {
+                    "chance": 1,
+                    "name": "cave lizard"
+                },{
+                    "chance": 3,
+                    "name": "cave snake"
+                }
+            ]
+        },
+        "help": "Seek out prey on the ridgeside, initiating a combat."
     },
     "smash": {
         "type": "actButton",
