@@ -375,7 +375,11 @@ div.percentControl {
     flex-direction: row;
     margin-left: 3px;
     margin-right: 3px;
-    position: relative
+    position: relative;
+    border-color: gray;
+    border: 3px;
+    border-radius: 7px;
+    width: fit-content;
 }
 
 div.percentText {

@@ -7,7 +7,7 @@
         [ "male", "female" ]
     ],
     "attack announce": "A long tongue spikes out at you from what you'd mistaken for a simple rock, and drags you several yards closer before you manage to break free, digging your claws into the ridgeside. Undeterred, the grey-scaled predator moves to attack again!",
-    "hunt announce": "TBD",
+    "hunt announce": "Stalking the larger rocks around the ridge makes you feel a bit awkward, but you know the lizards here are well camoflaged, and it's easy to miss one. Finally, you spot one that seems about the right size and shape, maybe. You approach it, but it doesn't flinch, until you swipe a claw at it. It's quick motion puts it just out of range, but not too far to press the attack!",
     "max health": 50,
     "max stamina": 15,
     "max mana": 10,
@@ -198,7 +198,7 @@
                     "verb": "card",
                     "details": {
                         "text": "Absorbing the lingering memories of the fallen lizard's spirit, you learn something about how to fight with your horns. It's not the easiest kind of attack to land, but it's got some nice damage potential.",
-                        "fail": "You try to absorb the lizards's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+                        "fail": "You try to absorb the lizard's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
                         "type": "aggress",
                         "card": "Basic Horn Gore"
                     }

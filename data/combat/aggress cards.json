@@ -159,5 +159,23 @@
     "scaleattacks": 1,
     "scalestaminacost": 1,
     "staminacost": 1
+  },
+  "Basic Constrict": {
+    "display": "You wrap your body around your foe, squeezing them like a snake! The two of you struggle against one another for several seconds, wearing you both out.",
+    "cardlines": "Basic Constrict\n\nAccuracy: \u25cf\u25cf\u25cf\nDamage: \u25cf\u25d6\nAttacks: \u25cf\nStamina damage",
+    "help": "Constrict attack, costs 2 stamina:\nAccuracy: 15\nDamage: 1d4+5\nAttacks: 1\nDepeletes enemy stamina. Weak vs Deflect\nStacking bonus: Increase ataccuracy by 5, +1 stamina cost",
+    "accuracy": 15,
+    "damagedice": 1,
+    "damagedie": 4,
+    "damageplus": 5,
+    "damagetype": "bludgeoning",
+    "staminadamagedice": 1,
+    "staminadamagedie": 4,
+    "staminadamageplus": 0,
+    "attacks": 1,
+    "scaleaccuracy": 5,
+    "scalestaminacost": 1,
+    "staminacost": 2,
+    "surrenderbonus": 10
   }
 }
