@@ -316,7 +316,7 @@
                     "event": "lizard attack"
                 }
             ],
-            "actions": [],
+            "actions": [ "hunt3" ],
             "directionOverrides": {},
             "light": "#804040",
             "dark": "#004040"           
@@ -335,7 +335,7 @@
                     "event": "lizard attack"
                 }
             ],
-            "actions": [],
+            "actions": [ "hunt3" ],
             "directionOverrides": {},
             "light": "#804040",
             "dark": "#004040"           
