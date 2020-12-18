@@ -1,0 +1,216 @@
+{
+    "display": "cave snake",
+    "tags": [
+        "snake",
+        "living creature",
+        "animal",
+        [ "male", "female" ]
+    ],
+    "attack announce": "One of the rocky ridges along the cliff side rises up, coiling back to strike. It's a snake! You almost didn't notice it before it was too late, but now it's coming for you!",
+    "hunt announce": "A slight bit of movement catches your attention from the corner of your eye. Scales blending into the rock here, nearly as cool and barely moving. But there it is.. a ridge snake! Soon to be your prey.",
+    "max health": 40,
+    "max stamina": 15,
+    "max mana": 10,
+    "evasion": 10,
+    "reshuffle": 8,
+    "cardsets": [
+        {
+            "tell": "The snake rears back, coiled to strike!",
+            "cards": [
+                {
+                    "aggress display": "The snake lunges forward to bite you!",
+                    "accuracy": 15,
+                    "damagedice": 1,
+                    "damagedie": 6,
+                    "damageplus": 2,
+                    "damagetype": "piercing",
+                    "attacks": 1,
+                    "abjure display": "The snake deflects with its tail!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The snake lunges forward to bite you!",
+                    "accuracy": 15,
+                    "damagedice": 1,
+                    "damagedie": 6,
+                    "damageplus": 2,
+                    "damagetype": "piercing",
+                    "attacks": 1,
+                    "abjure display": "The snake deflects with its tail!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0,
+                    "staminacost": 1
+                },{
+                    "aggress display": "The snake smacks you with it's tail!",
+                    "accuracy": 5,
+                    "damagedice": 3,
+                    "damagedie": 6,
+                    "damageplus": 6,
+                    "damagetype": "bludgeoning",
+                    "attacks": 2,
+                    "abjure display": "The snake dives out of the way!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 1
+                }
+            ]
+        },
+        {
+            "tell": "The snake hisses deeply, coiling in on itself.",
+            "cards": [
+                {
+                    "aggress display": "The snake spits at you! Gross!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 4,
+                    "damageplus": 5,
+                    "damagetype": "poison",
+                    "attacks": 4,
+                    "abjure display": "The snake endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The snake spits at you! Gross!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 4,
+                    "damageplus": 5,
+                    "damagetype": "poison",
+                    "attacks": 4,
+                    "abjure display": "The snake deflects with its tail!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The snake spits a massive glob at you! Super gross!",
+                    "accuracy": 20,
+                    "damagedice": 2,
+                    "damagedie": 4,
+                    "damageplus": 5,
+                    "damagetype": "poison",
+                    "attacks": 1,
+                    "abjure display": "The snake endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                }
+            ]
+        },
+        {
+            "tell": "The snake slithers laterally quite fast, circling you.",
+            "cards": [
+                {
+                    "aggress display": "The snake lunges, trying to wrap itself around you and crush you!",
+                    "accuracy": 20,
+                    "damagedice": 2,
+                    "damagedie": 12,
+                    "damageplus": 0,
+                    "damagetype": "bludgeoning",
+                    "attacks": 1,
+                    "abjure display": "The snake dodges about!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 2
+                },
+                {
+                    "aggress display": "The snake lunges, trying to wrap itself around you and crush you!",
+                    "accuracy": 20,
+                    "damagedice": 2,
+                    "damagedie": 12,
+                    "damageplus": 0,
+                    "damagetype": "bludgeoning",
+                    "attacks": 1,
+                    "abjure display": "The snake dodges about!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 2
+                },
+                {
+                    "aggress display": "The snake smacks you with it's tail!",
+                    "accuracy": 5,
+                    "damagedice": 3,
+                    "damagedie": 6,
+                    "damageplus": 6,
+                    "damagetype": "bludgeoning",
+                    "attacks": 2,
+                    "abjure display": "The snake dodges about!",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 2
+                }
+            ]
+        }
+    ],
+    "acquirecards": {
+        "devour": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/body",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Devour\n\n+30 nutrition",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "eat",
+                    "details": {
+                        "text": "You devour the snake's body, chomping its head before sucking in the rest like a giant noodle. Nice!",
+                        "nutrition": 30
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/body"
+                    }
+                }
+            ],
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +30 nutrition."
+        },
+        "card": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/soul",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Card\n\nChance to gain:\nBasic Constrict",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "card",
+                    "details": {
+                        "text": "Absorbing the lingering memories of the fallen snake's spirit, you learn something about how to wrap yourself around an enemy and crush them. It's not the deadliest attack you've got, but it can help wear down an enemy and force them to surrender.",
+                        "fail": "You try to absorb the snake's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+                        "type": "aggress",
+                        "card": "Basic Constrict"
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/soul"
+                    }
+                }
+            ],
+            "help": "Consume your enemy's spirit to learn from it.\nChance to gain Basic Constrict based on how many copies you have.\nA less lethal attack that wears down the enemy struggling against it.\nStrong against dodge, weak against deflect."
+        }
+    }
+}

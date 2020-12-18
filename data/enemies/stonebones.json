@@ -12,6 +12,7 @@
     "max stamina": 99,
     "max mana": 1,
     "evasion": 7,
+    "surrenderbonusmulti": 0,
   "reshuffle": 5,
   "damageMultiplier": {
     "fire": 0.1

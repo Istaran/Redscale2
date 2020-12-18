@@ -300,8 +300,12 @@ let progress = async function (state) {
         return `${enemyDef.captureText || enemyDef.display + " collapsed from exhaustion, unable to fight back any longer!"}\n\nIt's time to apprehend! Pick a card...`; 
     }
 
-    if (state.enemy.health <= enemyDef["yield max health"]) {
-        let yieldChance = enemyDef["yield base chance"] + enemyDef["yield scale chance"] * (enemyDef["yield max health"] - state.enemy.health);
+    // surrender bonus adds some effective damage for one check
+    let surrenderbonus = state.enemy.surrenderbonus * (state.enemy.surrenderbonusmulti ? state.enemy.surrenderbonusmulti : 1);
+    state.enemy.surrenderbonus = 0;
+
+    if (state.enemy.health <= enemyDef["yield max health"] + surrenderbonus) {
+        let yieldChance = enemyDef["yield base chance"] + enemyDef["yield scale chance"] * (enemyDef["yield max health"] - state.enemy.health + surrenderbonus);
         if (Math.random() < yieldChance) {
             state.enemy.phasequeue = ["apprehend"];
             return `${enemyDef.surrenderText || enemyDef.display + " lost the will to fight, and surrendered unconditionally!"}\n\nIt's time to apprehend! Pick a card...`; 
@@ -361,9 +365,12 @@ let getStatusDisplay = async function (state) {
     let statusDisplay = {
         lines: [
             { "text": enemyDef.display },
-            { "text": healthText, "help": "Health.\nWhen their health drops to zero, they will die and you can harvest your reward from their corpse." },
-            { "text": staminaText, "help": "Stamina.\nWhen their stamina drops to zero, they will be forced to submit and you can choose between mercy and murder." },
-            { "text": manaText, "help": "Mana.\nNot all creatures know how to use mana, but all of them possess at least some." }
+            { "text": healthText, "help": "Health.\nWhen their health drops to zero, they will die and you can harvest your reward from their corpse." ,
+            isPercent: true, leftVal: health, rightVal: 10-health, leftColor: "#FF0000", rightColor: "#884444" },
+            { "text": staminaText, "help": "Stamina.\nWhen their stamina drops to zero, they will be forced to submit and you can choose between mercy and murder.",
+            isPercent: true, leftVal: stamina, rightVal: 10-stamina, leftColor: "#FFFF00", rightColor: "#888844"  },
+            { "text": manaText, "help": "Mana.\nNot all creatures know how to use mana, but all of them possess at least some.",
+            isPercent: true, leftVal: mana, rightVal: 10-mana, leftColor: "#FF00FF", rightColor: "#884488" }
         ]
     };
 

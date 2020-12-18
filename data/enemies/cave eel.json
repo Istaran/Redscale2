@@ -1,0 +1,162 @@
+{
+    "display": "cave eel",
+    "tags": [
+        "eel",
+        "living creature",
+        "animal",
+        "swimmer",
+        [ "male", "female" ]
+    ],
+    "attack announce": "A huge eel lunges at you from one of the crevices lining the cave! It's twice as long as you are, with a head a fair bit larger than your own! You manage to avoid getting snatched up immediately, but it's already swinging around for another attack!",
+    "hunt announce": "You lurk near one of the larger crevices, out of view from its occupant. There! It darts out to snag a nearby fish, and you charge for its exposed neck! It manages to dart forward out of your way, but now it's in the open, exposed! Press the attack!",
+    "max health": 25,
+    "max stamina": 10,
+    "max mana": 10,
+    "evasion": 20,
+    "reshuffle": 5,  
+    "damageMultiplier": {
+        "electric": 0.1
+      },
+    "cardsets": [
+        {
+            "tell": "The eel comes about, heading straight for you!",
+            "cards": [
+                {
+                    "aggress display": "The eel lunges forward to bite you!",
+                    "accuracy": 5,
+                    "damagedice": 3,
+                    "damagedie": 10,
+                    "damageplus": 0,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The eel endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The eel slips past you, swinging its tail at you!",
+                    "accuracy": 10,
+                    "damagedice": 3,
+                    "damagedie": 6,
+                    "damageplus": 6,
+                    "damagetype": "bludgeoning",
+                    "attacks": 1,
+                    "abjure display": "The eel endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The eel lunges forward to bite you!",
+                    "accuracy": 5,
+                    "damagedice": 3,
+                    "damagedie": 10,
+                    "damageplus": 0,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The eel swerves to avoid your attack!",
+                    "dodge": 7,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 1
+                }
+            ]
+        },
+        {
+            "tell": "Your scales start tingling! The eel's up to something.",
+            "cards": [
+                {
+                    "aggress display": "The eel glows brightly, energy arcing out from it into the water!",
+                    "aggress deflect display": "You dart back out of range just in time!",
+                    "accuracy": 20,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 3,
+                    "damagetype": "electric",
+                    "attacks": 1,
+                    "abjure display": "The eel endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The eel glows brightly, energy arcing out from it into the water!",
+                    "aggress deflect display": "You dart back out of range just in time!",
+                    "accuracy": 20,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 3,
+                    "damagetype": "electric",
+                    "attacks": 1,
+                    "abjure display": "The eel darts forward to evade!",
+                    "dodge": 7,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 1
+                }
+            ]
+        }
+    ],
+    "acquirecards": {
+        "devour": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/body",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Devour\n\n+40 nutrition",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "eat",
+                    "details": {
+                        "text": "You devour the eels's body, starting from the tip of the tail and working your way up to the head, like one giant noodle.",
+                        "nutrition": 40
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/body"
+                    }
+                }
+            ],
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +40 nutrition."
+        },
+        "card": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/soul",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Card\n\nChance to gain:\nBasic Dodge",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "card",
+                    "details": {
+                        "text": "Absorbing the lingering memories of the defeated eel's spirit, you hone your skills at dodging.",
+                        "fail": "You try to absorb the eel's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+                        "type": "abjure",
+                        "card": "Basic Dodge"
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/soul"
+                    }
+                }
+            ],
+            "help": "Consume your enemy's spirit to learn from it.\nChance to gain Basic Dodge based on how many copies you have.\nA bit more evasive evasion, helping you avoid harm."
+        }
+    }
+}

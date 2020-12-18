@@ -17,6 +17,7 @@ let getSpotDetails = async function(state, zoneName, x, y, z) {
     let spot = await spotStyle(state, zoneName, x, y, z);
     let zone = await cache.load(`./data/locations/${zoneName}.json`);
     let style = zone.styles[spot];
+    if (!style) console.error("Style not found for " + spot + " in zone " + zoneName + "! getSpotDetails fail.");
     return { text: style.preview, light: style.light || "white", dark: style.dark || "black" };
 }
 

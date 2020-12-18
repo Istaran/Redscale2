@@ -60,7 +60,9 @@ div.rightStatus {
 }
 
 div.statusRow {
-	width: 100%;
+    width: 100%;
+    margin-left: 3px;
+    margin-right: 3px;
 }
 
 div.controlTable {
@@ -262,7 +264,7 @@ input.requantify {
 }
 
 div.requantifierHeaderRow {
-    height: 50px;
+    height: 25px;
     display: flex;
     border-bottom-color: black;
     border-bottom-style: dashed;
@@ -274,17 +276,22 @@ div.quantity {
     width:125px;
     text-align:right;
 }
-div.requantifierColumnHeader {
-    width: 125px;
+
+div.requantifierLeftColumnHeader {
+    width: 500px;
+    text-align: left;
+}
+
+div.requantifierRightColumnHeader {
+    width: 500px;
     text-align: right;
 }
 
 div.requantifierHeaderSpacer {
-    width: 750px;
+    width: 250px;
     justify-content:center;
     display:flex;
 }
-
 
 div.reassigner {
     position: center;
@@ -310,9 +317,14 @@ div.reassignerRow {
     flex-direction: row;
 }
 
-div.reassignerColumnHeader {
+div.reassignerLeftColumnHeader {
     width: 425px;
     text-align: left;
+}
+
+div.reassignerRightColumnHeader {
+    width: 425px;
+    text-align: right;
 }
 
 div.reassignerHeaderSpacer {
@@ -356,4 +368,22 @@ div.recombinerHeaderSpacer {
     width: 100px;
     justify-content: center;
     display: flex;
+}
+
+div.percentControl {
+    display: flex;
+    flex-direction: row;
+    margin-left: 3px;
+    margin-right: 3px;
+    position: relative;
+    border-color: gray;
+    border: 3px;
+    border-radius: 7px;
+    width: fit-content;
+}
+
+div.percentText {
+    position: absolute;
+    justify-content: center;
+    color: black;
 }

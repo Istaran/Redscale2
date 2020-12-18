@@ -4,6 +4,7 @@ var helper;
 var gameDisplayer;
 var formData = {};
 var saveSlot = 0;
+var userid;
 
 function getStatus() {
     fetch('/act' + location.search, {
@@ -82,7 +83,9 @@ class ChatDisplayer extends React.Component {
 	};
 	
 	render() {
-		let chatDisplay = this.props.chatLog.map((text, index) => { return (<tr key={index}><td>{text}</td></tr>); });
+		let chatDisplay = this.props.chatLog.map((text, index) => { 
+             return (<tr key={index}><td style={this.props.markupLog[index]}>{text}</td></tr>); 
+            });
 		
 		return (
 				<div id='chatDiv' className='div-bottom'>
@@ -193,28 +196,40 @@ class Navigator extends React.Component {
         let compassDisabled = "silver";
         let upColor = (this.props.details.up) ? this.props.details.up.light || "white" : compassLight;
         let upColor2 = (this.props.details.up) ? this.props.details.up.dark || "skyblue" : compassDisabled;
+        let upOutline = (this.props.details.up) ? "black" : "darkgrey";
         let northColor = (this.props.details.north) ? this.props.details.north.light || "red" : compassDisabled;
         let northColor2 = (this.props.details.north) ? this.props.details.north.dark || "darkred" : compassDisabled;
+        let northOutline = (this.props.details.north) ? "black" : "darkgrey";
         let westColor = (this.props.details.west) ? this.props.details.west.light || compassLight : compassDisabled;
         let westColor2 = (this.props.details.west) ? this.props.details.west.dark || compassDark : compassDisabled;
+        let westOutline = (this.props.details.west) ? "black" : "darkgrey";
         let specialColor = (this.props.details.special) ? this.props.details.special.light || compassLight : backgroundColor;
         let specialColor2 = (this.props.details.special) ? this.props.details.special.dark || compassDark : backgroundColor;
+        let specialOutline = (this.props.details.special) ? "black" : "darkgrey";
         let eastColor = (this.props.details.east) ? this.props.details.east.light || compassLight : compassDisabled;
         let eastColor2 = (this.props.details.east) ? this.props.details.east.dark || compassDark : compassDisabled;
+        let eastOutline = (this.props.details.east) ? "black" : "darkgrey";
         let southColor = (this.props.details.south) ? this.props.details.south.light || compassLight : compassDisabled;
         let southColor2 = (this.props.details.south) ? this.props.details.south.dark || compassDark : compassDisabled;
+        let southOutline = (this.props.details.south) ? "black" : "darkgrey";
         let nwColor = (this.props.details.nw) ? this.props.details.nw.light || compassLight : compassDisabled;
         let nwColor2 = (this.props.details.nw) ? this.props.details.nw.dark || compassDark : compassDisabled;
+        let nwOutline = (this.props.details.nw) ? "black" : "darkgrey";
         let neColor = (this.props.details.ne) ? this.props.details.ne.light || compassLight : compassDisabled;
         let neColor2 = (this.props.details.ne) ? this.props.details.ne.dark || compassDark : compassDisabled;
+        let neOutline = (this.props.details.ne) ? "black" : "darkgrey";
         let swColor = (this.props.details.sw) ? this.props.details.sw.light || compassLight : compassDisabled;
         let swColor2 = (this.props.details.sw) ? this.props.details.sw.dark || compassDark : compassDisabled;
+        let swOutline = (this.props.details.sw) ? "black" : "darkgrey";
         let seColor = (this.props.details.se) ? this.props.details.se.light || compassLight : compassDisabled;
         let seColor2 = (this.props.details.se) ? this.props.details.se.dark || compassDark : compassDisabled;
+        let seOutline = (this.props.details.se) ? "black" : "darkgrey";
         let downColor = (this.props.details.down) ? this.props.details.down.light || "lime" : compassDisabled;
         let downColor2 = (this.props.details.down) ? this.props.details.down.dark || "peru" : compassDark;
+        let downOutline = (this.props.details.down) ? "black" : "darkgrey";
         let hereColor = (this.props.details.here) ? this.props.details.here.light || compassLight : compassDisabled;
         let hereColor2 = (this.props.details.here) ? this.props.details.here.dark || compassDark : compassDisabled;
+        let hereOutline = "darkgrey";
 
 
         let dirs = [{ header: 'Up', prop: 'up' },
@@ -268,9 +283,9 @@ class Navigator extends React.Component {
                     <stop offset="85%" stopColor={specialColor2} />
                 </linearGradient>
             </defs>
-            <polygon points="43,0 0,43 149,43 106,0" fill="url(#skyGradient)" onClick={(event) => this.navigate(event, 'up')} />
-            <polygon points="0,48 0,98 149,98, 149,48" fill="url(#hereGradient)" />
-            <polygon points="0,103 43,146 106,146, 149,103" fill="url(#groundGradient)" onClick={(event) => this.navigate(event, 'down')} />
+            <polygon points="43,0 0,43 149,43 106,0" stroke={upOutline} fill="url(#skyGradient)" onClick={(event) => this.navigate(event, 'up')} />
+            <polygon points="0,48 0,98 149,98, 149,48" stroke={hereOutline} fill="url(#hereGradient)" />
+            <polygon points="0,103 43,146 106,146, 149,103" stroke={downOutline}  fill="url(#groundGradient)" onClick={(event) => this.navigate(event, 'down')} />
             <circle cx='75' cy='73' r='50' fill={backgroundColor} stroke="black" strokeWidth="3" />
             <line x1="36.3" y1="50.5" x2="32" y2="48" stroke="black" strokeWidth="1" />
             <line x1="36.3" y1="95.5" x2="32" y2="98" stroke="black" strokeWidth="1" />
@@ -288,25 +303,25 @@ class Navigator extends React.Component {
             <line x1="63.4" y1="116.5" x2="62" y2="121" stroke="black" strokeWidth="1" />
             <line x1="86.6" y1="29.5" x2="88" y2="25" stroke="black" strokeWidth="1" />
             <line x1="86.6" y1="116.5" x2="88" y2="121" stroke="black" strokeWidth="1" />
-            <polygon points="40,38 65,63 75,53" fill={nwColor} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'nw')} />
-            <polygon points="40,38 55,73 65,63" fill={nwColor2} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'nw')} />
-            <polygon points="40,108 55,73 65,83" fill={swColor} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'sw')} />
-            <polygon points="40,108 65,83 75,93" fill={swColor2} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'sw')} />
-            <polygon points="110,38 85,63 75,53" fill={neColor} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'ne')} />
-            <polygon points="110,38 95,73 85,63" fill={neColor2} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'ne')} />
-            <polygon points="110,108 95,73 85,83" fill={seColor} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'se')} />
-            <polygon points="110,108 85,83 75,93" fill={seColor2} stroke="black" strokeWidth="1" onClick={(event) => this.navigate(event, 'se')} />
+            <polygon points="40,38 65,63 75,53" fill={nwColor} stroke={nwOutline} strokeWidth="1" onClick={(event) => this.navigate(event, 'nw')} />
+            <polygon points="40,38 55,73 65,63" fill={nwColor2} stroke={nwOutline} strokeWidth="1" onClick={(event) => this.navigate(event, 'nw')} />
+            <polygon points="40,108 55,73 65,83" fill={swColor} stroke={swOutline} strokeWidth="1" onClick={(event) => this.navigate(event, 'sw')} />
+            <polygon points="40,108 65,83 75,93" fill={swColor2} stroke={swOutline} strokeWidth="1" onClick={(event) => this.navigate(event, 'sw')} />
+            <polygon points="110,38 85,63 75,53" fill={neColor} stroke={neOutline} strokeWidth="1" onClick={(event) => this.navigate(event, 'ne')} />
+            <polygon points="110,38 95,73 85,63" fill={neColor2} stroke={neOutline} strokeWidth="1" onClick={(event) => this.navigate(event, 'ne')} />
+            <polygon points="110,108 95,73 85,83" fill={seColor} stroke={seOutline} strokeWidth="1" onClick={(event) => this.navigate(event, 'se')} />
+            <polygon points="110,108 85,83 75,93" fill={seColor2} stroke={seOutline} strokeWidth="1" onClick={(event) => this.navigate(event, 'se')} />
 
 
-            <polygon points="75,22 65,63 75,58" stroke="black" strokeWidth="1" fill={northColor} onClick={(event) => this.navigate(event, 'north')} />
-            <polygon points="75,22 75,58 85,63" stroke="black" strokeWidth="1" fill={northColor2} onClick={(event) => this.navigate(event, 'north')} />
-            <polygon points="25,73 65,63 60,73" stroke="black" strokeWidth="1" fill={westColor} onClick={(event) => this.navigate(event, 'west')} />
-            <polygon points="25,73 60,73 65,83" stroke="black" strokeWidth="1" fill={westColor2} onClick={(event) => this.navigate(event, 'west')}  />
+            <polygon points="75,22 65,63 75,58" stroke={northOutline} strokeWidth="1" fill={northColor} onClick={(event) => this.navigate(event, 'north')} />
+            <polygon points="75,22 75,58 85,63" stroke={northOutline} strokeWidth="1" fill={northColor2} onClick={(event) => this.navigate(event, 'north')} />
+            <polygon points="25,73 65,63 60,73" stroke={westOutline} strokeWidth="1" fill={westColor} onClick={(event) => this.navigate(event, 'west')} />
+            <polygon points="25,73 60,73 65,83" stroke={westOutline} strokeWidth="1" fill={westColor2} onClick={(event) => this.navigate(event, 'west')}  />
             <circle cx='75' cy='73' r='10' fill="url(#specialGradient)" onClick={(event) => this.navigate(event, 'special')} />
-            <polygon points="124,73 85,63 89,73" stroke="black" strokeWidth="1" fill={eastColor} onClick={(event) => this.navigate(event, 'east')} />
-            <polygon points="124,73 89,73 85,83" stroke="black" strokeWidth="1" fill={eastColor2} onClick={(event) => this.navigate(event, 'east')} />
-            <polygon points="75,122 65,83 75,87" stroke="black" strokeWidth="1" fill={southColor} onClick={(event) => this.navigate(event, 'south')}  />
-            <polygon points="75,122 75,87 85,83" stroke="black" strokeWidth="1" fill={southColor2} onClick={(event) => this.navigate(event, 'south')} />
+            <polygon points="124,73 85,63 89,73" stroke={eastOutline} strokeWidth="1" fill={eastColor} onClick={(event) => this.navigate(event, 'east')} />
+            <polygon points="124,73 89,73 85,83" stroke={eastOutline} strokeWidth="1" fill={eastColor2} onClick={(event) => this.navigate(event, 'east')} />
+            <polygon points="75,122 65,83 75,87" stroke={southOutline} strokeWidth="1" fill={southColor} onClick={(event) => this.navigate(event, 'south')}  />
+            <polygon points="75,122 75,87 85,83" stroke={southOutline} strokeWidth="1" fill={southColor2} onClick={(event) => this.navigate(event, 'south')} />
 
 
 		</svg>;
@@ -340,6 +355,9 @@ class LeftStatus extends React.Component {
     render() {
         if (!this.props.source || !this.props.source.lines) return <div display='none'></div>;
 		var statuslines = this.props.source.lines.map((line, lineIdx) => {
+            if (line.isPercent) {
+                return <PercentBar  key={lineIdx} leftVal={line.leftVal} rightVal={line.rightVal} leftColor={line.leftColor} rightColor={line.rightColor} totalWidth='200' height='18px' text={line.text}></PercentBar>
+            }
 			return <div key={lineIdx} className='statusRow' onMouseOver={(event)=>helper.setState({help:line.help})} onMouseOut={(event)=>helper.setState({help:null})}>{line.text}</div>
 		});
 		return <div className='leftStatus'>{statuslines}</div>;
@@ -355,6 +373,9 @@ class RightStatus extends React.Component {
     render() {
         if (!this.props.source || !this.props.source.lines) return <div display='none'></div>;
         var statuslines = this.props.source.lines.map((line, lineIdx) => {
+            if (line.isPercent) {
+                return <PercentBar  key={lineIdx} leftVal={line.leftVal} rightVal={line.rightVal} leftColor={line.leftColor} rightColor={line.rightColor} totalWidth='200' height='18px' text={line.text}></PercentBar>
+            }
             return <div key={lineIdx} className='statusRow' onMouseOver={(event) => helper.setState({ help: line.help })} onMouseOut={(event) => helper.setState({ help: null })}>{line.text}</div>
         });
         return <div className='rightStatus'>{statuslines}</div>;
@@ -407,6 +428,7 @@ class Requantifier extends React.Component {
         // track updated numbers as state.
         var leftCounts = Object.assign({}, props.leftCounts);
         var rightCounts = Object.assign({}, props.rightCounts);
+        var leftChecks = props.leftChecks ? Object.assign({}, props.leftChecks) : undefined;
         var thing;
         for (thing in props.displays) {
             leftCounts[thing] = leftCounts[thing] || 0;
@@ -415,7 +437,8 @@ class Requantifier extends React.Component {
 
         this.state = {
             leftCounts: leftCounts,
-            rightCounts: rightCounts
+            rightCounts: rightCounts,
+            leftChecks: leftChecks
         }
     }
 
@@ -442,6 +465,10 @@ class Requantifier extends React.Component {
                     if (this.sum(this.state.rightCounts) < val)
                         return false;
                     break;
+                case "left check count":
+                    if (this.sum(this.state.leftChecks) != val)
+                    return false;
+                    break;
             }
         }
 
@@ -455,11 +482,28 @@ class Requantifier extends React.Component {
             deltaRight = -this.state.rightCounts[thing];
         var newState = {
             leftCounts: Object.assign({}, this.state.leftCounts),
-            rightCounts: Object.assign({}, this.state.rightCounts)
+            rightCounts: Object.assign({}, this.state.rightCounts),
+            leftChecks: this.state.leftChecks ? Object.assign({}, this.state.leftChecks) : undefined
         };
         newState.leftCounts[thing] = this.state.leftCounts[thing] - deltaRight;
         newState.rightCounts[thing] = this.state.rightCounts[thing] + deltaRight;
+        if(newState.leftChecks && newState.leftChecks[thing] && !newState.leftCounts[thing]) {
+            newState.leftChecks[thing] = undefined;
+        }
+
         this.setState(newState);
+    }
+
+    setCheck(thing) {
+        if (this.state.leftCounts[thing]) {
+            var newState = {
+                leftCounts: Object.assign({}, this.state.leftCounts),
+                rightCounts: Object.assign({}, this.state.rightCounts),
+                leftChecks: Object.assign({}, this.state.leftChecks)
+            };
+            newState.leftChecks[thing] = (newState.leftChecks[thing] || !newState.leftCounts[thing] ?undefined : 1);
+            this.setState(newState);
+        }
     }
 
     done() {
@@ -469,7 +513,7 @@ class Requantifier extends React.Component {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify({ 'body': { 'verb': 'requantify', 'slot': saveSlot, 'id': self.props.id, 'data': { 'left': this.state.leftCounts, 'right': this.state.rightCounts }} })
+            body: JSON.stringify({ 'body': { 'verb': 'requantify', 'slot': saveSlot, 'id': self.props.id, 'data': { 'left': this.state.leftCounts, 'right': this.state.rightCounts, 'leftChecks': this.state.leftChecks }} })
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
@@ -482,7 +526,12 @@ class Requantifier extends React.Component {
     render() {
         var rows = [];
         for (var thing in this.props.displays) {
+            let checkbox = null;
+            if (this.state.leftChecks) {
+                checkbox = <input className="requantify" type="checkbox" checked={this.state.leftChecks[thing]} onClick={(event) => this.setCheck(event.target.getAttribute("thing"))} key={thing + " lc"} thing={thing} />;
+            }
             var row = <div className="requantifierRow" key={thing + " row"}><div className="quantity" key={thing + " left"}>{this.state.leftCounts[thing]}</div>
+                {checkbox}
                 <input className="requantify" type="button" value={this.state.rightCounts[thing] > 100 ? "<<100" : "<< all"} onClick={(event) => this.change(event.target.getAttribute("thing"), -100)} key={thing + " -100"} thing={thing} />
                 <input className="requantify" type="button" value="<< 10" onClick={(event) => this.change(event.target.getAttribute("thing"), -10)} key={thing + " -10"} thing={thing} />
                 <input className="requantify" type="button" value="<< 1" onClick={(event) => this.change(event.target.getAttribute("thing"), -1)} key={thing + " -1"} thing={thing} />
@@ -493,7 +542,7 @@ class Requantifier extends React.Component {
                 < div className="quantity" key={thing + " right"}>{this.state.rightCounts[thing]}</div></div>;
             rows.push(row);
         }
-        return <div className="screencover"><div className="requantifier"><div className="requantifierHeaderRow"><div className="requantifierColumnHeader">{this.props.leftHeader}</div><div className="requantifierHeaderSpacer"><input type='button' disabled={!this.checkrules()} onClick={() => this.done()} value="Done" /></div><div className="requantifierColumnHeader">{this.props.rightHeader}</div></div>{rows}</div></div>;
+        return <div className="screencover"><div className="requantifier"><div className="requantifierHeaderRow"><div className="requantifierLeftColumnHeader">{this.props.leftHeader}</div><div className="requantifierHeaderSpacer"><input type='button' disabled={!this.checkrules()} onClick={() => this.done()} value="Done" /></div><div className="requantifierRightColumnHeader">{this.props.rightHeader}</div></div>{rows}</div></div>;
     }
 }
 
@@ -568,7 +617,7 @@ class Reassigner extends React.Component {
         return <div className="screencover">
             <div className="reassigner">
                 <div className="reassignerColumn">
-                    <div className="reassignerColumnHeader">{self.props.leftHeader}</div>
+                    <div className="reassignerLeftColumnHeader">{self.props.leftHeader}</div>
                     {leftRows}
                 </div>
                 <div className="reassignerSpacer">
@@ -577,7 +626,7 @@ class Reassigner extends React.Component {
                     </div>
                 </div>
                 <div className="reassignerColumn">
-                    <div className="reassignerColumnHeader">{self.props.rightHeader}</div>
+                    <div className="reassignerRightColumnHeader">{self.props.rightHeader}</div>
                     {rightRows}
                 </div>
             </div>
@@ -693,36 +742,76 @@ class Recombiner extends React.Component {
         </div>;
     }
 }
+
+class PercentBar extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {        
+        let self = this;
+        let left = Math.max(self.props.leftVal, 0);
+        let right = Math.max(self.props.rightVal, 0);
+        let multi = self.props.totalWidth / (left + right); 
+        let leftWidth = multi * left;
+        let rightWidth = multi * right;
+
+        return (<div className="percentControl">
+            <div className="percentLeft" style={{width: leftWidth,  height: self.props.height, backgroundColor: self.props.leftColor}}>
+            </div>
+            <div className="percentRight" style={{width: rightWidth,  height: self.props.height, backgroundColor: self.props.rightColor}}>
+            </div>
+            <div className="percentText" style={{width: self.props.totalWidth + 'px', height: self.props.height, top: 0, left: 0}}>{self.props.text}</div>
+        </div>);
+    }
+}
         
 class GameDisplayer extends React.Component {
 	constructor(props) {
         super(props);
         gameDisplayer = this;
-		var log = [];
-        for (var i = 0; i < 100; i++) { log.push(''); }; // Default chat log to empty
+        var log = [];
+        var mLog = [];
+        for (var i = 0; i < 100; i++) { log.push(''); mLog.push({})}; // Default chat log to empty
 		this.state = {
-		  chatLog: log,
+          chatLog: log,
+          markupLog: mLog,
 		  gameState: null,
 		};
 	}
 
     stringFromMessageData(data) {
-        var datestring = data.timestamp ? new Date(data.timestamp).toLocaleString() + ": " : "Unknown time & date: ";
+        var datestring = data.timestamp ? new Date(data.timestamp).toLocaleString() + ": " : "";
         var message = datestring + (data.username ? (data.username + '> ' + data.message) : data.message);
         return message;
     }
 
+    markupFromMessageData(data) {
+        var markup = {};
+        //color
+        if (data.type == 'system') {
+            markup.color = '#0088FF';
+        } else if (data.type == 'self' || (userid && data.userid == userid)) {
+            markup.color = '#FF4400';
+        }
+        return markup;
+    }
+
   	pushTextToChatLog = function(data) {
 	  var newLog = this.state.chatLog.slice();
-            newLog.shift();
-            newLog.push(this.stringFromMessageData(data));
-	  this.setState({chatLog: newLog});
+        newLog.shift();
+        newLog.push(this.stringFromMessageData(data));
+      var newMLog = this.state.markupLog.slice();
+      newMLog.shift();
+      newMLog.push(this.markupFromMessageData(data));
+      this.setState({chatLog: newLog, markupLog: newMLog});
 	};
 	
 	render() {
 		let self = this;
         formData = {}; // Caution: if this causes unexpected rerenderers I might have issues with setting this here.
         if (this.state.gameState) {
+            if (!userid && this.state.gameState.id) userid = this.state.gameState.id;
             let controlTable = this.state.gameState.controls.map((column, colIndex) => {
                 let controlColumn = [];
                 if (column) {
@@ -741,7 +830,7 @@ class GameDisplayer extends React.Component {
                             case 'reconnector':
                                 return <Reconnector />;
                             case 'requantifier':
-                                return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
+                                return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} leftChecks={control.leftChecks} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
                             case 'reassigner':
                                 return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
                             case 'recombiner':
@@ -758,7 +847,7 @@ class GameDisplayer extends React.Component {
                 return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
             });
 
-            return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
+            return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/></div>);
         } else if (this.state.saveList) {
             // initialize chat
             if (!this.chatInit) {
@@ -780,15 +869,18 @@ class GameDisplayer extends React.Component {
                         channel.bind('chat message', self.pushTextToChatLog.bind(self));
 
                         var newLog = self.state.chatLog.slice(1);
+                        var newMLog = self.state.markupLog.slice(1);
                         chatlog.forEach(function (data) {
                             if (data) {
                                 newLog.shift();
                                 newLog.push(self.stringFromMessageData(data));
+                                newMLog.shift();
+                                newMLog.push(self.markupFromMessageData(data));
                             }
                         });
-                        self.setState({ chatLog: newLog });
+                        self.setState({ chatLog: newLog, markupLog: newMLog });
                     } else {
-                        self.setState({ chatLog: ["Local server is not configured for live chat."]})
+                        self.setState({ chatLog: ["Local server is not configured for live chat."], markupLog: [{}]})
                     }
                 });
             }
@@ -800,7 +892,7 @@ class GameDisplayer extends React.Component {
             });
             return <div className='saveList'>{saveTable}<Loader slot={newSlot} key={newSlot} text='Start a new game.' /></div>;
         } else {		
-		    return (<div><div>Welcome, {name}. Please wait while we load your game state.</div><ChatDisplayer chatLog={this.state.chatLog} /></div>);
+		    return (<div><div>Welcome, {name}. Please wait while we load your game state.</div><ChatDisplayer chatLog={this.state.chatLog}  markupLog={this.state.markupLog}/></div>);
 		}
 	}
 }

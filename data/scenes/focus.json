@@ -133,6 +133,18 @@
                         "type": "requantifier"
                     },
                     "help": "Select how many copies of each aggress card to actively use in your combat deck.\nNOTE: if you leave out any copies of a card, you'll automatically leave out new copies you acquire."
+                },
+                {
+                    "type": "actButton",
+                    "display": "Focus: Abjure",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "",
+                        "name": "focus",
+                        "sub": "focusAbjure",
+                        "type": "requantifier"
+                    },
+                    "help": "Select how many copies of each abjure card to actively use in your combat deck.\nNOTE: if you leave out any copies of a card, you'll automatically leave out new copies you acquire."
                 }
             ]
         ]
@@ -145,6 +157,8 @@
                     "details": {
                         "leftDataContext": "party",
                         "leftPath": "leader/aggressCards",
+                        "leftCheckContext": "party",
+                        "leftCheckPath": "leader/aggressDefaultHand",
                         "type": "aggress",
                         "rightDataContext": "party",
                         "rightPath": "leader/aggressSideboard",
@@ -158,10 +172,44 @@
                             }
                         }
                     },
-                    "leftHeader": "Active Deck (minimum 15)",
+                    "leftHeader": "Active Deck (minimum 15, check 3 for starting hand)",
                     "rightHeader": "Sideboard",
                     "rules": {
-                        "left minimum count": 15
+                        "left minimum count": 15,
+                        "left check count": 3
+                    }
+                }
+            ]
+        ]
+    },
+    "focusAbjure": {
+        "controls": [
+            [
+                {
+                    "type": "requantifier",
+                    "details": {
+                        "leftDataContext": "party",
+                        "leftPath": "leader/abjureCards",
+                        "leftCheckContext": "party",
+                        "leftCheckPath": "leader/abjureDefaultHand",
+                        "type": "abjure",
+                        "rightDataContext": "party",
+                        "rightPath": "leader/abjureSideboard",
+                        "then": {
+                            "verb": "setscene",
+                            "details": {
+                                "text": "You focused on how best to channel your sense of self-preservation to survive your adversaries.",
+                                "name": "focus",
+                                "sub": "start",
+                                "type": "menu"
+                            }
+                        }
+                    },
+                    "leftHeader": "Active Deck (minimum 15, check 3 for starting hand)",
+                    "rightHeader": "Sideboard",
+                    "rules": {
+                        "left minimum count": 15,
+                        "left check count": 3
                     }
                 }
             ]
