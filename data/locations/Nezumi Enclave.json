@@ -56,7 +56,7 @@
     },
     "TiledPath": {
       "title": "Nezumi Enclave - tiled path",
-      "description": "Regular and conspiculously clean tiles, alternating black and white, line the path here. The walls are rougher, a mix of nature, old carved walls, and the occasional artistic flair. Skeletal rats, assorted flowers, and geometric shapes line are carved into the wall without rhyme or reason.",
+      "description": "Regular and conspicuously clean tiles, alternating black and white, line the path here. The walls are rougher, a mix of nature, old carved walls, and the occasional artistic flair. Skeletal rats, assorted flowers, and geometric shapes line are carved into the wall without rhyme or reason.",
       "preview": "The black and white tiles continue smoothly between artistically carved walls.",
       "events": [
         {
@@ -157,7 +157,7 @@
     "WestGuard": {
       "title": "Nezumi Enclave - Guard Post",
       "description": "The tunnel here is blocked by a grid of metal bars. There's no hinge, and a bit of looking shows it's meant to pull up into the ceiling. Nezumi guards, armored with layers of bone and holding swords made of the same, watch your approach nervously. As you get close, one shouts at you \"Halt! What business do you have in the Enclave of Bone?\"",
-      "preview": "A portculus bars the way ahead, with a pair of armored ratfolk standing guard before it. They're watching you warily, even from the distance, hands on the hilts of their weapons.",
+      "preview": "A portcullis bars the way ahead, with a pair of armored ratfolk standing guard before it. They're watching you warily, even from the distance, hands on the hilts of their weapons.",
       "events": [
         {
           "chance": 1,
@@ -172,8 +172,8 @@
     },
     "EastGuard": {
       "title": "Nezumi Enclave - Guard Post",
-      "description": "The road ends in a closed portculus, with a pair of guards watching bored. They straighten up as you approach, hands on hilts but not drawing their weapons. \"Road's closed, dragon,\" one of them states.",
-      "preview": "A portculus bars the way ahead, with a pair of armored ratfolk standing guard before it. They're not paying much attention, mostly just chatting with each other.",
+      "description": "The road ends in a closed li, with a pair of guards watching bored. They straighten up as you approach, hands on hilts but not drawing their weapons. \"Road's closed, dragon,\" one of them states.",
+      "preview": "A portcullis bars the way ahead, with a pair of armored ratfolk standing guard before it. They're not paying much attention, mostly just chatting with each other.",
       "events": [
         {
           "chance": 1,
