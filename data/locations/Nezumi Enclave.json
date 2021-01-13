@@ -930,12 +930,32 @@
     },
     "RatNestNS": {
       "title": "Nezumi Enclave - Random home",
-      "description": "Placeholder text - This location still needs to be described.",
-      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "description": "You push the entry sheet aside with your nose and make your way into one of the homes lining the side street, looking around at the squalor the poorer ratfolk are forced to live in.",
+      "preview": "The streets here are lined with entryways blocked off by simple silk sheets. Occasionally one of the ratfolk enter or exit, and various sounds and smells of life emanate from some of them.",
       "events": [
         {
-          "chance": 1,
-          "event": null
+          "chance": 10,
+          "event": "EmptyHouse"
+        },
+        {
+          "chance": 5,
+          "event": "FemalePoorHouse"
+        },
+        {
+          "chance": 10,
+          "event": "MalePoorHouse"
+        },
+        {
+          "chance": 10,
+          "event": "CouplePoorHouse"
+        },
+        {
+          "chance": 5,
+          "event": "FamilyPoorHouse"
+        },
+        {
+          "chance": 5,
+          "event": "SingleMotherPoorHouse"
         }
       ],
       "directionOverrides": {
@@ -952,17 +972,38 @@
           "disabled": true
         }
       },
+      "actions": [ "RandomHouseNS" ],
       "light": "#7F5217",
       "dark": "#7e3817"
     },
     "RatNestEW": {
       "title": "Nezumi Enclave - Random home",
-      "description": "Placeholder text - This location still needs to be described.",
-      "preview": "An undescribed location lies that way, waiting for Istaran to flesh it out. He really shouldn't have checked it in this way.",
+      "description": "You push the entry sheet aside with your nose and make your way into one of the homes lining the side street, looking around at the squalor the poorer ratfolk are forced to live in.",
+      "preview": "The streets here are lined with entryways blocked off by simple silk sheets. Occasionally one of the ratfolk enter or exit, and various sounds and smells of life emanate from some of them.",
       "events": [
         {
-          "chance": 1,
-          "event": null
+          "chance": 5,
+          "event": "EmptyHouse"
+        },
+        {
+          "chance": 10,
+          "event": "FemalePoorHouse"
+        },
+        {
+          "chance": 5,
+          "event": "MalePoorHouse"
+        },
+        {
+          "chance": 5,
+          "event": "CouplePoorHouse"
+        },
+        {
+          "chance": 10,
+          "event": "FamilyPoorHouse"
+        },
+        {
+          "chance": 10,
+          "event": "SingleMotherPoorHouse"
         }
       ],
       "directionOverrides": {
@@ -979,6 +1020,7 @@
           "disabled": true
         }
       },
+      "actions": [ "RandomHouseEW" ],
       "light": "#7F5217",
       "dark": "#7e3817"
     },
@@ -1636,6 +1678,57 @@
       "details": {
         "text": "The room has a heavy, lingering ratty smell to it, but there's no one here, neither a Nezumi nor a rat to be found. You don't spot anything of interest here, and get bored."
       }
+    },
+    "EmptyHouse": {
+      "verb": "flavor",
+      "details": {
+        "text": "This home is unoccupied at the moment, and nothing in here is really worth taking. A straw bed covered by a few thicker rags, a few other rags left out to dry, some poor quality cooking implements with no food to cook, and old bones in a corner chewed clean and sucked dry of marrow."
+      }
+    },
+    "FemalePoorHouse": {
+      "verb": "FemalePoorHouse",
+      "details": {
+        "text": "TODO: FemalePoorHouse scene start",
+        "name": "nezumi poor house",
+        "sub": "FemaleStart",
+        "type": "menu"
+      }
+    },
+    "MalePoorHouse": {
+      "verb": "MalePoorHouse",
+      "details": {
+        "text": "TODO: MalePoorHouse scene start",
+        "name": "nezumi poor house",
+        "sub": "MaleStart",
+        "type": "menu"
+      }
+    },
+    "CouplePoorHouse": {
+      "verb": "CouplePoorHouse",
+      "details": {
+        "text": "TODO: CouplePoorHouse scene start",
+        "name": "nezumi poor house",
+        "sub": "CoupleStart",
+        "type": "menu"
+      }
+    },
+    "FamilyPoorHouse": {
+      "verb": "FamilyPoorHouse",
+      "details": {
+        "text": "TODO: FamilyPoorHouse scene start",
+        "name": "nezumi poor house",
+        "sub": "FamilyStart",
+        "type": "menu"
+      } 
+    },
+    "SingleMotherPoorHouse": {
+      "verb": "SingleMotherPoorHouse",
+      "details": {
+        "text": "TODO: SingleMotherPoorHouse scene start",
+        "name": "nezumi poor house",
+        "sub": "SingleMotherStart",
+        "type": "menu"
+      }
     }
   },
   "actions": {
@@ -1763,6 +1856,120 @@
           "verb": "flavor",
           "details": {
             "text": "\"You don't accept copper coins here?\" you wonder.\n\n\"That's Kobold currency,\" she replies. \"We don't really use that for anything except trophies.\"\n\n\"And I imagine they don't use dragonbone for much,\" you muse.\n\n\"I guess not,\" she shrugs. \"Do they eat copper?\""
+          }
+        }
+      ]
+    },
+    "RandomHouseNS": {
+      "type": "actButton",
+      "display": "Check another house",
+      "verb": "random",
+      "details": [        
+        {
+          "chance": 5,
+          "verb": "setscene",
+          "details": {
+            "text": "TODO: FemalePoorHouse scene start",
+            "name": "nezumi poor house",
+            "sub": "FemaleStart",
+            "type": "menu"
+          }
+        },
+        {
+          "chance": 20,
+          "verb": "setscene",
+          "details": {
+            "text": "TODO: MalePoorHouse scene start",
+            "name": "nezumi poor house",
+            "sub": "MaleStart",
+            "type": "menu"
+          }
+        },
+        {
+          "chance": 10,
+          "verb": "setscene",
+          "details": {
+            "text": "TODO: CouplePoorHouse scene start",
+            "name": "nezumi poor house",
+            "sub": "CoupleStart",
+            "type": "menu"
+          }
+        },
+        {
+          "chance": 5,
+          "verb": "setscene",
+          "details": {
+            "text": "TODO: FamilyPoorHouse scene start",
+            "name": "nezumi poor house",
+            "sub": "FamilyStart",
+            "type": "menu"
+          } 
+        },
+        {
+          "chance": 5,
+          "verb": "setscene",
+          "details": {
+            "text": "TODO: SingleMotherPoorHouse scene start",
+            "name": "nezumi poor house",
+            "sub": "SingleMotherStart",
+            "type": "menu"
+          }
+        }
+      ]
+    },
+    "RandomHouseEW": {
+      "type": "actButton",
+      "display": "Check another house",
+      "verb": "random",
+      "details": [        
+        {
+          "chance": 15,
+          "verb": "setscene",
+          "details": {
+            "text": "TODO: FemalePoorHouse scene start",
+            "name": "nezumi poor house",
+            "sub": "FemaleStart",
+            "type": "menu"
+          }
+        },
+        {
+          "chance": 5,
+          "verb": "setscene",
+          "details": {
+            "text": "TODO: MalePoorHouse scene start",
+            "name": "nezumi poor house",
+            "sub": "MaleStart",
+            "type": "menu"
+          }
+        },
+        {
+          "chance": 5,
+          "verb": "setscene",
+          "details": {
+            "text": "TODO: CouplePoorHouse scene start",
+            "name": "nezumi poor house",
+            "sub": "CoupleStart",
+            "type": "menu"
+          }
+        },
+        {
+          "chance": 10,
+          "verb": "setscene",
+          "details": {
+            "text": "TODO: FamilyPoorHouse scene start",
+            "name": "nezumi poor house",
+            "sub": "FamilyStart",
+            "type": "menu"
+          } 
+        },
+        {
+          "chance": 10,
+          "verb": "setscene",
+          "details": {
+            "text": "TODO: SingleMotherPoorHouse scene start",
+            "name": "nezumi poor house",
+            "sub": "SingleMotherStart",
+            "type": "menu"
           }
         }
       ]
