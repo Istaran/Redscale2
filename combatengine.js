@@ -94,7 +94,13 @@ let getControls = async function (state) {
         }
     }
 
-
+    controls.forEach(async (cards) => {
+        cards.forEach(async (card) => {
+            console.log("Scrubbing " + card.display);
+            card.display = await gameengine.scrubText(state, card.display, state.enemy.tags, state.enemy.scrubbers);
+            console.log("Scrubbed to " + card.display);
+        });
+    });
 
     return controls;		
 }

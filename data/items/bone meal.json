@@ -1,0 +1,11 @@
+{
+  "display": "bone meal",
+  "cardtext": "Bone Meal\n\nGround bones mixed\ninto a bland paste.\n+15 Nutrition",
+  "descriptionSingular": "A small bowl of ground bones, mixed into a bland off-white paste.",
+  "descriptionPlural": "Some small bowls of ground bones, mixed into a bland off-white paste",
+  "hands": 0.01,
+  "weight": 0.02,
+  "use": {
+    "nutrition": 15
+  }
+}

@@ -1,0 +1,253 @@
+{
+    "FemaleStart": {
+        "controls": [
+            [
+                {
+                    "type": "actButton",
+                    "display": "Attack",
+                    "verb": "chain",
+                    "details": [
+                        {
+                            "verb": "eat",
+                            "details": {
+                                "text": "You launch a surprise attack on the woman, killing her instantly and finding yourself with a modestly satisfying snack to show for it. There's not much meat there, and even less fat on her body but it's something.",
+                                "nutrition": 10
+                            }
+                        },
+                        {
+                            "verb": "setscene",
+                            "details": {
+                                "clear": true
+                            }
+                        }
+                    ],
+                    "help": "Assault the nezumi woman!"
+                },
+                {
+                    "type": "actButton",
+                    "display": "Question",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "You decide to just ask some questions peacefully of the terrified woman",
+                        "sub": "question",
+                        "name": "nezumi poor house"
+                    }
+                },
+                {
+                    "type": "actButton",
+                    "display": "Leave",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "There's nothing here worth your while, so you turn tail and stroll right back out.",
+                        "clear": true
+                    },
+                    "help": "Take your leave."
+                }
+            ]
+        ]
+    },
+    "MaleStart": {
+        "controls": [
+            [
+                {
+                    "type": "actButton",
+                    "display": "Attack",
+                    "verb": "chain",
+                    "details": [
+                        {
+                            "verb": "eat",
+                            "details": {
+                                "text": "You launch a surprise attack on the man, killing him instantly and finding yourself with a modestly satisfying snack to show for it. He's tough and gamey and not at all satisfying, but waste not want not.",
+                                "nutrition": 10
+                            }
+                        },
+                        {
+                            "verb": "setscene",
+                            "details": {
+                                "clear": true
+                            }
+                        }
+                    ],
+                    "help": "Assault the nezumi man!"
+                },
+                {
+                    "type": "actButton",
+                    "display": "Question",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "You decide to just ask some questions peacefully of the depressed looking man",
+                        "sub": "question",
+                        "name": "nezumi poor house"
+                    }
+                },
+                {
+                    "type": "actButton",
+                    "display": "Leave",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "There's nothing here worth your while, so you turn tail and stroll right back out.",
+                        "clear": true
+                    },
+                    "help": "Take your leave."
+                }
+            ]
+        ]
+    },
+    "CoupleStart": {
+        "controls": [
+            [
+                {
+                    "type": "actButton",
+                    "display": "Attack",
+                    "verb": "chain",
+                    "details": [
+                        {
+                            "verb": "eat",
+                            "details": {
+                                "text": "You launch a surprise attack on the man, killing him instantly. The woman darts out the door behind you while you do, leaving you with only a single corpse to snack on. Oh well, there's plenty more in the city.",
+                                "nutrition": 10
+                            }
+                        },
+                        {
+                            "verb": "setscene",
+                            "details": {
+                                "clear": true
+                            }
+                        }
+                    ],
+                    "help": "Assault the nezumi couple!"
+                },
+                {
+                    "type": "actButton",
+                    "display": "Question",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "You decide to just ask some questions peacefully of the terrified couple.",
+                        "sub": "question",
+                        "name": "nezumi poor house"
+                    }
+                },
+                {
+                    "type": "actButton",
+                    "display": "Leave",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "There's nothing here worth your while, so you turn tail and stroll right back out.",
+                        "clear": true
+                    },
+                    "help": "Take your leave."
+                }
+            ]
+        ]
+    },
+    "FamilyStart": {
+        "controls": [
+            [
+                {
+                    "type": "actButton",
+                    "display": "Attack",
+                    "verb": "chain",
+                    "details": [
+                        {
+                            "verb": "eat",
+                            "details": {
+                                "text": "TODO: describe the massacre or maybe code this differently?",
+                                "nutrition": 10
+                            }
+                        },
+                        {
+                            "verb": "setscene",
+                            "details": {
+                                "clear": true
+                            }
+                        }
+                    ],
+                    "help": "Assault the nezumi family!"
+                },
+                {
+                    "type": "actButton",
+                    "display": "Question",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "You decide to just ask some questions peacefully of the terrified nezumi",
+                        "sub": "question",
+                        "name": "nezumi poor house"
+                    }
+                },
+                {
+                    "type": "actButton",
+                    "display": "Leave",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "There's nothing here worth your while, so you turn tail and stroll right back out.",
+                        "clear": true
+                    },
+                    "help": "Take your leave."
+                }
+            ]
+        ]
+    },
+    "SingleMotherStart": {
+        "controls": [
+            [
+                {
+                    "type": "actButton",
+                    "display": "Attack",
+                    "verb": "chain",
+                    "details": [
+                        {
+                            "verb": "eat",
+                            "details": {
+                                "text": "You launch a surprise attack on the woman, killing her instantly and finding yourself with a modestly satisfying snack to show for it. There's not much meat there, and even less fat on her body but it's something.",
+                                "nutrition": 10
+                            }
+                        },
+                        {
+                            "verb": "setscene",
+                            "details": {
+                                "clear": true
+                            }
+                        }
+                    ],
+                    "help": "Assault the nezumi woman!"
+                },
+                {
+                    "type": "actButton",
+                    "display": "Question",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "You decide to just ask some questions peacefully of the terrified woman",
+                        "sub": "question",
+                        "name": "nezumi poor house"
+                    }
+                },
+                {
+                    "type": "actButton",
+                    "display": "Leave",
+                    "verb": "setscene",
+                    "details": {
+                        "text": "There's nothing here worth your while, so you turn tail and stroll right back out.",
+                        "clear": true
+                    },
+                    "help": "Take your leave."
+                }
+            ]
+        ]
+    },
+     "question": {
+        "controls": [
+            [                
+                {
+                    "type": "actButton",
+                    "display": "Leave",
+                    "verb": "setscene",
+                    "details": {
+                        "clear": true,
+                        "text": "You bid farewell to the nezumi, and head back out of the home."
+                    },
+                    "help": "Take your leave."
+                }
+            ]
+        ]
+    }
+}

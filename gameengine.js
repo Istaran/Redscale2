@@ -395,10 +395,13 @@ let act = async function (profile, action, query) {
 // Choices is an array. Each element is an object with a chance (number), and possibly an if (condition). 
 let randomChoice = async function (state, choices) {
     let choiceList = choices ? choices.slice() : [];
+    let chanceList = [];
     let maxChance = 0, i = 0;
     for (; i < choiceList.length; i++) {
         if (await conditionMet(state, choiceList[i].if)) {
-            maxChance += choiceList[i].chance;
+            let chance = await calculate(state, choiceList[i].chance);
+            chanceList.push(chance);
+            maxChance += chance;
         } else {
             choiceList.splice(i, 1);
             i--; // to counter the default i++.
@@ -407,7 +410,7 @@ let randomChoice = async function (state, choices) {
     let roll = Math.random() * maxChance;
     console.log(`Rolled: ${Math.floor(roll) + 1} of ${maxChance}`);
     // Doing the simple method for now, may re-implement the Redscale's version someday.
-    for (i = 0; roll > choiceList[i].chance; roll -= choiceList[i].chance, i++) { }
+    for (i = 0; roll > chanceList[i]; roll -= chanceList[i], i++) { }
 
     return choiceList[i];
 };

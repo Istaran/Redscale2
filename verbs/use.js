@@ -16,6 +16,9 @@ let act = async function (state, details) {
     if (itemDef.use.healing) {
         user.health = Math.min(itemDef.use.healing + user.health, userDef.maxHealth);
     }
+    if (itemDef.use.stamina) {
+        user.stamina = Math.min(itemDef.use.stamina + user.stamina, userDef.maxStamina);
+    }
 
     let inventory = state.parties[state.activeParty].inventory;
     inventory[state.data.item]--;

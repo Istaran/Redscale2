@@ -5,7 +5,7 @@ let getControls = async function (state, scene) {
     if (!gameengine) gameengine = require('./gameengine');
     let private = state.query.nsfw == 'true' && await cache.load(`./private/scenes/${scene.name}.json`);
     let sceneDef = await cache.load(`data/scenes/${scene.name}.json`);
-    let subscene = (private && private[scene.sub]) || sceneDef[scene.sub];
+    let subscene = (private && private[scene.sub]) || (sceneDef && sceneDef[scene.sub]);
     let controls = [];
     if (subscene) {
         for (var i = 0; i < subscene.controls.length; i++) {

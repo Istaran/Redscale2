@@ -1,0 +1,195 @@
+{
+    "display": "clear slime",
+    "tags": [
+        "slime",
+        "living creature",
+        "neuter"
+    ],
+    "attack announce": "You notice a slight ripple in the air just before walking into it. It reacts to your light breath, refraction bending as a transparent foe shifts forward to envelop you! Now that you're alert for it, you can make it out vaguely but the amorphous blob is still hard to see, being completely transparent. It's intensions, however, are quite plain.",
+    "hunt announce": "TBD: no hunt for now",
+    "max health": 50,
+    "max stamina": 10,
+    "max mana": 1,
+    "evasion": 20,
+    "reshuffle": 6,  
+    "damageMultiplier": {
+        "electric": 2,
+        "acid": 0,
+        "fire": 1.1
+      },
+    "cardsets": [
+        {
+            "tell": "The slime holds still, hoping you've lost track of where it is, exactly.",
+            "cards": [
+                {
+                    "aggress display": "A pair of pseudopods suddenly lash at you from the side!",
+                    "accuracy": 10,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "bludgeoning",
+                    "attacks": 2,
+                    "abjure display": "The slime left itself wide open!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 0
+                },
+                {
+                    "aggress display": "A pseudopod suddenly lashes at you from the side!",
+                    "accuracy": 15,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "bludgeoning",
+                    "attacks": 1,
+                    "abjure display": "The slime endures your attacks!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "A pseudopod suddenly lashes at you from the side!",
+                    "accuracy": 15,
+                    "damagedice": 3,
+                    "damagedie": 6,
+                    "damageplus": 6,
+                    "damagetype": "bludgeoning",
+                    "attacks": 1,
+                    "abjure display": "The slime left itself wide open!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 0
+                }
+            ]
+        },
+        {
+            "tell": "The surface of the slime bubbles and boils!",
+            "cards": [
+                {
+                    "aggress display": "The slime sprays sizzling acid balls at you!",
+                    "accuracy": 10,
+                    "damagedice": 1,
+                    "damagedie": 6,
+                    "damageplus": 2,
+                    "damagetype": "acid",
+                    "attacks": 4,
+                    "abjure display": "The slime knocks your attack aside with a pseudopod!",
+                    "dodge": 0,
+                    "deflect": 1.5,
+                    "soak": 0,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The slime sprays sizzling acid balls at you!",
+                    "accuracy": 10,
+                    "damagedice": 1,
+                    "damagedie": 6,
+                    "damageplus": 2,
+                    "damagetype": "acid",
+                    "attacks": 4,
+                    "abjure display": "The slime knocks your attack aside with a pseudopod!",
+                    "dodge": 0,
+                    "deflect": 1.5,
+                    "soak": 0,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The slime sprays sizzling acid balls wildly!",
+                    "accuracy": 5,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "acid",
+                    "attacks": 4,
+                    "abjure display": "The slime knocks your attack aside with a pseudopod!",
+                    "dodge": 0,
+                    "deflect": 1,
+                    "soak": 0,
+                    "staminacost": 1
+                }
+            ]
+        },
+        {
+            "tell": "The transparent foe slithers around you quickly, making it hard to track!",
+            "cards": [
+                {
+                    "aggress display": "The slime sprays sizzling acid balls at you!",
+                    "accuracy": 10,
+                    "damagedice": 1,
+                    "damagedie": 6,
+                    "damageplus": 2,
+                    "damagetype": "acid",
+                    "attacks": 4,
+                    "abjure display": "The slime dodges about!",
+                    "dodge": 5,
+                    "deflect": 0.5,
+                    "soak": 0,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "A pseudopod suddenly lashes at you from the side!",
+                    "accuracy": 15,
+                    "damagedice": 2,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "bludgeoning",
+                    "attacks": 1,
+                    "abjure display": "The slime dodges about!",
+                    "dodge": 5,
+                    "deflect": 0.5,
+                    "soak": 0,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The slime tries to envelop you!",
+                    "accuracy": 10,
+                    "damagedice": 3,
+                    "damagedie": 6,
+                    "damageplus": 6,
+                    "damagetype": "acid",
+                    "attacks": 1,                    
+                    "breakthrough": 1,
+                    "abjure display": "The slime dodges about!",
+                    "dodge": 5,
+                    "deflect": 0.5,
+                    "soak": 0,
+                    "staminacost": 2
+                }
+            ]
+        }
+    ],
+    "acquirecards": {
+        "card": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/soul",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Card\n\nChance to gain:\nBasic Deflect",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "card",
+                    "details": {
+                        "text": "Absorbing the lingering memories of the slime's spirit, you hone your skills at deflecting attacks.",
+                        "fail": "You try to absorb the slime's spirit, but it didn't have anything new for you. The more you absorb, the rarer it is to find one that can help you improve further.",
+                        "type": "abjure",
+                        "card": "Basic Deflect"
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/soul"
+                    }
+                }
+            ],
+            "help": "Consume your enemy's spirit to learn from it.\nChance to gain Basic Deflect based on how many copies you have.\nGet better at anticipating attacks and knocking them aside with your pseudopod or whatever limb is handy."
+        }
+    }
+}

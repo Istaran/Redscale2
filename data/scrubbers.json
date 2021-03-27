@@ -10,14 +10,23 @@
     "neuter": "It"
   },
   "Their": {
-    "male": "his",
-    "female": "her",
-    "neuter": "its"
+    "male": "His",
+    "female": "Her",
+    "neuter": "Its"
   },
   "Theirs": {
-    "male": "his",
-    "female": "hers",
-    "neuter": "its"
+    "male": "His",
+    "female": "Hers",
+    "neuter": "Its"
+  },
+  "Neuter": {
+    "male": "Male",
+    "female": "Female"
+  },
+  "They're": {
+    "male": "He's",
+    "female": "She's",
+    "neuter": "It's"
   },
   "Pawn": {
     "kobold": "Kobold",
