@@ -70,6 +70,32 @@
         {
           "chance": 1,
           "event": "stonebones"
+        },
+        {
+          "chance":7,
+          "event": "cleaner",
+          "if": {
+            "condition": "logical",
+            "rule": "or",
+            "conditions": [
+              {
+                "condition": "timeis",
+                "time": "Midnight"
+              },
+              {
+                "condition": "timeis",
+                "time": "Dawn"
+              },
+              {
+                "condition": "timeis",
+                "time": "Noon"
+              },
+              {
+                "condition": "timeis",
+                "time": "Dusk"
+              }
+            ]
+          }
         }
       ],
       "light": "white",
@@ -94,6 +120,32 @@
         {
           "chance": 1,
           "event": null
+        },
+        {
+          "chance":7,
+          "event": "cleaner",
+          "if": {
+            "condition": "logical",
+            "rule": "or",
+            "conditions": [
+              {
+                "condition": "timeis",
+                "time": "Midnight"
+              },
+              {
+                "condition": "timeis",
+                "time": "Dawn"
+              },
+              {
+                "condition": "timeis",
+                "time": "Noon"
+              },
+              {
+                "condition": "timeis",
+                "time": "Dusk"
+              }
+            ]
+          }
         }
       ]
     },
@@ -133,6 +185,32 @@
         {
           "chance": 1,
           "event": null
+        },
+        {
+          "chance":7,
+          "event": "cleaner",
+          "if": {
+            "condition": "logical",
+            "rule": "or",
+            "conditions": [
+              {
+                "condition": "timeis",
+                "time": "Midnight"
+              },
+              {
+                "condition": "timeis",
+                "time": "Dawn"
+              },
+              {
+                "condition": "timeis",
+                "time": "Noon"
+              },
+              {
+                "condition": "timeis",
+                "time": "Dusk"
+              }
+            ]
+          }
         }
       ],
       "directionOverrides": {
@@ -1642,6 +1720,10 @@
     "stonebones": {
       "verb": "attack",
       "details": { "enemy": "stonebones" }
+    },
+    "cleaner": {
+      "verb": "attack",
+      "details": { "enemy": "clear slime" }
     },
     "HarukaIntro": {
       "verb": "first",
