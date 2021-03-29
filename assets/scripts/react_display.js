@@ -765,6 +765,32 @@ class PercentBar extends React.Component {
         </div>);
     }
 }
+
+class AttackRenderer extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {        
+        let self = this;
+
+        let left = Math.max(self.props.leftVal, 0);
+        let right = Math.max(self.props.rightVal, 0);
+        let multi = self.props.totalWidth / (left + right); 
+        let leftWidth = multi * left;
+        let rightWidth = multi * right;
+        let barLeft = multi * Math.max(self.props.barVal, 0);
+
+        return (<div className="percentControl">
+            <div className="percentLeft" style={{width: leftWidth,  height: self.props.height, backgroundColor: self.props.leftColor}}>
+            </div>
+            <div className="percentRight" style={{width: rightWidth,  height: self.props.height, backgroundColor: self.props.rightColor}}>
+            </div>
+            <div className="percentBar" style={{width: '2px', height: self.props.height, top: 0, left: barLeft, borderColor: "black"}}></div>
+            <div className="damageString">{self.props.text}</div>
+        </div>);
+    }
+}
         
 class GameDisplayer extends React.Component {
 	constructor(props) {
@@ -846,7 +872,6 @@ class GameDisplayer extends React.Component {
                 }
                 return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
             });
-
             return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/></div>);
         } else if (this.state.saveList) {
             // initialize chat
