@@ -5,9 +5,9 @@
       [],
       [],
       [],
-      [ null, null, null, null, null, null, null, null, null, null, null, null, "InnPantry", "InnKitchen", "InnPantry" ],
-      [ null, null, null, null, null, null, null, null, null, null, null, null, "InnLaundry", "InnLowerPath", "WellAccess" ],
-      [ null, null, null, null, null, null, null, null, null, null, null, null, "InnQuarters", "InnBreakRoom", "InnQuarters" ]
+      [ null, null, null, null, null, null, null, null, null, null, null, null, null, "InnPantry", "InnKitchen", "InnPantry" ],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, null, "InnLaundry", "InnLowerPath", "WellAccess" ],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, null, "InnQuarters", "InnBreakRoom", "InnQuarters" ]
     ],
     [
       [                 null,            null,            null,            null,            null,            null,            null,            null,            null,            null,            null,            null,     "RatNestNS",     "RatNestNS",           null,    "NorthRoad4",     "RatNestNS",         null,  "RatNestNS", "RatNestNS" ],
@@ -26,9 +26,9 @@
       [],
       [],
       [],
-      [ null, null, null, null, null, null, null, null, null, null, null, null, "Innkeeper", "InnRoomN", "InnBath" ],
-      [ null, null, null, null, null, null, null, null, null, null, null, null, "InnRoomW", "InnUpperPath", "InnRoomE" ],
-      [ null, null, null, null, null, null, null, null, null, null, null, null, "InnTBD", "InnRoomS", "InnTBD" ]
+      [ null, null, null, null, null, null, null, null, null, null, null, null, null, "Innkeeper", "InnRoomN", "InnBath" ],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, null, "InnRoomW", "InnUpperPath", "InnRoomE" ],
+      [ null, null, null, null, null, null, null, null, null, null, null, null, null, "InnTBD", "InnRoomS", "InnTBD" ]
     ]
   ],
   "styles": {

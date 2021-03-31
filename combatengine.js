@@ -245,33 +245,72 @@ let discardCards = function (hand, count) {
 
 };
 
-// Given (net) accuracy of attacker and evasion of defender, roll to hit, return damage multiplier (1 for standard hit, 0 for miss, >1 for crit)
-let attackRoll = function (accuracy, evasion) {
-    if (accuracy <= 0) return 0;
-    let roll = Math.random();
+var attackResult = {};
+
+// Given accuracy of attacker and dodge and evasion of defender, roll to hit, return damage multiplier (1 for standard hit, 0 for miss, >1 for crit)
+let attackRoll = function (accuracy, dodge, evasion) {
+    attackResult = { deflected: false, hitZone: Math.min(evasion, accuracy), critZone: Math.min(0, accuracy - evasion) };
+    attackResult.roll = Math.random() * evasion;
     let hit = 0;
-	console.log(`Rolling: Chance: ${accuracy} / ${evasion}, Roll: ${roll}`);
-    while (accuracy > roll * evasion) {
+	console.log(`Rolling: Chance: ${accuracy} - ${dodge} / ${evasion}, Roll: ${attackResult.roll}`);
+    if (attackResult.roll > accuracy) {
+        attackResult.result = 'miss';
+        console.log('miss');
+        return 0;
+    }
+    else if (attackResult.roll > accuracy - dodge) {
+        attackResult.result = 'dodged';
+        console.log('dodged');        
+        return 0;
+    }
+    accuracy -= dodge;
+    while (accuracy > attackResult.roll) {
         hit++;
         accuracy -= evasion;
     }
+    if (hit > 1) {
+        attackResult.result = 'crit';
+    }
+    else {
+        attackResult.result = 'hit';
+    }
 	console.log(`${hit} hit${hit == 1 ? "" : "s"}`);
+
     return hit;
 };
 
 // Given (net) dice count/faces and modifier, roll the dice and return damage.
-let damageRoll = function (damageDice, damageDie, damagePlus, multiplier) {
+let damageRoll = function (damageDice, damageDie, damagePlus, damageMinus, multiplier) {
     let damage = 0;
+    attackResult.damage = [];
     console.log(`Rolling ${damageDice}d${damageDie}+${damagePlus}`);
     for (var i = 0; i < damageDice; i++) {
-        damage += Math.floor(Math.random() * damageDie) + 1;
-        console.log(damage);
+        let roll = Math.floor(Math.random() * damageDie) + 1; 
+        damage += roll;
+        attackResult.damage.push(roll);
+        console.log("Rolled: " + roll);
     }
     damage += damagePlus;
-    damage *= multiplier;
-    console.log(damage);
+    attackResult.damage.push(damagePlus);
+    console.log("Plus: " + damagePlus);
+    if (damageMinus) {
+        attackResult.damage.push(-damageMinus);
+        damage -= damageMinus;        
+        console.log("Minus: " + -damageMinus);
+    }
+    if (multiplier != 1) {
+        damage *= multiplier;
+        attackResult.multiplier = multiplier;
+    }
+    console.log("Total: " + damage);
     return damage > 0 ? damage : 0;
 };
+
+let addAttackResults = function (state, enemyAttacking) {
+    attackResult.hitColor = enemyAttacking ? (state.enemy.dimcolor || 'paleyellow') : '#FF8888';
+    attackResult.critColor = enemyAttacking ? (state.enemy.brightcolor || 'yellow') : '#FF0000';
+    state.view.attacks.push(attackResult);
+}
 
 let clearCombat = async function (state) {
     if (!gameengine) gameengine = require('./gameengine');
@@ -386,6 +425,7 @@ let getStatusDisplay = async function (state) {
 module.exports = {
     attackRoll: attackRoll,
     damageRoll: damageRoll,
+    addAttackResults: addAttackResults,
     getControls: getControls,
     clearCombat: clearCombat,
     configureEnemy: configureEnemy,

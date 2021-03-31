@@ -24,6 +24,7 @@ let act = async function (state, details) {
     leader.stamina -= staminacost;
 
     let deflect = Math.floor(enemyCard.deflect + Math.random());
+    state.view.attacks = [];
 
     let allyResult = "";
     if (assist.allyattacks) {
@@ -31,8 +32,9 @@ let act = async function (state, details) {
             if (deflect) {
                 deflect--;
                 allyResult += `The ${enemyDef.display} deflected your ally's attack!\n`;
+                state.view.attacks.push({ deflected: true});
             } else {
-                let hitMulti = combatengine.attackRoll(assist.allyaccuracy - enemyCard.dodge, enemyDef.evasion);
+                let hitMulti = combatengine.attackRoll(assist.allyaccuracy, enemyCard.dodge, enemyDef.evasion);
                 if (hitMulti == 0)
                     allyResult += assist.allymisstext + "\n";
                 else {
@@ -47,16 +49,20 @@ let act = async function (state, details) {
                         allyResult += `{They} dealt ${damage} ${card.damagetype} damage!\n`;
                     }
                 }
+                combatengine.addAttackResults(state, false);
             }
         }
         allyResult = await gameengine.scrubText(state, allyResult, assist.tags, assist.scrubbers);
     }
 
     for (var i = 0; i < attacks; i++) {
-        if (deflect > i)
-            engineResult += card["aggress deflect display"] || (`The ${enemyDef.display} deflected your attack!\n`);
+        if (deflect > i) {
+            engineResult += card["aggress deflect display"] || (`The ${enemyDef.display} deflected your attack!\n`);            
+            state.view.attacks.push({ deflected: true});
+        }
         else {
-            let hitMulti = combatengine.attackRoll(accuracy - enemyCard.dodge, enemyDef.evasion);
+        
+            let hitMulti = combatengine.attackRoll(accuracy, enemyCard.dodge, enemyDef.evasion);
             if (hitMulti == 0)
                 engineResult += card["aggress dodge display"] || (`The ${enemyDef.display} avoided your attack!\n`);
             else {
@@ -69,7 +75,7 @@ let act = async function (state, details) {
                 }
                 let typeMulti = (enemyDef.damageMultiplier && enemyDef.damageMultiplier[card.damagetype]) ? Math.floor(enemyDef.damageMultiplier[card.damagetype]) : 1;
                 console.log(`Multiplier ${typeMulti} against type ${card.damagetype}`);
-                let damage = combatengine.damageRoll(damagedice, damagedie, damageplus - enemyCard.soak - (hitMulti <= 1 && enemyCard.noncritsoak ? enemyCard.noncritsoak : 0), typeMulti * hitMulti);
+                let damage = combatengine.damageRoll(damagedice, damagedie, damageplus, enemyCard.soak + (hitMulti <= 1 && enemyCard.noncritsoak ? enemyCard.noncritsoak : 0), typeMulti * hitMulti);
                 if (damage <= 0) {
                     engineResult += card["aggress soak display"] || "{They} shrugged it off!\n";
                 } else {
@@ -85,6 +91,7 @@ let act = async function (state, details) {
                     }
                 }
             }
+            combatengine.addAttackResults(state, false);
         }
     }
 
