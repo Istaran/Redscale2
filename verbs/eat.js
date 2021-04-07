@@ -1,3 +1,5 @@
+const gameengine = require('../gameengine');
+
 let act = async function (state, details) {
     let eater = state.parties[state.activeParty].leader;
     if (details.nutrition)
@@ -7,8 +9,7 @@ let act = async function (state, details) {
     if (details.health)
         eater.health = Math.min(details.health + eater.health, eater.maxHealth);
    
-
-    state.view.status = details.text;
+    gameengine.displayText(state, details.text, details.pause || 100);
 };
 
 

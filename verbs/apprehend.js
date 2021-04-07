@@ -10,13 +10,11 @@ let act = async function (state, details) {
         let playercards = await cache.load('data/combat/apprehend cards.json');
         apprehendCard = playercards[details.card];
     }
-    state.view.status = "";
 
     if (apprehendCard) { // Switching modes my end in a no-op maybe? Actually, status call should prevent.
         await gameengine.doVerb(apprehendCard.verb, state, apprehendCard.details);
     }
 }
-
 
 module.exports = {
     act: act

@@ -322,6 +322,7 @@ let damageRoll = function (damageDice, damageDie, damagePlus, damageMinus, multi
 };
 
 let addAttackResults = function (state, enemyAttacking) {
+    attackResult.type = "attack";
     attackResult.rtl = enemyAttacking;
     attackResult.hitColor = enemyAttacking ? (state.enemy.dimcolor || '#FFFF88') : '#FF8888';
     attackResult.critColor = enemyAttacking ? (state.enemy.brightcolor || '#FFFF00') : '#FF0000';
@@ -329,12 +330,11 @@ let addAttackResults = function (state, enemyAttacking) {
     attackResult.missColor = '#000000';
     attackResult.boxColor = '#FFFFFF';
     attackResult.lineColor = '#888888';
-    state.view.attacks.push(attackResult);
+    state.view.display.push(attackResult);
 }
 
 let clearCombat = async function (state) {
     if (!gameengine) gameengine = require('./gameengine');
-    state.view.status = await gameengine.scrubText(state, state.view.status || "", state.enemy.tags, state.enemy.scrubbers);
     state.enemy = undefined;
 };
 

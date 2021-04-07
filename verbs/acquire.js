@@ -1,6 +1,5 @@
-var combatengine = require('../combatengine');
-var gameengine = require('../gameengine');
-var cache = require('../cache');
+const gameengine = require('../gameengine');
+const cache = require('../cache');
 
 let act = async function (state, details) {
     let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
@@ -13,7 +12,6 @@ let act = async function (state, details) {
         await gameengine.doVerb(acquireCard.verb, state, acquireCard.details);
     }
 }
-
 
 module.exports = {
 	act: act

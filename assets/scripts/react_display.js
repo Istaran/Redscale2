@@ -5,6 +5,24 @@ var gameDisplayer;
 var formData = {};
 var saveSlot = 0;
 var userid;
+var frame = 0;
+
+function setError() {
+    gameDisplayer.setState(
+        { 
+            frame: frame++, 
+            gameState: { 
+                display: [
+                    { 
+                        type: "text", 
+                        text: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.",
+                        pause: 0
+                    }
+                ], 
+                controls: [[{ type: "refresher" }]] 
+            } 
+        });
+}
 
 function getStatus() {
     fetch('/act' + location.search, {
@@ -16,9 +34,9 @@ function getStatus() {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-        gameDisplayer.setState({ gameState: data });
+        gameDisplayer.setState({ frame: frame++, gameState: data });
     }).catch(function (err) {
-        gameDisplayer.setState({ gameState: { status: "There was an error trying to load your game. Click refresh when you want to try again. If the problem persists, email istaran@redscalesadventure.online and include your google email address for reference.", controls: [[{ type: "refresher" }]] } });
+        setError();
     });
 }
 
@@ -30,7 +48,7 @@ function getSaveList() {
     }).then(function (data) {
         gameDisplayer.setState({ saveList: data, gameState: null });
     }).catch(function (err) {
-        gameDisplayer.setState({ gameState: { status: "There was an error trying to load your save list. Click reconnect when you want to try again. If the problem persists, email istaran@redscalesadventure.online and include your google email address for reference.", controls: [[{ type: "reconnector" }]] } });
+        setError();
     });
 }
 
@@ -119,7 +137,7 @@ class ActButton extends React.Component {
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            gameDisplayer.setState({ gameState: data });
+            setError();
         });
     }
 
@@ -147,9 +165,9 @@ class Card extends React.Component {
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            gameDisplayer.setState({ gameState: data });
+            gameDisplayer.setState({ frame: frame++, gameState: data });
         }).catch(function (err) {
-            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+            setError();
         });
     }
 
@@ -182,9 +200,9 @@ class Navigator extends React.Component {
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
-                  gameDisplayer.setState({gameState: data});
+                  gameDisplayer.setState({ frame: frame++, gameState: data});
               }).catch(function (err) {
-                  gameDisplayer.setState({ gameState: { status: "There was an error trying to go there. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+                setError();
               });
 		}
 	}
@@ -516,10 +534,10 @@ class Requantifier extends React.Component {
             body: JSON.stringify({ 'body': { 'verb': 'requantify', 'slot': saveSlot, 'id': self.props.id, 'data': { 'left': this.state.leftCounts, 'right': this.state.rightCounts, 'leftChecks': this.state.leftChecks }} })
         }).then(function (response) {
             return response.json();
-        }).then(function (data) {
-            gameDisplayer.setState({ gameState: data });
+        }).then(function(data) {
+            gameDisplayer.setState({ frame: frame++, gameState: data});
         }).catch(function (err) {
-            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+            setError();
         });
     }
 
@@ -592,10 +610,10 @@ class Reassigner extends React.Component {
             body: JSON.stringify({ 'body': { 'verb': 'requantify', 'slot': saveSlot, 'id': self.props.id, 'data': { 'left': this.state.leftSet, 'right': this.state.rightSet } } })
         }).then(function (response) {
             return response.json();
-        }).then(function (data) {
-            gameDisplayer.setState({ gameState: data });
+        }).then(function(data) {
+            gameDisplayer.setState({ frame: frame++, gameState: data});
         }).catch(function (err) {
-            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+            setError();
         });
     }
 
@@ -670,10 +688,11 @@ class Recombiner extends React.Component {
                     rightSet: data.controls[0][0].rightSet.slice(),
                     displays: data.controls[0][0].displays.slice(),
                     id: data.controls[0][0].id,
+                    frame: frame++,
                 });
-        }).catch(function (err) {
-            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
-        });
+            }).catch(function (err) {
+                setError();
+            });
     }
 
     done() {
@@ -686,10 +705,10 @@ class Recombiner extends React.Component {
             body: JSON.stringify({ 'body': { 'verb': 'setscene', 'slot': saveSlot, 'id': self.state.id } })
         }).then(function (response) {
             return response.json();
-        }).then(function (data) {
-            gameDisplayer.setState({ gameState: data });
+        }).then(function(data) {
+            gameDisplayer.setState({ frame: frame++, gameState: data});
         }).catch(function (err) {
-            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+            setError();
         });
     }
 
@@ -766,11 +785,40 @@ class PercentBar extends React.Component {
     }
 }
 
+class TextRenderer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.props.queue.push(this);
+        this.state = { remainingTime: this.props.pause };
+    }
+
+    animate() {
+        if (this.animationDone()) {
+            return;
+        }
+        this.setState((state, props) => { return { remainingTime: state.remainingTime - 25}});        
+    }
+
+    animationDone() { return this.state.remainingTime <= 0; }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.frame != prevProps.frame) {
+            this.setState({ remainingTime: this.props.pause });
+            this.props.queue.push(this);
+        }
+    }
+
+    render() {        
+        let self = this;
+        return <div className="textControl">{self.props.text}</div>;
+    }
+}
+
 class AttackRenderer extends React.Component {
     constructor(props) {
         props.totalWidth = parseInt(props.totalWidth);
         super(props);
-        
+        this.props.queue.push(this);
         this.state = this.calcStateFromAttack(props.attack);
     }
 
@@ -817,22 +865,8 @@ class AttackRenderer extends React.Component {
         };
     }
 
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.animate(),
-            25
-        );
-    }
-
-    componentWillUnmount() {
-        if (this.timerID)
-            clearInterval(this.timerID);
-    }
-
     animate() {
-        if (this.state.barLeftFinal == this.state.barLeftCurrent) {
-            clearInterval(this.timerID);
-            this.timerID = null;
+        if (this.animationDone()) {
             return;
         }
         let newState = Object.assign({}, this.state);
@@ -848,16 +882,15 @@ class AttackRenderer extends React.Component {
         this.setState(newState);        
     }
 
-    componentDidUpdate(prevProps) {
-        this.props.totalWidth = parseInt(this.props.totalWidth);
-        this.props.barspeed = parseInt(this.props.barspeed);
-        if (this.props.attack != prevProps.attack) {
+    animationDone() { return this.state.barLeftFinal == this.state.barLeftCurrent; }
+
+    componentDidUpdate(prevProps) {        
+        if (this.props.frame != prevProps.frame) {
+            this.props.queue.push(this);
+            this.props.totalWidth = parseInt(this.props.totalWidth);
+            this.props.barspeed = parseInt(this.props.barspeed);
+
             this.setState(this.calcStateFromAttack(this.props.attack));
-            if(!this.timerID) 
-                this.timerID = setInterval(
-                    () => this.animate(),
-                    100
-                );
         }
     }
 
@@ -908,12 +941,43 @@ class GameDisplayer extends React.Component {
         var log = [];
         var mLog = [];
         for (var i = 0; i < 100; i++) { log.push(''); mLog.push({})}; // Default chat log to empty
+        this.animators = [];
 		this.state = {
           chatLog: log,
           markupLog: mLog,
 		  gameState: null,
+          maxShow: 1
 		};
 	}
+    
+    componentDidMount() {
+        this.timerID = setInterval(
+            () => this.animate(),
+            25
+        );
+    }
+
+    componentWillUnmount() {
+        if (this.timerID)
+            clearInterval(this.timerID);
+    }
+
+    animate() {
+        if (this.animators.length) {
+            this.animators[0].animate();
+            if (this.animators[0].animationDone())
+            {
+                this.animators.pop();
+                this.setState((state, props) => { return { maxShow: state.maxShow + 1}});
+            }
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.frame != prevState.frame) {
+            this.setState({maxShow: 1});
+        }
+    }
 
     stringFromMessageData(data) {
         var datestring = data.timestamp ? new Date(data.timestamp).toLocaleString() + ": " : "";
@@ -947,45 +1011,55 @@ class GameDisplayer extends React.Component {
         formData = {}; // Caution: if this causes unexpected rerenderers I might have issues with setting this here.
         if (this.state.gameState) {
             if (!userid && this.state.gameState.id) userid = this.state.gameState.id;
-            let controlTable = this.state.gameState.controls.map((column, colIndex) => {
-                let controlColumn = [];
-                if (column) {
-                    controlColumn = column.map((control, rowIndex) => {
-                        switch (control.type) {
-                            case 'actButton':
-                                return <ActButton key={colIndex * 10 + rowIndex} extendRight={control.extendRight} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
-                            case 'card':
-                                return <Card key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
-                            case 'navigator':
-                                return <Navigator key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
-                            case 'textBox':
-                                return <TextInputer key={colIndex * 10 + rowIndex} id={control.id} default={control.default} name={control.name} />;
-                            case 'refresher':
-                                return <Refresher />;
-                            case 'reconnector':
-                                return <Reconnector />;
-                            case 'requantifier':
-                                return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} leftChecks={control.leftChecks} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
-                            case 'reassigner':
-                                return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
-                            case 'recombiner':
-                                return <Recombiner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
-                            case 'itemCount':
-                                return <div key={colIndex * 10 + rowIndex} className="ctrlLabel">{control.display}</div>;
-                            case 'spacer':
-                                return <div key={colIndex * 10 + rowIndex} className="ctrlLabel"></div>; 
-                            default:
-                                return '';
-                        }
-                    });
+            let controlTable = [];
+            if (this.state.maxShow > self.state.gameState.display.length) {
+                controlTable = this.state.gameState.controls.map((column, colIndex) => {
+                    let controlColumn = [];
+                    if (column) {
+                        controlColumn = column.map((control, rowIndex) => {
+                            switch (control.type) {
+                                case 'actButton':
+                                    return <ActButton key={colIndex * 10 + rowIndex} extendRight={control.extendRight} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
+                                case 'card':
+                                    return <Card key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
+                                case 'navigator':
+                                    return <Navigator key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
+                                case 'textBox':
+                                    return <TextInputer key={colIndex * 10 + rowIndex} id={control.id} default={control.default} name={control.name} />;
+                                case 'refresher':
+                                    return <Refresher />;
+                                case 'reconnector':
+                                    return <Reconnector />;
+                                case 'requantifier':
+                                    return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} leftChecks={control.leftChecks} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
+                                case 'reassigner':
+                                    return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
+                                case 'recombiner':
+                                    return <Recombiner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
+                                case 'itemCount':
+                                    return <div key={colIndex * 10 + rowIndex} className="ctrlLabel">{control.display}</div>;
+                                case 'spacer':
+                                    return <div key={colIndex * 10 + rowIndex} className="ctrlLabel"></div>; 
+                                default:
+                                    return '';
+                            }
+                        });
+                    }
+                    return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
+                });
+            }
+    
+            let statusDisplay = self.state.gameState.display.map((display, index) => {
+                if (index < self.state.maxShow) {
+                    if(display.type == "text") {
+                        return <TextRenderer text={display.text} pause={display.pause} style={display.style} queue={self.animators} frame={self.state.frame} />
+                    } else if (display.type == "attack") {
+                        return <AttackRenderer totalWidth='100' attack={display} queue={self.animators} frame={self.state.frame}/>
+                    }
                 }
-                return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
+                return <div />;
             });
-            
-            let attackDisplay = self.state.gameState.attacks ? self.state.gameState.attacks.map((attack, index) => {
-                return <AttackRenderer totalWidth='100' height='15px' attack={attack}></AttackRenderer>
-            }) : <div></div>;
-            return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}{attackDisplay}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/></div>);
+            return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{statusDisplay}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/></div>);
         } else if (this.state.saveList) {
             // initialize chat
             if (!this.chatInit) {

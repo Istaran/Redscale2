@@ -1,8 +1,6 @@
 let gameengine = require('../gameengine');
 
 let act = async function (state, details) {
-    state.view.status = null;
-
     for (var i = 0; i < details.length; i++) {
         let element = details[i];
         if (await gameengine.conditionMet(state, element.if)) {
@@ -10,7 +8,7 @@ let act = async function (state, details) {
             break;
         }
     }
-    if (state.view.status == null) {
+    if (i == details.length) {
         console.log(`Try to do first thing, but none were valid.\n${details}`);
     }
 };

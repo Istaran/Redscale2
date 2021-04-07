@@ -1,7 +1,7 @@
 
-let cache = require('../cache');
-let combatengine = require('../combatengine');
-let gameengine = require('../gameengine');
+const cache = require('../cache');
+const combatengine = require('../combatengine');
+const gameengine = require('../gameengine');
 
 let act = async function (state, details) {
     let party = state.parties[state.activeParty];
@@ -120,9 +120,8 @@ let act = async function (state, details) {
             i++;
         }
     }
-
-
-    state.view.status = resultText;
+    
+    gameengine.displayText(state, resultText, details.pause || 100);
 };
 
 

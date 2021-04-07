@@ -1,4 +1,4 @@
-let gameengine = require('../gameengine');
+const gameengine = require('../gameengine');
 
 let act = async function (state, details) {
     let value = details.value;

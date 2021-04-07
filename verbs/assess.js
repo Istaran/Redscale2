@@ -4,10 +4,13 @@ var cache = require('../cache');
 var loc = require('../location');
 
 let act = async function (state, details) {
+    gameengine.displayText(state, state.enemy.tell, 100, state.enemy.tags, state.enemy.scrubbers);
+
     let cards = await cache.load('data/combat/assess cards.json');
     let card = cards[details.card];
-    let engineResult = "";
     state.enemy.phasequeue = ["assess"].concat(card.queue);
+
+    gameengine.displayText(state, card.display, 100, state.enemy.tags, state.enemy.scrubbers);
 
     if (card.escaperolls) {
         var navigator = (await loc.getControls(state))[0][0];
@@ -17,13 +20,12 @@ let act = async function (state, details) {
             let roll = Math.floor(Math.random() * directions.length);
             if (navigator.sub[directions[roll]]) {
                 await combatengine.clearCombat(state);
+                gameengine.displayText(state, `${card.display}\nYou manage to get away!\n\n`);
                 await gameengine.doVerb("travel", state, navigator.details[directions[roll]]);
-                state.view.status = `${card.display}\nYou manage to get away!\n\n${state.view.status}`;
                 return;
             }
         }
-
-        engineResult = "But you can't get away!";
+        gameengine.displayText(state, "But you can't get away!", 100, state.enemy.tags, state.enemy.scrubbers);
     }
 
     let leader = state.parties[state.activeParty].leader;
@@ -39,9 +41,8 @@ let act = async function (state, details) {
     }
 
     let engineProgress = await combatengine.progress(state);
-    state.view.status = `${state.enemy.tell}\n\n${card.display}\n\n${engineResult}\n\n${engineProgress}`;
+    gameengine.displayText(state, engineProgress, 100, state.enemy.tags, state.enemy.scrubbers);
 }
-
 
 module.exports = {
     act: act

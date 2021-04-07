@@ -1,4 +1,4 @@
-let gameengine = require('../gameengine');
+const gameengine = require('../gameengine');
 
 let act = async function (state, details) {
     console.log(`Requantifying:State:${JSON.stringify(state)}\ndetails:${JSON.stringify(details)}`);

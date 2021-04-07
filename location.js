@@ -1,4 +1,4 @@
-let cache = require('./cache');
+const cache = require('./cache');
 var gameengine = undefined;
 
 let spotStyle = async function (state, zoneName, x, y, z) {
@@ -104,19 +104,19 @@ let explore = async function (state) {
         let randomEvent = await gameengine.randomChoice(state, events);
 
         if (randomEvent && randomEvent.event) {
-            state.view.status = "";
             console.log(`triggered event: ${randomEvent.event}\nPrivate: ${private && private.events && private.events[randomEvent.event] ? JSON.stringify(private.events[randomEvent.event]) : undefined}\nNormal: ${JSON.stringify(zone.events[randomEvent.event])}`);
             let event = (private && private.events && private.events[randomEvent.event]) || zone.events[randomEvent.event];
             console.log(`Triggered random event: ${event.verb}: ${JSON.stringify(event.details)}`);
             await gameengine.doVerb(event.verb, state, event.details);
-            state.view.status = `${style.description}\n\n${state.view.status}`;
-        } else {
-            state.view.status = style.description;
-            // Nothing happens
         }
-
+        // Use shift to force style description in front, even though we let event happen first (it may chenge our style)
+        state.display.shift({
+            type: "text",
+            text: style.description + "\n\n",
+            pause: 100
+            });
 	} else {
-		state.view.status = "Ooops, you somehow ended up outside reality.";
+        gameengine.displayText(state, "Ooops, you somehow ended up outside reality.");
 	}
 };
 
@@ -150,20 +150,19 @@ let checkRequirements = async function (state, details) {
     if (spot) {
         let style = zone.styles[spot];
         let party = state.parties[state.activeParty];
-        state.view.status = "";
         if (style.requireall) {
             for (var req in style.requireall) {
                 if (!!party.leader.tags[req] != style.requireall[req]) {
-                    state.view.status += `You can't go that way, because you ${style.requireall[req] ? "aren't" : "are"} a ${req}.\n`;
+                    gameengine.displayText(state, `You can't go that way, because you ${style.requireall[req] ? "aren't" : "are"} a ${req}.\n`);
                 }
                 for (var i = 0; i < party.followers.length; i++) {
                     if (!!party.followers[i].tags[req] != style.requireall[req]) {
-                        state.view.status += `You can't go that way, because ${party.followers[i].display} ${style.requireall[req] ? "isn't" : "is"} a ${req}.\n`;
+                        gameengine.displayText(state, `You can't go that way, because ${party.followers[i].display} ${style.requireall[req] ? "isn't" : "is"} a ${req}.\n`);
                     }
                 }
                 for (var i = 0; i < party.pawns.length; i++) {
                     if (!!party.pawns[i].tags[req] != style.requireall[req]) {
-                        state.view.status += `You can't go that way, because ${party.pawns[i].display} ${style.requireall[req] ? "isn't" : "is"} a ${req}.\n`;
+                        gameengine.displayText(state, `You can't go that way, because ${party.pawns[i].display} ${style.requireall[req] ? "isn't" : "is"} a ${req}.\n`);
                     }
                 }
             }
@@ -189,13 +188,13 @@ let checkRequirements = async function (state, details) {
                     }
                 }
                 if (!gotOne) {
-                    state.view.status += `You can't go that way, because no one in your party ${style.requireall[req] ? "is" : "is not"} a ${req}.\n`;
+                    gameengine.displayText(state, `You can't go that way, because no one in your party ${style.requireall[req] ? "is" : "is not"} a ${req}.\n`);
                 }
             }
         }
         return !(state.view.status);
     } else {
-        state.view.status = "There isn't anywhere to go in that direction.";
+        gameengine.displayText(state, "There isn't anywhere to go in that direction.");
         return false;
     }
 };
