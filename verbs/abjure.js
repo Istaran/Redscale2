@@ -31,15 +31,15 @@ let act = async function (state, details) {
     for (var i = 0; i < attacks; i++) {
         if (assistdeflect > i) {
             engineResult += assist.allydeflecttext;
-            state.view.attacks.push({ deflected: true});
+            combatengine.deflect(enemyCard.accuracy, dodge, leader.evasion);
         } else if (deflect > i) {
             engineResult += enemyCard["aggress deflect display"] || "You deflected an attack!\n";            
-            state.view.attacks.push({ deflected: true});
+            combatengine.deflect(enemyCard.accuracy, dodge, leader.evasion);
         } else {
             if (deflect + brokethrough > i) {
                 engineResult += enemyCard["aggress breakthrough display"] || "Their attack broke through your deflection! ";
             }
-            let hitMulti = combatengine.attackRoll(enemyCard.accuracy, dodge, 10); // TEMP: hardcoded evasion at 10
+            let hitMulti = combatengine.attackRoll(enemyCard.accuracy, dodge, leader.evasion);
             if (hitMulti == 0)
                 engineResult += enemyCard["aggress dodge display"] || "You avoided an attack!\n";
             else {
@@ -60,9 +60,8 @@ let act = async function (state, details) {
             if (enemyCard.attacksupportpawn && assist.name) {
                 engineResult += enemyCard.attacksupportpawn + " (but not really because I haven't implemented that yet.)\n";
             }
-            
-            combatengine.addAttackResults(state, true);
         }
+        combatengine.addAttackResults(state, true);
     }
 
     leader.abjureHand[details.card] = undefined;

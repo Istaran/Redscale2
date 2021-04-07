@@ -32,7 +32,7 @@ let act = async function (state, details) {
             if (deflect) {
                 deflect--;
                 allyResult += `The ${enemyDef.display} deflected your ally's attack!\n`;
-                state.view.attacks.push({ deflected: true});
+                combatengine.deflect(assist.allyaccuracy, enemyCard.dodge, enemyDef.evasion);
             } else {
                 let hitMulti = combatengine.attackRoll(assist.allyaccuracy, enemyCard.dodge, enemyDef.evasion);
                 if (hitMulti == 0)
@@ -49,8 +49,8 @@ let act = async function (state, details) {
                         allyResult += `{They} dealt ${damage} ${card.damagetype} damage!\n`;
                     }
                 }
-                combatengine.addAttackResults(state, false);
             }
+            combatengine.addAttackResults(state, false);
         }
         allyResult = await gameengine.scrubText(state, allyResult, assist.tags, assist.scrubbers);
     }
@@ -58,7 +58,7 @@ let act = async function (state, details) {
     for (var i = 0; i < attacks; i++) {
         if (deflect > i) {
             engineResult += card["aggress deflect display"] || (`The ${enemyDef.display} deflected your attack!\n`);            
-            state.view.attacks.push({ deflected: true});
+            combatengine.deflect(accuracy, enemyCard.dodge, enemyDef.evasion);
         }
         else {
         
@@ -91,8 +91,8 @@ let act = async function (state, details) {
                     }
                 }
             }
-            combatengine.addAttackResults(state, false);
         }
+        combatengine.addAttackResults(state, false);
     }
 
     leader.aggressHand[details.card] = undefined;

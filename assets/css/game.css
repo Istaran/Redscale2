@@ -387,3 +387,50 @@ div.percentText {
     justify-content: center;
     color: black;
 }
+
+
+div.attackControl {
+    display: flex;
+    flex-direction: row;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 6px;
+    height: 15px;
+    position: relative;
+    width: fit-content;
+}
+
+div.attackResultText {
+    margin-left: 6px;
+    color: black;
+}
+
+div.attackZones {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    display: flex;
+    flex-direction: row;
+}
+div.attackZone {
+    display:inline;
+    height: 13px;
+}
+
+div.attackBar {
+    background: none;
+    border-style: groove;
+    border-width: 3px;
+    position: absolute;    
+    height: 15px;
+    top: -3px;
+}
+
+div.attackCancelBar {
+    background: none;
+    border-style: groove;
+    border-width: 3px;
+    position: absolute;
+    height: 1px;
+    top: 4px;
+}

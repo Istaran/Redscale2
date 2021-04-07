@@ -768,27 +768,136 @@ class PercentBar extends React.Component {
 
 class AttackRenderer extends React.Component {
     constructor(props) {
+        props.totalWidth = parseInt(props.totalWidth);
         super(props);
+        
+        this.state = this.calcStateFromAttack(props.attack);
+    }
+
+    calcStateFromAttack(attack) {        
+        let cancel = attack.deflected;
+        let crit = Math.max(attack.critZone || 0, 0);
+        let hit = Math.max(attack.hitZone || 0, 0);
+        let dodge = Math.max(attack.dodgeZone || 0, 0); 
+        let miss = Math.max(attack.missZone || 0, 0);   
+        let total = crit + hit + miss + dodge;
+        let multi = this.props.totalWidth / total; 
+        let critWidth = (multi * crit) + "px";
+        let hitWidth = (multi * hit) + "px";
+        let dodgeWidth = (multi * dodge) + "px";
+        let missWidth = (multi * miss) + "px";
+        let barWidth = multi  + "px";
+        // For deflect, we use barLeftCurrent to track width instead of left.
+        let barLeftFinal = cancel ? (
+                this.props.totalWidth
+            ) : (
+                attack.rtl ? 
+                (multi * Math.max(Math.floor(attack.roll), 0) - 2) :
+                (multi * Math.max(total - 1 - Math.floor(attack.roll), 0) - 2) 
+            );
+
+        let barLeftCurrent = cancel ? (
+            0
+        ) : (
+            attack.rtl ? 
+            this.props.totalWidth - multi:
+            -2
+        );
+        let barspeed = multi;
+        return {
+            cancel: cancel,
+            critWidth: critWidth,
+            hitWidth: hitWidth,
+            dodgeWidth: dodgeWidth,
+            missWidth: missWidth,
+            barWidth: barWidth,
+            barLeftFinal: barLeftFinal,
+            barLeftCurrent: barLeftCurrent,
+            barspeed: barspeed
+        };
+    }
+
+    componentDidMount() {
+        this.timerID = setInterval(
+            () => this.animate(),
+            25
+        );
+    }
+
+    componentWillUnmount() {
+        if (this.timerID)
+            clearInterval(this.timerID);
+    }
+
+    animate() {
+        if (this.state.barLeftFinal == this.state.barLeftCurrent) {
+            clearInterval(this.timerID);
+            this.timerID = null;
+            return;
+        }
+        let newState = Object.assign({}, this.state);
+        if (this.props.attack.rtl && !this.state.cancel) {
+            // RTL so move bar leftwards
+            newState.barLeftCurrent -= this.state.barspeed;
+            if (newState.barLeftCurrent < newState.barLeftFinal) newState.barLeftCurrent = newState.barLeftFinal;
+        } else {
+            // LTR so move bar rightwards (or expand in case of deflect)
+            newState.barLeftCurrent += this.state.barspeed;
+            if (newState.barLeftCurrent > newState.barLeftFinal) newState.barLeftCurrent = newState.barLeftFinal;
+        }
+        this.setState(newState);        
+    }
+
+    componentDidUpdate(prevProps) {
+        this.props.totalWidth = parseInt(this.props.totalWidth);
+        this.props.barspeed = parseInt(this.props.barspeed);
+        if (this.props.attack != prevProps.attack) {
+            this.setState(this.calcStateFromAttack(this.props.attack));
+            if(!this.timerID) 
+                this.timerID = setInterval(
+                    () => this.animate(),
+                    100
+                );
+        }
     }
 
     render() {        
         let self = this;
+        let attack = self.props.attack;        
+        let cancelBarLeft = attack.rtl ? "-2px" : (self.props.totalWidth - self.state.barLeftCurrent - 2) + "px";
 
-        let left = Math.max(self.props.leftVal, 0);
-        let right = Math.max(self.props.rightVal, 0);
-        let multi = self.props.totalWidth / (left + right); 
-        let leftWidth = multi * left;
-        let rightWidth = multi * right;
-        let barLeft = multi * Math.max(self.props.barVal, 0);
-
-        return (<div className="percentControl">
-            <div className="percentLeft" style={{width: leftWidth,  height: self.props.height, backgroundColor: self.props.leftColor}}>
-            </div>
-            <div className="percentRight" style={{width: rightWidth,  height: self.props.height, backgroundColor: self.props.rightColor}}>
-            </div>
-            <div className="percentBar" style={{width: '2px', height: self.props.height, top: 0, left: barLeft, borderColor: "black"}}></div>
-            <div className="damageString">{self.props.text}</div>
-        </div>);
+        return (<div className="attackControl">
+                { attack.rtl ? 
+                <div className="attackZones">
+                    <div className="attackZone" style={{width: self.state.critWidth, backgroundColor: attack.critColor}} />
+                    <div className="attackZone" style={{width: self.state.hitWidth, backgroundColor: attack.hitColor}} />
+                    <div className="attackZone" style={{width: self.state.dodgeWidth, backgroundColor: attack.dodgeColor}} />
+                    <div className="attackZone" style={{width: self.state.missWidth, backgroundColor: attack.missColor}} />
+                </div>
+                :
+                <div className="attackZones">
+                    <div className="attackZone" style={{width: self.state.missWidth, height: self.props.height, backgroundColor: attack.missColor}} />
+                    <div className="attackZone" style={{width: self.state.dodgeWidth,  height: self.props.height, backgroundColor: attack.dodgeColor}} />
+                    <div className="attackZone" style={{width: self.state.hitWidth, height: self.props.height, backgroundColor: attack.hitColor}} />
+                    <div className="attackZone" style={{width: self.state.critWidth, height: self.props.height, backgroundColor: attack.critColor}} />
+                </div>
+                }
+                { this.state.cancel ?
+                    <div className="attackCancelBar" style={{left: cancelBarLeft, width: self.state.barLeftCurrent + "px", borderColor: attack.lineColor}} />
+                :
+                    <div className="attackBar" style={{width: this.state.barWidth, height: self.props.height, left: this.state.barLeftCurrent, borderColor: attack.lineColor}} />
+                }
+                { 
+                ( this.state.cancel || self.state.barLeftCurrent == self.state.barLeftFinal) ? (
+                    (attack.result == "hit" || attack.result == "crit") ?
+                        <div className="attackResultText">{attack.result + "! " + attack.multiplier + "x ("}
+                        {attack.damage.map((roll, index)=>{return <span>{(index?" + ":"") + roll}</span>})}
+                        )</div>
+                    :
+                        <div className="attackResultText">{attack.result}</div>
+                ): <div/>
+                }
+            </div>);
     }
 }
         
@@ -872,7 +981,11 @@ class GameDisplayer extends React.Component {
                 }
                 return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
             });
-            return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/></div>);
+            
+            let attackDisplay = self.state.gameState.attacks ? self.state.gameState.attacks.map((attack, index) => {
+                return <AttackRenderer totalWidth='100' height='15px' attack={attack}></AttackRenderer>
+            }) : <div></div>;
+            return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}{attackDisplay}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/></div>);
         } else if (this.state.saveList) {
             // initialize chat
             if (!this.chatInit) {
