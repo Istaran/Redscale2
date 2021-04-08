@@ -30,6 +30,8 @@ function extractProfile(profile) {
         id: profile.id,
         displayName: profile.displayName
     };
+    savedProfile.id = savedProfile.id || profile.id;
+    savedProfile.displayName = savedProfile.displayName || profile.displayName;
     if (profile.photos && profile.photos.length) {
         savedProfile.imageUrl = profile.photos[0].value;
     }
