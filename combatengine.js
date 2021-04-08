@@ -435,7 +435,8 @@ let getStatusDisplay = async function (state) {
             { "text": staminaText, "help": "Stamina.\nWhen their stamina drops to zero, they will be forced to submit and you can choose between mercy and murder.",
             isPercent: true, leftVal: stamina, rightVal: 10-stamina, leftColor: "#FFFF00", rightColor: "#888844"  },
             { "text": manaText, "help": "Mana.\nNot all creatures know how to use mana, but all of them possess at least some.",
-            isPercent: true, leftVal: mana, rightVal: 10-mana, leftColor: "#FF00FF", rightColor: "#884488" }
+            isPercent: true, leftVal: mana, rightVal: 10-mana, leftColor: "#FF00FF", rightColor: "#884488" },
+            { "text": state.enemy.tell, "help": "Tell. By watching your opponent's actions you can get hints to what they will do next.\nWatch out for tricks though!"}
         ]
     };
 

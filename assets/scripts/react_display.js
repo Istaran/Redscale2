@@ -137,6 +137,8 @@ class ActButton extends React.Component {
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
+            gameDisplayer.setState({ frame: frame++, gameState: data });
+        }).catch(function (err) {
             setError();
         });
     }
@@ -789,10 +791,14 @@ class TextRenderer extends React.Component {
     constructor(props) {
         super(props);
         this.props.queue.push(this);
-        this.state = { remainingTime: this.props.pause };
+        this.state = { remainingTime: this.props.pause, animationStarted: false };
     }
 
     animate() {
+        if (!this.state.animationStarted) {
+            this.setState({animationStarted: true});
+            return;
+        }
         if (this.animationDone()) {
             return;
         }
@@ -801,22 +807,15 @@ class TextRenderer extends React.Component {
 
     animationDone() { return this.state.remainingTime <= 0; }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.frame != prevProps.frame) {
-            this.setState({ remainingTime: this.props.pause });
-            this.props.queue.push(this);
-        }
-    }
-
     render() {        
         let self = this;
-        return <div className="textControl">{self.props.text}</div>;
+        return this.state.animationStarted && <div className="textControl">{self.props.text}</div>;
     }
 }
 
 class AttackRenderer extends React.Component {
     constructor(props) {
-        props.totalWidth = parseInt(props.totalWidth);
+        props.blockWidth = parseInt(props.blockWidth);
         super(props);
         this.props.queue.push(this);
         this.state = this.calcStateFromAttack(props.attack);
@@ -829,97 +828,111 @@ class AttackRenderer extends React.Component {
         let dodge = Math.max(attack.dodgeZone || 0, 0); 
         let miss = Math.max(attack.missZone || 0, 0);   
         let total = crit + hit + miss + dodge;
-        let multi = this.props.totalWidth / total; 
-        let critWidth = (multi * crit) + "px";
-        let hitWidth = (multi * hit) + "px";
-        let dodgeWidth = (multi * dodge) + "px";
-        let missWidth = (multi * miss) + "px";
-        let barWidth = multi  + "px";
+        let multi = this.props.blockWidth; 
+        let dodgimation = 0;
+        let dodgespeed = dodge;
+        let totalWidth = multi * total;
+        let critWidth = multi * crit;
+        let hitWidth = multi * hit;
+        let dodgeWidth = multi * dodge;
+        let missWidth = multi * miss;
+        let barWidth = multi;
         // For deflect, we use barLeftCurrent to track width instead of left.
-        let barLeftFinal = cancel ? (
-                this.props.totalWidth
-            ) : (
-                attack.rtl ? 
-                (multi * Math.max(Math.floor(attack.roll), 0) - 2) :
-                (multi * Math.max(total - 1 - Math.floor(attack.roll), 0) - 2) 
-            );
+        let barLeftFinal = attack.rtl ? 
+            (multi * Math.max(Math.floor(attack.roll || Math.random() * total), 0) - 2) :
+            (multi * Math.max(total - 1 - Math.floor(attack.roll), 0) - 2);
 
-        let barLeftCurrent = cancel ? (
-            0
-        ) : (
-            attack.rtl ? 
-            this.props.totalWidth - multi:
-            -2
-        );
+        let barLeftCurrent = attack.rtl ? 
+            totalWidth - multi:
+            -2;
         let barspeed = multi;
         return {
             cancel: cancel,
+            cancelBarWidth: -totalWidth,
+            dodgimation: dodgimation,
+            dodgeSpeed: dodgespeed,
+            totalWidth: totalWidth,
             critWidth: critWidth,
             hitWidth: hitWidth,
             dodgeWidth: dodgeWidth,
             missWidth: missWidth,
             barWidth: barWidth,
             barLeftFinal: barLeftFinal,
+            barTop: -3,
             barLeftCurrent: barLeftCurrent,
-            barspeed: barspeed
+            barspeed: barspeed,
+            cancelspeed: barspeed * 3,
+            animationStarted: false
         };
     }
 
     animate() {
+        if (!this.state.animationStarted) {
+            this.setState({animationStarted: true});
+            return;
+        }
         if (this.animationDone()) {
             return;
         }
         let newState = Object.assign({}, this.state);
-        if (this.props.attack.rtl && !this.state.cancel) {
+        newState.dodgimation = Math.min(newState.dodgimation + newState.dodgeSpeed, newState.dodgeWidth);
+        if (newState.cancel) {
+            newState.cancelBarWidth = Math.min(newState.cancelBarWidth + newState.cancelspeed, newState.totalWidth);
+        }
+        if (this.props.attack.rtl) {
             // RTL so move bar leftwards
-            newState.barLeftCurrent -= this.state.barspeed;
+            newState.barLeftCurrent -= newState.barspeed;
             if (newState.barLeftCurrent < newState.barLeftFinal) newState.barLeftCurrent = newState.barLeftFinal;
+            if (newState.cancel && newState.cancelBarWidth >= newState.barLeftCurrent) {
+                newState.barTop = (newState.barTop + 4) * 2 - 4;
+            }
         } else {
-            // LTR so move bar rightwards (or expand in case of deflect)
-            newState.barLeftCurrent += this.state.barspeed;
+            // LTR so move bar rightwards
+            newState.barLeftCurrent += newState.barspeed;
             if (newState.barLeftCurrent > newState.barLeftFinal) newState.barLeftCurrent = newState.barLeftFinal;
+            if (newState.cancel && (newState.totalWidth - newState.barWidth - newState.cancelBarWidth) <= newState.barLeftCurrent) {
+                newState.barTop = (newState.barTop + 4) * 2 - 4;
+            }
         }
         this.setState(newState);        
     }
 
-    animationDone() { return this.state.barLeftFinal == this.state.barLeftCurrent; }
-
-    componentDidUpdate(prevProps) {        
-        if (this.props.frame != prevProps.frame) {
-            this.props.queue.push(this);
-            this.props.totalWidth = parseInt(this.props.totalWidth);
-            this.props.barspeed = parseInt(this.props.barspeed);
-
-            this.setState(this.calcStateFromAttack(this.props.attack));
-        }
+    animationDone() { return this.state.dodgimation == this.state.dodgeWidth && 
+        (this.state.cancel ?
+        this.state.cancelBarWidth == this.state.totalWidth && this.state.barTop > 1000 :
+        this.state.barLeftFinal == this.state.barLeftCurrent); 
     }
 
     render() {        
+        if (!this.state.animationStarted) return null;
         let self = this;
         let attack = self.props.attack;        
-        let cancelBarLeft = attack.rtl ? "-2px" : (self.props.totalWidth - self.state.barLeftCurrent - 2) + "px";
-
+        let cancelBarLeft = attack.rtl ? -2 : (self.state.totalWidth - self.state.cancelBarWidth - 2);
+        let fakeHitWidth = self.state.hitWidth + self.state.dodgeWidth - self.state.dodgimation;
         return (<div className="attackControl">
                 { attack.rtl ? 
                 <div className="attackZones">
                     <div className="attackZone" style={{width: self.state.critWidth, backgroundColor: attack.critColor}} />
-                    <div className="attackZone" style={{width: self.state.hitWidth, backgroundColor: attack.hitColor}} />
-                    <div className="attackZone" style={{width: self.state.dodgeWidth, backgroundColor: attack.dodgeColor}} />
+                    <div className="attackZone" style={{width: fakeHitWidth, backgroundColor: attack.hitColor}} />
+                    <div className="attackZone" style={{width: self.state.dodgimation, backgroundColor: attack.dodgeColor}} />
                     <div className="attackZone" style={{width: self.state.missWidth, backgroundColor: attack.missColor}} />
                 </div>
                 :
                 <div className="attackZones">
                     <div className="attackZone" style={{width: self.state.missWidth, height: self.props.height, backgroundColor: attack.missColor}} />
-                    <div className="attackZone" style={{width: self.state.dodgeWidth,  height: self.props.height, backgroundColor: attack.dodgeColor}} />
-                    <div className="attackZone" style={{width: self.state.hitWidth, height: self.props.height, backgroundColor: attack.hitColor}} />
+                    <div className="attackZone" style={{width: self.state.dodgimation,  height: self.props.height, backgroundColor: attack.dodgeColor}} />
+                    <div className="attackZone" style={{width: fakeHitWidth, height: self.props.height, backgroundColor: attack.hitColor}} />
                     <div className="attackZone" style={{width: self.state.critWidth, height: self.props.height, backgroundColor: attack.critColor}} />
                 </div>
                 }
-                { this.state.cancel ?
-                    <div className="attackCancelBar" style={{left: cancelBarLeft, width: self.state.barLeftCurrent + "px", borderColor: attack.lineColor}} />
-                :
-                    <div className="attackBar" style={{width: this.state.barWidth, height: self.props.height, left: this.state.barLeftCurrent, borderColor: attack.lineColor}} />
-                }
+                { this.state.cancelBarWidth > 0 ?
+                    <div className="attackCancelBar" style={{left: cancelBarLeft, width: self.state.cancelBarWidth, borderColor: attack.lineColor}} />
+                : ''}
+                { this.state.barTop < 1000 ? 
+                <div className="attackBar" style={{width: self.state.barWidth, height: self.props.height, 
+                    left: self.state.barLeftCurrent, top: self.state.barTop, 
+                    borderColor: attack.lineColor}} />
+                : ''}
                 { 
                 ( this.state.cancel || self.state.barLeftCurrent == self.state.barLeftFinal) ? (
                     (attack.result == "hit" || attack.result == "crit") ?
@@ -946,7 +959,7 @@ class GameDisplayer extends React.Component {
           chatLog: log,
           markupLog: mLog,
 		  gameState: null,
-          maxShow: 1
+          frame: frame
 		};
 	}
     
@@ -967,15 +980,9 @@ class GameDisplayer extends React.Component {
             this.animators[0].animate();
             if (this.animators[0].animationDone())
             {
-                this.animators.pop();
-                this.setState((state, props) => { return { maxShow: state.maxShow + 1}});
+                this.animators.shift();
+                this.setState({frame: frame});
             }
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (this.state.frame != prevState.frame) {
-            this.setState({maxShow: 1});
         }
     }
 
@@ -1008,57 +1015,60 @@ class GameDisplayer extends React.Component {
 	
 	render() {
 		let self = this;
+
         formData = {}; // Caution: if this causes unexpected rerenderers I might have issues with setting this here.
         if (this.state.gameState) {
             if (!userid && this.state.gameState.id) userid = this.state.gameState.id;
             let controlTable = [];
-            if (this.state.maxShow > self.state.gameState.display.length) {
-                controlTable = this.state.gameState.controls.map((column, colIndex) => {
-                    let controlColumn = [];
-                    if (column) {
-                        controlColumn = column.map((control, rowIndex) => {
-                            switch (control.type) {
-                                case 'actButton':
-                                    return <ActButton key={colIndex * 10 + rowIndex} extendRight={control.extendRight} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
-                                case 'card':
-                                    return <Card key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
-                                case 'navigator':
-                                    return <Navigator key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
-                                case 'textBox':
-                                    return <TextInputer key={colIndex * 10 + rowIndex} id={control.id} default={control.default} name={control.name} />;
-                                case 'refresher':
-                                    return <Refresher />;
-                                case 'reconnector':
-                                    return <Reconnector />;
-                                case 'requantifier':
-                                    return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} leftChecks={control.leftChecks} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
-                                case 'reassigner':
-                                    return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
-                                case 'recombiner':
-                                    return <Recombiner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
-                                case 'itemCount':
-                                    return <div key={colIndex * 10 + rowIndex} className="ctrlLabel">{control.display}</div>;
-                                case 'spacer':
-                                    return <div key={colIndex * 10 + rowIndex} className="ctrlLabel"></div>; 
-                                default:
-                                    return '';
-                            }
-                        });
-                    }
-                    return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
-                });
+            controlTable = this.state.gameState.controls.map((column, colIndex) => {
+                let controlColumn = [];
+                if (column) {
+                    controlColumn = column.map((control, rowIndex) => {
+                        switch (control.type) {
+                            case 'actButton':
+                                return <ActButton key={colIndex * 10 + rowIndex} extendRight={control.extendRight} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
+                            case 'card':
+                                return <Card key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
+                            case 'navigator':
+                                return <Navigator key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
+                            case 'textBox':
+                                return <TextInputer key={colIndex * 10 + rowIndex} id={control.id} default={control.default} name={control.name} />;
+                            case 'refresher':
+                                return <Refresher />;
+                            case 'reconnector':
+                                return <Reconnector />;
+                            case 'requantifier':
+                                return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} leftChecks={control.leftChecks} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
+                            case 'reassigner':
+                                return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
+                            case 'recombiner':
+                                return <Recombiner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
+                            case 'itemCount':
+                                return <div key={colIndex * 10 + rowIndex} className="ctrlLabel">{control.display}</div>;
+                            case 'spacer':
+                                return <div key={colIndex * 10 + rowIndex} className="ctrlLabel"></div>; 
+                            default:
+                                return '';
+                        }
+                    });
+                }
+                return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
+            });
+            if (this.state.frame != frame) {
+                controlTable = []; // hide controls until frame's animations go.
+                this.animators = [];
+                this.state.frame = frame;
             }
-    
             let statusDisplay = self.state.gameState.display.map((display, index) => {
-                if (index < self.state.maxShow) {
-                    if(display.type == "text") {
-                        return <TextRenderer text={display.text} pause={display.pause} style={display.style} queue={self.animators} frame={self.state.frame} />
-                    } else if (display.type == "attack") {
-                        return <AttackRenderer totalWidth='100' attack={display} queue={self.animators} frame={self.state.frame}/>
-                    }
+                let key = "display_" + frame + "_" + index;
+                if(display.type == "text") {
+                    return <TextRenderer key={key} text={display.text} pause={display.pause || 0} style={display.style} queue={self.animators} frame={self.state.frame} />
+                } else if (display.type == "attack") {
+                    return <AttackRenderer key={key} blockWidth='10' attack={display} queue={self.animators} frame={self.state.frame}/>
                 }
                 return <div />;
             });
+            if (this.animators.length > 0) controlTable = [];
             return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{statusDisplay}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/></div>);
         } else if (this.state.saveList) {
             // initialize chat

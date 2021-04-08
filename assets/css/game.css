@@ -423,7 +423,6 @@ div.attackBar {
     border-width: 3px;
     position: absolute;    
     height: 15px;
-    top: -3px;
 }
 
 div.attackCancelBar {

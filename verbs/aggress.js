@@ -3,15 +3,16 @@ var gameengine = require('../gameengine');
 var cache = require('../cache');
 
 let act = async function (state, details) {
+    let enemy = state.enemy;
     let cards = await cache.load('data/combat/aggress cards.json');
     let card = cards[details.card];
     console.log(`Aggress card: ${JSON.stringify(card)}`);
-    gameengine.displayText(state, card.display, 100, state.enemy.tags, state.enemy.scrubbers);
+    gameengine.displayText(state, card.display, 100, enemy.tags, enemy.scrubbers);
 
-    let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
-    let enemyCardId = state.enemy.cardqueue[0];
+    let enemyDef = await cache.load(`data/enemies/${enemy.name}.json`);
+    let enemyCardId = enemy.cardqueue[0];
     let enemyCard = enemyDef.cardsets[enemyCardId.set].cards[enemyCardId.card];
-    gameengine.displayText(state, enemyCard["abjure display"], 100, state.enemy.tags, state.enemy.scrubbers);
+    gameengine.displayText(state, enemyCard["abjure display"], 100, enemy.tags, enemy.scrubbers);
 
 
     let leader = state.parties[state.activeParty].leader;
@@ -47,7 +48,7 @@ let act = async function (state, details) {
                     if (damage <= 0) {
                         allyResult += card["aggress soak display"] || "{They} shrugged it off!\n";
                     } else {
-                        state.enemy.health -= damage;
+                        enemy.health -= damage;
                         allyResult += `{They} dealt ${damage} ${card.damagetype} damage!\n`;
                     }
                 }
@@ -68,7 +69,7 @@ let act = async function (state, details) {
             if (hitMulti == 0) {
                 attackText += card["aggress dodge display"] || (`The ${enemyDef.display} avoided your attack!\n`);
             } else {
-                attackText += `You hit ${state.enemy.name}. `;
+                attackText += `You hit ${enemy.name}. `;
                 if (hitMulti > 1) {
                     attackText += `Critical hit! (Net damage x${hitMulti}) `;
                     if (enemyCard.noncritsoak > 0) {
@@ -81,35 +82,35 @@ let act = async function (state, details) {
                 if (damage <= 0) {
                     attackText += card["aggress soak display"] || "{They} shrugged it off!\n";
                 } else {
-                    state.enemy.health -= damage;
+                    enemy.health -= damage;
                     attackText += `You dealt ${damage} ${card.damagetype} damage!\n`;
                     if (card.surrenderbonus)
-                        state.enemy.surrenderbonus = card.surrenderbonus;
+                        enemy.surrenderbonus = card.surrenderbonus;
 
                     if (card.staminadamagedie) {
                         let staminadamage = combatengine.damageRoll(card.staminadamagedice, card.staminadamagedie, card.staminadamageplus, 1);
-                        state.enemy.stamina -= staminadamage;
+                        enemy.stamina -= staminadamage;
                         attackText += `You wear down your enemy, depleting ${staminadamage} stamina!\n`;
                     }
                 }
             }
         }
         combatengine.addAttackResults(state, false);
-        gameengine.displayText(state, attackText, 100, state.enemy.tags, state.enemy.scrubbers);
+        gameengine.displayText(state, attackText, 100, enemy.tags, enemy.scrubbers);
     }
 
     leader.aggressHand[details.card] = undefined;
     if (leader.stamina < 0) {
         gameengine.displayText(state, 
             `You discard ${Math.min(combatengine.handSize(leader.aggressHand), -leader.stamina)} aggress cards and ${Math.min(combatengine.handSize(leader.abjureHand), -leader.stamina)} abjure cards due to low stamina!`, 
-            100, state.enemy.tags, state.enemy.scrubbers);
+            100, enemy.tags, enemy.scrubbers);
         combatengine.discardCards(leader.aggressHand, -leader.stamina);
         combatengine.discardCards(leader.abjureHand, -leader.stamina);
         leader.stamina = 0;
     }
 
     let engineProgress = await combatengine.progress(state);
-    gameengine.displayText(state, engineProgress, 100, state.enemy.tags, state.enemy.scrubbers);
+    gameengine.displayText(state, engineProgress, 100, enemy.tags, enemy.scrubbers);
 }
 
 

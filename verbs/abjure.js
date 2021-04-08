@@ -3,18 +3,18 @@ const gameengine = require('../gameengine');
 const cache = require('../cache');
 
 let act = async function (state, details) {
+    let enemy = state.enemy;
     let cards = await cache.load('data/combat/abjure cards.json');
     let card = cards[details.card];
     console.log(`Abjure card: ${JSON.stringify(card)}`);
 
-    gameengine.displayText(state, card.display, 100, state.enemy.tags, state.enemy.scrubbers);
+    gameengine.displayText(state, card.display, 100, enemy.tags, enemy.scrubbers);
 
-    let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
-    let enemyCardId = state.enemy.cardqueue[0];
+    let enemyDef = await cache.load(`data/enemies/${enemy.name}.json`);
+    let enemyCardId = enemy.cardqueue[0];
     let enemyCard = enemyDef.cardsets[enemyCardId.set].cards[enemyCardId.card];
-    let engineResult = "";
 
-    gameengine.displayText(state, enemyCard["aggress display"], 100, state.enemy.tags, state.enemy.scrubbers);
+    gameengine.displayText(state, enemyCard["aggress display"], 100, enemy.tags, enemy.scrubbers);
 
     let leader = state.parties[state.activeParty].leader;
     let assist = leader.activeassist || {};
@@ -48,7 +48,7 @@ let act = async function (state, details) {
             if (hitMulti == 0)
                 attackText += enemyCard["aggress dodge display"] || "You avoided an attack!\n";
             else {
-                attackText += `${state.enemy.name} hit you. `;
+                attackText += `${enemy.name} hit you. `;
                 if (hitMulti > 1)
                 attackText += `Critical hit! (Net damage x${hitMulti}) `;
                 let typeMulti = (leader.damageMultiplier && leader.damageMultiplier[enemyCard.damagetype]) ? Math.floor(leader.damageMultiplier[enemyCard.damagetype]) : 1;
@@ -67,14 +67,14 @@ let act = async function (state, details) {
             }
         }
         combatengine.addAttackResults(state, true);
-        gameengine.displayText(state, attackText, 100, state.enemy.tags, state.enemy.scrubbers);
+        gameengine.displayText(state, attackText, 100, enemy.tags, enemy.scrubbers);
     }
 
     leader.abjureHand[details.card] = undefined;
     if (leader.stamina < 0) {
         gameengine.displayText(state, 
             `You discard ${Math.min(combatengine.handSize(leader.aggressHand), -leader.stamina)} aggress cards and ${Math.min(combatengine.handSize(leader.abjureHand), -leader.stamina)} abjure cards due to low stamina!`, 
-            100, state.enemy.tags, state.enemy.scrubbers);
+            100, enemy.tags, enemy.scrubbers);
         combatengine.discardCards(leader.aggressHand, -leader.stamina);
         combatengine.discardCards(leader.abjureHand, -leader.stamina);
         leader.stamina = 0;
@@ -82,7 +82,7 @@ let act = async function (state, details) {
 
     let engineProgress = await combatengine.progress(state);
     console.log("State: " + JSON.stringify(state));
-    gameengine.displayText(state, engineProgress, 100, state.enemy.tags, state.enemy.scrubbers);
+    gameengine.displayText(state, engineProgress, 100, enemy.tags, enemy.scrubbers);
 }
 
 module.exports = {

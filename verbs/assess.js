@@ -4,13 +4,12 @@ var cache = require('../cache');
 var loc = require('../location');
 
 let act = async function (state, details) {
-    gameengine.displayText(state, state.enemy.tell, 100, state.enemy.tags, state.enemy.scrubbers);
-
     let cards = await cache.load('data/combat/assess cards.json');
-    let card = cards[details.card];
-    state.enemy.phasequeue = ["assess"].concat(card.queue);
+    let card = cards[details.card];    
+    let enemy = state.enemy;
+    enemy.phasequeue = ["assess"].concat(card.queue);
 
-    gameengine.displayText(state, card.display, 100, state.enemy.tags, state.enemy.scrubbers);
+    gameengine.displayText(state, card.display, 100, enemy.tags, enemy.scrubbers);
 
     if (card.escaperolls) {
         var navigator = (await loc.getControls(state))[0][0];
@@ -25,7 +24,7 @@ let act = async function (state, details) {
                 return;
             }
         }
-        gameengine.displayText(state, "But you can't get away!", 100, state.enemy.tags, state.enemy.scrubbers);
+        gameengine.displayText(state, "But you can't get away!", 100, enemy.tags, enemy.scrubbers);
     }
 
     let leader = state.parties[state.activeParty].leader;
@@ -41,7 +40,7 @@ let act = async function (state, details) {
     }
 
     let engineProgress = await combatengine.progress(state);
-    gameengine.displayText(state, engineProgress, 100, state.enemy.tags, state.enemy.scrubbers);
+    gameengine.displayText(state, engineProgress, 100, enemy.tags, enemy.scrubbers);
 }
 
 module.exports = {

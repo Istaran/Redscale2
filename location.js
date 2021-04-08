@@ -110,7 +110,7 @@ let explore = async function (state) {
             await gameengine.doVerb(event.verb, state, event.details);
         }
         // Use shift to force style description in front, even though we let event happen first (it may chenge our style)
-        state.display.shift({
+        state.view.display.unshift({
             type: "text",
             text: style.description + "\n\n",
             pause: 100
