@@ -318,16 +318,17 @@ let damageRoll = function (damageDice, damageDie, damagePlus, damageMinus, multi
     return damage > 0 ? damage : 0;
 };
 
-let addAttackResults = function (state, enemyAttacking) {
+let addAttackResults = async function (state, enemyAttacking) {    
+    let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
     attackResult.type = "attack";
     attackResult.rtl = enemyAttacking;
-    attackResult.hitColor = enemyAttacking ? (state.enemy.dimcolor || '#FFFF88') : '#FF8888';
-    attackResult.critColor = enemyAttacking ? (state.enemy.brightcolor || '#FFFF00') : '#FF0000';
-    attackResult.dodgeColor = enemyAttacking ? '#880000' : (state.enemy.darkcolor || '#888800');
+    attackResult.hitColor = enemyAttacking ? (enemyDef.dimcolor || '#FFFF88') : '#FF8888';
+    attackResult.critColor = enemyAttacking ? (enemyDef.brightcolor || '#FFFF00') : '#FF0000';
+    attackResult.dodgeColor = enemyAttacking ? '#880000' : (enemyDef.darkcolor || '#b98d29');
     attackResult.missColor = '#000000';
-    attackResult.halfdamColor = enemyAttacking ? (state.enemy.dimcolor || '#FFFF88') : '#FF8888';
-    attackResult.damageColor = enemyAttacking ? (state.enemy.brightcolor || '#FFFF00') : '#FF0000';
-    attackResult.blockColor = enemyAttacking ? '#880000' : (state.enemy.darkcolor || '#888800');
+    attackResult.halfdamColor = enemyAttacking ? (enemyDef.dimcolor || '#FFFF88') : '#FF8888';
+    attackResult.damageColor = enemyAttacking ? (enemyDef.brightcolor || '#FFFF00') : '#FF0000';
+    attackResult.blockColor = enemyAttacking ? '#880000' : (enemyDef.darkcolor || '#b98d29');
     attackResult.exblockColor = '#888888';
     attackResult.zeroColor = '#000000';
     attackResult.boxColor = '#FFFFFF';
@@ -341,6 +342,7 @@ let clearCombat = async function (state) {
 };
 
 let progress = async function (state) {
+    if (!gameengine) gameengine = require('./gameengine');
     let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
     if (!enemyDef) return `Failed to load enemy type in mid combat: ${state.enemy.name}`;
     let leader = state.parties[state.activeParty].leader;
@@ -394,11 +396,13 @@ let progress = async function (state) {
                     let assistcard = helperDef.assistcards[assist.card];
                     console.log(`Assist card: ${JSON.stringify(assistcard)}`);
                     leader.activeassist = {
-                        pawnIndex: assist.set
+                        pawnIndex: assist.set,
+                        tags: helper.tags,
+                        scrubbers: helper.scrubbers
                     }
                     Object.assign(leader.activeassist, assistcard);
-                    leader.activeassist.tags = Object.assign({}, helper.tags);
-                    leader.activeassist.scrubbers = Object.assign({}, helperDef.scrubbers);
+                    leader.activeassist.display = await gameengine.scrubText(state, leader.activeassist.display, helper.tags, helper.scrubbers);
+                    leader.activeassist.help = await gameengine.scrubText(state, leader.activeassist.help, helper.tags, helper.scrubbers);
                 }
             } else {
                 leader.activeassist = null;
@@ -408,11 +412,11 @@ let progress = async function (state) {
             if (state.enemy.cardqueue.length <= 0)
                 state.enemy.cardqueue = getQueueFromSets(enemyDef.cardsets, enemyDef.reshuffle);
 
-            state.enemy.tell = `${enemyDef.cardsets[state.enemy.cardqueue[0].set].tell}${leader.activeassist ? "\n\n" + leader.activeassist.display : ""}`;
+            state.enemy.tell = enemyDef.cardsets[state.enemy.cardqueue[0].set].tell;
             break;
     }
 
-    return `${newPhase == "assess" ? state.enemy.tell + "\n\n" : ""}It's time to ${newPhase}! Pick a card...`;
+    return `${newPhase == "assess" ? state.enemy.tell + "\n\n" + (leader.activeassist ? leader.activeassist.display + "\n\n" : "") : ""}It's time to ${newPhase}! Pick a card...`;
 };
 
 
@@ -435,7 +439,7 @@ let getStatusDisplay = async function (state) {
             { "text": healthText, "help": "Health.\nWhen their health drops to zero, they will die and you can harvest your reward from their corpse." ,
             isPercent: true, leftVal: health, rightVal: 10-health, leftColor: "#FF0000", rightColor: "#884444" },
             { "text": staminaText, "help": "Stamina.\nWhen their stamina drops to zero, they will be forced to submit and you can choose between mercy and murder.",
-            isPercent: true, leftVal: stamina, rightVal: 10-stamina, leftColor: "#FFFF00", rightColor: "#888844"  },
+            isPercent: true, leftVal: stamina, rightVal: 10-stamina, leftColor: "#FFFF00", rightColor: "#b98d29"  },
             { "text": manaText, "help": "Mana.\nNot all creatures know how to use mana, but all of them possess at least some.",
             isPercent: true, leftVal: mana, rightVal: 10-mana, leftColor: "#FF00FF", rightColor: "#884488" },
             { "text": state.enemy.tell, "help": "Tell. By watching your opponent's actions you can get hints to what they will do next.\nWatch out for tricks though!"}
