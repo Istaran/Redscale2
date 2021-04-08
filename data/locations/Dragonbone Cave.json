@@ -813,7 +813,9 @@
             "type": "actButton",
             "display": "Rest",
             "verb": "rest",
-            "details": {},
+            "details": {
+              "text": "You rest peacefully, digesting your food, recovering your strength, and backing up your save."
+            },
             "help": "Fast forward time to recover from your trevails. In addition, you may have a resting event, and also save a checkpoint in case you die or want to rewind."
         },
         "harvest": {

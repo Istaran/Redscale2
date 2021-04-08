@@ -1,4 +1,4 @@
-let gameengine = require('../gameengine');
+const gameengine = require('../gameengine');
 
 let act = async function (state, details) {
     let value = details.value;
@@ -6,10 +6,9 @@ let act = async function (state, details) {
     if (details.statepath) value = gameengine.readContextPath(state, details.sourcecontext, details.statepath);
     if (details.calc) value = await gameengine.calculate(state, details.calc);
     gameengine.writeContextPath(state, details.context, details.statename, value);
-
-    state.view.status = details.text;
-};
-
+    
+    gameengine.displayText(state, details.text, details.pause || 100);
+}
 
 module.exports = {
 	act: act

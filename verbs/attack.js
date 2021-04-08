@@ -1,8 +1,8 @@
-var combatengine = require('../combatengine');
+const combatengine = require('../combatengine');
+const gameengine = require('../gameengine');
 
 let act = async function (state, details) {
-
-    state.view.status = await combatengine.configureEnemy(state, details.enemy, "attack");
+    gameengine.displayText(state, await combatengine.configureEnemy(state, details.enemy, "attack"), details.pause || 100);
 };
 
 

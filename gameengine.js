@@ -27,30 +27,37 @@ let doVerb = async function (verbName, state, details) {
             verbs[verbName] = null;
         }
     }
-    if (verbs[verbName]) {
-        if (details && details.dirty) state.dirty = true;
-        await verbs[verbName].act(state, details);
-    }
-    if (details) {
-        var tags = {};
-        var contextScrubbers = null;
-        switch (details.scrubcontext) {
-            case "enemy":
-                tags = state.enemy.tags;
-                contextScrubbers = state.enemy.scrubbers;
-                break;
-            case "character":
-                console.log("Scrubbing text based on character: " + details.scrubcharacter);
-                if (details.scrubcharacter) {
-                    if (state.world && state.world.characters && state.world.characters[details.scrubcharacter]) {
-                        tags = state.world.characters[details.scrubcharacter].tags || {};
-                        contextScrubbers = state.world.characters[details.scrubcharacter].scrubbers || {};
-                        console.log(`Scrubbers: ${JSON.stringify(contextScrubbers)}\nTags:${JSON.stringify(tags)}`);
+    var oldContextScrubbers = state.contextScrubbers;
+    var oldContextTags = state.contextTags;
+    if (verbs[verbName]) {        
+        if (details) {        
+            if (details.dirty) state.dirty = true;
+
+            var tags = oldContextTags;
+            var contextScrubbers = oldContextScrubbers;
+            switch (details.scrubcontext) {
+                case "enemy":
+                    tags = state.enemy.tags;
+                    contextScrubbers = state.enemy.scrubbers;
+                    break;
+                case "character":
+                    console.log("Scrubbing text based on character: " + details.scrubcharacter);
+                    if (details.scrubcharacter) {
+                        if (state.world && state.world.characters && state.world.characters[details.scrubcharacter]) {
+                            tags = state.world.characters[details.scrubcharacter].tags || {};
+                            contextScrubbers = state.world.characters[details.scrubcharacter].scrubbers || {};
+                            console.log(`Scrubbers: ${JSON.stringify(contextScrubbers)}\nTags:${JSON.stringify(tags)}`);
+                        }
                     }
-                }
-                break;
+                    break;
+            }
+            state.contextTags = tags;
+            state.contextScrubbers = contextScrubbers;
         }
-        state.view.status = await scrubText(state, state.view.status || "", tags, contextScrubbers)
+        await verbs[verbName].act(state, details);
+        // restore outer context
+        state.contextScrubbers = oldContextScrubbers;
+        state.contextTags = oldContextTags;
     }
 }
 
@@ -363,7 +370,7 @@ let act = async function (profile, action, query) {
     // Apply action
     if (action.id && state.details[action.id]) {
         state.dirty = undefined;
-        state.view = {};
+        state.view = { display: []};
         let details = (action.sub ? state.details[action.id][action.sub] : state.details[action.id]);
         state.data = action.data;
         await doVerb(action.verb, state, details);
@@ -385,6 +392,16 @@ let act = async function (profile, action, query) {
 
     state.view.title = `${await loc.getTitle(state)} - ${time.getTimeString(state)}`;
     state.view.id = profile.id;
+
+    // apply display scrubbers
+    for (let d = 0; d < state.view.display.length; d++) {
+        let display = state.view.display[d];
+        if (display.text) {
+            display.text = await scrubText(state, display.text, display.tags, display.scrubbers);
+            display.tags = undefined;
+            display.scrubbers = undefined;
+        }
+    }
 	
 	// Save current state;
 	cache.save(savePath, state);
@@ -440,12 +457,12 @@ let writeContextPath = function (state, context, path, value) {
 }
 
 let archive = async function (state) {
-    let status = state.view.status; // prob not using this but still.
-    state.view.status = "You restore the previous moment of time.";
+    let display = state.view.display; 
+    state.view.display = [{type:"text", "text": "You restore the previous moment of time."}];
     let timestamp = Date.now();
     await cache.save(`${state.archivepath}${timestamp}.json`, JSON.parse(JSON.stringify(state)));
     state.archive = timestamp;
-    state.view.status = status;
+    state.view.display = display;
 }
 
 let rewind = async function (state, recurse) {
@@ -460,14 +477,14 @@ let rewind = async function (state, recurse) {
 let textify = function (tagmap, tags, fallback) {
     for (var tag in tagmap) {
         if (tags[tag]) {
-            console.log(`${tag} => ${tagmap[tag]}`);
             return tagmap[tag];
         }
-    }
+    }    
     return fallback;
 }
 
 let scrubText = async function (state, text, contextTags, contextScrubbers) {
+    if (contextTags === undefined) contextTags = {};
     let scrubbers = await cache.load("data/scrubbers.json");
     if (contextScrubbers) {
         for (var conscrub in contextScrubbers) {
@@ -476,10 +493,14 @@ let scrubText = async function (state, text, contextTags, contextScrubbers) {
             if (typeof scrubbed !== 'string') {
                 scrubbed = textify(scrubbed, contextTags, conscrub);
             }
-            while (text.indexOf(markup) > -1)
+            while (text.indexOf(markup) > -1) {
+                console.log(`${markup} => ${scrubbed}`);
                 text = text.replace(markup, scrubbed);
-            while (text.indexOf(markup.toLowerCase()) > -1)
+            }
+            while (text.indexOf(markup.toLowerCase()) > -1) {
+                console.log(`${markup.toLowerCase()} => ${scrubbed.toLowerCase()}`);
                 text = text.replace(markup.toLowerCase(), scrubbed.toLowerCase());
+            }
         }
     }
 
@@ -501,6 +522,19 @@ let scrubText = async function (state, text, contextTags, contextScrubbers) {
     return text;
 }
 
+let displayText = function(state, text, pauseAfterMs, contextTags, contextScrubbers) {
+    if (text)
+        state.view.display.push(
+            {
+                type: "text",
+                text: text,
+                pause: pauseAfterMs,
+                tags: contextTags || state.contextTags,
+                scrubbers: contextScrubbers || state.contextScrubbers
+            }
+        );
+}
+
 module.exports = {
     act: act,
     conditionMet: conditionMet,
@@ -514,5 +548,6 @@ module.exports = {
     randomChoice: randomChoice,
     readContextPath: readContextPath,
     writeContextPath: writeContextPath,
-    scrubText: scrubText
+    scrubText: scrubText,
+    displayText: displayText
 };

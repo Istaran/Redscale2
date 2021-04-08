@@ -10,8 +10,7 @@ let act = async function (state, details) {
         lastUpdated: state.gameTime
     };
     gameengine.writeContextPath(state, "location", "building", newBuild);
-
-    state.view.status = details.text;
+    gameengine.displayText(state, details.text, details.pause || 100);
 };
 
 

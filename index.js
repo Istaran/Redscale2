@@ -25,21 +25,19 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const cache = require('./cache');
 function extractProfile(profile) {
-    let imageUrl = '';
+    let profilePath = `saves/profiles/${profile.provider}.${profile.id}.json`;
+    let savedProfile = cache.load(profilePath) || {
+        id: profile.id,
+        displayName: profile.displayName
+    };
     if (profile.photos && profile.photos.length) {
-        imageUrl = profile.photos[0].value;
+        savedProfile.imageUrl = profile.photos[0].value;
     }
-    let email = '';
     if (profile.emails && profile.emails.length) {
-        email = profile.emails[0].value;
+        savedProfile.email = profile.emails[0].value;
     }
     
-    cache.save(`saves/profiles/${profile.provider}.${profile.id}.json`, {
-        id: profile.id,
-        displayName: profile.displayName,
-        email: email,
-        image: imageUrl,
-    });
+    cache.save(profilePath, savedProfile);
 
     return `${profile.provider}.${profile.id}`;
 }
@@ -110,18 +108,24 @@ if (google_oauth_config) {
     );
 }
 
-
+let getProfile = async function(user) {
+    let profile = null;
+    if (!google_oauth_config) {
+        profile = await cache.load(`saves/profiles/localdev.json`);
+        if (!profile) {
+            profile = { id: "localdev", displayName: "Developer" };
+            cache.save(`saves/profiles/localdev.json`, profile);
+        }
+    } else if (user) {
+        profile = await cache.load(`saves/profiles/${user}.json`);
+    }
+    return profile;
+};
 
 app.post('/chat', async function (req, res) {
   const body = req.body.body;
   const local = (req.ip == "::1" || req.ip == "127.0.0.1");
-    var profile;
-    
-    if (!google_oauth_config) {
-        profile = { id: "localdev", displayName: "Developer" };
-    } else if (req.user) {
-        profile = await cache.load(`saves/profiles/${req.user}.json`);
-    }
+    var profile = await getProfile(req.user);
     if (profile) {
         chat.sendChat(profile, body, local);
     }
@@ -130,11 +134,7 @@ app.post('/chat', async function (req, res) {
 });
 
 app.get('/chat', async function (req, res) {
-    if (!google_oauth_config) {
-        profile = { id: "localdev", displayName: "Developer" };
-    } else if (req.user) {
-        profile = await cache.load(`saves/profiles/${req.user}.json`);
-    }
+  var profile = await getProfile(req.user);
   const messages = chat.getChats(profile);
   
   res.set('Content-Type', 'Application/JSON');
@@ -160,38 +160,17 @@ app.get('/', async function (req, res) {
 });
 
 app.post('/act', async function (req, res) {
-    var profile;
-    if (!google_oauth_config) {
-        profile = { id: "localdev", displayName: "Developer" };
-    } else {
-        if (!req.user) {
-            res.set('Content-Type', 'Application/JSON');
-            res.send(JSON.stringify({ status: "Sorry to tell you this, but your session has become disconnected. Please click reconnect to sign back in. This may be because the server was reset.", controls: [[{ type: "reconnector" }]] }));
-            return;
-        }
-        profile = await cache.load(`saves/profiles/${req.user}.json`);
-    }
-
+    var profile = await getProfile(req.user);
 	const body = req.body.body;
     console.log("Query:" + JSON.stringify(req.query));
-	const state = await game.act(profile, body, req.query);
+	const view = await game.act(profile, body, req.query);
 	
 	res.set('Content-Type', 'Application/JSON');
-	res.send(JSON.stringify(state));
+	res.send(JSON.stringify(view));
 });
 
 app.get('/list', async function (req, res) {
-    var profile;
-    if (!google_oauth_config) {
-        profile = { id: "localdev", givenName: "Developer" };
-    } else {
-        if (!req.user) {
-            res.status(403);
-            res.send("No active session");
-            return;
-        }
-        profile = await cache.load(`saves/profiles/${req.user}.json`);
-    }
+    var profile = await getProfile(req.user);
     let saveList = await game.list(profile);
     res.set('Content-Type', 'Application/JSON');
     res.send(JSON.stringify(saveList));

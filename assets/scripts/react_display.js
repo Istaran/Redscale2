@@ -5,6 +5,24 @@ var gameDisplayer;
 var formData = {};
 var saveSlot = 0;
 var userid;
+var frame = 0;
+
+function setError() {
+    gameDisplayer.setState(
+        { 
+            frame: frame++, 
+            gameState: { 
+                display: [
+                    { 
+                        type: "text", 
+                        text: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.",
+                        pause: 0
+                    }
+                ], 
+                controls: [[{ type: "refresher" }]] 
+            } 
+        });
+}
 
 function getStatus() {
     fetch('/act' + location.search, {
@@ -16,9 +34,9 @@ function getStatus() {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-        gameDisplayer.setState({ gameState: data });
+        gameDisplayer.setState({ frame: frame++, gameState: data });
     }).catch(function (err) {
-        gameDisplayer.setState({ gameState: { status: "There was an error trying to load your game. Click refresh when you want to try again. If the problem persists, email istaran@redscalesadventure.online and include your google email address for reference.", controls: [[{ type: "refresher" }]] } });
+        setError();
     });
 }
 
@@ -30,7 +48,7 @@ function getSaveList() {
     }).then(function (data) {
         gameDisplayer.setState({ saveList: data, gameState: null });
     }).catch(function (err) {
-        gameDisplayer.setState({ gameState: { status: "There was an error trying to load your save list. Click reconnect when you want to try again. If the problem persists, email istaran@redscalesadventure.online and include your google email address for reference.", controls: [[{ type: "reconnector" }]] } });
+        setError();
     });
 }
 
@@ -119,7 +137,9 @@ class ActButton extends React.Component {
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            gameDisplayer.setState({ gameState: data });
+            gameDisplayer.setState({ frame: frame++, gameState: data });
+        }).catch(function (err) {
+            setError();
         });
     }
 
@@ -147,9 +167,9 @@ class Card extends React.Component {
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            gameDisplayer.setState({ gameState: data });
+            gameDisplayer.setState({ frame: frame++, gameState: data });
         }).catch(function (err) {
-            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+            setError();
         });
     }
 
@@ -182,9 +202,9 @@ class Navigator extends React.Component {
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
-                  gameDisplayer.setState({gameState: data});
+                  gameDisplayer.setState({ frame: frame++, gameState: data});
               }).catch(function (err) {
-                  gameDisplayer.setState({ gameState: { status: "There was an error trying to go there. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+                setError();
               });
 		}
 	}
@@ -516,10 +536,10 @@ class Requantifier extends React.Component {
             body: JSON.stringify({ 'body': { 'verb': 'requantify', 'slot': saveSlot, 'id': self.props.id, 'data': { 'left': this.state.leftCounts, 'right': this.state.rightCounts, 'leftChecks': this.state.leftChecks }} })
         }).then(function (response) {
             return response.json();
-        }).then(function (data) {
-            gameDisplayer.setState({ gameState: data });
+        }).then(function(data) {
+            gameDisplayer.setState({ frame: frame++, gameState: data});
         }).catch(function (err) {
-            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+            setError();
         });
     }
 
@@ -592,10 +612,10 @@ class Reassigner extends React.Component {
             body: JSON.stringify({ 'body': { 'verb': 'requantify', 'slot': saveSlot, 'id': self.props.id, 'data': { 'left': this.state.leftSet, 'right': this.state.rightSet } } })
         }).then(function (response) {
             return response.json();
-        }).then(function (data) {
-            gameDisplayer.setState({ gameState: data });
+        }).then(function(data) {
+            gameDisplayer.setState({ frame: frame++, gameState: data});
         }).catch(function (err) {
-            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+            setError();
         });
     }
 
@@ -670,10 +690,11 @@ class Recombiner extends React.Component {
                     rightSet: data.controls[0][0].rightSet.slice(),
                     displays: data.controls[0][0].displays.slice(),
                     id: data.controls[0][0].id,
+                    frame: frame++,
                 });
-        }).catch(function (err) {
-            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
-        });
+            }).catch(function (err) {
+                setError();
+            });
     }
 
     done() {
@@ -686,10 +707,10 @@ class Recombiner extends React.Component {
             body: JSON.stringify({ 'body': { 'verb': 'setscene', 'slot': saveSlot, 'id': self.state.id } })
         }).then(function (response) {
             return response.json();
-        }).then(function (data) {
-            gameDisplayer.setState({ gameState: data });
+        }).then(function(data) {
+            gameDisplayer.setState({ frame: frame++, gameState: data});
         }).catch(function (err) {
-            gameDisplayer.setState({ gameState: { status: "There was an error trying to do that. Click refresh to restore your controls, or email istaran@redscalesadventure.online if your problem persists.", controls: [[{ type: "refresher" }]] } });
+            setError();
         });
     }
 
@@ -766,29 +787,181 @@ class PercentBar extends React.Component {
     }
 }
 
-class AttackRenderer extends React.Component {
+class TextRenderer extends React.Component {
     constructor(props) {
         super(props);
+        this.props.queue.push(this);
+        this.state = { remainingTime: this.props.pause, animationStarted: false };
     }
+
+    animate() {
+        if (!this.state.animationStarted) {
+            this.setState({animationStarted: true});
+            return;
+        }
+        if (this.animationDone()) {
+            return;
+        }
+        this.setState((state, props) => { return { remainingTime: state.remainingTime - 25}});        
+    }
+
+    animationDone() { return this.state.remainingTime <= 0; }
 
     render() {        
         let self = this;
+        return this.state.animationStarted && <div className="textControl">{self.props.text}</div>;
+    }
+}
 
-        let left = Math.max(self.props.leftVal, 0);
-        let right = Math.max(self.props.rightVal, 0);
-        let multi = self.props.totalWidth / (left + right); 
-        let leftWidth = multi * left;
-        let rightWidth = multi * right;
-        let barLeft = multi * Math.max(self.props.barVal, 0);
+class AttackRenderer extends React.Component {
+    constructor(props) {
+        props.blockWidth = parseInt(props.blockWidth);
+        super(props);
+        this.props.queue.push(this);
+        this.state = this.calcStateFromAttack(props.attack);
+    }
 
-        return (<div className="percentControl">
-            <div className="percentLeft" style={{width: leftWidth,  height: self.props.height, backgroundColor: self.props.leftColor}}>
-            </div>
-            <div className="percentRight" style={{width: rightWidth,  height: self.props.height, backgroundColor: self.props.rightColor}}>
-            </div>
-            <div className="percentBar" style={{width: '2px', height: self.props.height, top: 0, left: barLeft, borderColor: "black"}}></div>
-            <div className="damageString">{self.props.text}</div>
-        </div>);
+    calcStateFromAttack(attack) {        
+        let cancel = attack.deflected;
+        let crit = Math.max(attack.critZone || 0, 0);
+        let hit = Math.max(attack.hitZone || 0, 0);
+        let dodge = Math.max(attack.dodgeZone || 0, 0); 
+        let miss = Math.max(attack.missZone || 0, 0);   
+        let total = crit + hit + miss + dodge;
+        let multi = this.props.blockWidth; 
+        let dodgimation = 0;
+        let dodgespeed = dodge;
+        let totalWidth = multi * total;
+        let critWidth = multi * crit;
+        let hitWidth = multi * hit;
+        let dodgeWidth = multi * dodge;
+        let missWidth = multi * miss;
+        let barWidth = multi;
+        // For deflect, we use barLeftCurrent to track width instead of left.
+        let barLeftFinal = attack.rtl ? 
+            (multi * Math.max(Math.floor(attack.roll || Math.random() * total), 0) - 2) :
+            (multi * Math.max(total - 1 - Math.floor(attack.roll), 0) - 2);
+
+        let barLeftCurrent = attack.rtl ? 
+            totalWidth - multi:
+            -2;
+        let barspeed = multi;
+        return {
+            cancel: cancel,
+            cancelBarWidth: -totalWidth,
+            dodgimation: dodgimation,
+            dodgeSpeed: dodgespeed,
+            totalWidth: totalWidth,
+            critWidth: critWidth,
+            hitWidth: hitWidth,
+            dodgeWidth: dodgeWidth,
+            missWidth: missWidth,
+            barWidth: barWidth,
+            barLeftFinal: barLeftFinal,
+            barTop: -3,
+            barLeftCurrent: barLeftCurrent,
+            barspeed: barspeed,
+            cancelspeed: barspeed * 3,
+            animationStarted: false
+        };
+    }
+
+    animate() {
+        if (!this.state.animationStarted) {
+            this.setState({animationStarted: true});
+            return;
+        }
+        if (this.animationDone()) {
+            return;
+        }
+        let newState = Object.assign({}, this.state);
+        newState.dodgimation = Math.min(newState.dodgimation + newState.dodgeSpeed, newState.dodgeWidth);
+        if (newState.cancel) {
+            newState.cancelBarWidth = Math.min(newState.cancelBarWidth + newState.cancelspeed, newState.totalWidth);
+        }
+        if (this.props.attack.rtl) {
+            // RTL so move bar leftwards
+            newState.barLeftCurrent -= newState.barspeed;
+            if (newState.barLeftCurrent < newState.barLeftFinal) newState.barLeftCurrent = newState.barLeftFinal;
+            if (newState.cancel && newState.cancelBarWidth >= newState.barLeftCurrent) {
+                newState.barTop = (newState.barTop + 4) * 2 - 4;
+            }
+        } else {
+            // LTR so move bar rightwards
+            newState.barLeftCurrent += newState.barspeed;
+            if (newState.barLeftCurrent > newState.barLeftFinal) newState.barLeftCurrent = newState.barLeftFinal;
+            if (newState.cancel && (newState.totalWidth - newState.barWidth - newState.cancelBarWidth) <= newState.barLeftCurrent) {
+                newState.barTop = (newState.barTop + 4) * 2 - 4;
+            }
+        }
+        this.setState(newState);        
+    }
+
+    animationDone() { return this.state.dodgimation == this.state.dodgeWidth && 
+        (this.state.cancel ?
+        this.state.cancelBarWidth == this.state.totalWidth && this.state.barTop > 1000 :
+        this.state.barLeftFinal == this.state.barLeftCurrent); 
+    }
+
+    render() {        
+        if (!this.state.animationStarted) return null;
+        let self = this;
+        let attack = self.props.attack;        
+        let cancelBarLeft = attack.rtl ? -2 : (self.state.totalWidth - self.state.cancelBarWidth - 2);
+        let fakeHitWidth = self.state.hitWidth + self.state.dodgeWidth - self.state.dodgimation;
+        let damageDisplay = null;        
+        let flexDir = attack.rtl ? 'row-reverse' : 'row';
+        if (this.animationDone() && attack.damage) {
+            damageDisplay = [];
+            let shields = attack.block || 0;
+            attack.damage.forEach((d) => {
+                for(let i = 0; i < d; i++) {
+                    if (shields) {
+                        damageDisplay.push(<div class='damageUsedShield' style={{'background-color': attack.blockColor}}/>);
+                        shields--;
+                    } else {
+                        if (attack.multiplier > 0) {
+                            let cluster = [];    
+                            let j = 0;                        
+                            for(j = 0; j <= attack.multiplier - 1; j++) {
+                                cluster.push(<div class='damageTick' style={{backgroundColor: attack.damageColor}}/>);
+                            }
+                            if (j < attack.multiplier) {
+                                // TODO: probably need to be tricksier about fractions in case of awkward type multipliers
+                                cluster.push(<div class='damageFraction' style={{backgroundColor: attack.halfdamColor}}/>);
+                            }
+                            damageDisplay.push(<div class='damageCluster'>{cluster}</div>);
+                        } else {
+                            damageDisplay.push(<div class='damageZero' style={{backgroundColor: attack.zeroColor}}/>);
+                        }
+                    }
+                }
+                damageDisplay.push(<div class='damageSpacer'/>);
+            });
+            for(let i = 0; i < shields; i++) {
+                damageDisplay.push(<div class='damageUnusedShield' style={{backgroundColor: attack.exblockColor}}/>);
+            }
+        }
+        return (<div className="attackControl" style={{'flex-direction':  flexDir}}>
+                <div className="attackZones" style={{'flex-direction':  flexDir}}>
+                    <div className="attackZone" style={{width: self.state.missWidth, backgroundColor: attack.missColor}} />
+                    <div className="attackZone" style={{width: self.state.dodgimation, backgroundColor: attack.dodgeColor}} />
+                    <div className="attackZone" style={{width: fakeHitWidth, backgroundColor: attack.hitColor}} />
+                    <div className="attackZone" style={{width: self.state.critWidth, backgroundColor: attack.critColor}} />
+                    { this.state.cancelBarWidth > 0 ?
+                        <div className="attackCancelBar" style={{left: cancelBarLeft, width: self.state.cancelBarWidth, borderColor: attack.lineColor}} />
+                    : ''}
+                    { this.state.barTop < 1000 ? 
+                    <div className="attackBar" style={{width: self.state.barWidth, height: self.props.height, 
+                        left: self.state.barLeftCurrent, top: self.state.barTop, 
+                        borderColor: attack.lineColor}} />
+                    : ''}
+                </div>
+                <div className="attackResultText">{ this.animationDone() ? attack.result + '!' : ''}</div>
+                <div className="damageZone"  style={{'flex-direction':  flexDir}}>
+                { damageDisplay }
+                </div>
+            </div>);
     }
 }
         
@@ -799,12 +972,37 @@ class GameDisplayer extends React.Component {
         var log = [];
         var mLog = [];
         for (var i = 0; i < 100; i++) { log.push(''); mLog.push({})}; // Default chat log to empty
+        this.animators = [];
 		this.state = {
           chatLog: log,
           markupLog: mLog,
 		  gameState: null,
+          frame: frame
 		};
 	}
+    
+    componentDidMount() {
+        this.timerID = setInterval(
+            () => this.animate(),
+            25
+        );
+    }
+
+    componentWillUnmount() {
+        if (this.timerID)
+            clearInterval(this.timerID);
+    }
+
+    animate() {
+        if (this.animators.length) {
+            this.animators[0].animate();
+            if (this.animators[0].animationDone())
+            {
+                this.animators.shift();
+                this.setState({frame: frame});
+            }
+        }
+    }
 
     stringFromMessageData(data) {
         var datestring = data.timestamp ? new Date(data.timestamp).toLocaleString() + ": " : "";
@@ -835,10 +1033,12 @@ class GameDisplayer extends React.Component {
 	
 	render() {
 		let self = this;
+
         formData = {}; // Caution: if this causes unexpected rerenderers I might have issues with setting this here.
         if (this.state.gameState) {
             if (!userid && this.state.gameState.id) userid = this.state.gameState.id;
-            let controlTable = this.state.gameState.controls.map((column, colIndex) => {
+            let controlTable = [];
+            controlTable = this.state.gameState.controls.map((column, colIndex) => {
                 let controlColumn = [];
                 if (column) {
                     controlColumn = column.map((control, rowIndex) => {
@@ -872,7 +1072,22 @@ class GameDisplayer extends React.Component {
                 }
                 return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
             });
-            return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{this.state.gameState.status}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/></div>);
+            if (this.state.frame != frame) {
+                controlTable = []; // hide controls until frame's animations go.
+                this.animators = [];
+                this.state.frame = frame;
+            }
+            let statusDisplay = self.state.gameState.display.map((display, index) => {
+                let key = "display_" + frame + "_" + index;
+                if(display.type == "text") {
+                    return <TextRenderer key={key} text={display.text} pause={display.pause || 0} style={display.style} queue={self.animators} frame={self.state.frame} />
+                } else if (display.type == "attack") {
+                    return <AttackRenderer key={key} blockWidth='10' attack={display} queue={self.animators} frame={self.state.frame}/>
+                }
+                return <div />;
+            });
+            if (this.animators.length > 0) controlTable = [];
+            return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{statusDisplay}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/></div>);
         } else if (this.state.saveList) {
             // initialize chat
             if (!this.chatInit) {

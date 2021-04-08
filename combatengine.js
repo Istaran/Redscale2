@@ -247,9 +247,26 @@ let discardCards = function (hand, count) {
 
 var attackResult = {};
 
+let setAttackZones = function (accuracy, dodge, evasion) {
+    let dodgedAccuracy = Math.max(0, accuracy - dodge);
+    // Calculate widths of various outcomes for rendering.
+    let critZone = Math.max(0, dodgedAccuracy - evasion);
+    let hitZone = Math.min(evasion, dodgedAccuracy) - critZone;
+    let dodgeZone = Math.min(accuracy - dodgedAccuracy, evasion - hitZone - critZone);
+    let missZone = evasion - hitZone - critZone - dodgeZone;
+    attackResult = { deflected: false, hitZone: hitZone, critZone: critZone, dodgeZone: dodgeZone, missZone: missZone };
+    return dodgedAccuracy;
+}
+
+let deflect = function (accuracy, dodge, evasion) {    
+    setAttackZones(accuracy, dodge, evasion);
+    attackResult.deflected = true;
+    attackResult.result = 'deflected';
+}
+
 // Given accuracy of attacker and dodge and evasion of defender, roll to hit, return damage multiplier (1 for standard hit, 0 for miss, >1 for crit)
 let attackRoll = function (accuracy, dodge, evasion) {
-    attackResult = { deflected: false, hitZone: Math.min(evasion, accuracy), critZone: Math.min(0, accuracy - evasion) };
+    let dodgedAccuracy = setAttackZones(accuracy, dodge, evasion);
     attackResult.roll = Math.random() * evasion;
     let hit = 0;
 	console.log(`Rolling: Chance: ${accuracy} - ${dodge} / ${evasion}, Roll: ${attackResult.roll}`);
@@ -258,12 +275,12 @@ let attackRoll = function (accuracy, dodge, evasion) {
         console.log('miss');
         return 0;
     }
-    else if (attackResult.roll > accuracy - dodge) {
+    else if (attackResult.roll > dodgedAccuracy) {
         attackResult.result = 'dodged';
         console.log('dodged');        
         return 0;
     }
-    accuracy -= dodge;
+    accuracy = dodgedAccuracy;
     while (accuracy > attackResult.roll) {
         hit++;
         accuracy -= evasion;
@@ -274,47 +291,52 @@ let attackRoll = function (accuracy, dodge, evasion) {
     else {
         attackResult.result = 'hit';
     }
-	console.log(`${hit} hit${hit == 1 ? "" : "s"}`);
+	console.log(attackResult.result);
 
     return hit;
 };
 
 // Given (net) dice count/faces and modifier, roll the dice and return damage.
 let damageRoll = function (damageDice, damageDie, damagePlus, damageMinus, multiplier) {
-    let damage = 0;
-    attackResult.damage = [];
-    console.log(`Rolling ${damageDice}d${damageDie}+${damagePlus}`);
+    let damage = damagePlus;
+    attackResult.damage = [damagePlus];
+    console.log(`Rolling ${damagePlus}+${damageDice}d${damageDie}-${damageMinus}`);
     for (var i = 0; i < damageDice; i++) {
         let roll = Math.floor(Math.random() * damageDie) + 1; 
         damage += roll;
         attackResult.damage.push(roll);
         console.log("Rolled: " + roll);
     }
-    damage += damagePlus;
-    attackResult.damage.push(damagePlus);
-    console.log("Plus: " + damagePlus);
+    attackResult.block = damageMinus;
     if (damageMinus) {
-        attackResult.damage.push(-damageMinus);
         damage -= damageMinus;        
-        console.log("Minus: " + -damageMinus);
     }
-    if (multiplier != 1) {
-        damage *= multiplier;
-        attackResult.multiplier = multiplier;
-    }
+    console.log("Subtotal: " + damage + " times " + multiplier);
+    damage *= multiplier;
+    attackResult.multiplier = multiplier;
     console.log("Total: " + damage);
     return damage > 0 ? damage : 0;
 };
 
 let addAttackResults = function (state, enemyAttacking) {
-    attackResult.hitColor = enemyAttacking ? (state.enemy.dimcolor || 'paleyellow') : '#FF8888';
-    attackResult.critColor = enemyAttacking ? (state.enemy.brightcolor || 'yellow') : '#FF0000';
-    state.view.attacks.push(attackResult);
+    attackResult.type = "attack";
+    attackResult.rtl = enemyAttacking;
+    attackResult.hitColor = enemyAttacking ? (state.enemy.dimcolor || '#FFFF88') : '#FF8888';
+    attackResult.critColor = enemyAttacking ? (state.enemy.brightcolor || '#FFFF00') : '#FF0000';
+    attackResult.dodgeColor = enemyAttacking ? '#880000' : (state.enemy.darkcolor || '#888800');
+    attackResult.missColor = '#000000';
+    attackResult.halfdamColor = enemyAttacking ? (state.enemy.dimcolor || '#FFFF88') : '#FF8888';
+    attackResult.damageColor = enemyAttacking ? (state.enemy.brightcolor || '#FFFF00') : '#FF0000';
+    attackResult.blockColor = enemyAttacking ? '#880000' : (state.enemy.darkcolor || '#888800');
+    attackResult.exblockColor = '#888888';
+    attackResult.zeroColor = '#000000';
+    attackResult.boxColor = '#FFFFFF';
+    attackResult.lineColor = '#888888';
+    state.view.display.push(attackResult);
 }
 
 let clearCombat = async function (state) {
     if (!gameengine) gameengine = require('./gameengine');
-    state.view.status = await gameengine.scrubText(state, state.view.status || "", state.enemy.tags, state.enemy.scrubbers);
     state.enemy = undefined;
 };
 
@@ -415,7 +437,8 @@ let getStatusDisplay = async function (state) {
             { "text": staminaText, "help": "Stamina.\nWhen their stamina drops to zero, they will be forced to submit and you can choose between mercy and murder.",
             isPercent: true, leftVal: stamina, rightVal: 10-stamina, leftColor: "#FFFF00", rightColor: "#888844"  },
             { "text": manaText, "help": "Mana.\nNot all creatures know how to use mana, but all of them possess at least some.",
-            isPercent: true, leftVal: mana, rightVal: 10-mana, leftColor: "#FF00FF", rightColor: "#884488" }
+            isPercent: true, leftVal: mana, rightVal: 10-mana, leftColor: "#FF00FF", rightColor: "#884488" },
+            { "text": state.enemy.tell, "help": "Tell. By watching your opponent's actions you can get hints to what they will do next.\nWatch out for tricks though!"}
         ]
     };
 
@@ -425,6 +448,7 @@ let getStatusDisplay = async function (state) {
 module.exports = {
     attackRoll: attackRoll,
     damageRoll: damageRoll,
+    deflect: deflect,
     addAttackResults: addAttackResults,
     getControls: getControls,
     clearCombat: clearCombat,

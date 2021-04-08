@@ -1,5 +1,5 @@
-var gameengine = require('../gameengine');
-var player = require('../player');
+const gameengine = require('../gameengine');
+const player = require('../player');
 const whilesPerRest = 10;
 
 let act = async function (state, details) {
@@ -10,7 +10,9 @@ let act = async function (state, details) {
 
     await gameengine.archive(state);
 
-    state.view.status = (details.silent ? "" : "You rest peacefully, digesting your food, recovering your strength, and backing up your save.");
+    if (!details.silent) {
+        gameengine.displayText(state, details.text, details.pause || 100);
+    }
 };
 
 

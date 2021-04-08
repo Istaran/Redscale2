@@ -1,4 +1,4 @@
-let cache = require('../cache');
+const cache = require('../cache');
 
 let act = async function (state, details) {
     let user = state.parties[state.activeParty].leader;

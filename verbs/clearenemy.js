@@ -1,12 +1,14 @@
-var combatengine = require('../combatengine');
-var loc = require('../location');
+const combatengine = require('../combatengine');
+const gameengine = require('../gameengine');
+const loc = require('../location');
 
 let act = async function (state, details) {
     await combatengine.clearCombat(state);
-    state.view.status = `${details.text || ''}\n\n${await loc.getDescription(state)}`;
+    if (details.text)
+        gameengine.displayText(state, details.text, details.pause || 100);
+    gameengine.displayText(state, await loc.getDescription(state), 100);
     console.log("Cleared enemy");
-}
-
+} 
 
 module.exports = {
     act: act

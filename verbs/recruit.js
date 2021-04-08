@@ -1,12 +1,13 @@
-let cache = require('../cache');
-let combatengine = require('../combatengine');
+const cache = require('../cache');
+const combatengine = require('../combatengine');
+const gameengine = require('../gameengine');
 
 let act = async function (state, details) {
-    state.view.status = details.text;
-
     let tags = {};
+    let scrubbers = null;
     if (details.tags == "enemy") {
         tags = Object.assign(tags, state.enemy.tags);
+        scrubbers = state.enemy.scrubbers;
         combatengine.clearCombat(state);
     } else if (details.tags) {
         for (var i = 0; i < details.tags.length; i++) {
@@ -27,6 +28,8 @@ let act = async function (state, details) {
         display: pawnDef.display
     };
     state.parties[state.activeParty].pawns.push(pawn);
+
+    gameengine.displayText(state, details.text, details.pause || 100, tags, scrubbers || pawnDef.scrubbers);
 };
 
 

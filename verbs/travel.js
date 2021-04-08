@@ -1,5 +1,5 @@
-var loc = require('../location');
-let player = require('../player');
+const loc = require('../location');
+const player = require('../player');
 
 let act = async function (state, details) {
     if (state.event || state.event2 || state.enemy) return; // Somehow you cheaty-clicked to travel

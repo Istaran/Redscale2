@@ -387,3 +387,105 @@ div.percentText {
     justify-content: center;
     color: black;
 }
+
+
+div.attackControl {
+    display: flex;
+    flex-direction: row;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 6px;
+    height: 15px;
+    position: relative;
+    width: fit-content;
+}
+
+div.attackResultText {
+    margin-left: 6px;
+    color: black;
+    width: 75px;
+    text-align: center;
+}
+
+div.attackZones {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+div.attackZone {
+    display:inline;
+    height: 13px;
+}
+
+div.attackBar {
+    background: none;
+    border-style: groove;
+    border-width: 3px;
+    position: absolute;    
+    height: 15px;
+}
+
+div.attackCancelBar {
+    background: none;
+    border-style: groove;
+    border-width: 3px;
+    position: absolute;
+    height: 1px;
+    top: 4px;
+}
+
+div.damageZone {
+    display: flex;
+    width: 200px;
+}
+
+div.damageTick {
+    flex: 2;
+    width: 10px;
+    margin-bottom: 1px;
+    background-color: #FFFF88;
+    border: 1px solid black;
+}
+
+div.damageFraction {  
+    flex: 1;  
+    width: 10px;
+    background-color: #FFFF88;
+    border: 1px solid black;
+}
+
+div.damageZero{
+    height: 10px;
+    width: 10px;
+    background-color: black;
+}
+
+div.damageCluster {
+    height: 15px;
+    width: 10px;
+    display:flex;
+    flex-direction: column;
+}
+
+div.damageUsedShield {
+    height: 15px;
+    width: 10px;
+    background-color: darkred;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+div.damageUnusedShield {
+    height: 15px;
+    width: 10px;
+    background-color: gray;    
+    clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+div.damageSpacer {
+    height: 10px;
+    width: 5px;
+}
+
