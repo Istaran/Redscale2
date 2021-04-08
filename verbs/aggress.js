@@ -53,7 +53,7 @@ let act = async function (state, details) {
                     }
                 }
             }
-            combatengine.addAttackResults(state, false);
+            await combatengine.addAttackResults(state, false);
             gameengine.displayText(state, allyResult, 100, assist.tags, assist.scrubbers);
         }        
     }
@@ -95,7 +95,7 @@ let act = async function (state, details) {
                 }
             }
         }
-        combatengine.addAttackResults(state, false);
+        await combatengine.addAttackResults(state, false);
         gameengine.displayText(state, attackText, 100, enemy.tags, enemy.scrubbers);
     }
 

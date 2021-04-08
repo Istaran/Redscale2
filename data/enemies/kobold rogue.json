@@ -6,6 +6,9 @@
         "person",
         [ "male", "female" ]
     ],
+    "brightcolor": "#0000FF",
+    "dimcolor": "#8888FF",
+    "darkcolor": "#000088",
     "attack announce": "",
     "hunt announce": "You lunge toward the kobold, but find yourself with a faceful of coat weighing you down. You dodge back just in time for the wind to sweep your neck as they try to slit your throat.\n\nAs soon as you get the coat torn free, you press the attack again, eager to put the knife-wielding kobold in their place.",
     "max health": 45,

@@ -7,6 +7,9 @@
         [ "male", "female" ],
         "miner"
     ],
+    "brightcolor": "#0000FF",
+    "dimcolor": "#8888FF",
+    "darkcolor": "#000088",
     "hunt announce": "You decide to take the initiative, and attack the kobold. They should belong to you, submitted like any other.",
     "max health": 50,
     "max stamina": 15,

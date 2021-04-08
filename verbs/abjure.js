@@ -66,7 +66,7 @@ let act = async function (state, details) {
                 attackText += enemyCard.attacksupportpawn + " (but not really because I haven't implemented that yet.)\n";
             }
         }
-        combatengine.addAttackResults(state, true);
+        await combatengine.addAttackResults(state, true);
         gameengine.displayText(state, attackText, 100, enemy.tags, enemy.scrubbers);
     }
 
