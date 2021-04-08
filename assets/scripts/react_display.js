@@ -7,10 +7,20 @@ var saveSlot = 0;
 var userid;
 var frame = 0;
 
+function setGameState(data) {
+    gameDisplayer.setState(
+        { 
+            frame: frame++, 
+            animationDone: false,
+            gameState: data
+        });
+}
+
 function setError() {
     gameDisplayer.setState(
         { 
             frame: frame++, 
+            animationDone: true,
             gameState: { 
                 display: [
                     { 
@@ -34,7 +44,7 @@ function getStatus() {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-        gameDisplayer.setState({ frame: frame++, gameState: data });
+        setGameState(data);
     }).catch(function (err) {
         setError();
     });
@@ -137,7 +147,7 @@ class ActButton extends React.Component {
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            gameDisplayer.setState({ frame: frame++, gameState: data });
+            setGameState(data);
         }).catch(function (err) {
             setError();
         });
@@ -167,7 +177,7 @@ class Card extends React.Component {
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            gameDisplayer.setState({ frame: frame++, gameState: data });
+            setGameState(data);
         }).catch(function (err) {
             setError();
         });
@@ -202,7 +212,7 @@ class Navigator extends React.Component {
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {
-                  gameDisplayer.setState({ frame: frame++, gameState: data});
+                setGameState(data);
               }).catch(function (err) {
                 setError();
               });
@@ -537,7 +547,7 @@ class Requantifier extends React.Component {
         }).then(function (response) {
             return response.json();
         }).then(function(data) {
-            gameDisplayer.setState({ frame: frame++, gameState: data});
+            setGameState(data);
         }).catch(function (err) {
             setError();
         });
@@ -613,7 +623,7 @@ class Reassigner extends React.Component {
         }).then(function (response) {
             return response.json();
         }).then(function(data) {
-            gameDisplayer.setState({ frame: frame++, gameState: data});
+            setGameState(data);
         }).catch(function (err) {
             setError();
         });
@@ -708,7 +718,7 @@ class Recombiner extends React.Component {
         }).then(function (response) {
             return response.json();
         }).then(function(data) {
-            gameDisplayer.setState({ frame: frame++, gameState: data});
+            setGameState(data);
         }).catch(function (err) {
             setError();
         });
@@ -977,7 +987,8 @@ class GameDisplayer extends React.Component {
           chatLog: log,
           markupLog: mLog,
 		  gameState: null,
-          frame: frame
+          frame: frame,
+          animationDone: false
 		};
 	}
     
@@ -999,8 +1010,10 @@ class GameDisplayer extends React.Component {
             if (this.animators[0].animationDone())
             {
                 this.animators.shift();
-                this.setState({frame: frame});
+                this.setState({animationDone: (this.animators.length == 0)});
             }
+        } else if (!this.state.animationDone) {
+            this.setState({animationDone: true});
         }
     }
 
@@ -1038,44 +1051,46 @@ class GameDisplayer extends React.Component {
         if (this.state.gameState) {
             if (!userid && this.state.gameState.id) userid = this.state.gameState.id;
             let controlTable = [];
-            controlTable = this.state.gameState.controls.map((column, colIndex) => {
-                let controlColumn = [];
-                if (column) {
-                    controlColumn = column.map((control, rowIndex) => {
-                        switch (control.type) {
-                            case 'actButton':
-                                return <ActButton key={colIndex * 10 + rowIndex} extendRight={control.extendRight} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
-                            case 'card':
-                                return <Card key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
-                            case 'navigator':
-                                return <Navigator key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
-                            case 'textBox':
-                                return <TextInputer key={colIndex * 10 + rowIndex} id={control.id} default={control.default} name={control.name} />;
-                            case 'refresher':
-                                return <Refresher />;
-                            case 'reconnector':
-                                return <Reconnector />;
-                            case 'requantifier':
-                                return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} leftChecks={control.leftChecks} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
-                            case 'reassigner':
-                                return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
-                            case 'recombiner':
-                                return <Recombiner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
-                            case 'itemCount':
-                                return <div key={colIndex * 10 + rowIndex} className="ctrlLabel">{control.display}</div>;
-                            case 'spacer':
-                                return <div key={colIndex * 10 + rowIndex} className="ctrlLabel"></div>; 
-                            default:
-                                return '';
-                        }
-                    });
-                }
-                return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
-            });
             if (this.state.frame != frame) {
-                controlTable = []; // hide controls until frame's animations go.
                 this.animators = [];
+                this.state.animationDone = false;
                 this.state.frame = frame;
+            }
+            if (this.state.animationDone) {
+                controlTable = this.state.gameState.controls.map((column, colIndex) => {
+                    let controlColumn = [];
+                    if (column) {
+                        controlColumn = column.map((control, rowIndex) => {
+                            switch (control.type) {
+                                case 'actButton':
+                                    return <ActButton key={colIndex * 10 + rowIndex} extendRight={control.extendRight} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
+                                case 'card':
+                                    return <Card key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
+                                case 'navigator':
+                                    return <Navigator key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
+                                case 'textBox':
+                                    return <TextInputer key={colIndex * 10 + rowIndex} id={control.id} default={control.default} name={control.name} />;
+                                case 'refresher':
+                                    return <Refresher />;
+                                case 'reconnector':
+                                    return <Reconnector />;
+                                case 'requantifier':
+                                    return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} leftChecks={control.leftChecks} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
+                                case 'reassigner':
+                                    return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
+                                case 'recombiner':
+                                    return <Recombiner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
+                                case 'itemCount':
+                                    return <div key={colIndex * 10 + rowIndex} className="ctrlLabel">{control.display}</div>;
+                                case 'spacer':
+                                    return <div key={colIndex * 10 + rowIndex} className="ctrlLabel"></div>; 
+                                default:
+                                    return '';
+                            }
+                        });
+                    }
+                    return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
+                });
             }
             let statusDisplay = self.state.gameState.display.map((display, index) => {
                 let key = "display_" + frame + "_" + index;
@@ -1086,7 +1101,6 @@ class GameDisplayer extends React.Component {
                 }
                 return <div />;
             });
-            if (this.animators.length > 0) controlTable = [];
             return (<div><div className='topbar'><div className='topleft' /><div className='titlebar'>{this.state.gameState.title}</div><div className='topright' /></div><div className='statusWrapper'><LeftStatus source={this.state.gameState.leftStatus} /><div className='statusDisplay'>{statusDisplay}</div><RightStatus source={this.state.gameState.rightStatus} /></div><div className='controlTable'>{controlTable}</div><ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/></div>);
         } else if (this.state.saveList) {
             // initialize chat
