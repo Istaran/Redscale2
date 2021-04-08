@@ -909,40 +909,58 @@ class AttackRenderer extends React.Component {
         let attack = self.props.attack;        
         let cancelBarLeft = attack.rtl ? -2 : (self.state.totalWidth - self.state.cancelBarWidth - 2);
         let fakeHitWidth = self.state.hitWidth + self.state.dodgeWidth - self.state.dodgimation;
-        return (<div className="attackControl">
-                { attack.rtl ? 
-                <div className="attackZones">
-                    <div className="attackZone" style={{width: self.state.critWidth, backgroundColor: attack.critColor}} />
-                    <div className="attackZone" style={{width: fakeHitWidth, backgroundColor: attack.hitColor}} />
-                    <div className="attackZone" style={{width: self.state.dodgimation, backgroundColor: attack.dodgeColor}} />
+        let damageDisplay = null;        
+        let flexDir = attack.rtl ? 'row-reverse' : 'row';
+        if (this.animationDone() && attack.damage) {
+            damageDisplay = [];
+            let shields = attack.block || 0;
+            attack.damage.forEach((d) => {
+                for(let i = 0; i < d; i++) {
+                    if (shields) {
+                        damageDisplay.push(<div class='damageUsedShield' style={{'background-color': attack.blockColor}}/>);
+                        shields--;
+                    } else {
+                        if (attack.multiplier > 0) {
+                            let cluster = [];    
+                            let j = 0;                        
+                            for(j = 0; j <= attack.multiplier - 1; j++) {
+                                cluster.push(<div class='damageTick' style={{backgroundColor: attack.damageColor}}/>);
+                            }
+                            if (j < attack.multiplier) {
+                                // TODO: probably need to be tricksier about fractions in case of awkward type multipliers
+                                cluster.push(<div class='damageFraction' style={{backgroundColor: attack.halfdamColor}}/>);
+                            }
+                            damageDisplay.push(<div class='damageCluster'>{cluster}</div>);
+                        } else {
+                            damageDisplay.push(<div class='damageZero' style={{backgroundColor: attack.zeroColor}}/>);
+                        }
+                    }
+                }
+                damageDisplay.push(<div class='damageSpacer'/>);
+            });
+            for(let i = 0; i < shields; i++) {
+                damageDisplay.push(<div class='damageUnusedShield' style={{backgroundColor: attack.exblockColor}}/>);
+            }
+        }
+        return (<div className="attackControl" style={{'flex-direction':  flexDir}}>
+                <div className="attackZones" style={{'flex-direction':  flexDir}}>
                     <div className="attackZone" style={{width: self.state.missWidth, backgroundColor: attack.missColor}} />
+                    <div className="attackZone" style={{width: self.state.dodgimation, backgroundColor: attack.dodgeColor}} />
+                    <div className="attackZone" style={{width: fakeHitWidth, backgroundColor: attack.hitColor}} />
+                    <div className="attackZone" style={{width: self.state.critWidth, backgroundColor: attack.critColor}} />
+                    { this.state.cancelBarWidth > 0 ?
+                        <div className="attackCancelBar" style={{left: cancelBarLeft, width: self.state.cancelBarWidth, borderColor: attack.lineColor}} />
+                    : ''}
+                    { this.state.barTop < 1000 ? 
+                    <div className="attackBar" style={{width: self.state.barWidth, height: self.props.height, 
+                        left: self.state.barLeftCurrent, top: self.state.barTop, 
+                        borderColor: attack.lineColor}} />
+                    : ''}
                 </div>
-                :
-                <div className="attackZones">
-                    <div className="attackZone" style={{width: self.state.missWidth, height: self.props.height, backgroundColor: attack.missColor}} />
-                    <div className="attackZone" style={{width: self.state.dodgimation,  height: self.props.height, backgroundColor: attack.dodgeColor}} />
-                    <div className="attackZone" style={{width: fakeHitWidth, height: self.props.height, backgroundColor: attack.hitColor}} />
-                    <div className="attackZone" style={{width: self.state.critWidth, height: self.props.height, backgroundColor: attack.critColor}} />
+                <div className="attackResultText">{ this.animationDone() ? attack.result + '!' : ''}</div>
+                <div className="damageZone"  style={{'flex-direction':  flexDir}}>
+                { damageDisplay }
                 </div>
-                }
-                { this.state.cancelBarWidth > 0 ?
-                    <div className="attackCancelBar" style={{left: cancelBarLeft, width: self.state.cancelBarWidth, borderColor: attack.lineColor}} />
-                : ''}
-                { this.state.barTop < 1000 ? 
-                <div className="attackBar" style={{width: self.state.barWidth, height: self.props.height, 
-                    left: self.state.barLeftCurrent, top: self.state.barTop, 
-                    borderColor: attack.lineColor}} />
-                : ''}
-                { 
-                ( this.state.cancel || self.state.barLeftCurrent == self.state.barLeftFinal) ? (
-                    (attack.result == "hit" || attack.result == "crit") ?
-                        <div className="attackResultText">{attack.result + "! " + attack.multiplier + "x ("}
-                        {attack.damage.map((roll, index)=>{return <span>{(index?" + ":"") + roll}</span>})}
-                        )</div>
-                    :
-                        <div className="attackResultText">{attack.result}</div>
-                ): <div/>
-                }
             </div>);
     }
 }

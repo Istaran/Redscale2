@@ -298,23 +298,20 @@ let attackRoll = function (accuracy, dodge, evasion) {
 
 // Given (net) dice count/faces and modifier, roll the dice and return damage.
 let damageRoll = function (damageDice, damageDie, damagePlus, damageMinus, multiplier) {
-    let damage = 0;
-    attackResult.damage = [];
-    console.log(`Rolling ${damageDice}d${damageDie}+${damagePlus}`);
+    let damage = damagePlus;
+    attackResult.damage = [damagePlus];
+    console.log(`Rolling ${damagePlus}+${damageDice}d${damageDie}-${damageMinus}`);
     for (var i = 0; i < damageDice; i++) {
         let roll = Math.floor(Math.random() * damageDie) + 1; 
         damage += roll;
         attackResult.damage.push(roll);
         console.log("Rolled: " + roll);
     }
-    damage += damagePlus;
-    attackResult.damage.push(damagePlus);
-    console.log("Plus: " + damagePlus);
+    attackResult.block = damageMinus;
     if (damageMinus) {
-        attackResult.damage.push(-damageMinus);
         damage -= damageMinus;        
-        console.log("Minus: " + -damageMinus);
     }
+    console.log("Subtotal: " + damage + " times " + multiplier);
     damage *= multiplier;
     attackResult.multiplier = multiplier;
     console.log("Total: " + damage);
@@ -328,6 +325,11 @@ let addAttackResults = function (state, enemyAttacking) {
     attackResult.critColor = enemyAttacking ? (state.enemy.brightcolor || '#FFFF00') : '#FF0000';
     attackResult.dodgeColor = enemyAttacking ? '#880000' : (state.enemy.darkcolor || '#888800');
     attackResult.missColor = '#000000';
+    attackResult.halfdamColor = enemyAttacking ? (state.enemy.dimcolor || '#FFFF88') : '#FF8888';
+    attackResult.damageColor = enemyAttacking ? (state.enemy.brightcolor || '#FFFF00') : '#FF0000';
+    attackResult.blockColor = enemyAttacking ? '#880000' : (state.enemy.darkcolor || '#888800');
+    attackResult.exblockColor = '#888888';
+    attackResult.zeroColor = '#000000';
     attackResult.boxColor = '#FFFFFF';
     attackResult.lineColor = '#888888';
     state.view.display.push(attackResult);

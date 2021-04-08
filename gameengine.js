@@ -394,13 +394,14 @@ let act = async function (profile, action, query) {
     state.view.id = profile.id;
 
     // apply display scrubbers
-    state.view.display.forEach(async (display) => {
+    for (let d = 0; d < state.view.display.length; d++) {
+        let display = state.view.display[d];
         if (display.text) {
-            display.text = await scrubText(state, display.text, display.contextTags, display.contextScrubbers);
-            display.contextTags = undefined;
-            display.contextScrubbers = undefined;
+            display.text = await scrubText(state, display.text, display.tags, display.scrubbers);
+            display.tags = undefined;
+            display.scrubbers = undefined;
         }
-    });
+    }
 	
 	// Save current state;
 	cache.save(savePath, state);
@@ -476,10 +477,9 @@ let rewind = async function (state, recurse) {
 let textify = function (tagmap, tags, fallback) {
     for (var tag in tagmap) {
         if (tags[tag]) {
-            console.log(`${tag} => ${tagmap[tag]}`);
             return tagmap[tag];
         }
-    }
+    }    
     return fallback;
 }
 
@@ -493,10 +493,14 @@ let scrubText = async function (state, text, contextTags, contextScrubbers) {
             if (typeof scrubbed !== 'string') {
                 scrubbed = textify(scrubbed, contextTags, conscrub);
             }
-            while (text.indexOf(markup) > -1)
+            while (text.indexOf(markup) > -1) {
+                console.log(`${markup} => ${scrubbed}`);
                 text = text.replace(markup, scrubbed);
-            while (text.indexOf(markup.toLowerCase()) > -1)
+            }
+            while (text.indexOf(markup.toLowerCase()) > -1) {
+                console.log(`${markup.toLowerCase()} => ${scrubbed.toLowerCase()}`);
                 text = text.replace(markup.toLowerCase(), scrubbed.toLowerCase());
+            }
         }
     }
 
