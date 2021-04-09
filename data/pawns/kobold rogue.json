@@ -23,6 +23,7 @@
       "allydamagedice": 1,
       "allydamagedie": 4,
       "allydamageplus": 3,
+      "allydamagetype": "piercing",
       "subtype": "aggress"
     }
   ],
