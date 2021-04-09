@@ -79,15 +79,15 @@ let act = async function (state, details) {
                 if (!immune) {
                     let attackRoll =
                         details.accuracy == "auto" ? 1 :
-                        await combatengine.attackRoll(details.accuracy, target.evasion || defs.evasion);
+                        await combatengine.attackRoll(details.accuracy, target.bonusdodge || defs.bonusdodge || 0, target.evasion || defs.evasion);
                     if (attackRoll == 0) {
                         resultText += "\n" + await gameengine.scrubText(state,
                             details[`${targetType[i]}misstext`],
                             target.tags,
                             defs ? defs.scrubbers : null);
                     } else {
-                        let typeMulti = target.damageMultiplier && target.damageMultiplier[details.damagetype] ? Math.floor(target.damageMultiplier[details.damagetype]) : 1;
-                        let damage = (await combatengine.damageRoll(details.damagedice, details.damagedie, details.damageplus), typeMulti * attackRoll);
+                        let typeMulti = combatengine.getTypeMulti(target, details.damagetype);
+                        let damage = combatengine.damageRoll(details.damagedice, details.damagedie, details.damageplus, target.bonussoak || defs.bonussoak || 0, typeMulti * attackRoll);
                         if (!target.health) target.health = defs.maxHealth;
                         target.health -= damage;
                         if (target.health > 0) {

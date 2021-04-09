@@ -1,3 +1,13 @@
+body {
+    margin: 8px;
+}
+
+#reactroot {
+    position: relative;
+    width: calc(100vw - 16px);
+    height: calc(100vh - 16px);
+}
+
 div.topbar {
     width: 100%;
     height: 25px;
@@ -220,7 +230,9 @@ div.div-unhelp {
 	position: absolute;
 	top: 15px;
 	left:2.5%;
-	color: black;
+	color: black;    
+	border-color: gray;
+	border-style: ridge;
 	animation-name: fade-out-to-top;
 	animation-duration: 1s;
 	opacity:0;

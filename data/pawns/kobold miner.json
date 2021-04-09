@@ -17,6 +17,7 @@
         "allydamagedie": 6,
         "allydamageplus": 2,
         "allydamagepierce": 4,
+        "allydamagetype": "piercing",
         "subtype": "aggress"
       },
         {

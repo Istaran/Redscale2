@@ -333,7 +333,7 @@
         "damageplus": 3,
         "damagetype": "piercing",
         "leaderhittext": "A dart flies out from the wall suddenly, slamming into your side and piercing your scales!",
-        "leadermisstext": "A dart flies out from the wall suddenly, boucning off your scales! Whew, that could have been bad.",
+        "leadermisstext": "A dart flies out from the wall suddenly, bouncing off your scales! Whew, that could have been bad.",
         "leaderkilltext": "A dart flies out from the wall suddenly, slamming into your eye and piercing your brain! Pain flares for a moment before you reject the event, and rip back time!",
         "pawnhittext": "A dart flies out from the wall suddenly, striking one of your {pawn} slaves, injuring {them}!",
         "pawnkilltext": "A dart flies out from the wall suddenly, striking one of your {pawn} slaves through the eye! {They} flop to the ground, lifeless!",

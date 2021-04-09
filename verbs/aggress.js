@@ -44,12 +44,13 @@ let act = async function (state, details) {
                     allyResult += assist.allyhittext + " ";
                     if (hitMulti > 1)
                         allyResult += `Critical hit! (Net damage x${hitMulti}) `;
-                    let damage = combatengine.damageRoll(assist.allydamagedice, assist.allydamagedie, assist.allydamageplus - Math.max(0, enemyCard.soak - (assist.allydamagepierce || 0))) * hitMulti;
+                    let typeMulti = combatengine(enemyDef, assist.allydamagetype);
+                    let damage = combatengine.damageRoll(assist.allydamagedice, assist.allydamagedie, assist.allydamageplus, Math.max(0, enemyCard.soak - (assist.allydamagepierce || 0)), hitMulti * typeMulti);
                     if (damage <= 0) {
                         allyResult += card["aggress soak display"] || "{They} shrugged it off!\n";
                     } else {
                         enemy.health -= damage;
-                        allyResult += `{They} dealt ${damage} ${card.damagetype} damage!\n`;
+                        allyResult += `{They} dealt ${damage} ${assist.allydamagetype} damage!\n`;
                     }
                 }
             }
@@ -76,7 +77,7 @@ let act = async function (state, details) {
                         attackText += "You bypassed {their} armor! ";
                     }
                 }
-                let typeMulti = (enemyDef.damageMultiplier && enemyDef.damageMultiplier[card.damagetype]) ? Math.floor(enemyDef.damageMultiplier[card.damagetype]) : 1;
+                let typeMulti = (enemyDef.damageMultiplier && enemyDef.damageMultiplier[card.damagetype] !== undefined) ? enemyDef.damageMultiplier[card.damagetype] : 1;
                 console.log(`Multiplier ${typeMulti} against type ${card.damagetype}`);
                 let damage = combatengine.damageRoll(damagedice, damagedie, damageplus, enemyCard.soak + (hitMulti <= 1 && enemyCard.noncritsoak ? enemyCard.noncritsoak : 0), typeMulti * hitMulti);
                 if (damage <= 0) {
@@ -88,7 +89,7 @@ let act = async function (state, details) {
                         enemy.surrenderbonus = card.surrenderbonus;
 
                     if (card.staminadamagedie) {
-                        let staminadamage = combatengine.damageRoll(card.staminadamagedice, card.staminadamagedie, card.staminadamageplus, 1);
+                        let staminadamage = combatengine.damageRoll(card.staminadamagedice, card.staminadamagedie, card.staminadamageplus, 0, 1);
                         enemy.stamina -= staminadamage;
                         attackText += `You wear down your enemy, depleting ${staminadamage} stamina!\n`;
                     }

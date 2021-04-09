@@ -264,6 +264,12 @@ let deflect = function (accuracy, dodge, evasion) {
     attackResult.result = 'deflected';
 }
 
+let getTypeMulti = function (target, type) {
+    if (target.damageMultiplier === undefined || target.damageMultiplier[type] === undefined)
+        return 1;
+    return target.damageMultiplier[type];
+}
+
 // Given accuracy of attacker and dodge and evasion of defender, roll to hit, return damage multiplier (1 for standard hit, 0 for miss, >1 for crit)
 let attackRoll = function (accuracy, dodge, evasion) {
     let dodgedAccuracy = setAttackZones(accuracy, dodge, evasion);
@@ -312,7 +318,7 @@ let damageRoll = function (damageDice, damageDie, damagePlus, damageMinus, multi
         damage -= damageMinus;        
     }
     console.log("Subtotal: " + damage + " times " + multiplier);
-    damage *= multiplier;
+    damage = Math.floor(multiplier * damage);
     attackResult.multiplier = multiplier;
     console.log("Total: " + damage);
     return damage > 0 ? damage : 0;
@@ -338,7 +344,8 @@ let addAttackResults = async function (state, enemyAttacking) {
 
 let clearCombat = async function (state) {
     if (!gameengine) gameengine = require('./gameengine');
-    state.enemy = undefined;
+    state.enemy = undefined;    
+    state.parties[state.activeParty].leader.activeassist = undefined;
 };
 
 let progress = async function (state) {
@@ -355,7 +362,8 @@ let progress = async function (state) {
         await clearCombat(state);
         return "You lost, but it wasn't you so whatever."; // TODO: flesh out side-party death scenario.
     }
-    if (state.enemy.health <= 0) {
+    if (state.enemy.health <= 0) {        
+        leader.activeassist = undefined;
         state.enemy.phasequeue = ["acquire"];
         return `${enemyDef.killText || "You slew the " + state.enemy.name + "!"}\n\nIt's time to acquire! Pick a card...`; 
     }
@@ -365,6 +373,7 @@ let progress = async function (state) {
     }
 
     if (state.enemy.stamina <= 0) {
+        leader.activeassist = undefined;
         state.enemy.phasequeue = ["apprehend"];
         return `${enemyDef.captureText || enemyDef.display + " collapsed from exhaustion, unable to fight back any longer!"}\n\nIt's time to apprehend! Pick a card...`; 
     }
@@ -376,6 +385,7 @@ let progress = async function (state) {
     if (state.enemy.health <= enemyDef["yield max health"] + surrenderbonus) {
         let yieldChance = enemyDef["yield base chance"] + enemyDef["yield scale chance"] * (enemyDef["yield max health"] - state.enemy.health + surrenderbonus);
         if (Math.random() < yieldChance) {
+            leader.activeassist = undefined;
             state.enemy.phasequeue = ["apprehend"];
             return `${enemyDef.surrenderText || enemyDef.display + " lost the will to fight, and surrendered unconditionally!"}\n\nIt's time to apprehend! Pick a card...`; 
         }
@@ -452,6 +462,7 @@ let getStatusDisplay = async function (state) {
 module.exports = {
     attackRoll: attackRoll,
     damageRoll: damageRoll,
+    getTypeMulti: getTypeMulti,
     deflect: deflect,
     addAttackResults: addAttackResults,
     getControls: getControls,
