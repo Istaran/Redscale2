@@ -15,7 +15,6 @@ try {
 //}
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const querystring = require('querystring');
 const app = express();
 const port = process.env.PORT || 8161;
@@ -23,14 +22,23 @@ const port = process.env.PORT || 8161;
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
+// default settings. Any you don't have will default to these, and you can only set these.
+const settingsTemplate = {
+    displayName: null,
+    darkTheme: false,
+    fastAnimations: false
+};
+
 const cache = require('./cache');
 function extractProfile(profile) {
     let profilePath = `saves/profiles/${profile.provider}.${profile.id}.json`;
     let savedProfile = cache.load(profilePath) || {
         id: profile.id,
+        provider: profile.provider,
         displayName: profile.displayName
     };
     savedProfile.id = savedProfile.id || profile.id;
+    savedProfile.provider = savedProfile.provider || profile.provider;
     savedProfile.displayName = savedProfile.displayName || profile.displayName;
     if (profile.photos && profile.photos.length) {
         savedProfile.imageUrl = profile.photos[0].value;
@@ -38,7 +46,10 @@ function extractProfile(profile) {
     if (profile.emails && profile.emails.length) {
         savedProfile.email = profile.emails[0].value;
     }
-    
+    for (setting in settingsTemplate) {
+        if (profile[setting] === undefined)
+            profile[setting] = settingsTemplate[setting];
+    }
     cache.save(profilePath, savedProfile);
 
     return `${profile.provider}.${profile.id}`;
@@ -63,8 +74,8 @@ passport.deserializeUser(function (obj, cb) {
 const chat = require('./chatserver');
 const game = require('./gameengine');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({extended: false }));
+app.use(express.json());
 
 // [START session]
 // Configure the session and session storage.
@@ -113,11 +124,20 @@ if (google_oauth_config) {
 let getProfile = async function(user) {
     let profile = null;
     if (!google_oauth_config) {
-        profile = await cache.load(`saves/profiles/localdev.json`);
+        profile = await cache.load(`saves/profiles/local.dev.json`);
+        let changed = false;
         if (!profile) {
-            profile = { id: "localdev", displayName: "Developer" };
-            cache.save(`saves/profiles/localdev.json`, profile);
+            changed = true;
+            profile = { "provider": "local", "id": "dev", displayName: "Developer" };
         }
+        for (setting in settingsTemplate) {
+            if (profile[setting] === undefined) {
+                profile[setting] = settingsTemplate[setting];
+                changed = true;
+            }
+        }
+        if (changed)
+            cache.save(`saves/profiles/local.dev.json`, profile);
     } else if (user) {
         profile = await cache.load(`saves/profiles/${user}.json`);
     }
@@ -144,7 +164,7 @@ app.get('/chat', async function (req, res) {
 });
 
 app.get('/', async function (req, res) {
-    if (!google_oauth_config) { req.user = 'localDev' };
+    if (!google_oauth_config) { req.user = 'local.dev' };
     let path = (req.user ? 'hidden assets/home.html' : 'assets/home.html');
     req.session.nsfw = req.query.nsfw;
     let homepage = await new Promise(function (resolve, reject) {
@@ -166,7 +186,10 @@ app.post('/act', async function (req, res) {
 	const body = req.body.body;
     console.log("Query:" + JSON.stringify(req.query));
 	const view = await game.act(profile, body, req.query);
-	
+    view.profile = {};
+	for (setting in settingsTemplate) {
+        view.profile[setting] = profile[setting];
+    }
 	res.set('Content-Type', 'Application/JSON');
 	res.send(JSON.stringify(view));
 });
@@ -176,6 +199,25 @@ app.get('/list', async function (req, res) {
     let saveList = await game.list(profile);
     res.set('Content-Type', 'Application/JSON');
     res.send(JSON.stringify(saveList));
-})
+});
+
+app.post('/set', async function (req, res) {    
+    var profile = await getProfile(req.user);
+	const body = req.body.body;
+    
+    console.log("Got request to set settings:");
+    console.log(JSON.stringify(req.body));
+    let viewProfile = {};
+    for (setting in settingsTemplate) {
+        if (body[setting] !== undefined)
+            profile[setting] = body[setting];
+        viewProfile[setting] = profile[setting];
+    }
+    
+    let profilePath = `saves/profiles/${profile.provider}.${profile.id}.json`;
+    cache.save(profilePath, profile);
+	res.set('Content-Type', 'Application/JSON');
+	res.send(JSON.stringify(viewProfile));
+});
 
 app.listen(port, () => console.log(`Redscale is listening on port ${port}!`));
