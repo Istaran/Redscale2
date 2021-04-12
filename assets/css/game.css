@@ -24,6 +24,9 @@
     --button-bg-color: rgb(239, 239, 239);
     --button-fg-color: black;
     --button-bd-color: rgb(118, 118, 118);
+    --button-dbg-color: rgba(239, 239, 239, 0.3);
+    --button-dfg-color: rgba(16, 16, 16, 0.3);
+    --button-dbd-color: rgba(118, 118, 118, 0.3);
 
     --abjure-bg: #AAAAFF;
     --abjure-fg: darkblue;
@@ -97,9 +100,12 @@ body.darktheme {
     --save-fg-color: firebrick;
     --save-bd-color: dimgray;
 
-    --button-bg-color: rgb(63, 63, 63);
+    --button-bg-color: rgb(59, 59, 59);
     --button-fg-color: white;
-    --button-bd-color: rgb(118, 118, 118);
+    --button-bd-color: rgb(133, 133, 133);
+    --button-dbg-color: rgba(19, 1, 1, 0.3);
+    --button-dfg-color: rgba(255, 255, 255, 0.3);
+    --button-dbd-color: rgba(195, 195, 195, 0.3);
 
     --compass-bg-color: rgb(63, 63, 63);;
     --compass-fg-color: darkgrey;
@@ -180,6 +186,12 @@ input[type="button"] {
     background-color: var(--button-bg-color);
     color: var(--button-fg-color);
     border-color: var(--button-bd-color);
+}
+
+input[type="button"]:disabled {
+    background-color: var(--button-dbg-color);
+    color: var(--button-dfg-color);
+    border-color: var(--button-dbd-color);
 }
 
 div.topbar {
