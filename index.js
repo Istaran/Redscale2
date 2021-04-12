@@ -30,13 +30,15 @@ const settingsTemplate = {
 };
 
 const cache = require('./cache');
-function extractProfile(profile) {
+async function extractProfile(profile) {
+
     let profilePath = `saves/profiles/${profile.provider}.${profile.id}.json`;
-    let savedProfile = cache.load(profilePath) || {
+    let savedProfile = await cache.load(profilePath) || {
         id: profile.id,
         provider: profile.provider,
         displayName: profile.displayName
     };
+
     savedProfile.id = savedProfile.id || profile.id;
     savedProfile.provider = savedProfile.provider || profile.provider;
     savedProfile.displayName = savedProfile.displayName || profile.displayName;
@@ -47,8 +49,8 @@ function extractProfile(profile) {
         savedProfile.email = profile.emails[0].value;
     }
     for (setting in settingsTemplate) {
-        if (profile[setting] === undefined)
-            profile[setting] = settingsTemplate[setting];
+        if (savedProfile[setting] === undefined)
+        savedProfile[setting] = settingsTemplate[setting];
     }
     cache.save(profilePath, savedProfile);
 
@@ -57,8 +59,8 @@ function extractProfile(profile) {
 
 if (google_oauth_config) {
     passport.use(new GoogleStrategy(google_oauth_config,
-        function (accessToken, refreshToken, profile, cb) {
-            return cb(null, extractProfile(profile));
+        async function (accessToken, refreshToken, profile, cb) {
+            return cb(null, await extractProfile(profile));
         }
     ));
 }
