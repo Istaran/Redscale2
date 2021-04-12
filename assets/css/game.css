@@ -82,6 +82,15 @@
     --blue-halfdam: #8888FF;
     --blue-damage: #0000FF;
     --blue-block: #000088;
+
+    --health-full: #FF0000;
+    --health-empty: #884444;
+    --stamina-full: #FFFF00;
+    --stamina-empty: #b98d29;
+    --nutrition-full: #00FF00;
+    --nutrition-empty: #448844;
+    --mana-full: #FF00FF;
+    --mana-empty: #884488;
 }
 
 body.darktheme {
@@ -168,6 +177,15 @@ body.darktheme {
     --blue-halfdam: #8888FF;
     --blue-damage: #0000FF;
     --blue-block: #000088;
+
+    --health-full: #884444;
+    --health-empty: #440000;
+    --stamina-full: #b98d29;
+    --stamina-empty: #3b2e0e;
+    --nutrition-full: #448844;
+    --nutrition-empty: #004400;
+    --mana-full: #884488;
+    --mana-empty: #440044;
 }
 
 body {
