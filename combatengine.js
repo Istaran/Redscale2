@@ -438,11 +438,11 @@ let getStatusDisplay = async function (state) {
         lines: [
             { "text": enemyDef.display },
             { "text": healthText, "help": "Health.\nWhen their health drops to zero, they will die and you can harvest your reward from their corpse." ,
-            isPercent: true, leftVal: health, rightVal: 10-health, leftColor: "#FF0000", rightColor: "#884444" },
+            isPercent: true, leftVal: health, rightVal: 10-health, leftColor: "var(--health-full)", rightColor: "var(--health-empty)" },
             { "text": staminaText, "help": "Stamina.\nWhen their stamina drops to zero, they will be forced to submit and you can choose between mercy and murder.",
-            isPercent: true, leftVal: stamina, rightVal: 10-stamina, leftColor: "#FFFF00", rightColor: "#b98d29"  },
+            isPercent: true, leftVal: stamina, rightVal: 10-stamina, leftColor: "var(--stamina-full)", rightColor: "var(--stamina-empty)"  },
             { "text": manaText, "help": "Mana.\nNot all creatures know how to use mana, but all of them possess at least some.",
-            isPercent: true, leftVal: mana, rightVal: 10-mana, leftColor: "#FF00FF", rightColor: "#884488" },
+            isPercent: true, leftVal: mana, rightVal: 10-mana, leftColor: "var(--mana-full)", rightColor: "var(--mana-empty)" },
             { "text": state.enemy.tell, "help": "Tell. By watching your opponent's actions you can get hints to what they will do next.\nWatch out for tricks though!"}
         ]
     };
