@@ -47,8 +47,8 @@ function extractProfile(profile) {
         savedProfile.email = profile.emails[0].value;
     }
     for (setting in settingsTemplate) {
-        if (profile[setting] === undefined)
-            profile[setting] = settingsTemplate[setting];
+        if (savedProfile[setting] === undefined)
+        savedProfile[setting] = settingsTemplate[setting];
     }
     cache.save(profilePath, savedProfile);
 
