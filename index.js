@@ -31,12 +31,16 @@ const settingsTemplate = {
 
 const cache = require('./cache');
 function extractProfile(profile) {
+    console.log('Extract profile got from provider: ' + JSON.stringify(profile));
+
     let profilePath = `saves/profiles/${profile.provider}.${profile.id}.json`;
     let savedProfile = cache.load(profilePath) || {
         id: profile.id,
         provider: profile.provider,
         displayName: profile.displayName
     };
+    console.log('Extract profile loaded: ' + JSON.stringify(savedProfile));
+
     savedProfile.id = savedProfile.id || profile.id;
     savedProfile.provider = savedProfile.provider || profile.provider;
     savedProfile.displayName = savedProfile.displayName || profile.displayName;
@@ -50,6 +54,7 @@ function extractProfile(profile) {
         if (savedProfile[setting] === undefined)
         savedProfile[setting] = settingsTemplate[setting];
     }
+    console.log('Extract profile is saving: ' + JSON.stringify(savedProfile));
     cache.save(profilePath, savedProfile);
 
     return `${profile.provider}.${profile.id}`;
