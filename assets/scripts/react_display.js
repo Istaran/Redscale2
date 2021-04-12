@@ -957,7 +957,7 @@ class AttackRenderer extends React.Component {
         return (<div className="attackControl" style={{'flex-direction':  flexDir}}>
                 <div className="attackZones" style={{'flex-direction':  flexDir}}>
                     <div className="attackZone miss" style={{width: self.state.missWidth}} />
-                    <div className={"attackZone dodge " + attack.defenderColors} style={{width: self.state.dodgimation}} />
+                    <div className={"attackZone dodge " + attack.defendColors} style={{width: self.state.dodgimation}} />
                     <div className={"attackZone hit " + attack.attackColors } style={{width: fakeHitWidth}} />
                     <div className={"attackZone crit " + attack.attackColors } style={{width: self.state.critWidth}} />
                     { this.state.cancelBarWidth > 0 ?
