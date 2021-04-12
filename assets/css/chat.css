@@ -2,8 +2,8 @@ div.div-bottom {
     position: absolute;
     bottom: 5px;
 	width: 100%;
-	background-color: black;
-	color: lime;
+	background-color: var(--chat-bg-color);
+	color: var(--chat-fg-color);
 }
 
 div.div-scroll-bottom {

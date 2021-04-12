@@ -6,6 +6,7 @@
         "animal",
         [ "male", "female" ]
     ],
+    "colorclass": "pale",
     "attack announce": "You suddenly feel the sticky strands of a massive web upon you! You literally walked right into that, and before you can pull yourself free, the web's creator descends on you to attack!",
     "hunt announce": "You find a massive cave spider hanging out above you. Had you not been on the lookout for it specifically, you might have stumbled into its web. As it is, the fight is on, starting on your terms.",
     "max health": 20,

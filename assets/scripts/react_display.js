@@ -220,46 +220,48 @@ class Navigator extends React.Component {
 	}
 	
     render() {
-        let backgroundColor = "silver";
-        let compassLight = "white";
-        let compassDark = "black";
-        let compassDisabled = "silver";
-        let upColor = (this.props.details.up) ? this.props.details.up.light || "white" : compassLight;
-        let upColor2 = (this.props.details.up) ? this.props.details.up.dark || "skyblue" : compassDisabled;
-        let upOutline = (this.props.details.up) ? "black" : "darkgrey";
-        let northColor = (this.props.details.north) ? this.props.details.north.light || "red" : compassDisabled;
-        let northColor2 = (this.props.details.north) ? this.props.details.north.dark || "darkred" : compassDisabled;
-        let northOutline = (this.props.details.north) ? "black" : "darkgrey";
+        let backgroundColor = "var(--compass-bg-color)";
+        let outlineColor = "var(--compass-fg-color)";
+        let outlineDisabled = "var(--compass-do-color)";
+        let compassLight = "var(--compass-light-color)";
+        let compassDark = "var(--compass-dark-color)";
+        let compassDisabled =  "var(--compass-ds-color)";
+        let upColor = (this.props.details.up) ? this.props.details.up.light || compassLight : compassLight;
+        let upColor2 = (this.props.details.up) ? this.props.details.up.dark || compassDark : compassDisabled;
+        let upOutline = (this.props.details.up) ? outlineColor : outlineDisabled;
+        let northColor = (this.props.details.north) ? this.props.details.north.light || compassLight : compassDisabled;
+        let northColor2 = (this.props.details.north) ? this.props.details.north.dark || compassDark : compassDisabled;
+        let northOutline = (this.props.details.north) ? outlineColor : outlineDisabled;
         let westColor = (this.props.details.west) ? this.props.details.west.light || compassLight : compassDisabled;
         let westColor2 = (this.props.details.west) ? this.props.details.west.dark || compassDark : compassDisabled;
-        let westOutline = (this.props.details.west) ? "black" : "darkgrey";
+        let westOutline = (this.props.details.west) ? outlineColor : outlineDisabled;
         let specialColor = (this.props.details.special) ? this.props.details.special.light || compassLight : backgroundColor;
         let specialColor2 = (this.props.details.special) ? this.props.details.special.dark || compassDark : backgroundColor;
-        let specialOutline = (this.props.details.special) ? "black" : "darkgrey";
+        let specialOutline = (this.props.details.special) ? outlineColor : outlineDisabled;
         let eastColor = (this.props.details.east) ? this.props.details.east.light || compassLight : compassDisabled;
         let eastColor2 = (this.props.details.east) ? this.props.details.east.dark || compassDark : compassDisabled;
-        let eastOutline = (this.props.details.east) ? "black" : "darkgrey";
+        let eastOutline = (this.props.details.east) ? outlineColor : outlineDisabled;
         let southColor = (this.props.details.south) ? this.props.details.south.light || compassLight : compassDisabled;
         let southColor2 = (this.props.details.south) ? this.props.details.south.dark || compassDark : compassDisabled;
-        let southOutline = (this.props.details.south) ? "black" : "darkgrey";
+        let southOutline = (this.props.details.south) ? outlineColor : outlineDisabled;
         let nwColor = (this.props.details.nw) ? this.props.details.nw.light || compassLight : compassDisabled;
         let nwColor2 = (this.props.details.nw) ? this.props.details.nw.dark || compassDark : compassDisabled;
-        let nwOutline = (this.props.details.nw) ? "black" : "darkgrey";
+        let nwOutline = (this.props.details.nw) ? outlineColor : outlineDisabled;
         let neColor = (this.props.details.ne) ? this.props.details.ne.light || compassLight : compassDisabled;
         let neColor2 = (this.props.details.ne) ? this.props.details.ne.dark || compassDark : compassDisabled;
-        let neOutline = (this.props.details.ne) ? "black" : "darkgrey";
+        let neOutline = (this.props.details.ne) ? outlineColor : outlineDisabled;
         let swColor = (this.props.details.sw) ? this.props.details.sw.light || compassLight : compassDisabled;
         let swColor2 = (this.props.details.sw) ? this.props.details.sw.dark || compassDark : compassDisabled;
-        let swOutline = (this.props.details.sw) ? "black" : "darkgrey";
+        let swOutline = (this.props.details.sw) ? outlineColor : outlineDisabled;
         let seColor = (this.props.details.se) ? this.props.details.se.light || compassLight : compassDisabled;
         let seColor2 = (this.props.details.se) ? this.props.details.se.dark || compassDark : compassDisabled;
-        let seOutline = (this.props.details.se) ? "black" : "darkgrey";
-        let downColor = (this.props.details.down) ? this.props.details.down.light || "lime" : compassDisabled;
-        let downColor2 = (this.props.details.down) ? this.props.details.down.dark || "peru" : compassDark;
-        let downOutline = (this.props.details.down) ? "black" : "darkgrey";
+        let seOutline = (this.props.details.se) ? outlineColor : outlineDisabled;
+        let downColor = (this.props.details.down) ? this.props.details.down.light || compassLight : compassDisabled;
+        let downColor2 = (this.props.details.down) ? this.props.details.down.dark || compassDark : compassDark;
+        let downOutline = (this.props.details.down) ? outlineColor : outlineDisabled;
         let hereColor = (this.props.details.here) ? this.props.details.here.light || compassLight : compassDisabled;
         let hereColor2 = (this.props.details.here) ? this.props.details.here.dark || compassDark : compassDisabled;
-        let hereOutline = "darkgrey";
+        let hereOutline = outlineDisabled;
 
 
         let dirs = [{ header: 'Up', prop: 'up' },
@@ -316,23 +318,23 @@ class Navigator extends React.Component {
             <polygon points="43,0 0,43 149,43 106,0" stroke={upOutline} fill="url(#skyGradient)" onClick={(event) => this.navigate(event, 'up')} />
             <polygon points="0,48 0,98 149,98, 149,48" stroke={hereOutline} fill="url(#hereGradient)" />
             <polygon points="0,103 43,146 106,146, 149,103" stroke={downOutline}  fill="url(#groundGradient)" onClick={(event) => this.navigate(event, 'down')} />
-            <circle cx='75' cy='73' r='50' fill={backgroundColor} stroke="black" strokeWidth="3" />
-            <line x1="36.3" y1="50.5" x2="32" y2="48" stroke="black" strokeWidth="1" />
-            <line x1="36.3" y1="95.5" x2="32" y2="98" stroke="black" strokeWidth="1" />
-            <line x1="113.7" y1="50.5" x2="118" y2="48" stroke="black" strokeWidth="1" />
-            <line x1="113.7" y1="95.5" x2="118" y2="98" stroke="black" strokeWidth="1" />
-            <line x1="52.5" y1="34.3" x2="50" y2="30" stroke="black" strokeWidth="1" />
-            <line x1="52.5" y1="111.7" x2="50" y2="116" stroke="black" strokeWidth="1" />
-            <line x1="97.5" y1="34.3" x2="100" y2="30" stroke="black" strokeWidth="1" />
-            <line x1="97.5" y1="111.7" x2="100" y2="116" stroke="black" strokeWidth="1" />
-            <line x1="31.5" y1="61.4" x2="27" y2="60" stroke="black" strokeWidth="1" />
-            <line x1="31.5" y1="84.6" x2="27" y2="86" stroke="black" strokeWidth="1" />
-            <line x1="118.5" y1="61.4" x2="123" y2="60" stroke="black" strokeWidth="1" />
-            <line x1="118.5" y1="84.6" x2="123" y2="86" stroke="black" strokeWidth="1" />
-            <line x1="63.4" y1="29.5" x2="62" y2="25" stroke="black" strokeWidth="1" />
-            <line x1="63.4" y1="116.5" x2="62" y2="121" stroke="black" strokeWidth="1" />
-            <line x1="86.6" y1="29.5" x2="88" y2="25" stroke="black" strokeWidth="1" />
-            <line x1="86.6" y1="116.5" x2="88" y2="121" stroke="black" strokeWidth="1" />
+            <circle cx='75' cy='73' r='50' fill={backgroundColor} stroke={outlineColor} strokeWidth="3" />
+            <line x1="36.3" y1="50.5" x2="32" y2="48" stroke={outlineColor} strokeWidth="1" />
+            <line x1="36.3" y1="95.5" x2="32" y2="98" stroke={outlineColor} strokeWidth="1" />
+            <line x1="113.7" y1="50.5" x2="118" y2="48" stroke={outlineColor} strokeWidth="1" />
+            <line x1="113.7" y1="95.5" x2="118" y2="98" stroke={outlineColor} strokeWidth="1" />
+            <line x1="52.5" y1="34.3" x2="50" y2="30" stroke={outlineColor} strokeWidth="1" />
+            <line x1="52.5" y1="111.7" x2="50" y2="116" stroke={outlineColor} strokeWidth="1" />
+            <line x1="97.5" y1="34.3" x2="100" y2="30" stroke={outlineColor} strokeWidth="1" />
+            <line x1="97.5" y1="111.7" x2="100" y2="116" stroke={outlineColor} strokeWidth="1" />
+            <line x1="31.5" y1="61.4" x2="27" y2="60" stroke={outlineColor} strokeWidth="1" />
+            <line x1="31.5" y1="84.6" x2="27" y2="86" stroke={outlineColor} strokeWidth="1" />
+            <line x1="118.5" y1="61.4" x2="123" y2="60" stroke={outlineColor} strokeWidth="1" />
+            <line x1="118.5" y1="84.6" x2="123" y2="86" stroke={outlineColor} strokeWidth="1" />
+            <line x1="63.4" y1="29.5" x2="62" y2="25" stroke={outlineColor} strokeWidth="1" />
+            <line x1="63.4" y1="116.5" x2="62" y2="121" stroke={outlineColor} strokeWidth="1" />
+            <line x1="86.6" y1="29.5" x2="88" y2="25" stroke={outlineColor} strokeWidth="1" />
+            <line x1="86.6" y1="116.5" x2="88" y2="121" stroke={outlineColor} strokeWidth="1" />
             <polygon points="40,38 65,63 75,53" fill={nwColor} stroke={nwOutline} strokeWidth="1" onClick={(event) => this.navigate(event, 'nw')} />
             <polygon points="40,38 55,73 65,63" fill={nwColor2} stroke={nwOutline} strokeWidth="1" onClick={(event) => this.navigate(event, 'nw')} />
             <polygon points="40,108 55,73 65,83" fill={swColor} stroke={swOutline} strokeWidth="1" onClick={(event) => this.navigate(event, 'sw')} />
@@ -849,12 +851,12 @@ class AttackRenderer extends React.Component {
         let barWidth = multi;
         // For deflect, we use barLeftCurrent to track width instead of left.
         let barLeftFinal = attack.rtl ? 
-            (multi * Math.max(Math.floor(attack.roll || Math.random() * total), 0) - 2) :
-            (multi * Math.max(total - 1 - Math.floor(attack.roll), 0) - 2);
+            (multi * Math.max(Math.floor(attack.roll || Math.random() * total), 0) - 3) :
+            (multi * Math.max(total - 1 - Math.floor(attack.roll), 0) - 3);
 
         let barLeftCurrent = attack.rtl ? 
-            totalWidth - multi:
-            -2;
+            totalWidth:
+            -multi - 3;
         let barspeed = multi;
         return {
             cancel: cancel,
@@ -927,44 +929,43 @@ class AttackRenderer extends React.Component {
             attack.damage.forEach((d) => {
                 for(let i = 0; i < d; i++) {
                     if (shields) {
-                        damageDisplay.push(<div class='damageUsedShield' style={{'background-color': attack.blockColor}}/>);
+                        damageDisplay.push(<div class={'damageUsedShield ' + attack.defendColors } />);
                         shields--;
                     } else {
                         if (attack.multiplier > 0) {
                             let cluster = [];    
                             let j = 0;                        
                             for(j = 0; j <= attack.multiplier - 1; j++) {
-                                cluster.push(<div class='damageTick' style={{backgroundColor: attack.damageColor}}/>);
+                                cluster.push(<div class={'damageTick ' + attack.attackColors } />);
                             }
                             if (j < attack.multiplier) {
                                 // TODO: probably need to be tricksier about fractions in case of awkward type multipliers
-                                cluster.push(<div class='damageFraction' style={{backgroundColor: attack.halfdamColor}}/>);
+                                cluster.push(<div class={'damageFraction ' + attack.attackColors } />);
                             }
                             damageDisplay.push(<div class='damageCluster'>{cluster}</div>);
                         } else {
-                            damageDisplay.push(<div class='damageZero' style={{backgroundColor: attack.zeroColor}}/>);
+                            damageDisplay.push(<div class='damageZero' />);
                         }
                     }
                 }
                 damageDisplay.push(<div class='damageSpacer'/>);
             });
             for(let i = 0; i < shields; i++) {
-                damageDisplay.push(<div class='damageUnusedShield' style={{backgroundColor: attack.exblockColor}}/>);
+                damageDisplay.push(<div class='damageUnusedShield' />);
             }
         }
         return (<div className="attackControl" style={{'flex-direction':  flexDir}}>
                 <div className="attackZones" style={{'flex-direction':  flexDir}}>
-                    <div className="attackZone" style={{width: self.state.missWidth, backgroundColor: attack.missColor}} />
-                    <div className="attackZone" style={{width: self.state.dodgimation, backgroundColor: attack.dodgeColor}} />
-                    <div className="attackZone" style={{width: fakeHitWidth, backgroundColor: attack.hitColor}} />
-                    <div className="attackZone" style={{width: self.state.critWidth, backgroundColor: attack.critColor}} />
+                    <div className="attackZone miss" style={{width: self.state.missWidth}} />
+                    <div className={"attackZone dodge " + attack.defenderColors} style={{width: self.state.dodgimation}} />
+                    <div className={"attackZone hit " + attack.attackColors } style={{width: fakeHitWidth}} />
+                    <div className={"attackZone crit " + attack.attackColors } style={{width: self.state.critWidth}} />
                     { this.state.cancelBarWidth > 0 ?
-                        <div className="attackCancelBar" style={{left: cancelBarLeft, width: self.state.cancelBarWidth, borderColor: attack.lineColor}} />
+                        <div className="attackCancelBar" style={{left: cancelBarLeft, width: self.state.cancelBarWidth}} />
                     : ''}
                     { this.state.barTop < 1000 ? 
                     <div className="attackBar" style={{width: self.state.barWidth, height: self.props.height, 
-                        left: self.state.barLeftCurrent, top: self.state.barTop, 
-                        borderColor: attack.lineColor}} />
+                        left: self.state.barLeftCurrent, top: self.state.barTop}} />
                     : ''}
                 </div>
                 <div className="attackResultText">{ this.animationDone() ? attack.result + '!' : ''}</div>
@@ -1005,15 +1006,21 @@ class GameDisplayer extends React.Component {
     }
 
     animate() {
-        if (this.animators.length) {
-            this.animators[0].animate();
-            if (this.animators[0].animationDone())
-            {
-                this.animators.shift();
-                this.setState({animationDone: (this.animators.length == 0)});
+        let loop = this.state.gameState && this.state.gameState.profile && this.state.gameState.profile.fastAnimations;
+        for(let iterations = (loop ? 100 : 1); iterations > 0; iterations--) {
+            if (this.animators.length) {
+                this.animators[0].animate();
+                if (this.animators[0].animationDone())
+                {
+                    this.animators.shift();
+                    this.setState({animationDone: (this.animators.length == 0)});
+                }
+            } else if (!this.state.animationDone) {
+                this.setState({animationDone: true});
+                break;
+            } else {
+                break;
             }
-        } else if (!this.state.animationDone) {
-            this.setState({animationDone: true});
         }
     }
 
@@ -1049,6 +1056,11 @@ class GameDisplayer extends React.Component {
 
         formData = {}; // Caution: if this causes unexpected rerenderers I might have issues with setting this here.
         if (this.state.gameState) {
+            if (this.state.gameState.profile.darkTheme) {
+                document.body.className = "darktheme";
+            } else {
+                document.body.className = "lighttheme";
+            }
             if (!userid && this.state.gameState.id) userid = this.state.gameState.id;
             let controlTable = [];
             if (this.state.frame != frame) {

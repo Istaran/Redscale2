@@ -6,6 +6,7 @@
         "stone",
         "neuter"
     ],
+    "colorclass": "pale",
     "attack announce": "With a scraping of stone on stone, one of the carved rat skeletons pulls free of the wall and rushes toward you! Dust is still falling loose, marring the previously spotless tiles, as it clatters across them unnaturally.\n\nThicker stone portions around the arms and legs show sign of numerous ineffectual blows, but you catch sight of a half dozen rubies buries in the inside of the spine that look like they are important. A well aimed blow might rip them loose.",
     "hunt announce": "",
     "max health": 75,

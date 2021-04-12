@@ -2,6 +2,7 @@
     "name": "Lady Redscale",
   "display": "Redscale",
   "description": "\u2640 Red Dragon",
+  "colorclass": "red",
     "health": 120,
     "maxHealth": 120,
     "stamina": 100,

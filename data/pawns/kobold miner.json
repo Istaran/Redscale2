@@ -1,5 +1,6 @@
 {
     "display": "kobold miner",
+    "colorclass": "red",
     "maxHealth": 15,
     "safeHealth": 5,
     "maxNutrition": 60,

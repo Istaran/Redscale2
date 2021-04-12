@@ -7,6 +7,7 @@
         "animal",
         [ "male", "female" ]
     ],
+    "colorclass": "pale",
     "attack announce": "A massive cave fish slips around a bend in the river and surges toward you, hoping for a meal! It obviously hasn't thought this though, but then fish never were very smart.",
     "hunt announce": "You spot one of the larger fish in the river and dive toward it. At this size, though, it isn't easily intimidated, and turns to meet you in combat!",
     "max health": 20,

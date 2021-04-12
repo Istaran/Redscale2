@@ -324,21 +324,11 @@ let damageRoll = function (damageDice, damageDie, damagePlus, damageMinus, multi
     return damage > 0 ? damage : 0;
 };
 
-let addAttackResults = async function (state, enemyAttacking) {    
-    let enemyDef = await cache.load(`data/enemies/${state.enemy.name}.json`);
+let addAttackResults = async function (state, enemyAttacking, attackercolorclass, defendercolorclass) {   
     attackResult.type = "attack";
     attackResult.rtl = enemyAttacking;
-    attackResult.hitColor = enemyAttacking ? (enemyDef.dimcolor || '#FFFF88') : '#FF8888';
-    attackResult.critColor = enemyAttacking ? (enemyDef.brightcolor || '#FFFF00') : '#FF0000';
-    attackResult.dodgeColor = enemyAttacking ? '#880000' : (enemyDef.darkcolor || '#b98d29');
-    attackResult.missColor = '#000000';
-    attackResult.halfdamColor = enemyAttacking ? (enemyDef.dimcolor || '#FFFF88') : '#FF8888';
-    attackResult.damageColor = enemyAttacking ? (enemyDef.brightcolor || '#FFFF00') : '#FF0000';
-    attackResult.blockColor = enemyAttacking ? '#880000' : (enemyDef.darkcolor || '#b98d29');
-    attackResult.exblockColor = '#888888';
-    attackResult.zeroColor = '#000000';
-    attackResult.boxColor = '#FFFFFF';
-    attackResult.lineColor = '#888888';
+    attackResult.attackColors = attackercolorclass;
+    attackResult.defendColors = defendercolorclass;
     state.view.display.push(attackResult);
 }
 
@@ -408,7 +398,8 @@ let progress = async function (state) {
                     leader.activeassist = {
                         pawnIndex: assist.set,
                         tags: helper.tags,
-                        scrubbers: helper.scrubbers
+                        scrubbers: helper.scrubbers,
+                        colorclass: helper.colorclass
                     }
                     Object.assign(leader.activeassist, assistcard);
                     leader.activeassist.display = await gameengine.scrubText(state, leader.activeassist.display, helper.tags, helper.scrubbers);
