@@ -7,6 +7,7 @@
         "swimmer",
         [ "male", "female" ]
     ],
+    "colorclass": "pale",
     "attack announce": "A massive cave newt from the river rushes you! These amphibious creatures can be quite agressive at times, attacking you on land or underwater.",
     "hunt announce": "You spot a cave newt treading water in the river. The creature is about your size without the wings, though its fin-like tail is better in the water. Not enough to save it from your hunger, though.",
     "max health": 30,

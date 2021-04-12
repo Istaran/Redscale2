@@ -54,7 +54,7 @@ let act = async function (state, details) {
                     }
                 }
             }
-            await combatengine.addAttackResults(state, false);
+            await combatengine.addAttackResults(state, false, assist.colorclass, enemyDef.colorclass);
             gameengine.displayText(state, allyResult, 100, assist.tags, assist.scrubbers);
         }        
     }
@@ -96,7 +96,7 @@ let act = async function (state, details) {
                 }
             }
         }
-        await combatengine.addAttackResults(state, false);
+        await combatengine.addAttackResults(state, false, leader.colorclass, enemyDef.colorclass);
         gameengine.displayText(state, attackText, 100, enemy.tags, enemy.scrubbers);
     }
 

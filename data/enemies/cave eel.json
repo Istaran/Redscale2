@@ -7,6 +7,7 @@
         "swimmer",
         [ "male", "female" ]
     ],
+    "colorclass": "pale",
     "attack announce": "A huge eel lunges at you from one of the crevices lining the cave! It's twice as long as you are, with a head a fair bit larger than your own! You manage to avoid getting snatched up immediately, but it's already swinging around for another attack!",
     "hunt announce": "You lurk near one of the larger crevices, out of view from its occupant. There! It darts out to snag a nearby fish, and you charge for its exposed neck! It manages to dart forward out of your way, but now it's in the open, exposed! Press the attack!",
     "max health": 25,

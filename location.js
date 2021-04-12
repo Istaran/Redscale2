@@ -147,6 +147,7 @@ let getTitle = async function (state) {
 let checkRequirements = async function (state, details) {
     let zone = await cache.load(`./data/locations/${details.location}.json`);
     let spot = await spotStyle(state, details.location, details.x, details.y, details.z);
+    let blocked = false;
     if (spot) {
         let style = zone.styles[spot];
         let party = state.parties[state.activeParty];
@@ -154,15 +155,18 @@ let checkRequirements = async function (state, details) {
             for (var req in style.requireall) {
                 if (!!party.leader.tags[req] != style.requireall[req]) {
                     gameengine.displayText(state, `You can't go that way, because you ${style.requireall[req] ? "aren't" : "are"} a ${req}.\n`);
+                    blocked = true;
                 }
                 for (var i = 0; i < party.followers.length; i++) {
                     if (!!party.followers[i].tags[req] != style.requireall[req]) {
                         gameengine.displayText(state, `You can't go that way, because ${party.followers[i].display} ${style.requireall[req] ? "isn't" : "is"} a ${req}.\n`);
+                        blocked = true;
                     }
                 }
                 for (var i = 0; i < party.pawns.length; i++) {
                     if (!!party.pawns[i].tags[req] != style.requireall[req]) {
                         gameengine.displayText(state, `You can't go that way, because ${party.pawns[i].display} ${style.requireall[req] ? "isn't" : "is"} a ${req}.\n`);
+                        blocked = true;
                     }
                 }
             }
@@ -189,14 +193,15 @@ let checkRequirements = async function (state, details) {
                 }
                 if (!gotOne) {
                     gameengine.displayText(state, `You can't go that way, because no one in your party ${style.requireall[req] ? "is" : "is not"} a ${req}.\n`);
+                    blocked = true;
                 }
             }
         }
-        return !(state.view.status);
     } else {
         gameengine.displayText(state, "There isn't anywhere to go in that direction.");
-        return false;
+        blocked = true;
     }
+    return !blocked;
 };
 
 let getBuildOptions = async function (state) {

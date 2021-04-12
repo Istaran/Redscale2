@@ -6,6 +6,7 @@
         "animal",
         [ "male", "female" ]
     ],
+    "colorclass": "pale",
     "attack announce": "A long tongue spikes out at you from what you'd mistaken for a simple rock, and drags you several yards closer before you manage to break free, digging your claws into the ridgeside. Undeterred, the grey-scaled predator moves to attack again!",
     "hunt announce": "Stalking the larger rocks around the ridge makes you feel a bit awkward, but you know the lizards here are well camoflaged, and it's easy to miss one. Finally, you spot one that seems about the right size and shape, maybe. You approach it, but it doesn't flinch, until you swipe a claw at it. It's quick motion puts it just out of range, but not too far to press the attack!",
     "max health": 50,

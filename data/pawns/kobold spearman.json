@@ -1,5 +1,6 @@
 {
     "display": "Kobold",
+    "colorclass": "red",
     "maxHealth": 15,
     "safeHealth": 5,
     "maxNutrition": 60,

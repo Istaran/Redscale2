@@ -5,6 +5,7 @@
         "living creature",
         "neuter"
     ],
+    "colorclass": "pale",
     "attack announce": "You notice a slight ripple in the air just before walking into it. It reacts to your light breath, refraction bending as a transparent foe shifts forward to envelop you! Now that you're alert for it, you can make it out vaguely but the amorphous blob is still hard to see, being completely transparent. It's intensions, however, are quite plain.",
     "hunt announce": "TBD: no hunt for now",
     "max health": 20,

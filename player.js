@@ -152,6 +152,9 @@ let setDefaults = async function (state) {
         if (!state.parties[0].leader.damageMultiplier) {
             state.parties[0].leader.damageMultiplier = { "fire": 0 };
         }
+        if (!state.parties[0].leader.colorclass) {
+            state.parties[0].leader.colorclass = "red";
+        }
         if (Array.isArray(state.parties[0].inventory))
             state.parties[0].inventory = {};
     }

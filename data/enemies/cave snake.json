@@ -6,6 +6,7 @@
         "animal",
         [ "male", "female" ]
     ],
+    "colorclass": "pale",
     "attack announce": "One of the rocky ridges along the cliff side rises up, coiling back to strike. It's a snake! You almost didn't notice it before it was too late, but now it's coming for you!",
     "hunt announce": "A slight bit of movement catches your attention from the corner of your eye. Scales blending into the rock here, nearly as cool and barely moving. But there it is.. a ridge snake! Soon to be your prey.",
     "max health": 40,

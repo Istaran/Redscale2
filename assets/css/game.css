@@ -1,11 +1,185 @@
+:root {
+    --main-bg-color: white;
+    --main-fg-color: black;
+    --gray-bg-color: lightgray;
+
+    --chat-bg-color: black;
+    --chat-fg-color: lime;
+
+    --help-bg-color: white;
+    --help-fg-color: black;
+    --help-bd-color: gray;
+
+    --save-bg-color: whitesmoke;
+    --save-fg-color: firebrick;
+    --save-bd-color: dimgray;
+
+    --compass-bg-color: silver;
+    --compass-fg-color: black;
+    --compass-ds-color: silver;
+    --compass-do-color: darkgrey;
+    --compass-light-color: white;
+    --compass-dark-color: black;
+
+    --button-bg-color: rgb(239, 239, 239);
+    --button-fg-color: black;
+    --button-bd-color: rgb(118, 118, 118);
+
+    --abjure-bg: #AAAAFF;
+    --abjure-fg: darkblue;
+    --abjure-bd: darkblue;
+    
+    --acquire-bg: gold;
+    --acquire-fg: black;
+    --acquire-bd: darkgoldenrod;
+
+    --aggress-bg: #FFAAAA;
+    --aggress-fg: darkred;
+    --aggress-bd: darkred;
+    
+    --assess-bg: #AAFFAA;
+    --assess-fg: darkgreen;
+    --assess-bd: darkgreen;
+
+    --assist-bg: white;
+    --assist-fg: black;
+    --assist-bd: black;
+
+    --apprehend-bg: #FFDDAA;
+    --apprehend-fg: darkorange;
+    --apprehend-bd: darkorange;
+    
+    --worker-bg: burlywood;
+    --worker-fg: saddlebrown;
+    --worker-bd: saddlebrown;
+
+    --attack-gray-color: rgb(197, 197, 197);
+    --attack-exblock: #888888;
+    --attack-zero: #000000;
+    --attack-miss: #000000;
+    --attack-border: #FFFFFF;
+
+    --pale-crit: #FFFF00;
+    --pale-hit: #FFFF88;
+    --pale-dodge: #b98d29;
+    --pale-halfdam: #FFFF88;
+    --pale-damage: #FFFF00;
+    --pale-block: #b98d29;
+    
+    --red-crit: #FF0000;
+    --red-hit: #FF8888;
+    --red-dodge: #880000;
+    --red-halfdam: #FF8888;
+    --red-damage: #FF0000;
+    --red-block: #880000;
+
+    --blue-crit: #0000FF;
+    --blue-hit: #8888FF;
+    --blue-dodge: #000088;
+    --blue-halfdam: #8888FF;
+    --blue-damage: #0000FF;
+    --blue-block: #000088;
+}
+
+body.darktheme {
+    --main-bg-color: black;
+    --main-fg-color: white;
+    --gray-bg-color: rgb(63, 63, 63);
+
+    --chat-bg-color: black;
+    --chat-fg-color: lime;
+
+    --help-bg-color: black;
+    --help-fg-color: white;
+    --help-bd-color: gray;
+
+    --save-bg-color: whitesmoke;
+    --save-fg-color: firebrick;
+    --save-bd-color: dimgray;
+
+    --button-bg-color: rgb(63, 63, 63);
+    --button-fg-color: white;
+    --button-bd-color: rgb(118, 118, 118);
+
+    --compass-bg-color: rgb(63, 63, 63);;
+    --compass-fg-color: darkgrey;
+    --compass-ds-color: darkgrey;
+    --compass-do-color: rgb(118, 118, 118);
+    --compass-light-color: white;
+    --compass-dark-color: black;
+    
+    --abjure-bg: darkblue;
+    --abjure-fg: #AAAAFF;
+    --abjure-bd: #AAAAFF;
+    
+    --acquire-bg: darkgoldenrod;
+    --acquire-fg: white;
+    --acquire-bd: gold;
+
+    --aggress-bg: darkred;
+    --aggress-fg: #FFAAAA;
+    --aggress-bd: #FFAAAA;
+    
+    --assess-bg: darkgreen;
+    --assess-fg: #AAFFAA;
+    --assess-bd: #AAFFAA;
+
+    --assist-bg: black;
+    --assist-fg: white;
+    --assist-bd: white;
+
+    --apprehend-bg: darkorange;
+    --apprehend-fg: #FFDDAA;
+    --apprehend-bd: #FFDDAA;
+    
+    --worker-bg: saddlebrown;
+    --worker-fg: burlywood;
+    --worker-bd: burlywood;
+    
+    --attack-gray-color: rgb(136, 136, 136);
+    --attack-exblock: #888888;
+    --attack-zero: #000000;
+    --attack-miss: #000000;
+    --attack-border: #FFFFFF;
+
+    --pale-crit: #FFFF00;
+    --pale-hit: #FFFF88;
+    --pale-dodge: #b98d29;
+    --pale-halfdam: #FFFF88;
+    --pale-damage: #FFFF00;
+    --pale-block: #b98d29;
+    
+    --red-crit: #FF0000;
+    --red-hit: #FF8888;
+    --red-dodge: #880000;
+    --red-halfdam: #FF8888;
+    --red-damage: #FF0000;
+    --red-block: #880000;
+
+    --blue-crit: #0000FF;
+    --blue-hit: #8888FF;
+    --blue-dodge: #000088;
+    --blue-halfdam: #8888FF;
+    --blue-damage: #0000FF;
+    --blue-block: #000088;
+}
+
 body {
     margin: 8px;
+    background-color: var(--main-bg-color);
+    color: var(--main-fg-color);
 }
 
 #reactroot {
     position: relative;
     width: calc(100vw - 16px);
     height: calc(100vh - 16px);
+}
+
+input[type="button"] {
+    background-color: var(--button-bg-color);
+    color: var(--button-fg-color);
+    border-color: var(--button-bd-color);
 }
 
 div.topbar {
@@ -29,7 +203,7 @@ div.topright {
 div.titlebar {
     height: 25px;
     width: calc(100vw - 500px);
-    border-color: black;
+    border-color: var(--main-fg-color);
     border-style: solid;
     border-width: 1px;
     overflow: hidden;
@@ -53,18 +227,18 @@ div.statusWrapper {
 div.leftStatus {
     width: 250px;
     min-height: calc(100vh - 525px);
-    border-color: black;
+    border-color: var(--main-fg-color);
     border-style: groove;
-    background-color: lightgray;
+    background-color: var(--gray-bg-color);
     display: flex;
     flex-direction: column;
 }
 div.rightStatus {
     width: 250px;
     min-height: calc(100vh - 525px);
-    border-color: black;
+    border-color: var(--main-fg-color);
     border-style: groove;
-    background-color: lightgray;
+    background-color: var(--gray-bg-color);
     display: flex;
     flex-direction: column;
 }
@@ -80,7 +254,7 @@ div.controlTable {
     bottom: 235px;
 	width: 100%;
 	height: 150px;
-	background-color: lightgray;
+	background-color: var(--gray-bg-color);
 	display: flex;
     flex-direction: row;
 }
@@ -106,7 +280,7 @@ div.saveList {
     left: 25px;
     width: calc(100vw - 50px);
     max-height: calc(100vh - 50px);
-    background-color: dimgray;
+    background-color: var(--save-bd-color);
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -116,8 +290,8 @@ div.save {
     width: calc(100% - 30px);
     height: 100px;
     margin: 15px;
-    background-color: whitesmoke;
-    color: firebrick;
+    background-color: var(--save-bg-color);
+    color: var(--save-fg-color);
     white-space: pre-wrap;
 }
 
@@ -125,8 +299,8 @@ div.refresher {
     height: 25px;
     width: 150px;
     text-align:center;
-    background-color:ButtonFace;
-    color:ButtonText;
+    background-color:var(--main-bg-color);
+    color:var(--main-fg-color);
 }
 
 input.actButton {
@@ -153,43 +327,45 @@ div.selectedCard {
 }
 
 div.abjure {
-    background-color: #AAAAFF;
-    color: darkblue;
-    border-color: darkblue;
+    background-color: var(--abjure-bg);
+    color: var(--abjure-fg);
+    border-color: var(--abjure-bd);
 }
 
 div.acquire {
-    background-color: gold;
-    color: black;
-    border-color: darkgoldenrod;
+    background-color: var(--acquire-bg);
+    color: var(--acquire-fg);
+    border-color: var(--acquire-bd);
 }
 
 div.aggress {
-    background-color: #FFAAAA;
-    color: darkred;
-    border-color: darkred;
+    background-color: var(--aggress-bg);
+    color: var(--aggress-fg);
+    border-color: var(--aggress-bd);
 }
 
 div.assess {
-    background-color: #AAFFAA;
-    color: darkgreen;
-    border-color: darkgreen;
-}
-
-div.apprehend {
-    background-color: #FFDDAA;
-    color: darkorange;
-    border-color: darkorange;
-}
-
-div.worker {
-    background-color:burlywood;
-    color:saddlebrown;
-    border-color: saddlebrown;
+    background-color: var(--assess-bg);
+    color: var(--assess-fg);
+    border-color: var(--assess-bd);
 }
 
 div.assist {
+    background-color: var(--assist-bg);
+    color: var(--assist-fg);
+    border-color: var(--assist-bd);
+}
 
+div.apprehend {
+    background-color: var(--apprehend-bg);
+    color: var(--apprehend-fg);
+    border-color: var(--apprehend-bd);
+}
+
+div.worker {
+    background-color: var(--worker-bg);
+    color: var(--worker-fg);
+    border-color: var(--worker-bd);
 }
 
 div.stack {
@@ -201,8 +377,8 @@ div.stack {
 }
 
 @keyframes fade-in-from-top {
-  0%   {background-color:black; height:0px;}
-  100% {background-color:white; height:150px;}
+  0%   {background-color:var(--chat-bg-color); height:0px;}
+  100% {background-color:var(--help-bg-color); height:150px;}
 }
 
 div.div-help {
@@ -210,8 +386,8 @@ div.div-help {
 	position: absolute;
 	top: 15px;
 	left:2.5%;
-	color: black;
-	border-color: gray;
+	color: var(--help-fg-color);
+	border-color: var(--help-bd-color);;
 	border-style: ridge;
 	animation-name: fade-in-from-top;
 	animation-duration: 1s;
@@ -220,8 +396,8 @@ div.div-help {
 }
 
 @keyframes fade-out-to-top {
-  0% { background-color:white; height:150px; opacity:1;}
-  100%   {background-color:black; height:0px; opacity:0;}
+  0% { background-color:var(--help-bg-color); height:150px; opacity:1;}
+  100%   {background-color:var(--chat-bg-color); height:0px; opacity:0;}
 }
 
 
@@ -230,8 +406,8 @@ div.div-unhelp {
 	position: absolute;
 	top: 15px;
 	left:2.5%;
-	color: black;    
-	border-color: gray;
+	color: var(--help-fg-color);    
+	border-color: var(--help-bd-color);
 	border-style: ridge;
 	animation-name: fade-out-to-top;
 	animation-duration: 1s;
@@ -257,8 +433,8 @@ div.requantifier {
     height: calc(100vh - 250px);
     overflow-y: scroll;
     border: thick;
-    border-color: black;
-    background: white;
+    border-color: var(--main-fg-color);
+    background: var(--main-bg-color);
     display: flex;
     flex-direction: column;
 }
@@ -278,7 +454,7 @@ input.requantify {
 div.requantifierHeaderRow {
     height: 25px;
     display: flex;
-    border-bottom-color: black;
+    border-bottom-color: var(--main-fg-color);
     border-bottom-style: dashed;
     flex-direction: row;
     justify-content: space-between;
@@ -311,8 +487,8 @@ div.reassigner {
     height: calc(100vh - 250px);
     overflow-y: scroll;
     border: thick;
-    border-color: black;
-    background: white;
+    border-color: var(--main-fg-color);
+    background: var(--main-bg-color);
     display: flex;
     flex-direction: row;
 }
@@ -352,8 +528,8 @@ div.recombiner {
     height: calc(100vh - 250px);
     overflow-y: scroll;
     border: thick;
-    border-color: black;
-    background: white;
+    border-color: var(--main-fg-color);
+    background: var(--main-bg-color);
     display: flex;
     flex-direction: row;
 }
@@ -397,9 +573,35 @@ div.percentControl {
 div.percentText {
     position: absolute;
     justify-content: center;
-    color: black;
+    color: var(--main-fg-color);
 }
 
+div.pale {
+    --damage-color: var(--pale-damage);
+    --halfdam-color: var(--pale-halfdam);
+    --block-color: var(--pale-block);
+    --hit-color: var(--pale-hit);
+    --crit-color: var(--pale-crit);
+    --dodge-color: var(--pale-dodge);
+}
+
+div.red {
+    --damage-color: var(--red-damage);
+    --halfdam-color: var(--red-halfdam);
+    --block-color: var(--red-block);
+    --hit-color: var(--red-hit);
+    --crit-color: var(--red-crit);
+    --dodge-color: var(--red-dodge);
+}
+
+div.blue {
+    --damage-color: var(--blue-damage);
+    --halfdam-color: var(--blue-halfdam);
+    --block-color: var(--blue-block);
+    --hit-color: var(--blue-hit);
+    --crit-color: var(--blue-crit);
+    --dodge-color: var(--blue-dodge);
+}
 
 div.attackControl {
     display: flex;
@@ -414,7 +616,7 @@ div.attackControl {
 
 div.attackResultText {
     margin-left: 6px;
-    color: black;
+    color: var(--main-fg-color);
     width: 75px;
     text-align: center;
 }
@@ -422,27 +624,46 @@ div.attackResultText {
 div.attackZones {
     border-style: solid;
     border-width: 1px;
-    border-color: black;
+    border-color: var(--attack-gray-color);
     display: flex;
     flex-direction: row;
     position: relative;
 }
+
 div.attackZone {
     display:inline;
     height: 13px;
 }
 
+div.attackZone.hit {
+    background-color: var(--hit-color);
+}
+
+div.attackZone.crit {
+    background-color: var(--crit-color);
+}
+
+div.attackZone.dodge {
+    background-color: var(--dodge-color);
+}
+
+div.attackZone.miss {
+    background-color: var(--attack-miss);
+}
+
 div.attackBar {
     background: none;
     border-style: groove;
+    border-color: var(--attack-gray-color);
     border-width: 3px;
     position: absolute;    
-    height: 15px;
+    height: 13px;
 }
 
 div.attackCancelBar {
     background: none;
     border-style: groove;
+    border-color: var(--attack-gray-color);
     border-width: 3px;
     position: absolute;
     height: 1px;
@@ -458,21 +679,22 @@ div.damageTick {
     flex: 2;
     width: 10px;
     margin-bottom: 1px;
-    background-color: #FFFF88;
-    border: 1px solid black;
+    background-color: var(--damage-color);
+    border: 1px solid var(--attack-gray-color);
 }
 
 div.damageFraction {  
     flex: 1;  
     width: 10px;
-    background-color: #FFFF88;
-    border: 1px solid black;
+    background-color: var(--halfdam-color);
+    border: 1px solid var(--attack-gray-color);
 }
 
 div.damageZero{
     height: 10px;
     width: 10px;
-    background-color: black;
+    background-color: var(--attack-zero);    
+    border: 1px solid var(--attack-gray-color);
 }
 
 div.damageCluster {
@@ -485,14 +707,14 @@ div.damageCluster {
 div.damageUsedShield {
     height: 15px;
     width: 10px;
-    background-color: darkred;
+    background-color: var(--block-color);
     clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 50% 100%, 0% 50%);
 }
 
 div.damageUnusedShield {
     height: 15px;
     width: 10px;
-    background-color: gray;    
+    background-color: var(--attack-exblock);    
     clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 50% 100%, 0% 50%);
 }
 
