@@ -125,9 +125,9 @@ if (google_oauth_config) {
 
 let getProfile = async function(user) {
     let profile = null;
+    let changed = false;
     if (!google_oauth_config) {
         profile = await cache.load(`saves/profiles/local.dev.json`);
-        let changed = false;
         if (!profile) {
             changed = true;
             profile = { "provider": "local", "id": "dev", displayName: "Developer" };
@@ -142,6 +142,14 @@ let getProfile = async function(user) {
             cache.save(`saves/profiles/local.dev.json`, profile);
     } else if (user) {
         profile = await cache.load(`saves/profiles/${user}.json`);
+        for (setting in settingsTemplate) {
+            if (profile[setting] === undefined) {
+                profile[setting] = settingsTemplate[setting];
+                changed = true;
+            }
+        }
+        if (changed)
+            cache.save`saves/profiles/${user}.json`, profile);
     }
     return profile;
 };
