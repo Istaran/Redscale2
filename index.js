@@ -30,11 +30,11 @@ const settingsTemplate = {
 };
 
 const cache = require('./cache');
-function extractProfile(profile) {
+async function extractProfile(profile) {
     console.log('Extract profile got from provider: ' + JSON.stringify(profile));
 
     let profilePath = `saves/profiles/${profile.provider}.${profile.id}.json`;
-    let savedProfile = cache.load(profilePath) || {
+    let savedProfile = await cache.load(profilePath) || {
         id: profile.id,
         provider: profile.provider,
         displayName: profile.displayName
@@ -62,8 +62,8 @@ function extractProfile(profile) {
 
 if (google_oauth_config) {
     passport.use(new GoogleStrategy(google_oauth_config,
-        function (accessToken, refreshToken, profile, cb) {
-            return cb(null, extractProfile(profile));
+        async function (accessToken, refreshToken, profile, cb) {
+            return cb(null, await extractProfile(profile));
         }
     ));
 }
