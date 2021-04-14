@@ -10,7 +10,7 @@
   "Fight defensively": {
     "display": "You take the time to consider your options.",
     "cardlines": "Fight defensively\n\nAttack last\nAbjure Draw: \u25cf\u25cf\nAggress Draw: \u25cf\u25cf",
-    "help": "Attack last! Draw: 1 Abjure, 1 Aggress",
+    "help": "Attack last! Draw: 2 Abjure, 2 Aggress",
     "queue": [ "abjure", "aggress", "assess" ],
     "abjuredraw": 2,
     "aggressdraw": 2
