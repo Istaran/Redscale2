@@ -149,7 +149,7 @@ let getProfile = async function(user) {
             }
         }
         if (changed)
-            cache.save`saves/profiles/${user}.json`, profile);
+            cache.save(`saves/profiles/${user}.json`, profile);
     }
     return profile;
 };

@@ -1,0 +1,41 @@
+{
+    "display": "Young naga",
+    "colorclass": "red",
+    "maxHealth": 25,
+    "safeHealth": 5,
+    "maxNutrition": 60,
+    "evasion": 6,
+    "assistcards": [
+        {
+            "display": "Your naga ally fills your veins with magic energy, boosting your strength for a moment.",
+            "cardlines": "Naga\nEmpowering Tide\n\nDamage: +2",
+            "help": "Empowering Tide\n\nGrants your attacks this round +2 Damage, helping overwhelm defenses and crush your foes.",
+            "bonusdamage": 2,
+            "subtype": "aggress"
+        },
+        {
+            "display": "Your naga ally readies to protect you with his magic.",
+            "cardlines": "Naga\nAblative Water\n\nSoak damage: +2",
+            "help": "Ablative Water\n\nReduce incoming damage by 2 (before multipliers).",
+            "bonussoak": 2,
+            "subtype": "abjure"
+        }
+    ],
+    "workercard": {
+        "cardlines": "Naga\nWork Rating: 1\nSecurity Rating: 1\nAquatic: +/- 1\nEnchanting bonus +1\nUpkeep: 1 nutrition\n(Omnivore)",
+        "help": "Nagas have snakelike bottoms that allow them to navigate narrow tunnels and swim extremely well.\nAquatic: Get a bonus to work and security in watery places, and a penalty in very dry places.\nOmnivore: nagas have a varied diet.",
+        "work": {
+            "base": 1,
+            "wet": 1,
+            "dry": -1,
+            "enchanting": 1
+        },
+        "security": {
+            "base": 1,
+            "wet": 1,
+            "dry": -1
+        },
+        "nutritioncost": 1,
+        "eats": [ "animal", "vegetable" ]
+    }
+}

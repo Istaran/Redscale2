@@ -413,12 +413,12 @@
         },
         "LakeSurface": {
             "title": "Undermountain Waterways - undescribed",
-            "description": "WIP: This location still needs to be described",
+            "description": "So full of nagas! (seriously, need to tone it down)",
             "preview": "WIP: This location still needs a preview",
             "events": [
                 {
                     "chance": 10,
-                    "event": null
+                    "event": "naga youth attack"
                 }
             ],
             "actions": [],
@@ -611,6 +611,10 @@
         "snake attack": {
             "verb": "attack",
             "details": { "enemy": "cave snake" }
+        },
+        "naga youth attack": {
+            "verb": "attack",
+            "details": { "enemy": "naga youth" }
         }
     },
 "actions":{

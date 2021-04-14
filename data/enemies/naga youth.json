@@ -1,0 +1,224 @@
+{
+    "display": "young naga",
+    "tags": [
+        "naga",
+        "living creature",
+        "person",
+        "swimmer",
+        [ "male", "female" ]
+    ],
+    "colorclass": "pale",
+    "attack announce": "A creature approaches you with a frenzied yell. Something about {their} demeanor seems more... challenging than bloodthirsty. But it's clear they mean it to be a challenge of might. And perhaps magic.\n{Their} body is scaled but humanoid down to the hips where a tied on cloth offers some modesty before a long tail continues for as long as your entire body, no lower legs to be seen. The water shifts about with {their} movements, beyond even what the physical power of {their} tail can explain.",
+    "hunt announce": "TBD",
+    "max health": 75,
+    "max stamina": 10,
+    "max mana": 5,
+    "evasion": 6,
+    "reshuffle": 5,
+    "yield max health": 25,
+    "yield base chance": 0.5,
+    "yield scale chance": 0.03,
+    "cardsets": [
+        {
+            "tell": "The naga circles you at a distance, the water moving unnaturally in {their} wake.",
+            "cards": [
+                {
+                    "aggress display": "The naga flicks {their} tail and spikes of water stab out at you!",
+                    "accuracy": 10,
+                    "damagedice": 2,
+                    "damagedie": 8,
+                    "damageplus": 2,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "{They} pull a layer of water up around {themself}, dampening your attack!",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 7,
+                    "staminacost": 0,
+                    "manacost": 1
+                },
+                {
+                    "aggress display": "The naga flicks {their} tail and spikes of water stab out at you!",
+                    "accuracy": 10,
+                    "damagedice": 2,
+                    "damagedie": 8,
+                    "damageplus": 2,
+                    "damagetype": "piercing",
+                    "attacks": 2,
+                    "abjure display": "The water surges beneath {them}, helping them dodge!",
+                    "dodge": 7,
+                    "deflect": 1,
+                    "soak": 0,
+                    "staminacost": 0,
+                    "manacost": 1
+                }
+            ]
+        },
+        {
+            "tell": "The naga gives a challenging grin, flexing {their} fingers in anticipation.",
+            "cards": [
+                {
+                    "aggress display": "The naga rushes forward, swinging {their} fists at you repeatedly.",
+                    "accuracy": 6,
+                    "damagedice": 1,
+                    "damagedie": 4,
+                    "damageplus": 5,
+                    "damagetype": "bludgeoning",
+                    "attacks": 4,
+                    "abjure display": "The naga braced for your attack, enduring your blows.",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The naga rushes forward, swinging {their} fists at you repeatedly.",
+                    "accuracy": 6,
+                    "damagedice": 1,
+                    "damagedie": 4,
+                    "damageplus": 5,
+                    "damagetype": "bludgeoning",
+                    "attacks": 4,
+                    "abjure display": "The naga slithered out of your way, dodging.",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 1
+                }
+            ]
+        },
+        {
+            "tell": "The naga circles warily, watching for an opening.",
+            "cards": [
+                {
+                    "aggress display": "The naga lashes at you with a powerful tail slap!",
+                    "accuracy": 12,
+                    "damagedice": 4,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "bludgeoning",
+                    "attacks": 1,
+                    "abjure display": "The naga braced for your attack, enduring your blows.",
+                    "dodge": 0,
+                    "deflect": 0,
+                    "soak": 5,
+                    "staminacost": 1
+                },
+                {
+                    "aggress display": "The naga lashes at you with a powerful tail slap!",
+                    "accuracy": 12,
+                    "damagedice": 4,
+                    "damagedie": 6,
+                    "damageplus": 4,
+                    "damagetype": "bludgeoning",
+                    "attacks": 1,
+                    "abjure display": "The naga slithered out of your way, dodging.",
+                    "dodge": 5,
+                    "deflect": 0,
+                    "soak": 0,
+                    "staminacost": 1
+                }
+            ]
+        }
+    ],
+    "acquirecards": {
+        "devour": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/body",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Devour\n\n+35 nutrition",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "eat",
+                    "details": {
+                        "text": "It's like a giant noodle, but far too large and tough to eat in one big slurp. You take your time, ripping off bits until you've had your fill. A bit like eel, you decide, but notably different. Not your favorite but it fills your belly.",
+                        "nutrition": 35
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/body"
+                    }
+                }
+            ],
+            "help": "Consume your enemy's corpse to gain its calories.\nGet +35 nutrition."
+        },
+        "stuff": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/stuff",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Loot\n\nSmall pearls",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "gather",
+                    "details": {
+                        "item": "small pearl",
+                        "dice": 1,
+                        "die": 4,
+                        "plus": 1,
+                        "text": "You gather some pearls from your fallen foe. Shiny!"
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/stuff"
+                    }
+                }
+            ],
+            "help": "Pick up whatever they had on them."
+        }        
+    },
+    "apprehendcards": {
+        "recruit": {
+            "display": "Recruit\n\nDemand the naga's\nloyalty henceforth.",
+            "verb": "recruit",
+            "details": {
+                "name": "naga youth",
+                "tags": "enemy",
+                "text": "The naga bows to you in surrender, and you look into {their} eyes deeply, pushing your presence in where once there was just the dim light of their own natural aura.\nYou feel the water around you through their senses, an omnipresent ambiance ebbing and flowing. It's distracting for a moment before you pull your senses back to yourself."
+            }
+        },
+        "stuff": {
+            "if": {
+                "condition": "stateis",
+                "fact": "enemy/acquired/stuff",
+                "rule": "!=",
+                "value": true
+            },
+            "display": "Loot\n\nSmall pearls",
+            "verb": "chain",
+            "details": [
+                {
+                    "verb": "gather",
+                    "details": {
+                        "item": "small pearl",
+                        "dice": 1,
+                        "die": 4,
+                        "plus": 1,
+                        "text": "You demand tribute from the naga, and {they} hand over a few small pearls. Shiny!"
+                    }
+                },
+                {
+                    "verb": "setstate",
+                    "details": {
+                        "value": true,
+                        "statename": "enemy/acquired/stuff"
+                    }
+                }
+            ],
+            "help": "Demand whatever they have on them."
+        }
+    }
+}

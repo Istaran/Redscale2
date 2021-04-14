@@ -359,7 +359,9 @@ let progress = async function (state) {
     }
 
     if (state.enemy.phasequeue[1] == "assess") {
-        state.enemy.stamina -= enemyDef.cardsets[state.enemy.cardqueue[0].set].cards[state.enemy.cardqueue[0].card].staminacost; // Pay stamina cost just before assess.
+        // Pay costs just before assess.
+        state.enemy.stamina -= enemyDef.cardsets[state.enemy.cardqueue[0].set].cards[state.enemy.cardqueue[0].card].staminacost || 0; 
+        state.enemy.mana -= enemyDef.cardsets[state.enemy.cardqueue[0].set].cards[state.enemy.cardqueue[0].card].manacost || 0;
     }
 
     if (state.enemy.stamina <= 0) {
