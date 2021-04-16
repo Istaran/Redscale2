@@ -161,12 +161,14 @@ let checkRequirements = async function (state, details) {
                     if (!!party.followers[i].tags[req] != style.requireall[req]) {
                         gameengine.displayText(state, `You can't go that way, because ${party.followers[i].display} ${style.requireall[req] ? "isn't" : "is"} a ${req}.\n`);
                         blocked = true;
+                        break;
                     }
                 }
                 for (var i = 0; i < party.pawns.length; i++) {
                     if (!!party.pawns[i].tags[req] != style.requireall[req]) {
                         gameengine.displayText(state, `You can't go that way, because ${party.pawns[i].display} ${style.requireall[req] ? "isn't" : "is"} a ${req}.\n`);
                         blocked = true;
+                        break;
                     }
                 }
             }

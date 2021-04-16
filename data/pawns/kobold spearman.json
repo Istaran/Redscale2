@@ -16,7 +16,7 @@
         {
             "display": "Your kobold ally readies to deflect with their spear.",
             "cardlines": "Kobold\nDeflecting Spear\n\nDeflect chance: 40%",
-            "help": "nDeflecting Spear\n\n40% to deflect an incoming attack, independant your own.",
+            "help": "Deflecting Spear\n\n40% to deflect an incoming attack, independant your own.",
             "allydeflect": 0.4,
             "allydeflecttext": "Your kobold knocked a blow aside with its spear!\n",
             "subtype": "abjure"

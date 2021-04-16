@@ -1,0 +1,8 @@
+{
+    "display": "small pearl",
+    "cardtext":  "Small pearl\n\nSmall white orb\nthat shinies\nwith rainbow colors.",
+	"descriptionSingular": "A small white pearl, beautiful and smooth. Its preciousness is obvious to you, though it is just a little one.",
+	"descriptionPlural": "Small white pearls, beautiful and smooth. Their preciousness is obvious to you, and you intend to grow your collection.",
+	"hands": 0.01,
+	"weight": 0.01
+}

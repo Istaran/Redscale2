@@ -412,13 +412,17 @@
             "dark": "#008080"               
         },
         "LakeSurface": {
-            "title": "Undermountain Waterways - undescribed",
-            "description": "WIP: This location still needs to be described",
-            "preview": "WIP: This location still needs a preview",
+            "title": "Undermountain Waterways - Underground lake",
+            "description": "You are swimming on the surface of a massive underground lake. Points of light from glowing moss on the ceiling reflect off the surface in an ever-shifting shimmer of quiet beauty. The water lapping across your scales is pleasantly warm, making this a nice relaxing environment at least anytime you aren't fighting.",
+            "preview": "An underground lake stretches out across the cavern",
             "events": [
                 {
                     "chance": 10,
                     "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "naga youth attack"
                 }
             ],
             "actions": [],
@@ -433,13 +437,25 @@
             "dark": "#008080"            
         },
         "UnderLake": {
-            "title": "Undermountain Waterways - undescribed",
-            "description": "WIP: This location still needs to be described",
-            "preview": "WIP: This location still needs a preview",
+            "title": "Undermountain Waterways - Underground lake",
+            "description": "You are swimming underwater in the underground lake. No light to speak of makes it down here and your sensitive scales can't make sense of shifts of water pressure as well as they usually sense air pressure, so you're feeling particularly blind down here. You occasionally open your mouth and summon your inner fire to make a visible glow to see by, but it doesn't help long as the steam bubbles it produces cloud your view after a few seconds.",
+            "preview": "The dark depths of the underground lake extend quite some distance.",
             "events": [
                 {
                     "chance": 10,
                     "event": null
+                },
+                {
+                    "chance": 1,
+                    "event": "naga youth attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "cave fish attack"
+                },
+                {
+                    "chance": 1,
+                    "event": "find small pearl"
                 }
             ],
             "actions": [],
@@ -611,6 +627,20 @@
         "snake attack": {
             "verb": "attack",
             "details": { "enemy": "cave snake" }
+        },
+        "naga youth attack": {
+            "verb": "attack",
+            "details": { "enemy": "naga youth" }
+        },
+        "find small pearl": {
+            "verb": "gather",
+            "details": {
+                "item": "small pearl",
+                "dice": 0,
+                "die": 0,
+                "plus": 1,
+                "text": "You find a clamshell at the bottom of the water with a small shiny pearl inside. Yay! You take it carefully, setting the clam back down to hopefully make another for you."
+            }
         }
     },
 "actions":{
