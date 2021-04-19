@@ -1,3 +1,7 @@
+registerControl('requantifier', (colIndex, rowIndex, control) => {
+    return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} leftChecks={control.leftChecks} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
+});
+
 class Requantifier extends React.Component {
     constructor(props) {
         super(props);

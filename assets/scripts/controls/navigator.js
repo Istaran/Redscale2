@@ -1,3 +1,7 @@
+registerControl('navigator', (colIndex, rowIndex, control) => {
+    return <Navigator key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
+});
+
 class Navigator extends React.Component {
 	constructor(props) {
 		super(props);
@@ -5,7 +9,7 @@ class Navigator extends React.Component {
 	
 	navigate(event, dir) {
         let id = this.props.id;
-        helper.setState({ help: null });
+        setHelp(null);
 		if (this.props.details[dir]) {
             fetch('/act' + location.search, {
 				method: 'post',
@@ -100,7 +104,7 @@ class Navigator extends React.Component {
             }
         }
 
-        return <svg className='navigator' width='150' height='145' onMouseOver={(event) => helper.setState({ help: navHelp })} onMouseOut={(event) => helper.setState({ help: null })}>
+        return <svg className='navigator' width='150' height='145' onMouseOver={() => setHelp(navHelp)} onMouseOut={() => setHelp(null)}>
 		    <defs>
 			    <linearGradient id="groundGradient" x1="0" x2="0" y1="0" y2="1">
 				    <stop offset="50%" stopColor={downColor}/>

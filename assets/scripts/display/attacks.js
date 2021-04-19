@@ -1,3 +1,7 @@
+registerDisplay('attack', (frame, index, display) => {
+    return <AttackRenderer key={frame + '-' + index} blockWidth='10' attack={display} queue={gameDisplayer.animators} frame={frame}/>
+});
+
 class AttackRenderer extends React.Component {
     constructor(props) {
         props.blockWidth = parseInt(props.blockWidth);

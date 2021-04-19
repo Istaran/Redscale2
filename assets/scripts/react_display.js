@@ -1,6 +1,5 @@
 var pusher;
 
-var helper;
 var gameDisplayer;
 var formData = {};
 var saveSlot = 0;
@@ -50,278 +49,24 @@ function getStatus() {
     });
 }
 
-function getSaveList() {
-    fetch('/list', {
-        method: 'get'
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        gameDisplayer.setState({ saveList: data, gameState: null });
-    }).catch(function (err) {
-        setError();
-    });
-}
-
-class HelpDisplayer extends React.Component {
-	constructor(props) {
-		super(props);
-		helper = this;
-		this.state = {help: null};
-		this.oldHelp = null;
-	}
-	
-	render() {
-		if (this.state.help) {
-			this.oldHelp = this.state.help;
-			return <div className='div-help'>{this.state.help}</div>;
-		}
-		if (this.oldHelp) {
-		return <div className='div-unhelp'>{this.oldHelp}</div>;
-		}
-		return null;
-	}
-}
-
-class ActButton extends React.Component {
-    constructor(props) {
-        super(props);
-    };
-
-    takeAction = function () {
-        let self = this;
-        helper.setState({ help: null });
-        fetch('/act' + location.search, {
-            method: 'post',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'slot': saveSlot, 'id': self.props.id, 'data': formData } })
-        }).then(function (response) {
-            return response.json();
-        }).then(function (data) {
-            setGameState(data);
-        }).catch(function (err) {
-            setError();
-        });
-    }
-
-    render() {
-        var width = 150 + 155 * (this.props.extendRight || 0);
-        return <input type='button' className='actButton' style={{ width: width }} onClick={(event) => this.takeAction(event)} value={this.props.display} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} />;
-	}
-}
-
-
-class Card extends React.Component {
-    constructor(props) {
-        super(props);
-    };
-
-    takeAction = function () {
-        let self = this;
-        helper.setState({ help: null });
-        fetch('/act' + location.search, {
-            method: 'post',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'slot': saveSlot, 'id': self.props.id } })
-        }).then(function (response) {
-            return response.json();
-        }).then(function (data) {
-            setGameState(data);
-        }).catch(function (err) {
-            setError();
-        });
-    }
-
-    render() {
-        let display = this.props.display;
-        let stacks = [];
-        for (var i = 1; i < this.props.count; i++) {
-            stacks.push(<div className={'stack ' + this.props.verb} key={'stack ' + i} />);
-        }
-        return <div className='cardBox'><div className={'card ' + this.props.verb} onClick={(event) => this.takeAction(event)} disabled={!this.props.enabled} onMouseOver={(event) => helper.setState({ help: this.props.help })} onMouseOut={(event) => helper.setState({ help: null })} >{display}</div>{stacks}</div>;
-    }
-}
-
-class TextInputer extends React.Component {
-    constructor(props) {
-        super(props);
-
-        formData[this.props.name] = this.props.default;
-    }
-
-    purgeCharacters(event) {
-        event.target.value = event.target.value.replace(/[^a-zA-Z0-9 ]/, '');
-
-        formData[this.props.name] = event.target.value || this.props.default;
-    }
-
-    render() {
-        return <input type="text" placeholder={this.props.default} onInput={(event) => this.purgeCharacters(event)} />;
-    }
-}
-
-class LeftStatus extends React.Component {
-	constructor(props) {
-		super(props);
-		
-	}
-	
-    render() {
-        if (!this.props.source || !this.props.source.lines) return <div display='none'></div>;
-		var statuslines = this.props.source.lines.map((line, lineIdx) => {
-            if (line.isPercent) {
-                return <PercentBar  key={lineIdx} leftVal={line.leftVal} rightVal={line.rightVal} leftColor={line.leftColor} rightColor={line.rightColor} totalWidth='200' height='18px' text={line.text}></PercentBar>
-            }
-			return <div key={lineIdx} className='statusRow' onMouseOver={(event)=>helper.setState({help:line.help})} onMouseOut={(event)=>helper.setState({help:null})}>{line.text}</div>
-		});
-		return <div className='leftStatus'>{statuslines}</div>;
-	}
-}
-
-class RightStatus extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
-
-    render() {
-        if (!this.props.source || !this.props.source.lines) return <div display='none'></div>;
-        var statuslines = this.props.source.lines.map((line, lineIdx) => {
-            if (line.isPercent) {
-                return <PercentBar  key={lineIdx} leftVal={line.leftVal} rightVal={line.rightVal} leftColor={line.leftColor} rightColor={line.rightColor} totalWidth='200' height='18px' text={line.text}></PercentBar>
-            }
-            return <div key={lineIdx} className='statusRow' onMouseOver={(event) => helper.setState({ help: line.help })} onMouseOut={(event) => helper.setState({ help: null })}>{line.text}</div>
-        });
-        return <div className='rightStatus'>{statuslines}</div>;
-    }
-}
-
-class Refresher extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return <div className='refresher' onClick={getStatus}>&#x1f503;Refresh&#x1f503;</div>;
-    }
-}
-
-class Reconnector extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    
-
-    render() {
-        return <a href="login/google" className='refresher'>&#x1F4F6;Reconnect&#x1F4F6;</a>;
-    }
-}
-
-class Loader extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    onClick(event) {
-        saveSlot = this.props.slot;
-        getStatus();
-    }
-
-    render() {
-        return <div className='save' onClick={(event) => this.onClick(event)}>{this.props.text}</div>;
-    }
-}
-
-
-class PercentBar extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {        
-        let self = this;
-        let left = Math.max(self.props.leftVal, 0);
-        let right = Math.max(self.props.rightVal, 0);
-        let multi = self.props.totalWidth / (left + right); 
-        let leftWidth = multi * left;
-        let rightWidth = multi * right;
-
-        return (<div className="percentControl">
-            <div className="percentLeft" style={{width: leftWidth,  height: self.props.height, backgroundColor: self.props.leftColor}}>
-            </div>
-            <div className="percentRight" style={{width: rightWidth,  height: self.props.height, backgroundColor: self.props.rightColor}}>
-            </div>
-            <div className="percentText" style={{width: self.props.totalWidth + 'px', height: self.props.height, top: 0, left: 0}}>{self.props.text}</div>
-        </div>);
-    }
-}
-
-class TextRenderer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.props.queue.push(this);
-        this.state = { remainingTime: this.props.pause, animationStarted: false };
-    }
-
-    animate() {
-        if (!this.state.animationStarted) {
-            this.setState({animationStarted: true});
-            return;
-        }
-        if (this.animationDone()) {
-            return;
-        }
-        this.setState((state, props) => { return { remainingTime: state.remainingTime - 25}});        
-    }
-
-    animationDone() { return this.state.remainingTime <= 0; }
-
-    render() {        
-        let self = this;
-        return this.state.animationStarted && <div className="textControl">{self.props.text}</div>;
-    }
-}
-
-
 var gameDisplayerControlMap = {};
 var gameDisplayerDisplayMap = {};
+var gameDisplayerStatusMap = {};
 function registerControl(name, templateFunction) {
     gameDisplayerControlMap[name] = templateFunction;
 }
 function registerDisplay(name, templateFunction) {
     gameDisplayerDisplayMap[name] = templateFunction;
 }
+function registerStatus(name, templateFunction) {
+    gameDisplayerStatusMap[name] = templateFunction;
+}
 
-registerControl('actButton', (colIndex, rowIndex, control) => {
-    return <ActButton key={colIndex * 10 + rowIndex} extendRight={control.extendRight} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
-});
-registerControl('card', (colIndex, rowIndex, control) => {
-    return <Card key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
-});
-registerControl('navigator', (colIndex, rowIndex, control) => {
-    return <Navigator key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
-});
-registerControl('textBox', (colIndex, rowIndex, control) => {
-    return <TextInputer key={colIndex * 10 + rowIndex} id={control.id} default={control.default} name={control.name} />;
-});
 registerControl('refresher', (colIndex, rowIndex, control) => {
-    return <Refresher />;
+    return <div className='refresher' onClick={getStatus}>&#x1f503;Refresh&#x1f503;</div>;
 });
 registerControl('reconnector', (colIndex, rowIndex, control) => {
-    return <Reconnector />;
-});
-registerControl('requantifier', (colIndex, rowIndex, control) => {
-    return <Requantifier key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftCounts={control.leftCounts} leftChecks={control.leftChecks} rightCounts={control.rightCounts} displays={control.displays} id={control.id} rules={control.rules}/>;
-});
-registerControl('reassigner', (colIndex, rowIndex, control) => {
-    return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
-});
-registerControl('recombiner', (colIndex, rowIndex, control) => {
-    return <Recombiner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
+    return <a href="login/google" className='refresher'>&#x1F4F6;Reconnect&#x1F4F6;</a>;
 });
 registerControl('itemCount', (colIndex, rowIndex, control) => {
     return <div key={colIndex * 10 + rowIndex} className="ctrlLabel">{control.display}</div>;
@@ -329,11 +74,8 @@ registerControl('itemCount', (colIndex, rowIndex, control) => {
 registerControl('spacer', (colIndex, rowIndex, control) => {
     return <div key={colIndex * 10 + rowIndex} className="ctrlLabel"></div>; 
 });
-registerDisplay('text', (frame, index, display) => {
-    return <TextRenderer key={key} text={display.text} pause={display.pause || 0} style={display.style} queue={self.animators} frame={self.state.frame} />
-});
-registerDisplay('attack', (frame, index, display) => {
-    return <AttackRenderer key={key} blockWidth='10' attack={display} queue={self.animators} frame={self.state.frame}/>
+registerStatus('text', (side, index, status) => {
+    return <div key={side + '-' + index} className='statusRow' onMouseOver={() => setHelp(status.help)} onMouseOut={() => setHelp(null)}>{status.text}</div>
 });
 
 class GameDisplayer extends React.Component {
@@ -440,24 +182,35 @@ class GameDisplayer extends React.Component {
                     return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
                 });
             }
-            let statusDisplay = self.state.gameState.display.map((display, index) => {
+            let statusDisplay = !self.state.gameState.display ? null :            
+            <div className='statusDisplay'>{
+                self.state.gameState.display.map((display, index) => {
                 let key = "display_" + frame + "_" + index;
                 if(!gameDisplayerDisplayMap[display.type]) return null;
                 return gameDisplayerDisplayMap[display.type](frame, index, display);
-            });
+            })}</div>;
+            let leftStatus = !self.state.gameState.leftStatus ? null :
+            <div  className='leftStatus'>{
+                self.state.gameState.leftStatus.lines.map((line, index) => {
+                if(!gameDisplayerStatusMap[line.type]) return null;
+                return gameDisplayerStatusMap[line.type]("left", index, line);
+            })}</div>;
+            let rightStatus = !self.state.gameState.rightStatus ? null :
+            <div className='rightStatus'>{
+             self.state.gameState.rightStatus.lines.map((line, index) => {
+                if(!gameDisplayerStatusMap[line.type]) return null;
+                return gameDisplayerStatusMap[line.type]("right", index, line);
+            })}</div>;
             return (<div>
                 <div className='topbar'>
                     <div className='topleft' />
                     <div className='titlebar'>{this.state.gameState.title}</div>
-                    <div className='topright' /></div>
-                    <div className='statusWrapper'>
-                        <LeftStatus source={this.state.gameState.leftStatus} />
-                        <div className='statusDisplay'>{statusDisplay}</div>
-                        <RightStatus source={this.state.gameState.rightStatus} />
-                    </div>
-                    <div className='controlTable'>{controlTable}</div>
-                    <ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/>
-                </div>);
+                    <div className='topright' />
+                </div>
+                <div className='statusWrapper'>{leftStatus}{statusDisplay}{rightStatus}</div>
+                <div className='controlTable'>{controlTable}</div>
+                <ChatDisplayer chatLog={this.state.chatLog} markupLog={this.state.markupLog}/>
+            </div>);
         } else if (this.state.saveList) {
             // initialize chat
             if (!this.chatInit) {
@@ -508,10 +261,18 @@ class GameDisplayer extends React.Component {
 }
 
 //-------------------------------------------------------//
-
 ReactDOM.render(
-  <GameDisplayer />,
-  document.getElementById('reactroot')
-);
+    <GameDisplayer />,
+    document.getElementById('reactroot')
+    );
 
-getSaveList();
+    fetch('/list', {
+    method: 'get'
+}).then(function (response) {
+    return response.json();
+}).then(function (data) {
+    gameDisplayer.setState({ saveList: data, gameState: null });
+}).catch(function (err) {
+    setError();
+});
+
