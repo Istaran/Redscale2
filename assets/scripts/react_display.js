@@ -48,7 +48,7 @@ class GameDisplayer extends React.Component {
         var log = [];
         var mLog = [];
         for (var i = 0; i < 100; i++) { log.push(''); mLog.push({})}; // Default chat log to empty
-        this.animators = [];
+        GameDisplayer.animators = [];
 		this.state = {
           chatLog: log,
           markupLog: mLog,
@@ -73,12 +73,12 @@ class GameDisplayer extends React.Component {
     animate() {
         let loop = this.state.gameState && this.state.gameState.profile && this.state.gameState.profile.fastAnimations;
         for(let iterations = (loop ? 100 : 1); iterations > 0; iterations--) {
-            if (this.animators.length) {
-                this.animators[0].animate();
-                if (this.animators[0].animationDone())
+            if (GameDisplayer.animators.length) {
+                GameDisplayer.animators[0].animate();
+                if (GameDisplayer.animators[0].animationDone())
                 {
-                    this.animators.shift();
-                    this.setState({animationDone: (this.animators.length == 0)});
+                    GameDisplayer.animators.shift();
+                    this.setState({animationDone: (GameDisplayer.animators.length == 0)});
                 }
             } else if (!this.state.animationDone) {
                 this.setState({animationDone: true});
@@ -119,7 +119,6 @@ class GameDisplayer extends React.Component {
 	render() {
 		let self = this;
 
-        formData = {}; // Caution: if this causes unexpected rerenderers I might have issues with setting this here.
         if (this.state.gameState) {
             if (this.state.gameState.profile.darkTheme) {
                 document.body.className = "darktheme";
@@ -128,8 +127,9 @@ class GameDisplayer extends React.Component {
             }
             if (!GameDisplayer.userid && this.state.gameState.id) GameDisplayer.userid = this.state.gameState.id;
             let controlTable = [];
-            if (this.state.frame != GameDisplayer.frame) {
-                this.animators = [];
+            if (this.state.frame != GameDisplayer.frame) {                
+                GameDisplayer.formData = {};
+                GameDisplayer.animators = [];
                 this.state.animationDone = false;
                 this.state.frame = GameDisplayer.frame;
             }

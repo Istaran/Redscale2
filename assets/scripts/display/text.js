@@ -1,5 +1,5 @@
 registerDisplay('text', (frame, index, display) => {
-    return <TextRenderer key={frame + '-' + index} text={display.text} pause={display.pause || 0} style={display.style} queue={gameDisplayer.animators} frame={frame} />
+    return <TextRenderer key={frame + '-' + index} text={display.text} pause={display.pause || 0} style={display.style} queue={GameDisplayer.animators} frame={frame} />
 });
 
 class TextRenderer extends React.Component {

@@ -1,5 +1,5 @@
 registerDisplay('attack', (frame, index, display) => {
-    return <AttackRenderer key={frame + '-' + index} blockWidth='10' attack={display} queue={gameDisplayer.animators} frame={frame}/>
+    return <AttackRenderer key={frame + '-' + index} blockWidth='10' attack={display} queue={GameDisplayer.animators} frame={frame}/>
 });
 
 class AttackRenderer extends React.Component {
