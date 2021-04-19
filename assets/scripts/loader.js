@@ -4,7 +4,7 @@ class Loader extends React.Component {
     }
 
     onClick(event) {
-        saveSlot = this.props.slot;
+        GameDisplayer.saveSlot = this.props.slot;
         getStatus();
     }
 

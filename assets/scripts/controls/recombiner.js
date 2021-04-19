@@ -25,7 +25,7 @@ class Recombiner extends React.Component {
             },
             body: JSON.stringify({
                 'body': {
-                    'verb': 'use', 'slot': saveSlot, 'id': self.state.id, 'data': {
+                    'verb': 'use', 'slot': GameDisplayer.saveSlot, 'id': self.state.id, 'data': {
                         'item': self.item, 'user': { 'type': (self.state.rightSelect ? "pawn" : "leader"), 'index': (self.state.rightSelect - 1) } 
                     }
                 }
@@ -38,7 +38,7 @@ class Recombiner extends React.Component {
                     rightSet: data.controls[0][0].rightSet.slice(),
                     displays: data.controls[0][0].displays.slice(),
                     id: data.controls[0][0].id,
-                    frame: frame++,
+                    frame: GameDisplayer.frame++,
                 });
             }).catch(function (err) {
                 setError();
@@ -52,7 +52,7 @@ class Recombiner extends React.Component {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify({ 'body': { 'verb': 'setscene', 'slot': saveSlot, 'id': self.state.id } })
+            body: JSON.stringify({ 'body': { 'verb': 'setscene', 'slot': GameDisplayer.saveSlot, 'id': self.state.id } })
         }).then(function (response) {
             return response.json();
         }).then(function(data) {

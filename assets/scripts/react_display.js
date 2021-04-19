@@ -1,24 +1,16 @@
-var pusher;
-
-var gameDisplayer;
-var formData = {};
-var saveSlot = 0;
-var userid;
-var frame = 0;
-
 function setGameState(data) {
-    gameDisplayer.setState(
+    GameDisplayer.Instance.setState(
         { 
-            frame: frame++, 
+            frame: GameDisplayer.frame++, 
             animationDone: false,
             gameState: data
         });
 }
 
 function setError() {
-    gameDisplayer.setState(
+    GameDisplayer.Instance.setState(
         { 
-            frame: frame++, 
+            frame: GameDisplayer.frame++, 
             animationDone: true,
             gameState: { 
                 display: [
@@ -39,7 +31,7 @@ function getStatus() {
         headers: {
             "Content-Type": "application/json; charset=utf-8",
         },
-        body: JSON.stringify({ 'body': { 'verb': 'status', 'slot': saveSlot } })
+        body: JSON.stringify({ 'body': { 'verb': 'status', 'slot': GameDisplayer.saveSlot } })
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -49,39 +41,10 @@ function getStatus() {
     });
 }
 
-var gameDisplayerControlMap = {};
-var gameDisplayerDisplayMap = {};
-var gameDisplayerStatusMap = {};
-function registerControl(name, templateFunction) {
-    gameDisplayerControlMap[name] = templateFunction;
-}
-function registerDisplay(name, templateFunction) {
-    gameDisplayerDisplayMap[name] = templateFunction;
-}
-function registerStatus(name, templateFunction) {
-    gameDisplayerStatusMap[name] = templateFunction;
-}
-
-registerControl('refresher', (colIndex, rowIndex, control) => {
-    return <div className='refresher' onClick={getStatus}>&#x1f503;Refresh&#x1f503;</div>;
-});
-registerControl('reconnector', (colIndex, rowIndex, control) => {
-    return <a href="login/google" className='refresher'>&#x1F4F6;Reconnect&#x1F4F6;</a>;
-});
-registerControl('itemCount', (colIndex, rowIndex, control) => {
-    return <div key={colIndex * 10 + rowIndex} className="ctrlLabel">{control.display}</div>;
-});
-registerControl('spacer', (colIndex, rowIndex, control) => {
-    return <div key={colIndex * 10 + rowIndex} className="ctrlLabel"></div>; 
-});
-registerStatus('text', (side, index, status) => {
-    return <div key={side + '-' + index} className='statusRow' onMouseOver={() => setHelp(status.help)} onMouseOut={() => setHelp(null)}>{status.text}</div>
-});
-
 class GameDisplayer extends React.Component {
 	constructor(props) {
         super(props);
-        gameDisplayer = this;
+        GameDisplayer.Instance = this;
         var log = [];
         var mLog = [];
         for (var i = 0; i < 100; i++) { log.push(''); mLog.push({})}; // Default chat log to empty
@@ -90,7 +53,7 @@ class GameDisplayer extends React.Component {
           chatLog: log,
           markupLog: mLog,
 		  gameState: null,
-          frame: frame,
+          frame: GameDisplayer.frame,
           animationDone: false
 		};
 	}
@@ -137,7 +100,7 @@ class GameDisplayer extends React.Component {
         //color
         if (data.type == 'system') {
             markup.color = '#0088FF';
-        } else if (data.type == 'self' || (userid && data.userid == userid)) {
+        } else if (data.type == 'self' || (GameDisplayer.userid && data.userid == GameDisplayer.userid)) {
             markup.color = '#FF4400';
         }
         return markup;
@@ -163,20 +126,20 @@ class GameDisplayer extends React.Component {
             } else {
                 document.body.className = "lighttheme";
             }
-            if (!userid && this.state.gameState.id) userid = this.state.gameState.id;
+            if (!GameDisplayer.userid && this.state.gameState.id) GameDisplayer.userid = this.state.gameState.id;
             let controlTable = [];
-            if (this.state.frame != frame) {
+            if (this.state.frame != GameDisplayer.frame) {
                 this.animators = [];
                 this.state.animationDone = false;
-                this.state.frame = frame;
+                this.state.frame = GameDisplayer.frame;
             }
             if (this.state.animationDone) {
                 controlTable = this.state.gameState.controls.map((column, colIndex) => {
                     let controlColumn = [];
                     if (column) {
                         controlColumn = column.map((control, rowIndex) => {
-                            if(!gameDisplayerControlMap[control.type]) return null;
-                            return gameDisplayerControlMap[control.type](colIndex, rowIndex, control);
+                            if(!GameDisplayer.ControlMap[control.type]) return null;
+                            return GameDisplayer.ControlMap[control.type](colIndex, rowIndex, control);
                         });
                     }
                     return <div key={colIndex} className='controlColumn'>{controlColumn}</div>
@@ -185,21 +148,21 @@ class GameDisplayer extends React.Component {
             let statusDisplay = !self.state.gameState.display ? null :            
             <div className='statusDisplay'>{
                 self.state.gameState.display.map((display, index) => {
-                let key = "display_" + frame + "_" + index;
-                if(!gameDisplayerDisplayMap[display.type]) return null;
-                return gameDisplayerDisplayMap[display.type](frame, index, display);
+                let key = "display_" + this.state.frame + "_" + index;
+                if(!GameDisplayer.DisplayMap[display.type]) return null;
+                return GameDisplayer.DisplayMap[display.type](this.state.frame, index, display);
             })}</div>;
             let leftStatus = !self.state.gameState.leftStatus ? null :
             <div  className='leftStatus'>{
                 self.state.gameState.leftStatus.lines.map((line, index) => {
-                if(!gameDisplayerStatusMap[line.type]) return null;
-                return gameDisplayerStatusMap[line.type]("left", index, line);
+                if(!GameDisplayer.StatusMap[line.type]) return null;
+                return GameDisplayer.StatusMap[line.type]("left", index, line);
             })}</div>;
             let rightStatus = !self.state.gameState.rightStatus ? null :
             <div className='rightStatus'>{
              self.state.gameState.rightStatus.lines.map((line, index) => {
-                if(!gameDisplayerStatusMap[line.type]) return null;
-                return gameDisplayerStatusMap[line.type]("right", index, line);
+                if(!GameDisplayer.StatusMap[line.type]) return null;
+                return GameDisplayer.StatusMap[line.type]("right", index, line);
             })}</div>;
             return (<div>
                 <div className='topbar'>
@@ -224,11 +187,11 @@ class GameDisplayer extends React.Component {
                     if (chatlog && chatlog.length) {
                         var config = chatlog[0];
 
-                        pusher = new Pusher(config.key, {
+                        GameDisplayer.pusher = new Pusher(config.key, {
                             cluster: config.cluster,
                             forceTLS: true
                         });
-                        var channel = pusher.subscribe('Redscale_main_chat');
+                        var channel = GameDisplayer.pusher.subscribe('Redscale_main_chat');
                         channel.bind('chat message', self.pushTextToChatLog.bind(self));
 
                         var newLog = self.state.chatLog.slice(1);
@@ -260,6 +223,39 @@ class GameDisplayer extends React.Component {
 	}
 }
 
+GameDisplayer.frame = 0;
+GameDisplayer.ControlMap = {};
+GameDisplayer.DisplayMap = {};
+GameDisplayer.StatusMap = {};
+GameDisplayer.Widget = [];
+GameDisplayer.formData = {};
+
+function registerControl(name, templateFunction) {
+    GameDisplayer.ControlMap[name] = templateFunction;
+}
+function registerDisplay(name, templateFunction) {
+    GameDisplayer.DisplayMap[name] = templateFunction;
+}
+function registerStatus(name, templateFunction) {
+    GameDisplayer.StatusMap[name] = templateFunction;
+}
+
+registerControl('refresher', (colIndex, rowIndex, control) => {
+    return <div className='refresher' onClick={getStatus}>&#x1f503;Refresh&#x1f503;</div>;
+});
+registerControl('reconnector', (colIndex, rowIndex, control) => {
+    return <a href="login/google" className='refresher'>&#x1F4F6;Reconnect&#x1F4F6;</a>;
+});
+registerControl('itemCount', (colIndex, rowIndex, control) => {
+    return <div key={colIndex * 10 + rowIndex} className="ctrlLabel">{control.display}</div>;
+});
+registerControl('spacer', (colIndex, rowIndex, control) => {
+    return <div key={colIndex * 10 + rowIndex} className="ctrlLabel"></div>; 
+});
+registerStatus('text', (side, index, status) => {
+    return <div key={side + '-' + index} className='statusRow' onMouseOver={() => setHelp(status.help)} onMouseOut={() => setHelp(null)}>{status.text}</div>
+});
+
 //-------------------------------------------------------//
 ReactDOM.render(
     <GameDisplayer />,
@@ -271,7 +267,7 @@ ReactDOM.render(
 }).then(function (response) {
     return response.json();
 }).then(function (data) {
-    gameDisplayer.setState({ saveList: data, gameState: null });
+    GameDisplayer.Instance.setState({ saveList: data, gameState: null });
 }).catch(function (err) {
     setError();
 });

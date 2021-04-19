@@ -45,7 +45,7 @@ class Reassigner extends React.Component {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify({ 'body': { 'verb': 'requantify', 'slot': saveSlot, 'id': self.props.id, 'data': { 'left': this.state.leftSet, 'right': this.state.rightSet } } })
+            body: JSON.stringify({ 'body': { 'verb': 'requantify', 'slot': GameDisplayer.saveSlot, 'id': self.props.id, 'data': { 'left': this.state.leftSet, 'right': this.state.rightSet } } })
         }).then(function (response) {
             return response.json();
         }).then(function(data) {

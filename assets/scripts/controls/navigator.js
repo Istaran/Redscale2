@@ -16,7 +16,7 @@ class Navigator extends React.Component {
 				headers: {
 				   "Content-Type": "application/json; charset=utf-8",
 				},
-                body: JSON.stringify({ 'body': { 'verb': 'travel', 'slot': saveSlot, 'id': id, 'sub': dir }})
+                body: JSON.stringify({ 'body': { 'verb': 'travel', 'slot': GameDisplayer.saveSlot, 'id': id, 'sub': dir }})
 			  }).then(function(response) {
 				return response.json();
 			  }).then(function(data) {

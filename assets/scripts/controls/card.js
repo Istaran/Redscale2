@@ -15,7 +15,7 @@ class Card extends React.Component {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'slot': saveSlot, 'id': self.props.id } })
+            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'slot': GameDisplayer.saveSlot, 'id': self.props.id } })
         }).then(function (response) {
             return response.json();
         }).then(function (data) {

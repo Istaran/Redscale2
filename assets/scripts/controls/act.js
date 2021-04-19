@@ -15,7 +15,7 @@ class ActButton extends React.Component {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'slot': saveSlot, 'id': self.props.id, 'data': formData } })
+            body: JSON.stringify({ 'body': { 'verb': self.props.verb, 'slot': GameDisplayer.saveSlot, 'id': self.props.id, 'data': GameDisplayer.formData } })
         }).then(function (response) {
             return response.json();
         }).then(function (data) {

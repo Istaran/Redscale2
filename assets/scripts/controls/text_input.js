@@ -6,13 +6,13 @@ class TextInputer extends React.Component {
     constructor(props) {
         super(props);
 
-        formData[this.props.name] = this.props.default;
+        GameDisplayer.formData[this.props.name] = this.props.default;
     }
 
     purgeCharacters(event) {
         event.target.value = event.target.value.replace(/[^a-zA-Z0-9 ]/, '');
 
-        formData[this.props.name] = event.target.value || this.props.default;
+        GameDisplayer.formData[this.props.name] = event.target.value || this.props.default;
     }
 
     render() {
