@@ -322,6 +322,7 @@ div.save {
     width: calc(100% - 30px);
     height: 100px;
     margin: 15px;
+    text-align: left;
     background-color: var(--save-bg-color);
     color: var(--save-fg-color);
     white-space: pre-wrap;
@@ -771,15 +772,17 @@ div.help-icon::after {
 }
 
 div.widget-icon {
+    line-height: 21px;
     height: 21px;
-    width: 21px;
+    width: 25px;
     margin: 1px;
     font-size: 18px;
     border-width: 1px;
     border-style: outset;
-    border-color: var(--main-fg-color);
-    background: var(--main-bg-color);
-    color: var(--main-fg-color);
+    border-color: var(--button-bd-color);
+    background: var(--button-bg-color);
+    color: var(--button-fg-color);
+    text-align: center;
 }
 
 div.widget-icon.widget-state-hidden {
@@ -787,27 +790,30 @@ div.widget-icon.widget-state-hidden {
 }
 
 div.widget-icon.widget-state-locked {
-    border-style: solid;
-    border-color: var(--gray-bg-color);
-    color: var(--gray-bg-color);
+    border-color: var(--button-dbd-color);
+    background: var(--button-dbg-color);
+    color: var(--button-dfg-color);
 }
 
 div.widget-icon.widget-state-highlighted {
+    line-height: 19px;
     height: 19px;
-    width: 19px;
+    width: 23px;
     border-width: 2px;
 }
 
 div.widget-icon.widget-state-opened {
+    line-height: 19px;
     height: 19px;
-    width: 19px;
+    width: 23px;
     border-width: 2px;
     border-style: inset;
 }
 
 div.widget-icon.widget-state-normal:hover {
+    line-height: 19px;
     height: 19px;
-    width: 19px;
+    width: 23px;
     border-width: 2px;
 }
 

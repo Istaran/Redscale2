@@ -18,9 +18,9 @@ class Widget extends React.Component {
         self.setState({mode: 'opened'});
     }
     
-    close() {
-        let self = this;
-        self.setState({mode: 'normal'});
+    static close() {
+        if (Widget.openWidget)
+            Widget.openWidget.setState({mode: 'normal'});
         Widget.openWidget = null;
     }
 
@@ -28,8 +28,8 @@ class Widget extends React.Component {
         let self = this;
         if (this.state.mode == 'opened') {
             let internal = self.renderInternal();
-            return <div class={`${self.type}-icon widget-icon widget-state-${this.state.mode}`} onClick={() => self.close()}>
-                    <div class='widget-modal' onClick='(e)=>e.stopPropagation()' >{internal}</div>
+            return <div class={`${self.type}-icon widget-icon widget-state-${this.state.mode}`} onClick={() => Widget.close()}>
+                    <div class='widget-modal' onClick={(e)=>e.stopPropagation()} >{internal}</div>
                 </div>;
         }
         return <div class={`${self.type}-icon widget-icon widget-state-${this.state.mode}`} onClick={() => self.open()} />;

@@ -270,7 +270,7 @@ ReactDOM.render(
     document.getElementById('reactroot')
     );
 
-    fetch('/list', {
+fetch('/list', {
     method: 'get'
 }).then(function (response) {
     return response.json();

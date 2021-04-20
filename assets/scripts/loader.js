@@ -6,6 +6,7 @@ class Loader extends React.Component {
     onClick(event) {
         GameDisplayer.saveSlot = this.props.slot;
         getStatus();
+        Widget.close();
     }
 
     render() {
