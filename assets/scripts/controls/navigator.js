@@ -1,4 +1,4 @@
-registerControl('navigator', (colIndex, rowIndex, control) => {
+GameDisplayer.registerControl('navigator', (colIndex, rowIndex, control) => {
     return <Navigator key={colIndex * 10 + rowIndex} details={control.sub} id={control.id} />;
 });
 

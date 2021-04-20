@@ -1,4 +1,4 @@
-registerStatus('percent', (side, index, status) => {
+GameDisplayer.registerStatus('percent', (side, index, status) => {
     return <PercentBar  key={side + '-' + index} leftVal={status.leftVal} rightVal={status.rightVal} leftColor={status.leftColor} rightColor={status.rightColor} totalWidth='200' height='18px' text={status.text}></PercentBar>
 });
 

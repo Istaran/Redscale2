@@ -115,6 +115,26 @@ class GameDisplayer extends React.Component {
       newMLog.push(this.markupFromMessageData(data));
       this.setState({chatLog: newLog, markupLog: newMLog});
 	};
+
+    static frame = 0;
+    static ControlMap = {};
+    static DisplayMap = {};
+    static StatusMap = {};
+    static WidgetList = [];
+    static formData = {};
+
+    static registerControl(name, templateFunction) {
+        GameDisplayer.ControlMap[name] = templateFunction;
+    };
+    static registerDisplay(name, templateFunction) {
+        GameDisplayer.DisplayMap[name] = templateFunction;
+    }
+    static registerStatus(name, templateFunction) {
+        GameDisplayer.StatusMap[name] = templateFunction;
+    }
+    static registerWidget(index, templateFunction) {
+        GameDisplayer.WidgetList[index] = templateFunction;
+    }
 	
 	render() {
 		let self = this;
@@ -164,11 +184,14 @@ class GameDisplayer extends React.Component {
                 if(!GameDisplayer.StatusMap[line.type]) return null;
                 return GameDisplayer.StatusMap[line.type]("right", index, line);
             })}</div>;
+            let widgets = GameDisplayer.WidgetList.map((template) => {
+                return template(self.state.gameState);
+            });
             return (<div>
                 <div className='topbar'>
                     <div className='topleft' />
                     <div className='titlebar'>{this.state.gameState.title}</div>
-                    <div className='topright' />
+                    <div className='topright'>{widgets}</div>
                 </div>
                 <div className='statusWrapper'>{leftStatus}{statusDisplay}{rightStatus}</div>
                 <div className='controlTable'>{controlTable}</div>
@@ -223,36 +246,21 @@ class GameDisplayer extends React.Component {
 	}
 }
 
-GameDisplayer.frame = 0;
-GameDisplayer.ControlMap = {};
-GameDisplayer.DisplayMap = {};
-GameDisplayer.StatusMap = {};
-GameDisplayer.Widget = [];
-GameDisplayer.formData = {};
 
-function registerControl(name, templateFunction) {
-    GameDisplayer.ControlMap[name] = templateFunction;
-}
-function registerDisplay(name, templateFunction) {
-    GameDisplayer.DisplayMap[name] = templateFunction;
-}
-function registerStatus(name, templateFunction) {
-    GameDisplayer.StatusMap[name] = templateFunction;
-}
 
-registerControl('refresher', (colIndex, rowIndex, control) => {
+GameDisplayer.registerControl('refresher', (colIndex, rowIndex, control) => {
     return <div className='refresher' onClick={getStatus}>&#x1f503;Refresh&#x1f503;</div>;
 });
-registerControl('reconnector', (colIndex, rowIndex, control) => {
+GameDisplayer.registerControl('reconnector', (colIndex, rowIndex, control) => {
     return <a href="login/google" className='refresher'>&#x1F4F6;Reconnect&#x1F4F6;</a>;
 });
-registerControl('itemCount', (colIndex, rowIndex, control) => {
+GameDisplayer.registerControl('itemCount', (colIndex, rowIndex, control) => {
     return <div key={colIndex * 10 + rowIndex} className="ctrlLabel">{control.display}</div>;
 });
-registerControl('spacer', (colIndex, rowIndex, control) => {
+GameDisplayer.registerControl('spacer', (colIndex, rowIndex, control) => {
     return <div key={colIndex * 10 + rowIndex} className="ctrlLabel"></div>; 
 });
-registerStatus('text', (side, index, status) => {
+GameDisplayer.registerStatus('text', (side, index, status) => {
     return <div key={side + '-' + index} className='statusRow' onMouseOver={() => setHelp(status.help)} onMouseOut={() => setHelp(null)}>{status.text}</div>
 });
 

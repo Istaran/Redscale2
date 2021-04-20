@@ -1,4 +1,4 @@
-registerControl('card', (colIndex, rowIndex, control) => {
+GameDisplayer.registerControl('card', (colIndex, rowIndex, control) => {
     return <Card key={colIndex * 10 + rowIndex} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} count={control.count} />;
 });
 

@@ -1,4 +1,4 @@
-registerControl('actButton', (colIndex, rowIndex, control) => {
+GameDisplayer.registerControl('actButton', (colIndex, rowIndex, control) => {
     return <ActButton key={colIndex * 10 + rowIndex} extendRight={control.extendRight} display={control.display} verb={control.verb} id={control.id} help={control.help} enabled={control.enabled} />;
 });
 

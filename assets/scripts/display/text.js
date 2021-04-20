@@ -1,4 +1,4 @@
-registerDisplay('text', (frame, index, display) => {
+GameDisplayer.registerDisplay('text', (frame, index, display) => {
     return <TextRenderer key={frame + '-' + index} text={display.text} pause={display.pause || 0} style={display.style} queue={GameDisplayer.animators} frame={frame} />
 });
 

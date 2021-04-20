@@ -1,4 +1,4 @@
-registerControl('recombiner', (colIndex, rowIndex, control) => {
+GameDisplayer.registerControl('recombiner', (colIndex, rowIndex, control) => {
     return <Recombiner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
 });
 

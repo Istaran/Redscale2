@@ -1,4 +1,4 @@
-registerDisplay('attack', (frame, index, display) => {
+GameDisplayer.registerDisplay('attack', (frame, index, display) => {
     return <AttackRenderer key={frame + '-' + index} blockWidth='10' attack={display} queue={GameDisplayer.animators} frame={frame}/>
 });
 

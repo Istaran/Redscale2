@@ -228,6 +228,8 @@ div.topleft {
 div.topright {
     width: 250px;
     height: 25px;
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 div.titlebar {
@@ -752,3 +754,69 @@ div.damageSpacer {
     width: 5px;
 }
 
+div.file-icon::after {
+    content: "🖫";
+}
+
+div.map-icon::after {
+    content: "🗺";
+}
+
+div.settings-icon::after {
+    content: "⚙";
+}
+
+div.help-icon::after {
+    content: "⍰";
+}
+
+div.widget-icon {
+    height: 21px;
+    width: 21px;
+    margin: 1px;
+    font-size: 18px;
+    border-width: 1px;
+    border-style: outset;
+    border-color: var(--main-fg-color);
+    background: var(--main-bg-color);
+    color: var(--main-fg-color);
+}
+
+div.widget-icon.widget-state-hidden {
+    display: none;
+}
+
+div.widget-icon.widget-state-locked {
+    border-style: solid;
+    border-color: var(--gray-bg-color);
+    color: var(--gray-bg-color);
+}
+
+div.widget-icon.widget-state-highlighted {
+    height: 19px;
+    width: 19px;
+    border-width: 2px;
+}
+
+div.widget-icon.widget-state-opened {
+    height: 19px;
+    width: 19px;
+    border-width: 2px;
+    border-style: inset;
+}
+
+div.widget-icon.widget-state-normal:hover {
+    height: 19px;
+    width: 19px;
+    border-width: 2px;
+}
+
+div.widget-modal {
+    position: fixed;
+    top: 33px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: 9001;
+}

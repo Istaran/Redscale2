@@ -1,4 +1,4 @@
-registerControl('reassigner', (colIndex, rowIndex, control) => {
+GameDisplayer.registerControl('reassigner', (colIndex, rowIndex, control) => {
     return <Reassigner key={colIndex * 10 + rowIndex} leftHeader={control.leftHeader} rightHeader={control.rightHeader} leftSet={control.leftSet} rightSet={control.rightSet} displays={control.displays} id={control.id} />;
 });
 

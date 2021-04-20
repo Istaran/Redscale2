@@ -1,4 +1,4 @@
-registerControl('textBox', (colIndex, rowIndex, control) => {
+GameDisplayer.registerControl('textBox', (colIndex, rowIndex, control) => {
     return <TextInputer key={colIndex * 10 + rowIndex} id={control.id} default={control.default} name={control.name} />;
 });
 
