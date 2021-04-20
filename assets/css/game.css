@@ -253,6 +253,7 @@ div.statusWrapper {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    overflow-x: hidden;
     overflow-y:auto;
 }
 
@@ -823,6 +824,6 @@ div.widget-modal {
     bottom: 0px;
     left: 0px;
     right: 0px;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(128, 128, 128, 0.7);
     z-index: 9001;
 }
