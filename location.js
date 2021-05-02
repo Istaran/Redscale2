@@ -13,15 +13,19 @@ let spotStyle = async function (state, zoneName, x, y, z) {
     return zone.map[z][y][x];
 }
 
-let getSpotDetails = async function(state, zoneName, x, y, z) {
+let getSpotDetails = async function(state, zoneName, x, y, z, includeDetails) {
     let spot = await spotStyle(state, zoneName, x, y, z);
     let zone = await cache.load(`./data/locations/${zoneName}.json`);
     let style = zone.styles[spot];
     if (!style) console.error("Style not found for " + spot + " in zone " + zoneName + "! getSpotDetails fail.");
-    return { text: style.preview, light: style.light || "white", dark: style.dark || "black" };
+    return { 
+        text: includeDetails ? style.preview : undefined, 
+        light: style.light || "white", 
+        dark: style.dark || "black" 
+    };
 }
 
-let setupDirection = async function (state, zoneName, x, y, z, dir, control, hereStyle) {
+let setupDirection = async function (state, zoneName, x, y, z, dir, control, hereStyle, includeDetails) {
     let overrided = hereStyle.directionOverrides && hereStyle.directionOverrides[dir];
     let over = (overrided ? hereStyle.directionOverrides[dir] : {}); // Direction override pretends 'here' is in the zone specified and offset by dimensions specified for purpose of calculating links in the given direction.
     if (over.disabled) return;
@@ -48,31 +52,40 @@ let setupDirection = async function (state, zoneName, x, y, z, dir, control, her
 
     if (overrided || ((!reqNS || control.sub[reqNS]) && (!reqEW || control.sub[reqEW]))) {
         if (await spotStyle(state, targetZone, targetX, targetY, targetZ)) {
-            control.sub[dir] = await getSpotDetails(state, targetZone, targetX, targetY, targetZ);
-            control.details[dir] = { location: (over.zone || zoneName), x: targetX, y: targetY, z: targetZ };
+            control.sub[dir] = await getSpotDetails(state, targetZone, targetX, targetY, targetZ, includeDetails);
+            if (includeDetails)
+                control.details[dir] = { location: (over.zone || zoneName), x: targetX, y: targetY, z: targetZ };
         }
     }
+}
+
+let createNavigator = async function (state, style, location, x, y, z, includeDetails) {
+    navHere = (x == state.x && y == state.y && z == state.z);
+
+    let navigator = { type: "navigator", details: {}, sub: {} };
+
+    await Promise.all(["up", "north", "east", "west", "south", "down"].map((dir) => setupDirection(state, location, x, y, z, dir, navigator, style, includeDetails)));
+    await Promise.all(["nw", "ne", "sw", "se"].map((dir) => setupDirection(state, location, x, y, z, dir, navigator, style, includeDetails)));
+    navigator.sub.here = { light: style.light || "white", dark: style.dark || "black" };
+
+    return navigator;
 }
 
 let getControls = async function (state) {
 	let zone = await cache.load(`./data/locations/${state.location}.json`);
     let private = state.query.nsfw == 'true' && await cache.load(`./private/locations/${state.location}.json`);
-    let controls = [[{ type: "navigator", details: {}, sub: {} }], []];
     if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
+    let controls = [[], []];
 
     let spot = await spotStyle(state, state.location, state.x, state.y, state.z);
 	if (spot) {
 		let style = zone.styles[spot];
-        let pStyle = (private && private.styles && private.styles[spot]) ? private.styles[spot] : {};
+        controls[0][0] = await createNavigator(state, style, state.location, state.x, state.y, state.z, true);
 
-        await Promise.all(["up", "north", "east", "west", "south", "down"].map((dir) => setupDirection(state, state.location, state.x, state.y, state.z, dir, controls[0][0], style)));
-        await Promise.all(["nw", "ne", "sw", "se"].map((dir) => setupDirection(state, state.location, state.x, state.y, state.z, dir, controls[0][0], style)));
-        controls[0][0].sub.here = { light: style.light || "white", dark: style.dark || "black" };
-
-        let actions = pStyle.actions ? (style.actions || []).concat(pStyle.actions) : style.actions;
+        let actions = style.actions;
         if (actions) {
             for (var i = 0; i < actions.length; i++) {
-                let action = (private && private.actions && private.actions[actions[i]]) || zone.actions[actions[i]];
+                let action = zone.actions[actions[i]];
                 if (await gameengine.conditionMet(state, action.if)) {
                     let ctrl = await gameengine.getControl(state, action);
                     if (ctrl)
@@ -80,11 +93,33 @@ let getControls = async function (state) {
                 }
             }
 		}
+
+        if (private && private.styles && private.styles[spot]) {
+            let pStyle = private.styles[spot];
+            let pActions = pStyle.actions;
+            if (pActions) {
+                for (var i = 0; i < pActions.length; i++) {
+                    let pAction = private.actions[pActions[i]] || zone.actions[pActions[i]];
+                    if (await gameengine.conditionMet(state, pAction.if)) {
+                        let pCtrl = await gameengine.getControl(state, pAction);
+                        if (pCtrl)
+                            controls[1].push(pCtrl);
+                    }
+                }
+            }
+        }
 	} else {
-		// If someone ends up stuck in a wall, so to speak, add a location reset button.
-        controls[0][0].details.special = { location: "Dragonbone Cave", x: 4, y: 5, z: 0, help: "Debug warp to home." };
-        controls[0][0].sub.special = { text: "You see your home through the mysterious portal of Ooops, how'd you get somewhere that isn't adjacent to anywhere?!", light: "white", dark: "black" };
-	}
+        // Insert a pathway home from nowhere
+        controls[0][0] = { 
+            type: "navigator", 
+            details: {
+                special: { location: "Dragonbone Cave", x: 4, y: 5, z: 0, help: "Debug warp to home." }
+            }, 
+            sub: {
+                special: { text: "You see your home through the mysterious portal of Ooops, how'd you get somewhere that isn't adjacent to anywhere?!", light: "white", dark: "black" }
+            } 
+        };
+    }
 	return controls;
 };
 
@@ -234,11 +269,34 @@ let getBuildOptions = async function (state) {
     if (!any) state.buildoptions = null;
 }
 
+let map = async function (state) {
+    if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
+    let zone = await cache.load(`./data/locations/${state.location}.json`);
+    if(!zone || !zone.map) return null;
+    let outMap = [];
+    for(let z in zone.map) {
+        outMap[z] = [];
+        for (let y in zone.map[z]) {
+            outMap[z][y] = [];
+            for (let x in zone.map[z][y]) {
+                let spot = await spotStyle(state, state.location, x, y, z);
+                if (spot) {
+                    let style = zone.styles[spot];
+                    let pseudoNav = await createNavigator(state, style, state.location, parseInt(x), parseInt(y), parseInt(z), false);
+                    outMap[z][y][x] = pseudoNav.sub;
+                }
+            }
+        }        
+    }
+    return outMap;
+}
+
 module.exports = {
     checkRequirements: checkRequirements,
 	explore: explore,
     getControls: getControls,
     getDescription: getDescription,
     getTitle: getTitle,
-    getBuildOptions: getBuildOptions
+    getBuildOptions: getBuildOptions,
+    map: map
 };

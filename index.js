@@ -26,7 +26,8 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const settingsTemplate = {
     displayName: null,
     darkTheme: false,
-    fastAnimations: false
+    fastAnimations: false,
+    earlyAccess: false
 };
 
 const cache = require('./cache');
@@ -228,6 +229,13 @@ app.post('/set', async function (req, res) {
     cache.save(profilePath, profile);
 	res.set('Content-Type', 'Application/JSON');
 	res.send(JSON.stringify(viewProfile));
+});
+
+app.get('/map', async function (req, res) {
+    var profile = await getProfile(req.user);
+	const map = await game.map(profile, req.query.slot);
+	res.set('Content-Type', 'Application/JSON');
+	res.send(JSON.stringify(map));
 });
 
 app.listen(port, () => console.log(`Redscale is listening on port ${port}!`));

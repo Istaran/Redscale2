@@ -92,20 +92,20 @@ let getStatusDisplay = function (state) {
     let manaText = `Mana: ${leader.mana} / ${leader.maxMana}`;
 	let statusDisplay = {
         lines: [
-            { "text": leader.display },
-            { "text": healthText, "help": "Health.\nWhen your health drops to zero, you will be force to rewind to your last rest point. Over time, nutrition converts to stamina and then to health.",
-        isPercent: true, leftVal: leader.health, rightVal: leader.maxHealth - leader.health, leftColor: "var(--health-full)", rightColor: "var(--health-empty)" },
-            { "text": staminaText, "help":"Stamina.\nWhen your stamina drops to zero, you will need to digest food to recover. Some actions spend stamina, and also it converts to health over time.",
-            isPercent: true, leftVal: leader.stamina, rightVal: leader.maxStamina - leader.stamina, leftColor: "var(--stamina-full)", rightColor: "var(--stamina-empty)"},
-            { "text": nutritionText, "help": "Nutrition.\nEat food to fill up so you can recover and heal.",
-            isPercent: true, leftVal: leader.nutrition, rightVal: leader.maxNutrition - leader.nutrition, leftColor: "var(--nutrition-full)", rightColor: "var(--nutrition-empty)" },
-            { "text": manaText, "help": "Mana.\nThe mystical energy that wells up within you over time." ,
-            isPercent: true, leftVal: leader.mana, rightVal: leader.maxMana - leader.mana, leftColor: "var(--mana-full)", rightColor: "var(--mana-empty)"}
+            { "type": "text", "text": leader.display },
+            { "type": "percent", "text": healthText, "help": "Health.\nWhen your health drops to zero, you will be force to rewind to your last rest point. Over time, nutrition converts to stamina and then to health.",
+                leftVal: leader.health, rightVal: leader.maxHealth - leader.health, leftColor: "var(--health-full)", rightColor: "var(--health-empty)" },
+            { "type": "percent", "text": staminaText, "help":"Stamina.\nWhen your stamina drops to zero, you will need to digest food to recover. Some actions spend stamina, and also it converts to health over time.",
+                leftVal: leader.stamina, rightVal: leader.maxStamina - leader.stamina, leftColor: "var(--stamina-full)", rightColor: "var(--stamina-empty)"},
+            { "type": "percent", "text": nutritionText, "help": "Nutrition.\nEat food to fill up so you can recover and heal.",
+                leftVal: leader.nutrition, rightVal: leader.maxNutrition - leader.nutrition, leftColor: "var(--nutrition-full)", rightColor: "var(--nutrition-empty)" },
+            { "type": "percent", "text": manaText, "help": "Mana.\nThe mystical energy that wells up within you over time." ,
+                leftVal: leader.mana, rightVal: leader.maxMana - leader.mana, leftColor: "var(--mana-full)", rightColor: "var(--mana-empty)"}
         ]
 	};
 	if (leader.activeassist) {
         statusDisplay.lines.push({
-            "text": leader.activeassist.display, "help": "Active Assist:\n" + leader.activeassist.help
+            "type": "text", "text": leader.activeassist.display, "help": "Active Assist:\n" + leader.activeassist.help
         });
     }
 	return statusDisplay;
