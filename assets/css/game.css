@@ -411,8 +411,8 @@ div.stack {
 }
 
 @keyframes fade-in-from-top {
-  0%   { color:var(--help-bg-color); background-color:var(--chat-bg-color); height:0px;}
-  100% { color:var(--chat-fg-color); background-color:var(--help-bg-color); height:150px;}
+  0%   { color:var(--chat-bg-color); background-color:var(--chat-bg-color); height:0px;}
+  100% { color:var(--help-fg-color); background-color:var(--help-bg-color); height:150px;}
 }
 
 div.div-help {
@@ -826,4 +826,43 @@ div.widget-modal {
     right: 0px;
     background: rgba(128, 128, 128, 0.7);
     z-index: 9001;
+}
+
+div.map {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+    overflow: scroll;
+}
+
+div.map-level {
+    display: grid;
+    padding-bottom: 10px;
+    border-bottom: 5px solid var(--main-fg-color);
+    margin-bottom: 10px;
+    gap: 1px;
+    grid-auto-columns: 25px;
+    grid-auto-rows: 25px;
+
+}
+
+div.map-cell {
+    display: block;
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+    min-height: 25px;
+    float: left;
+}
+
+div.map-box {
+    border-style: solid;
+    border-width: 5px;
+    width: 15px;
+    height: 15px;
+    min-width: 15px;
+    min-height: 15px;
 }

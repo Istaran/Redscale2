@@ -535,6 +535,17 @@ let displayText = function(state, text, pauseAfterMs, contextTags, contextScrubb
         );
 }
 
+let map = async function (profile, slot) {
+    console.log(`Creating map for ${profile.id}/${slot}`);
+    let savePath = `./saves/${profile.id}/${slot}.json`;
+
+    // Load current existence.
+    let state = await cache.load(savePath);
+    if (!state) return false;
+
+    return loc.map(state);
+}
+
 module.exports = {
     act: act,
     conditionMet: conditionMet,
@@ -549,5 +560,6 @@ module.exports = {
     readContextPath: readContextPath,
     writeContextPath: writeContextPath,
     scrubText: scrubText,
-    displayText: displayText
+    displayText: displayText,
+    map: map
 };

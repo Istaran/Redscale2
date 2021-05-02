@@ -230,4 +230,11 @@ app.post('/set', async function (req, res) {
 	res.send(JSON.stringify(viewProfile));
 });
 
+app.get('/map', async function (req, res) {
+    var profile = await getProfile(req.user);
+	const map = await game.map(profile, req.query.slot);
+	res.set('Content-Type', 'Application/JSON');
+	res.send(JSON.stringify(map));
+});
+
 app.listen(port, () => console.log(`Redscale is listening on port ${port}!`));
