@@ -1,5 +1,5 @@
 GameDisplayer.registerWidget(0, (gamestate) => {
-    return <HelpMenu />
+    return gamestate.profile.earlyAccess && <HelpMenu />
 });
 
 class HelpMenu extends Widget {

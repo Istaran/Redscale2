@@ -26,7 +26,8 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const settingsTemplate = {
     displayName: null,
     darkTheme: false,
-    fastAnimations: false
+    fastAnimations: false,
+    earlyAccess: false
 };
 
 const cache = require('./cache');
