@@ -124,6 +124,8 @@ let getControls = async function (state) {
 };
 
 let explore = async function (state) {
+    wasHere(state, state.location, state.x, state.y, state.z);
+
     let zone = await cache.load(`./data/locations/${state.location}.json`);
     let private = state.query.nsfw == 'true' && await cache.load(`./private/locations/${state.location}.json`);
 	//Temp:
@@ -272,13 +274,17 @@ let getBuildOptions = async function (state) {
 let map = async function (state) {
     if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
     let zone = await cache.load(`./data/locations/${state.location}.json`);
-    if(!zone || !zone.map) return null;
+    if(!zone || !zone.map || !state.travelog || !state.travelog[state.location]) return null;
     let outMap = [];
     for(let z in zone.map) {
+        if (!state.travelog[state.location][z]) continue;
         outMap[z] = [];
-        for (let y in zone.map[z]) {
+        for (let y in zone.map[z]) {            
+            if (!state.travelog[state.location][z][y]) continue;
             outMap[z][y] = [];
             for (let x in zone.map[z][y]) {
+//                console.log(`travelog entry: ${state.travelog[state.location][z][y]}, bitmask: ${(1 << x)}`);
+                if (!(state.travelog[state.location][z][y] & (1 << x))) continue;
                 let spot = await spotStyle(state, state.location, x, y, z);
                 if (spot) {
                     let style = zone.styles[spot];
@@ -291,6 +297,14 @@ let map = async function (state) {
     return outMap;
 }
 
+let wasHere = function (state, location, x, y, z) {
+    if (!state.travelog) state.travelog = {};
+    if (!state.travelog[location]) state.travelog[location] = [];
+    if (!state.travelog[location][z]) state.travelog[location][z] = [];
+    if (!state.travelog[location][z][y]) state.travelog[location][z][y] = 0;
+    state.travelog[location][z][y] |= (1 << x);
+}
+
 module.exports = {
     checkRequirements: checkRequirements,
 	explore: explore,
@@ -298,5 +312,6 @@ module.exports = {
     getDescription: getDescription,
     getTitle: getTitle,
     getBuildOptions: getBuildOptions,
-    map: map
+    map: map,
+    wasHere: wasHere,
 };
