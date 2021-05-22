@@ -842,27 +842,32 @@ div.map-level {
     display: grid;
     padding-bottom: 10px;
     border-bottom: 5px solid var(--main-fg-color);
-    margin-bottom: 10px;
-    gap: 1px;
-    grid-auto-columns: 25px;
-    grid-auto-rows: 25px;
-
+    margin: 25px 25px 35px 25px;
+    gap: 0px;
+    grid-auto-columns: 50px;
+    grid-auto-rows: 50px;
 }
 
-div.map-cell {
+.map-cell {
     display: block;
-    width: 25px;
-    height: 25px;
-    min-width: 25px;
-    min-height: 25px;
+    margin: -25px;
+    width: 100px;
+    height: 100px;
+    min-width: 100px;
+    min-height: 100px;
     float: left;
 }
 
-div.map-box {
-    border-style: solid;
-    border-width: 5px;
-    width: 15px;
-    height: 15px;
-    min-width: 15px;
-    min-height: 15px;
+
+.map-draw-bottom {
+    z-index: -20;
+}
+.map-draw-low {
+    z-index: -10;
+}
+.map-draw-high {
+    z-index: 10;
+}
+.map-draw-top {
+    z-index: 20;
 }
