@@ -139,6 +139,18 @@ let setDefaults = async function (state) {
             }
         };
     }
+    if (!state.travelog) {
+        state.travelog = {
+            'Dragonbone Cave': [
+                [null, null, 0x3C, 0x7E, 0x7E, 0x7E, 0x7E, 0x3C]
+            ],
+            'Undermountain Waterways': [
+                [], [], [], [], [], [], [], [], [], [
+                    null, null, null, null, null, null, null, null, null, null, null, null, null, 0x18000, 0x8000, 0x8000, 0xF000, 0x5000
+                ]
+            ]
+        };
+    }
     if (state.world.locations['Dragonbone Cave'][0][5][4].building.workers == {}) {
         state.world.locations['Dragonbone Cave'][0][5][4].building.workers = [];
     }
