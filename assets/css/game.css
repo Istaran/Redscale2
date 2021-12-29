@@ -856,8 +856,12 @@ div.map-level {
     min-width: 100px;
     min-height: 100px;
     float: left;
+    pointer-events: none;
 }
 
+.map-cell g {
+    pointer-events: painted;
+}
 
 .map-draw-bottom {
     z-index: -20;

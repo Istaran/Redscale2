@@ -19,9 +19,10 @@ let getSpotDetails = async function(state, zoneName, x, y, z, includeDetails) {
     let style = zone.styles[spot];
     if (!style) console.error("Style not found for " + spot + " in zone " + zoneName + "! getSpotDetails fail.");
     return { 
-        text: includeDetails ? style.preview : undefined, 
+        text: style.preview, 
         light: style.light || "white", 
-        dark: style.dark || "black" 
+        dark: style.dark || "black",
+        visited: !!(state.travelog[zoneName] && state.travelog[zoneName][z] && state.travelog[zoneName][z][y] && (state.travelog[zoneName][z][y] & (1 << x))),
     };
 }
 
@@ -66,7 +67,7 @@ let createNavigator = async function (state, style, location, x, y, z, includeDe
 
     await Promise.all(["up", "north", "east", "west", "south", "down"].map((dir) => setupDirection(state, location, x, y, z, dir, navigator, style, includeDetails)));
     await Promise.all(["nw", "ne", "sw", "se"].map((dir) => setupDirection(state, location, x, y, z, dir, navigator, style, includeDetails)));
-    navigator.sub.here = { light: style.light || "white", dark: style.dark || "black" };
+    navigator.sub.here = { light: style.light || "white", dark: style.dark || "black", title: style.title };
 
     return navigator;
 }
@@ -272,24 +273,31 @@ let getBuildOptions = async function (state) {
 }
 
 let map = async function (state) {
+    return await mapZone(state, state.location);
+}
+
+let mapZone = async function (state, loc) {
     if (!gameengine) gameengine = require('./gameengine'); // Lazy load to avoid circular dependency problem.
-    let zone = await cache.load(`./data/locations/${state.location}.json`);
-    if(!zone || !zone.map || !state.travelog || !state.travelog[state.location]) return null;
+    let zone = await cache.load(`./data/locations/${loc}.json`);
+    if(!zone || !zone.map || !state.travelog || !state.travelog[loc]) return null;
     let outMap = [];
     for(let z in zone.map) {
-        if (!state.travelog[state.location][z]) continue;
+        if (!state.travelog[loc][z]) continue;
         outMap[z] = [];
         for (let y in zone.map[z]) {            
-            if (!state.travelog[state.location][z][y]) continue;
+            if (!state.travelog[loc][z][y]) continue;
             outMap[z][y] = [];
             for (let x in zone.map[z][y]) {
-//                console.log(`travelog entry: ${state.travelog[state.location][z][y]}, bitmask: ${(1 << x)}`);
-                if (!(state.travelog[state.location][z][y] & (1 << x))) continue;
-                let spot = await spotStyle(state, state.location, x, y, z);
+//                console.log(`travelog entry: ${state.travelog[loc][z][y]}, bitmask: ${(1 << x)}`);
+                if (!(state.travelog[loc][z][y] & (1 << x))) continue;
+                let spot = await spotStyle(state, loc, x, y, z);
                 if (spot) {
                     let style = zone.styles[spot];
-                    let pseudoNav = await createNavigator(state, style, state.location, parseInt(x), parseInt(y), parseInt(z), false);
+                    let pseudoNav = await createNavigator(state, style, loc, parseInt(x), parseInt(y), parseInt(z), false);
+                    if (loc == state.location && x == state.x && y == state.y && z == state.z)
+                        pseudoNav.sub.YouAreHere = true;
                     outMap[z][y][x] = pseudoNav.sub;
+
                 }
             }
         }        
