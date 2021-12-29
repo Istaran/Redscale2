@@ -1,5 +1,5 @@
 GameDisplayer.registerWidget(6, (gamestate) => {
-    return gamestate.profile.earlyAccess && <MapViewer />
+    return <MapViewer />
 });
 
 class MapViewer extends Widget {
@@ -32,13 +32,7 @@ class MapViewer extends Widget {
                     if (row) {
                         let rooms = row.map((room, roomIdx) => {
                             if (room) {
-                                let roomStyle = {
-                                    backgroundColor: room.here.light,
-                                    borderColor: room.here.dark,
-                                    gridColumn: roomIdx + 1,
-                                    gridRow: rowIdx + 1
-                                };
-                                return <div class="map-cell map-box" style={roomStyle}></div>;
+                                return <MapCell details={room} row={rowIdx + 1} col={roomIdx + 1} />;
                             }
                         });
                         return rooms;

@@ -1,5 +1,5 @@
 GameDisplayer.registerWidget(2, (gamestate) => {
-    return gamestate.profile.earlyAccess && <Settings profile={gamestate.profile} />
+    return <Settings profile={gamestate.profile} />
 });
 
 class Settings extends Widget {
