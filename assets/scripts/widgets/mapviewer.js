@@ -1,5 +1,5 @@
 GameDisplayer.registerWidget(6, (gamestate) => {
-    return gamestate.profile.earlyAccess && <MapViewer />
+    return <MapViewer />
 });
 
 class MapViewer extends Widget {

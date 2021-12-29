@@ -1,5 +1,5 @@
 GameDisplayer.registerWidget(10, (gamestate) => {
-    return gamestate.profile.earlyAccess && <FileMenu />;
+    return <FileMenu />;
 });
 
 class FileMenu extends Widget {
