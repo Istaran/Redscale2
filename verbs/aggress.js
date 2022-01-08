@@ -44,7 +44,7 @@ let act = async function (state, details) {
                     allyResult += assist.allyhittext + " ";
                     if (hitMulti > 1)
                         allyResult += `Critical hit! (Net damage x${hitMulti}) `;
-                    let typeMulti = combatengine(enemyDef, assist.allydamagetype);
+                    let typeMulti = combatengine.getTypeMulti(enemyDef, assist.allydamagetype);
                     let damage = combatengine.damageRoll(assist.allydamagedice, assist.allydamagedie, assist.allydamageplus, Math.max(0, enemyCard.soak - (assist.allydamagepierce || 0)), hitMulti * typeMulti);
                     if (damage <= 0) {
                         allyResult += card["aggress soak display"] || "{They} shrugged it off!\n";
@@ -77,7 +77,7 @@ let act = async function (state, details) {
                         attackText += "You bypassed {their} armor! ";
                     }
                 }
-                let typeMulti = (enemyDef.damageMultiplier && enemyDef.damageMultiplier[card.damagetype] !== undefined) ? enemyDef.damageMultiplier[card.damagetype] : 1;
+                let typeMulti = combatengine.getTypeMulti(enemyDef, card.damagetype);
                 console.log(`Multiplier ${typeMulti} against type ${card.damagetype}`);
                 let damage = combatengine.damageRoll(damagedice, damagedie, damageplus, enemyCard.soak + (hitMulti <= 1 && enemyCard.noncritsoak ? enemyCard.noncritsoak : 0), typeMulti * hitMulti);
                 if (damage <= 0) {
