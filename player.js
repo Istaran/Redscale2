@@ -151,7 +151,7 @@ let setDefaults = async function (state) {
             ]
         };
     }
-    if (state.world.locations['Dragonbone Cave'][0][5][4].building.workers == {}) {
+    if (!Array.isArray(state.world.locations['Dragonbone Cave'][0][5][4].building.workers )) {
         state.world.locations['Dragonbone Cave'][0][5][4].building.workers = [];
     }
     if (state.parties[0]) {
