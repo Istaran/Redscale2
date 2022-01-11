@@ -189,6 +189,8 @@ let configureEnemy = async function (state, target, flavor) {
     console.log(`Configured enemy: ${JSON.stringify(enemy)}`);
 
     state.enemy = enemy;
+    state.contextTags = enemy.tags;
+    state.contextScrubbers = enemy.scrubbers;
 
     let announce = targetDef[`${flavor} announce`];
     state.enemy.tell = targetDef.cardsets[enemy.cardqueue[0].set].tell;
