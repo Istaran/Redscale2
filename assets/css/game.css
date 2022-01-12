@@ -829,13 +829,10 @@ div.widget-modal {
 }
 
 div.map {
-    display: flex;
-    flex-direction: column-reverse;
     width: 90%;
     height: 90%;
     top: 5%;
     left: 5%;
-    overflow: scroll;
 }
 
 div.map-level {
@@ -846,6 +843,7 @@ div.map-level {
     gap: 0px;
     grid-auto-columns: 50px;
     grid-auto-rows: 50px;
+    overflow: scroll;
 }
 
 .map-cell {
@@ -874,4 +872,25 @@ div.map-level {
 }
 .map-draw-top {
     z-index: 20;
+}
+
+.map-level-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.map-level-button {
+    outline-style: groove;
+    outline-color: var(--main-fg-color);
+}
+
+.map-zone-menu {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+
+.map-zone-button {
+    outline-style: groove;
+    outline-color: var(--main-fg-color);
 }

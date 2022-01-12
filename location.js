@@ -273,7 +273,18 @@ let getBuildOptions = async function (state) {
 }
 
 let map = async function (state) {
-    return await mapZone(state, state.location);
+    let mapSet = {
+        current: {
+            x: state.x,
+            y: state.y,
+            z: state.z,
+            map: state.location,
+        }
+    }
+    for (let place in state.travelog) {
+        mapSet[place] = await mapZone(state, place);
+    }
+    return mapSet;
 }
 
 let mapZone = async function (state, loc) {
