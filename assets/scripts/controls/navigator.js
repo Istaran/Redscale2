@@ -100,7 +100,7 @@ class Navigator extends React.Component {
                         dirs.splice(i, 1);
                     }
                 }
-                navHelp += `${header}:${this.props.details[dir.prop].text}\n`;
+                navHelp += `${header}: ${this.props.details[dir.prop].text}\n`;
             }
         }
 
