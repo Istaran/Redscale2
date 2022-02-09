@@ -3,6 +3,9 @@
     --main-fg-color: black;
     --gray-bg-color: lightgray;
 
+    --highlight-bg-color: rgb(255, 128, 128);
+    --highlight-fg-color: rgb(64, 0, 0);
+
     --chat-bg-color: black;
     --chat-fg-color: lime;
 
@@ -833,17 +836,25 @@ div.map {
     height: 90%;
     top: 5%;
     left: 5%;
+    display: grid;
+    grid-gap: 2px;
+    grid-template-columns: 25px 1fr;
+    grid-template-rows: 50px 1fr;
 }
 
 div.map-level {
+    grid-column: 2;
+    grid-row: 2;
     display: grid;
     padding-bottom: 10px;
     border-bottom: 5px solid var(--main-fg-color);
-    margin: 25px 25px 35px 25px;
+    padding: 100px 100px 200px 200px;
     gap: 0px;
     grid-auto-columns: 50px;
     grid-auto-rows: 50px;
     overflow: scroll;
+    align-content: center;
+    justify-content: center;
 }
 
 .map-cell {
@@ -875,22 +886,42 @@ div.map-level {
 }
 
 .map-level-menu {
+    width: 25px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
+    grid-column: 1;
+    grid-row: 2;
 }
 
 .map-level-button {
     outline-style: groove;
     outline-color: var(--main-fg-color);
+    color: var(--main-fg-color);
     background-color: var(--main-bg-color);
     margin: 1px;
     padding: 2px;
+}
+
+.map-level-button.highlighted {
+    outline-color: var(--highlight-fg-color);
+    color: var(--highlight-fg-color);
+    background-color: var(--highlight-bg-color);
+}
+
+.map-level-button.gray {
+    outline-color: var(--main-fg-color);
+    color: var(--main-fg-color);
+    background-color: var(--gray-bg-color);
 }
 
 .map-zone-menu {
     display: flex;
     flex-direction: row;
     overflow-x: scroll;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    justify-content: start;
 }
 
 .map-zone-button {
@@ -899,4 +930,16 @@ div.map-level {
     background-color: var(--main-bg-color);
     margin: 5px;
     padding: 2px;
+}
+
+.map-zone-button.highlighted {
+    outline-color: var(--highlight-fg-color);
+    color: var(--highlight-fg-color);
+    background-color: var(--highlight-bg-color);
+}
+
+.map-zone-button.gray {
+    outline-color: var(--main-fg-color);
+    color: var(--main-fg-color);
+    background-color: var(--gray-bg-color);
 }

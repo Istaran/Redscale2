@@ -79,11 +79,24 @@ class MapViewer extends Widget {
         if (map) {
             let level = map[self.state.location.z];
             if (level) {
+                let minX = 1000;
+                let minY = 1000;
+                level.forEach((r, y) => {
+                    if (r) {
+                        r.forEach((c, x) => {
+                            if (c) {
+                                minX = Math.min(minX, x);
+                                minY = Math.min(minY, y);
+                            }
+                        });
+                    }
+                });
+
                 let rows = level.map((row, rowIdx) => {
                     if (row) {
                         let rooms = row.map((room, roomIdx) => {
                             if (room) {
-                                return <MapCell details={room} row={rowIdx + 1} col={roomIdx + 1} />;
+                                return <MapCell details={room} row={rowIdx - minY + 1} col={roomIdx - minX + 1} />;
                             }
                         });
                         return rooms;
@@ -94,12 +107,18 @@ class MapViewer extends Widget {
             var levelMenu = <div class="map-level-menu">{map.map((lvl, lvlIdx) => {
                 if (this.anyRooms(lvl)) {
                     if (self.state.you.map == self.state.location.map && lvlIdx == self.state.you.z)
-                        return <div class="map-level-button" key={"level_" + lvlIdx} onClick={() => self.setLevel(lvlIdx)}>Here</div>;
-                    return <div class="map-level-button" key={"level_" + lvlIdx} onClick={() => self.setLevel(lvlIdx)}>--*--</div>;
+                        return <div class="map-level-button highlighted" key={"level_" + lvlIdx} onClick={() => self.setLevel(lvlIdx)}>*</div>;
+                    else if (lvlIdx == self.state.location.z)
+                        return <div class="map-level-button gray" key={"level_" + lvlIdx}>*</div>;
+                    return <div class="map-level-button" key={"level_" + lvlIdx} onClick={() => self.setLevel(lvlIdx)}>*</div>;
                 }
             })}</div>;
             var zoneMenu = <div class="map-zone-menu">{Object.keys(this.state.map).map((zone, zoneIdx) => {
                 if (self.state.map[zone]) {
+                    if (self.state.you.map == zone)
+                        return <div class="map-zone-button highlighted" key={"zone_" + zoneIdx} onClick={() => self.setZone(zone)}>{zone}</div>;
+                    else if (self.state.location.map == zone)
+                        return <div class="map-zone-button gray" key={"zone_" + zoneIdx} >{zone}</div>;
                     return <div class="map-zone-button" key={"zone_" + zoneIdx} onClick={() => self.setZone(zone)}>{zone}</div>;
                 }
             })}</div>;
