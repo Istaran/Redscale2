@@ -234,8 +234,8 @@
     },
     "WestGuard": {
       "title": "Nezumi Enclave - Guard Post",
-      "description": "The tunnel here is blocked by a grid of metal bars. There's no hinge, and a bit of looking shows it's meant to pull up into the ceiling. Nezumi guards, armored with layers of bone and holding swords made of the same, watch your approach nervously. As you get close, one shouts at you \"Halt! What business do you have in the Enclave of Bone?\"",
-      "preview": "A portcullis bars the way ahead, with a pair of armored ratfolk standing guard before it. They're watching you warily, even from the distance, hands on the hilts of their weapons.",
+      "description": "After what seemed an eternity of walking through the narrow, elegant tunnels, you notice as the walls begin to expand, now easily accomodating your size. Light from torches creep into your vision, as they start to line the walls. Finally you enter a clearing in the tunnel, revealing a large gate made of chiselled jade, practically glowing of old magics. Even to your untrained eye you can see it was created from masters of their trade.",
+      "preview": "A jade portcullis bars the way ahead, with a pair of armored ratfolk standing guard before it. They're watching you warily, even from the distance, hands on the hilts of their weapons.",
       "events": [
         {
           "chance": 1,
@@ -244,13 +244,13 @@
       ],
       "directionOverrides": {
         "east": {
-          "disabled": false
+          "disabled": true
         }
       }
     },
     "EastGuard": {
       "title": "Nezumi Enclave - Guard Post",
-      "description": "The road ends in a closed li, with a pair of guards watching bored. They straighten up as you approach, hands on hilts but not drawing their weapons. \"Road's closed, dragon,\" one of them states.",
+      "description": "The road ends in a closed jade portcullis, with a pair of guards watching bored. They straighten up as you approach, hands on hilts but not drawing their weapons. \"Road's closed, dragon,\" one of them states.",
       "preview": "A portcullis bars the way ahead, with a pair of armored ratfolk standing guard before it. They're not paying much attention, mostly just chatting with each other.",
       "events": [
         {
