@@ -393,6 +393,12 @@ let act = async function (profile, action, query) {
     state.view.title = `${await loc.getTitle(state)} - ${time.getTimeString(state)}`;
     state.view.id = profile.id;
 
+    // Fix for older saves with lingering status
+    if (state.view.status) {
+        if (!state.view.display) state.view.display = [];
+        state.view.display.unshift({type:"text", "text": state.view.status})
+    }
+
     // apply display scrubbers
     for (let d = 0; d < state.view.display.length; d++) {
         let display = state.view.display[d];
