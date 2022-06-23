@@ -7,6 +7,10 @@ function setGameState(data) {
         });
 }
 
+function getGameState() {
+    return (GameDisplayer.Instance && GameDisplayer.Instance.state && GameDisplayer.Instance.state.gameState);    
+}
+
 function setError() {
     GameDisplayer.Instance.setState(
         { 

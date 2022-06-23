@@ -5,12 +5,14 @@ GameDisplayer.registerControl('navigator', (colIndex, rowIndex, control) => {
 class Navigator extends React.Component {
 	constructor(props) {
 		super(props);
+        this.state = {};
 	};
 	
 	navigate(event, dir) {
         let id = this.props.id;
         setHelp(null);
-		if (this.props.details[dir]) {
+		if (this.props.details[dir] && !this.state.navigating) {
+            this.setState({navigating: true});
             fetch('/act' + location.search, {
 				method: 'post',
 				headers: {
@@ -26,7 +28,58 @@ class Navigator extends React.Component {
               });
 		}
 	}
-	
+
+    onKeyDown(event) {
+        var gameState = getGameState();
+        if (gameState && gameState.profile.earlyAccess) {
+            switch(event.keyCode) {
+                case 103: // numpad 7
+                    this.navigate(event, 'nw');
+                    break;
+                case 104: // numpad 8
+                    this.navigate(event, 'north');
+                    break;
+                case 105: // numpad 9
+                    this.navigate(event, 'ne');
+                    break;
+                case 100: // numpad 4
+                    this.navigate(event, 'west');
+                    break;
+                case 101: // numpad 5
+                    this.navigate(event, 'special');
+                    break;
+                case 102: // numpad 6
+                    this.navigate(event, 'east');
+                    break;
+                case 97: // numpad 1
+                    this.navigate(event, 'sw');
+                    break;
+                case 98: // numpad 2
+                    this.navigate(event, 'south');
+                    break;
+                case 99: // numpad 3
+                    this.navigate(event, 'se');
+                    break;
+                case 107: // numpad +
+                    this.navigate(event, 'down');
+                    break;
+                case 109: // numpad -
+                    this.navigate(event, 'up');
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    componentDidMount(){
+        document.addEventListener("keydown", this.onKeyDown.bind(this));
+    }    
+    
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.onKeyDown.bind(this));
+    }
+
     render() {
         let backgroundColor = "var(--compass-bg-color)";
         let outlineColor = "var(--compass-fg-color)";
@@ -91,7 +144,7 @@ class Navigator extends React.Component {
                 for (var i = 0; i < dirs.length;) {
                     if (this.props.details[dirs[i].prop]) {
                         if (this.props.details[dir.prop].text == this.props.details[dirs[i].prop].text) {
-                            header += ", " + dirs[i].header;
+                               header += ", " + dirs[i].header;
                             dirs.splice(i, 1);
                         } else {
                             i++;
